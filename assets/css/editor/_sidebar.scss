@@ -75,6 +75,7 @@
   text-align: center;
   margin-bottom: $gutter-size-sm;
   background-size: contain;
+  transition: width 0.2s;
 }
 
 .editor-sidebar-block-text {
@@ -89,20 +90,8 @@
   background-color: $color-block-video;
 }
 
-.editor-sidebar-block-dragging {
-  @extend .editor-canvas-block;
-  color: transparent;
+.editor-sidebar-block-over {
+  width: $width-block !important;
+  height: 100px !important;
   border: 0;
-
-  &.editor-sidebar-block-text {
-    @extend .editor-canvas-block-text;
-  }
-
-  &.editor-sidebar-block-image {
-    @extend .editor-canvas-block-image;
-  }
-
-  &.editor-sidebar-block-video {
-    @extend .editor-canvas-block-video;
-  }
 }

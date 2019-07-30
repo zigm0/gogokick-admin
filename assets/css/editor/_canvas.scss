@@ -15,7 +15,7 @@
 }
 
 .editor-canvas-block {
-  width: 680px !important;
+  width: $width-block !important;
   user-select: none;
   background-color: #efefef;
   background-size: contain;

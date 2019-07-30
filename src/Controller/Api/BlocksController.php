@@ -15,7 +15,6 @@ class BlocksController
      */
     public function getAction($id, Request $request)
     {
-        sleep(1);
         return new JsonResponse([
             ['id' => 4, 'type' => 'text'],
             ['id' => 5, 'type' => 'image'],

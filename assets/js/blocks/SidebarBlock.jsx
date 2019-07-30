@@ -58,6 +58,7 @@ export default class SidebarBlock extends React.PureComponent {
       <Draggable key={type} draggableId={type} index={index}>
         {(provided, snapshot) => {
           const classes = classNames(`editor-sidebar-block editor-sidebar-block-${type}`, {
+            'editor-sidebar-block-over':     snapshot.draggingOver === 'canvasBlocks',
             'editor-sidebar-block-dragging': snapshot.isDragging
           });
 

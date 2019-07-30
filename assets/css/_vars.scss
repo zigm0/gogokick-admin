@@ -38,6 +38,7 @@ $gutter-size-lg: $gutter-size * 2;
 $gutter-size-sm: $gutter-size / 2;
 $header-height: 55px;
 $footer-height: 100px;
+$width-block: 680px;
 
 @mixin media-xs {
   @media (min-width: #{$break-xs}) and (max-width: #{$break-sm - 1px}) {
