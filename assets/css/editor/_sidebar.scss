@@ -26,11 +26,12 @@
 
 .editor-sidebar-team-member {
   display: flex;
+  cursor: pointer;
   align-items: center;
-  margin-bottom: 0.5rem;
+  padding: $gutter-size-sm;
 
-  &:last-child {
-    margin-bottom: 0;
+  &:hover {
+    background-color: lighten($color-secondary, 10%);
   }
 
   .avatar {
