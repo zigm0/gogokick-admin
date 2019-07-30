@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext } from 'react-beautiful-dnd';
 import { connect, mapDispatchToProps } from 'utils';
 import { Row, Column } from 'components/bootstrap';
+import { Loading } from 'components';
 import * as editorActions from 'actions/editorActions';
 import Sidebar from 'editor/Sidebar';
 import Canvas from 'editor/Canvas';
@@ -18,18 +19,20 @@ const mapStateToProps = state => ({
 )
 export default class Editor extends React.PureComponent {
   static propTypes = {
-    editor:     PropTypes.object.isRequired,
-    editorInit: PropTypes.func.isRequired,
-    editorDrop: PropTypes.func.isRequired
+    editor:            PropTypes.object.isRequired,
+    editorInit:        PropTypes.func.isRequired,
+    editorDrop:        PropTypes.func.isRequired,
+    editorLoadProject: PropTypes.func.isRequired
   };
 
   /**
    *
    */
   componentDidMount() {
-    const { editorInit } = this.props;
+    const { editorInit, editorLoadProject } = this.props;
 
     editorInit({});
+    editorLoadProject(1);
   }
 
   /**
@@ -61,6 +64,9 @@ export default class Editor extends React.PureComponent {
             </Column>
           </Row>
         </DragDropContext>
+        {editor.isBusy && (
+          <Loading middle />
+        )}
       </div>
     );
   }

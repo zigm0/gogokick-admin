@@ -1,10 +1,10 @@
 /**
- * @param {number} eid
+ * @param {number} id
  * @returns {Promise<any> | Promise | Promise}
  */
-const fetchEmail = (eid) => {
+const fetchBlocks = (id) => {
   return new Promise((resolve, reject) => {
-    fetch(`/api/templates/emails/${eid}`, {
+    fetch(`/api/blocks/${id}`, {
       headers: {
         'Content-Type': 'application/json'
       },
@@ -22,5 +22,5 @@ const fetchEmail = (eid) => {
 };
 
 export default {
-  fetchEmail
+  fetchBlocks
 };

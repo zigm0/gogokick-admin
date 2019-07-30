@@ -1,5 +1,8 @@
-export const EDITOR_INIT = 'EDITOR_INIT';
-export const EDITOR_DROP = 'EDITOR_DROP';
+import { api } from 'utils';
+export const EDITOR_INIT         = 'EDITOR_INIT';
+export const EDITOR_BUSY         = 'EDITOR_BUSY';
+export const EDITOR_LOAD_PROJECT = 'EDITOR_LOAD_PROJECT';
+export const EDITOR_DROP         = 'EDITOR_DROP';
 
 /**
  * @param {*} payload
@@ -11,6 +14,41 @@ export const editorInit = (payload) => {
       type: EDITOR_INIT,
       payload
     });
+  };
+};
+
+/**
+ * @param {*} payload
+ * @returns {{payload: *, type: string}}
+ */
+export const editorBusy = (payload) => {
+  return {
+    type: EDITOR_BUSY,
+    payload
+  }
+};
+
+/**
+ * @param {number} payload
+ * @returns {Function}
+ */
+export const editorLoadProject = (payload) => {
+  return (dispatch) => {
+    dispatch(editorBusy(true));
+    dispatch({
+      type:    EDITOR_LOAD_PROJECT,
+      payload: []
+    });
+    api.fetchBlocks(payload)
+      .then((canvasBlocks) => {
+        dispatch({
+          type:    EDITOR_LOAD_PROJECT,
+          payload: canvasBlocks
+        });
+      })
+      .finally(() => {
+        dispatch(editorBusy(false));
+      });
   };
 };
 

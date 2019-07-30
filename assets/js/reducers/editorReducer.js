@@ -2,30 +2,10 @@ import { objects } from 'utils';
 import * as types from 'actions/editorActions';
 
 const initialState = {
-  init:         false,
-  mode:         'kickstarter',
-  canvasBlocks: [
-    {
-      id:   4,
-      type: 'text'
-    },
-    {
-      id:   5,
-      type: 'image'
-    },
-    {
-      id:   6,
-      type: 'video'
-    },
-    {
-      id:   7,
-      type: 'text'
-    },
-    {
-      id:   8,
-      type: 'text'
-    }
-  ],
+  init:          false,
+  isBusy:        false,
+  mode:          'kickstarter',
+  canvasBlocks:  [],
   sidebarBlocks: [
     {
       id:   1,
@@ -84,6 +64,20 @@ const onEditorInit = (state, action) => {
  * @param {*} action
  * @returns {*}
  */
+const onEditorBusy = (state, action) => {
+  const isBusy = action.payload;
+
+  return {
+    ...state,
+    isBusy
+  };
+};
+
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
 const onEditorDrop = (state, action) => {
   let { sidebarBlocks, canvasBlocks } = objects.clone(state);
   const { source, destination } = action.payload;
@@ -111,9 +105,25 @@ const onEditorDrop = (state, action) => {
   };
 };
 
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onEditorLoadProject = (state, action) => {
+  const canvasBlocks = Array.from(action.payload);
+
+  return {
+    ...state,
+    canvasBlocks
+  };
+};
+
 const handlers = {
-  [types.EDITOR_INIT]: onEditorInit,
-  [types.EDITOR_DROP]: onEditorDrop
+  [types.EDITOR_INIT]:         onEditorInit,
+  [types.EDITOR_BUSY]:         onEditorBusy,
+  [types.EDITOR_DROP]:         onEditorDrop,
+  [types.EDITOR_LOAD_PROJECT]: onEditorLoadProject
 };
 
 /**
