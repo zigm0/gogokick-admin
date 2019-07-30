@@ -29,7 +29,7 @@ export default class Canvas extends React.PureComponent {
       <div className="editor-header-user-menu">
         <div className="avatar-menu">
           <Icon name="angle-down" />
-          <Avatar src="https://app.blocksedit.com/avatars/default-avatar-240x240.png" sm />
+          <Avatar src="https://i.pravatar.cc/36?img=8" sm />
         </div>
         <div>Scott K.</div>
       </div>
