@@ -42,6 +42,9 @@ export default class Canvas extends React.PureComponent {
   renderHeader = () => {
     return (
       <div className="editor-header editor-header-canvas">
+        <div className="editor-header-project-name">
+          The Flappy Project
+        </div>
         <div className="editor-header editor-header-canvas-buttons">
           <Button icon="file" sm>
             Save
@@ -61,9 +64,6 @@ export default class Canvas extends React.PureComponent {
           <Button icon="question-circle" sm>
             Help
           </Button>
-        </div>
-        <div className="editor-header-project-name">
-          The Flappy Project
         </div>
         {this.renderUserMenu()}
       </div>
