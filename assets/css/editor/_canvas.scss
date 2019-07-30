@@ -15,7 +15,7 @@
 }
 
 .editor-canvas-block {
-  width: 680px;
+  width: 680px !important;
   user-select: none;
   background-color: #efefef;
   background-size: contain;
@@ -27,16 +27,16 @@
 }
 
 .editor-canvas-block-text {
-  height: 100px;
+  height: 100px !important;
   background-image: url(/images/block-placeholder-text.png);
 }
 
 .editor-canvas-block-image {
-  height: 400px;
+  height: 400px !important;
   background-image: url(/images/block-placeholder-image.png);
 }
 
 .editor-canvas-block-video {
-  height: 382px;
+  height: 382px !important;
   background-image: url(/images/block-placeholder-video.png);
 }

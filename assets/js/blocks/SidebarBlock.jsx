@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
 import { Icon } from 'components';
 
@@ -56,13 +57,17 @@ export default class SidebarBlock extends React.PureComponent {
     return (
       <Draggable key={type} draggableId={type} index={index}>
         {(provided, snapshot) => {
+          const classes = classNames(`editor-sidebar-block editor-sidebar-block-${type}`, {
+            'editor-sidebar-block-dragging': snapshot.isDragging
+          });
+
           return (
             <>
               <li
                 ref={provided.innerRef}
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
-                className={`editor-sidebar-block editor-sidebar-block-${type}`}
+                className={classes}
                 style={provided.draggableProps.style}
               >
                 <div>{this.getLabel(type)}</div>
