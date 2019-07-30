@@ -1,0 +1,89 @@
+@import "../vars";
+
+.editor-sidebar-col {
+  @include media-xl {
+    padding-right: 0;
+  }
+}
+
+.editor-sidebar {
+  color: #FFF;
+  background-color: $color-secondary;
+}
+
+.editor-sidebar-body {
+  padding: $gutter-size;
+}
+
+.editor-sidebar-title {
+  font-size: 1rem;
+  margin-bottom: $gutter-size;
+}
+
+.editor-sidebar-team {
+  margin-bottom: $gutter-size;
+}
+
+.editor-sidebar-team-member {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .avatar {
+    margin-right: 0.5rem;
+  }
+}
+
+.editor-sidebar-team-member-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-sidebar-team-btn {
+  color: #FFF;
+  opacity: 0.9;
+  font-size: 0.9rem;
+  padding: 0 0 0 0.25rem;
+
+  .icon {
+    margin-right: 0.5rem;
+  }
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: #FFF;
+    box-shadow: none;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.editor-sidebar-block {
+  cursor: pointer;
+  color: #FFF;
+  user-select: none;
+  border: 1px solid #000;
+  padding: $gutter-size-lg;
+  text-align: center;
+  margin-bottom: $gutter-size-sm;
+}
+
+.editor-sidebar-block-text {
+  background-color: $color-block-text;
+}
+
+.editor-sidebar-block-image {
+  background-color: $color-block-image;
+}
+
+.editor-sidebar-block-video {
+  background-color: $color-block-video;
+}
+

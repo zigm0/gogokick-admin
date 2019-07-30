@@ -1,0 +1,42 @@
+@import "../vars";
+
+.editor-canvas-col {
+  @include media-xl {
+    padding-left: 0;
+  }
+}
+
+.editor-canvas-body {
+  .container {
+    padding-top: $gutter-size;
+    border-right: 1px solid #ececec;
+    border-left: 1px solid #ececec;
+  }
+}
+
+.editor-canvas-block {
+  width: 680px;
+  user-select: none;
+  background-color: #efefef;
+  background-size: contain;
+  margin-bottom: $gutter-size-sm;
+
+  @include media-xs {
+    width: 100%;
+  }
+}
+
+.editor-canvas-block-text {
+  height: 100px;
+  background-image: url(/images/block-placeholder-text.png);
+}
+
+.editor-canvas-block-image {
+  height: 400px;
+  background-image: url(/images/block-placeholder-image.png);
+}
+
+.editor-canvas-block-video {
+  height: 382px;
+  background-image: url(/images/block-placeholder-video.png);
+}

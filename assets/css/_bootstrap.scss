@@ -1,0 +1,23 @@
+@import "vars";
+
+$enable-rounded: false;
+$theme-colors: (
+  "primary": $color-primary,
+  "secondary": $color-secondary,
+  "info": $color-info,
+  "success": $color-success,
+  "danger": $color-danger,
+  "warning": $color-warning
+);
+
+@import "~bootstrap/scss/bootstrap";
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1040px;
+  }
+}
+
+.btn .icon {
+  margin-right: 0.5rem;
+}

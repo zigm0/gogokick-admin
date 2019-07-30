@@ -1,0 +1,55 @@
+@import "../vars";
+
+.editor-header {
+  height: $header-height;
+  display: flex;
+  color: #FFF;
+  align-items: center;
+  background-color: $color-primary;
+  border-bottom: darken($color-primary, 10%);
+
+  .logo {
+    margin-right: 0.5rem;
+  }
+
+  .brand {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  .btn {
+    margin-right: 0.25rem;
+  }
+}
+
+.editor-header-sidebar {
+  padding-left: $gutter-size;
+}
+
+.editor-header-canvas {
+  display: flex;
+  justify-content: space-between;
+}
+
+.editor-header-canvas-buttons {
+  @include media-xs {
+    display: none;
+  }
+}
+
+.editor-header-user-menu {
+  display: flex;
+  color: #FFF;
+  align-items: center;
+  padding-left: $gutter-size;
+  padding-right: $gutter-size;
+
+  .avatar {
+    margin-right: 0.5rem;
+  }
+}
+
+.editor-header-project-name {
+  flex-grow: 2;
+  padding-left: 185px;
+}
