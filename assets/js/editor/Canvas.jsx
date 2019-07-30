@@ -5,6 +5,7 @@ import { connect, mapDispatchToProps } from 'utils';
 import { Container, Row, Column, Button } from 'components/bootstrap';
 import { Avatar, Icon } from 'components';
 import { CanvasBlock } from 'blocks';
+import * as editorActions from 'actions/editorActions';
 
 const mapStateToProps = state => ({
   editor: state.editor
@@ -12,11 +13,13 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps()
+  mapDispatchToProps(editorActions)
 )
 export default class Canvas extends React.PureComponent {
   static propTypes = {
-    editor: PropTypes.object.isRequired
+    editor:     PropTypes.object.isRequired,
+    editorUndo: PropTypes.func.isRequired,
+    editorRedo: PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -40,10 +43,13 @@ export default class Canvas extends React.PureComponent {
    * @returns {*}
    */
   renderHeader = () => {
+    const { editor, editorUndo, editorRedo } = this.props;
+    const { blockIndex, canvasBlocks } = editor;
+
     return (
       <div className="editor-header editor-header-canvas">
         <div className="editor-header-project-name">
-          The Flappy Project
+          The Flappy Project {editor.isChanged && '*'}
         </div>
         <div className="editor-header editor-header-canvas-buttons">
           <Button icon="file" sm>
@@ -55,10 +61,10 @@ export default class Canvas extends React.PureComponent {
           <Button icon="cog" sm>
             Settings
           </Button>
-          <Button icon="undo" sm>
+          <Button icon="undo" disabled={blockIndex === 0} onClick={editorUndo} sm>
             Undo
           </Button>
-          <Button icon="redo" sm>
+          <Button icon="redo" disabled={blockIndex === canvasBlocks.length - 1} onClick={editorRedo} sm>
             Redo
           </Button>
           <Button icon="question-circle" sm>
@@ -75,6 +81,7 @@ export default class Canvas extends React.PureComponent {
    */
   render() {
     const { editor } = this.props;
+    const { canvasBlocks, blockIndex } = editor;
 
     return (
       <div className="editor-canvas h-100">
@@ -86,7 +93,7 @@ export default class Canvas extends React.PureComponent {
                 <Droppable droppableId="canvasBlocks">
                   {(provided) => (
                     <ul className="editor-canvas-blocks" ref={provided.innerRef}>
-                      {editor.canvasBlocks.map((block, index) => (
+                      {canvasBlocks[blockIndex].map((block, index) => (
                         <CanvasBlock
                           key={block.id}
                           block={block}

@@ -4,8 +4,9 @@ import * as types from 'actions/editorActions';
 const initialState = {
   init:          false,
   isBusy:        false,
+  isChanged:     false,
   mode:          'kickstarter',
-  canvasBlocks:  [],
+  canvasBlocks:  [[]],
   sidebarBlocks: [
     {
       id:   1,
@@ -19,7 +20,8 @@ const initialState = {
       id:   3,
       type: 'video'
     }
-  ]
+  ],
+  blockIndex: 0
 };
 
 let idIndex = 9;
@@ -43,11 +45,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
 
   destClone.splice(droppableDestination.index, 0, sourceBlock);
 
-  const result = {};
-  result[droppableSource.droppableId] = sourceClone;
-  result[droppableDestination.droppableId] = destClone;
-
-  return result;
+  return destClone;
 };
 
 /**
@@ -57,6 +55,41 @@ const move = (source, destination, droppableSource, droppableDestination) => {
  */
 const onEditorInit = (state, action) => {
   return state;
+};
+
+/**
+ * @param {*} state
+ * @returns {*}
+ */
+const onEditorUndo = (state) => {
+  let { blockIndex } = state;
+
+  if (blockIndex > 0) {
+    blockIndex -= 1;
+  }
+
+  return {
+    ...state,
+    blockIndex
+  };
+};
+
+/**
+ * @param {*} state
+ * @returns {*}
+ */
+const onEditorRedo = (state) => {
+  const { canvasBlocks } = state;
+  let { blockIndex } = state;
+
+  if (blockIndex < canvasBlocks.length) {
+    blockIndex += 1;
+  }
+
+  return {
+    ...state,
+    blockIndex
+  };
 };
 
 /**
@@ -79,29 +112,34 @@ const onEditorBusy = (state, action) => {
  * @returns {*}
  */
 const onEditorDrop = (state, action) => {
-  let { sidebarBlocks, canvasBlocks } = objects.clone(state);
+  const { sidebarBlocks, canvasBlocks } = objects.clone(state);
+  let { blockIndex } = state;
   const { source, destination } = action.payload;
 
   if (destination && destination.droppableId !== 'sidebarBlocks') {
     if (source.droppableId === destination.droppableId) {
-      canvasBlocks = reorder(
-        canvasBlocks,
+      canvasBlocks[blockIndex + 1] = reorder(
+        canvasBlocks[blockIndex],
         source.index,
         destination.index
       );
     } else {
-      ({ canvasBlocks } = move(
+      canvasBlocks[blockIndex + 1] = move(
         sidebarBlocks,
-        canvasBlocks,
+        canvasBlocks[blockIndex],
         source,
         destination
-      ));
+      );
     }
+
+    blockIndex += 1;
   }
 
   return {
     ...state,
-    canvasBlocks
+    canvasBlocks,
+    blockIndex,
+    isChanged: true
   };
 };
 
@@ -111,11 +149,12 @@ const onEditorDrop = (state, action) => {
  * @returns {*}
  */
 const onEditorLoadProject = (state, action) => {
-  const canvasBlocks = Array.from(action.payload);
+  const canvasBlocks = [Array.from(action.payload)];
 
   return {
     ...state,
-    canvasBlocks
+    canvasBlocks,
+    isChanged: false
   };
 };
 
@@ -123,6 +162,8 @@ const handlers = {
   [types.EDITOR_INIT]:         onEditorInit,
   [types.EDITOR_BUSY]:         onEditorBusy,
   [types.EDITOR_DROP]:         onEditorDrop,
+  [types.EDITOR_UNDO]:         onEditorUndo,
+  [types.EDITOR_REDO]:         onEditorRedo,
   [types.EDITOR_LOAD_PROJECT]: onEditorLoadProject
 };
 

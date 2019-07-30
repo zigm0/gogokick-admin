@@ -41,6 +41,8 @@
 
 .editor-header-user-menu {
   display: flex;
+  justify-content: flex-end;
+  width: 33%;
   color: #FFF;
   align-items: center;
   padding-left: $gutter-size;
@@ -52,5 +54,5 @@
 }
 
 .editor-header-project-name {
-  flex-grow: 2;
+  width: 33%;
 }
