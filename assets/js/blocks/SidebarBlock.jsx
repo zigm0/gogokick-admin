@@ -28,7 +28,7 @@ export default class SidebarBlock extends React.PureComponent {
    */
   getIcon = (type) => {
     return  {
-      text:  'align-left',
+      text:  'align-center',
       image: 'image',
       video: 'video'
     }[type];
