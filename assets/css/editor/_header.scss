@@ -19,6 +19,7 @@
 
   .btn {
     margin-right: 0.25rem;
+    width: auto;
   }
 }
 
@@ -39,14 +40,42 @@
   }
 }
 
+.editor-header-menu {
+  width: 33%;
+  display: flex;
+  justify-content: flex-end;
+
+  .dropdown-menu {
+    background-color: $color-primary;
+    transform: translate3d(1px, 49px, 0px) !important;
+
+    a {
+      color: #FFF;
+
+      &:hover {
+        background-color: lighten($color-primary, 5%);
+      }
+    }
+
+    .icon {
+      margin-right: 0.5rem;
+    }
+  }
+}
+
 .editor-header-user-menu {
   display: flex;
   justify-content: flex-end;
-  width: 33%;
   color: #FFF;
+  opacity: 0.9;
   align-items: center;
   padding-left: $gutter-size;
   padding-right: $gutter-size;
+
+  &:hover {
+    color: #FFF;
+    opacity: 1;
+  }
 
   .avatar {
     margin-right: 0.5rem;

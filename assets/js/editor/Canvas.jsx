@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Droppable } from 'react-beautiful-dnd';
 import { connect, mapDispatchToProps } from 'utils';
 import { Container, Row, Column, Button } from 'components/bootstrap';
-import { Avatar, Icon } from 'components';
 import { CanvasBlock } from 'blocks';
+import UserMenu from './UserMenu';
 import * as editorActions from 'actions/editorActions';
 
 const mapStateToProps = state => ({
@@ -23,21 +23,6 @@ export default class Canvas extends React.PureComponent {
   };
 
   static defaultProps = {};
-
-  /**
-   * @returns {*}
-   */
-  renderUserMenu = () => {
-    return (
-      <div className="editor-header-user-menu">
-        <div className="avatar-menu">
-          <Icon name="angle-down" />
-          <Avatar src="https://i.pravatar.cc/36?img=8" sm />
-        </div>
-        <div>Scott K.</div>
-      </div>
-    );
-  };
 
   /**
    * @returns {*}
@@ -71,7 +56,7 @@ export default class Canvas extends React.PureComponent {
             Help
           </Button>
         </div>
-        {this.renderUserMenu()}
+        <UserMenu />
       </div>
     );
   };
