@@ -99,16 +99,16 @@ class BlocksController extends ApiController
     public function saveAction($id, Request $request, ProjectRepository $projectRepository)
     {
         $user = $this->getUser();
-/*        if (!$user) {
+        if (!$user) {
             throw $this->createAccessDeniedException();
-        }*/
-        $project = $projectRepository->findByID(2);
+        }
+        $project = $projectRepository->findByID($id);
         if (!$project) {
             throw $this->createNotFoundException();
         }
-/*        if ($project->getUser()->getId() !== $user->getId()) {
+        if ($project->getUser()->getId() !== $user->getId()) {
             throw $this->createAccessDeniedException();
-        }*/
+        }
 
         $blocks     = $request->json->get('blocks');
         $screenshot = $request->json->get('screenshot');
