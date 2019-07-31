@@ -20,6 +20,7 @@
   background-color: #efefef;
   background-size: contain;
   margin-bottom: $gutter-size-sm;
+  border-radius: $border-radius-blocks;
 
   @include media-xs {
     width: 100%;
