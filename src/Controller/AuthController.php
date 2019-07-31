@@ -34,8 +34,8 @@ class AuthController extends Controller
 
         return $this->render('auth/login.html.twig', [
             'lastUsername' => $lastUsername,
-            'error'         => $error,
-            'form'          => $form->createView(),
+            'error'        => $error,
+            'form'         => $form->createView(),
         ]);
     }
 

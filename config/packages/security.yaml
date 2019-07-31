@@ -6,7 +6,6 @@ security:
         user:
             entity:
                 class: App\Entity\User
-                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -15,6 +14,9 @@ security:
             anonymous: true
             provider: user
             user_checker: App\Security\UserChecker
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
             form_login:
                 login_path: login
                 check_path: login_check
