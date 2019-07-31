@@ -1,0 +1,30 @@
+@import "vars";
+
+.gutter {
+  padding: $gutter-size;
+}
+
+.gutter-sm {
+  padding: $gutter-size / 2;
+}
+
+.gutter-bottom {
+  padding-bottom: $gutter-size;
+}
+
+.gutter-top {
+  padding-top: $gutter-size;
+}
+
+.gutter-bottom-sm {
+  padding-bottom: $gutter-size / 2;
+}
+
+.gutter-top-sm {
+  padding-top: $gutter-size / 2;
+}
+
+.circle {
+  border-radius: 50%;
+  display: inline-block;
+}

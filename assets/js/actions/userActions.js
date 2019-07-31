@@ -70,6 +70,32 @@ export const userLogin = () => {
 /**
  * @returns {Function}
  */
+export const userRegister = () => {
+  return (dispatch, getState) => {
+    const { forms } = getState();
+
+    dispatch(userBusy(true));
+    dispatch(userError(''));
+    api.post(router.generate('api_user_register'), forms.register)
+      .then((payload) => {
+        if (payload._error) {
+          dispatch(userError(payload._error));
+        } else {
+          dispatch({
+            type: USER_ME,
+            payload
+          });
+        }
+      })
+      .finally(() => {
+        dispatch(userBusy(false));
+      });
+  };
+};
+
+/**
+ * @returns {Function}
+ */
 export const userLogout = () => {
   return (dispatch) => {
 

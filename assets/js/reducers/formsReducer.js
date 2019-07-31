@@ -21,6 +21,12 @@ const initialState = {
     password: '',
     ...commonForms
   },
+  register: {
+    name: '',
+    email: '',
+    password: '',
+    ...commonForms
+  },
   projectSettings: {
     name: '',
     ...commonForms

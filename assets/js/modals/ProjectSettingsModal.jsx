@@ -73,6 +73,7 @@ export default class ProjectSettingsModal extends React.PureComponent {
           type="text"
           label="Project Name"
           id="input-project-settings-name"
+          sm
         />
       </Form>
     );

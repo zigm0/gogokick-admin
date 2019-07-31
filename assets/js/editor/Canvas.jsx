@@ -8,7 +8,8 @@ import UserMenu from './UserMenu';
 import * as editorActions from 'actions/editorActions';
 
 const mapStateToProps = state => ({
-  editor: state.editor
+  editor: state.editor,
+  user:   state.user
 });
 
 @connect(
@@ -17,6 +18,7 @@ const mapStateToProps = state => ({
 )
 export default class Canvas extends React.PureComponent {
   static propTypes = {
+    user:              PropTypes.object.isRequired,
     editor:            PropTypes.object.isRequired,
     editorUndo:        PropTypes.func.isRequired,
     editorRedo:        PropTypes.func.isRequired,
@@ -46,10 +48,26 @@ export default class Canvas extends React.PureComponent {
   };
 
   /**
+   *
+   */
+  handleSaveClick = () => {
+    const { user, editorModal, editorSaveProject } = this.props;
+
+    if (!user.isAuthenticated) {
+      editorModal({
+        modal: 'register',
+        open:  true
+      });
+    } else {
+      editorSaveProject();
+    }
+  };
+
+  /**
    * @returns {*}
    */
   renderHeader = () => {
-    const { editor, editorUndo, editorRedo, editorSaveProject } = this.props;
+    const { editor, editorUndo, editorRedo } = this.props;
     const { blockIndex, canvasBlocks } = editor;
 
     return (
@@ -58,7 +76,7 @@ export default class Canvas extends React.PureComponent {
           {editor.projectName} {editor.isChanged && '*'}
         </div>
         <div className="editor-header editor-header-canvas-buttons">
-          <Button icon="file" disabled={editor.isSaving} onClick={editorSaveProject} sm>
+          <Button icon="file" disabled={editor.isSaving} onClick={this.handleSaveClick} sm>
             Save
           </Button>
           <Button icon="eye" sm>

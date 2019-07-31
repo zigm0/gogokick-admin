@@ -17,12 +17,13 @@ const mapStateToProps = state => ({
   mapStateToProps,
   mapDispatchToProps(userActions, editorActions, formActions)
 )
-export default class LoginModal extends React.PureComponent {
+export default class RegisterModal extends React.PureComponent {
   static propTypes = {
-    user:        PropTypes.object.isRequired,
-    modals:      PropTypes.object.isRequired,
-    userLogin:   PropTypes.func.isRequired,
-    editorModal: PropTypes.func.isRequired
+    user:         PropTypes.object.isRequired,
+    modals:       PropTypes.object.isRequired,
+    userLogin:    PropTypes.func.isRequired,
+    userRegister: PropTypes.func.isRequired,
+    editorModal:  PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -35,7 +36,7 @@ export default class LoginModal extends React.PureComponent {
 
     if (!prevProps.user.isAuthenticated && user.isAuthenticated) {
       editorModal({
-        modal: 'login',
+        modal: 'register',
         open:  false
       });
     }
@@ -48,26 +49,39 @@ export default class LoginModal extends React.PureComponent {
     const { editorModal } = this.props;
 
     editorModal({
-      modal: 'login',
+      modal: 'register',
       open:  false
     });
   };
 
   /**
-   *
+   * @param {Event} e
    */
-  handleLoginClick = () => {
+  handleLoginSubmit = (e) => {
     const { userLogin } = this.props;
+
+    e.preventDefault();
 
     userLogin();
   };
 
   /**
+   * @param {Event} e
+   */
+  handleRegisterSubmit = (e) => {
+    const { userRegister } = this.props;
+
+    e.preventDefault();
+
+    userRegister();
+  };
+
+  /**
    * @returns {*}
    */
-  renderForm = () => {
+  renderLoginForm = () => {
     return (
-      <Form name="login">
+      <Form name="login" className="gutter-bottom" onSubmit={this.handleLoginSubmit}>
         <Input
           name="email"
           type="text"
@@ -82,6 +96,46 @@ export default class LoginModal extends React.PureComponent {
           id="input-login-password"
           sm
         />
+        <div className="text-right">
+          <Button type="submit" sm>Login</Button>
+        </div>
+      </Form>
+    );
+  };
+
+  /**
+   * @returns {*}
+   */
+  renderRegistrationForm = () => {
+    return (
+      <Form name="register" onSubmit={this.handleRegisterSubmit}>
+        <div className="gutter-bottom-sm">
+          Don't have an account yet?
+        </div>
+        <Input
+          name="name"
+          type="text"
+          label="Name"
+          id="input-register-name"
+          sm
+        />
+        <Input
+          name="email"
+          type="text"
+          label="Email"
+          id="input-register-email"
+          sm
+        />
+        <Input
+          name="password"
+          type="password"
+          label="Password"
+          id="input-register-password"
+          sm
+        />
+        <div className="text-right">
+          <Button type="submit" sm>Register</Button>
+        </div>
       </Form>
     );
   };
@@ -93,7 +147,7 @@ export default class LoginModal extends React.PureComponent {
     const { user, modals } = this.props;
 
     return (
-      <Modal open={modals.login} onClosed={this.handleClosed}>
+      <Modal open={modals.register} onClosed={this.handleClosed}>
         <ModalHeader>
           <Icon name="sign-in-alt" />
           Login
@@ -104,16 +158,9 @@ export default class LoginModal extends React.PureComponent {
               {user.error}
             </div>
           )}
-          {this.renderForm()}
+          {this.renderLoginForm()}
+          {this.renderRegistrationForm()}
         </ModalBody>
-        <ModalFooter>
-          <Button onClick={this.handleLoginClick} sm>
-            Login
-          </Button>
-          <Button onClick={this.handleClosed} sm>
-            Cancel
-          </Button>
-        </ModalFooter>
       </Modal>
     );
   }
