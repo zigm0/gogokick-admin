@@ -3,6 +3,7 @@
 .editor-header {
   height: $header-height;
   display: flex;
+  justify-content: space-between;
   color: #FFF;
   align-items: center;
   background-color: $color-primary;
@@ -23,26 +24,23 @@
   }
 }
 
-.editor-header-sidebar {
+.editor-header-left {
+  flex-grow: 1;
+  width: 16%;
   padding-left: $gutter-size;
+  display: flex;
 }
 
-.editor-header-canvas {
+.editor-header-middle {
+  flex-grow: 2;
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 
-.editor-header-canvas-buttons {
-  flex-grow: 2;
-  justify-content: center;
-
-  @include media-xs {
-    display: none;
-  }
-}
-
-.editor-header-menu {
-  width: 20%;
+.editor-header-right {
+  flex-grow: 1;
+  width: 16%;
   display: flex;
   justify-content: flex-end;
 
@@ -91,3 +89,4 @@
 .editor-header-project-name {
   width: 20%;
 }
+

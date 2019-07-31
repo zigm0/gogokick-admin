@@ -88,10 +88,6 @@ export default class Sidebar extends React.PureComponent {
   render() {
     return (
       <div className="editor-sidebar h-100">
-        <div className="editor-header editor-header-sidebar">
-          <Icon name="dice-d20" className="logo" size={2} />
-          <h1 className="brand">DragStarter</h1>
-        </div>
         <div className="editor-sidebar-body">
           {this.renderBlocks()}
           {this.renderTeam()}

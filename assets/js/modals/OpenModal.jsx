@@ -61,7 +61,7 @@ export default class OpenModal extends React.PureComponent {
     return (
       <Row>
         {projects.map(project => (
-          <Column xl={3}>
+          <Column key={project.id} xl={3}>
             <Card className="card-project">
               <CardBody>
                 <div className="card-project-thumb" style={{ backgroundImage: `url(${project.screenshot})`}} />

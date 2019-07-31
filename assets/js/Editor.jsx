@@ -10,6 +10,7 @@ import * as editorActions from 'actions/editorActions';
 import * as userActions from 'actions/userActions';
 import Sidebar from 'editor/Sidebar';
 import Canvas from 'editor/Canvas';
+import Header from 'editor/Header';
 
 const mapStateToProps = state => ({
   editor: state.editor,
@@ -60,6 +61,7 @@ export default class Editor extends React.PureComponent {
     return (
       <div className={classes}>
         <DragDropContext onDragEnd={this.handleDragEnd}>
+          <Header />
           <Row className="h-100">
             <Column className="editor-sidebar-col" xl={2} md={12}>
               <Sidebar />
