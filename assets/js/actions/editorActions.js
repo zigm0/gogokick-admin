@@ -102,7 +102,7 @@ export const editorSaveProject = () => {
     });
 
     const payload = {
-      blocks: editor.canvasBlocks
+      blocks: editor.canvasBlocks[editor.blockIndex]
     };
 
     api.post(router.generate('api_blocks_save', { id: editor.projectId }), payload)

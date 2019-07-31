@@ -1,17 +1,22 @@
 <?php
 namespace App\Controller\Api;
 
+use App\Http\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/api/blocks", name="api_blocks_", options={"expose"=true})
+ * @Route("/api/blocks", name="api_blocks", options={"expose"=true})
  */
 class BlocksController
 {
     /**
-     * @Route("/{id}", name="open", methods={"GET"})
+     * @Route("/{id}", name="_open", methods={"GET"})
+     *
+     * @param int $id
+     * @param Request $request
+     *
+     * @return JsonResponse
      */
     public function openAction($id, Request $request)
     {
@@ -25,11 +30,18 @@ class BlocksController
     }
 
     /**
-     * @Route("/{id}", name="save", methods={"POST"})
+     * @Route("/{id}", name="_save", methods={"POST"})
+     *
+     * @param int $id
+     * @param Request $request
+     *
+     * @return JsonResponse
      */
     public function saveAction($id, Request $request)
     {
+        $blocks = $request->json->get('blocks');
+
         sleep(1);
-        return new JsonResponse('ok');
+        return new JsonResponse($blocks);
     }
 }

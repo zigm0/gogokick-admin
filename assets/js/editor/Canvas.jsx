@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Droppable } from 'react-beautiful-dnd';
-import { connect, mapDispatchToProps } from 'utils';
+import { connect, router, mapDispatchToProps } from 'utils';
 import { Container, Row, Column, Button } from 'components/bootstrap';
 import { CanvasBlock } from 'blocks';
 import UserMenu from './UserMenu';
@@ -24,6 +24,13 @@ export default class Canvas extends React.PureComponent {
   };
 
   static defaultProps = {};
+
+  /**
+   *
+   */
+  handleHelpClick = () => {
+    window.open(router.generate('help_index'));
+  };
 
   /**
    * @returns {*}
@@ -53,7 +60,7 @@ export default class Canvas extends React.PureComponent {
           <Button icon="redo" disabled={blockIndex === canvasBlocks.length - 1} onClick={editorRedo} sm>
             Redo
           </Button>
-          <Button icon="question-circle" sm>
+          <Button icon="question-circle" onClick={this.handleHelpClick} sm>
             Help
           </Button>
         </div>
