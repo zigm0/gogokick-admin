@@ -74,7 +74,7 @@ export const editorRedo = (payload) => {
  */
 export const editorFetchProjects = () => {
   return (dispatch) => {
-    api.get(router.generate('api_blocks_projects'))
+    api.get(router.generate('api_projects_get'))
       .then((payload) => {
         dispatch({
           type: EDITOR_PROJECTS,
@@ -91,7 +91,7 @@ export const editorFetchProjects = () => {
 export const editorOpenProject = (projectId) => {
   return (dispatch) => {
     dispatch(editorBusy(true));
-    api.get(router.generate('api_blocks_open', { id: projectId }))
+    api.get(router.generate('api_projects_open', { id: projectId }))
       .then((payload) => {
         dispatch({
           type: EDITOR_OPEN_PROJECT,
@@ -127,7 +127,7 @@ export const editorSaveProject = () => {
         blocks: editor.canvasBlocks[editor.blockIndex]
       };
 
-      api.post(router.generate('api_blocks_save', { id: editor.projectId }), payload)
+      api.post(router.generate('api_projects_save', { id: editor.projectId }), payload)
         .then((payload) => {
           dispatch({
             type: EDITOR_PROJECTS,

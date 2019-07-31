@@ -1,27 +1,25 @@
 <?php
 namespace App\Controller\Api;
 
-use App\Entity\Block;
-use App\Entity\Project;
 use App\Http\Request;
 use App\Repository\ProjectRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/api/blocks", name="api_blocks", options={"expose"=true})
+ * @Route("/api/projects", name="api_projects", options={"expose"=true})
  */
-class BlocksController extends ApiController
+class ProjectsController extends ApiController
 {
     /**
-     * @Route("/projects", name="_projects", methods={"GET"})
+     * @Route("/projects", name="_get", methods={"GET"})
      *
      * @param Request $request
      * @param ProjectRepository $projectRepository
      *
      * @return JsonResponse
      */
-    public function projectsAction(Request $request, ProjectRepository $projectRepository)
+    public function getAction(Request $request, ProjectRepository $projectRepository)
     {
         $projects = $projectRepository->findAll();
 
