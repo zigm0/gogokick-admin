@@ -14,6 +14,12 @@
   }
 }
 
+.editor-canvas-body-col {
+  padding-left: 0;
+  padding-right: 0;
+  max-width: 680px;
+}
+
 .editor-canvas-block {
   width: $width-block !important;
   user-select: none;

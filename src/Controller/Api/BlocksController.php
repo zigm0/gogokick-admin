@@ -14,6 +14,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class BlocksController extends ApiController
 {
     /**
+     * @Route("/projects", name="_projects", methods={"GET"})
+     *
+     * @param Request $request
+     * @param ProjectRepository $projectRepository
+     *
+     * @return JsonResponse
+     */
+    public function projectsAction(Request $request, ProjectRepository $projectRepository)
+    {
+        $projects = $projectRepository->findAll();
+
+        return $this->jsonEntityResponse($projects);
+    }
+
+    /**
      * @Route("/{id}", name="_open", methods={"GET"})
      *
      * @param int $id
@@ -106,6 +121,8 @@ class BlocksController extends ApiController
 
         $this->em->flush();
 
-        return new JsonResponse($blocks);
+        $projects = $projectRepository->findAll();
+
+        return $this->jsonEntityResponse($projects);
     }
 }

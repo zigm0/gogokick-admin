@@ -9,6 +9,7 @@ const initialState = {
   projectId:     0,
   projectName:   '',
   mode:          'kickstarter',
+  projects:      [],
   canvasBlocks:  [[]],
   sidebarBlocks: [
     {
@@ -231,6 +232,20 @@ const onEditorModal = (state, action) => {
   };
 };
 
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onEditorProjects = (state, action) => {
+  const projects = Array.from(action.payload);
+
+  return {
+    ...state,
+    projects
+  };
+};
+
 const handlers = {
   [types.EDITOR_INIT]:         onEditorInit,
   [types.EDITOR_BUSY]:         onEditorBusy,
@@ -238,6 +253,7 @@ const handlers = {
   [types.EDITOR_UNDO]:         onEditorUndo,
   [types.EDITOR_REDO]:         onEditorRedo,
   [types.EDITOR_MODAL]:        onEditorModal,
+  [types.EDITOR_PROJECTS]:     onEditorProjects,
   [types.EDITOR_SAVING]:       onEditorSaving,
   [types.EDITOR_CHANGED]:      onEditorChanged,
   [types.EDITOR_OPEN_PROJECT]: onEditorOpenProject

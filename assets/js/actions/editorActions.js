@@ -5,6 +5,7 @@ export const EDITOR_INIT         = 'EDITOR_INIT';
 export const EDITOR_BUSY         = 'EDITOR_BUSY';
 export const EDITOR_CHANGED      = 'EDITOR_CHANGED';
 export const EDITOR_SAVING       = 'EDITOR_SAVING';
+export const EDITOR_PROJECTS     = 'EDITOR_PROJECTS';
 export const EDITOR_UNDO         = 'EDITOR_UNDO';
 export const EDITOR_REDO         = 'EDITOR_REDO';
 export const EDITOR_OPEN_PROJECT = 'EDITOR_OPEN_PROJECT';
@@ -69,6 +70,25 @@ export const editorRedo = (payload) => {
 };
 
 /**
+ * @returns {Function}
+ */
+export const editorFetchProjects = () => {
+  return (dispatch) => {
+    dispatch(editorBusy(true));
+    api.get(router.generate('api_blocks_projects'))
+      .then((payload) => {
+        dispatch({
+          type: EDITOR_PROJECTS,
+          payload
+        });
+      })
+      .finally(() => {
+        dispatch(editorBusy(false));
+      });
+  };
+};
+
+/**
  * @param {number} projectId
  * @returns {Function}
  */
@@ -103,7 +123,7 @@ export const editorSaveProject = () => {
       payload: true
     });
 
-    html2canvas(document.querySelector('.editor-canvas-body')).then((canvas) => {
+    html2canvas(document.querySelector('.editor-canvas-blocks')).then((canvas) => {
       const screenshot = canvas.toDataURL();
 
       const payload = {
@@ -112,7 +132,11 @@ export const editorSaveProject = () => {
       };
 
       api.post(router.generate('api_blocks_save', { id: editor.projectId }), payload)
-        .then(() => {
+        .then((payload) => {
+          dispatch({
+            type: EDITOR_PROJECTS,
+            payload
+          });
           dispatch(editorChanged(false));
         })
         .finally(() => {

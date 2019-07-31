@@ -36,6 +36,18 @@ export default class Canvas extends React.PureComponent {
   };
 
   /**
+   *
+   */
+  handleOpenClick = () => {
+    const { editorModal } = this.props;
+
+    editorModal({
+      modal: 'open',
+      open:  true
+    });
+  };
+
+  /**
    * @param {Event} e
    */
   handleSettingsClick = (e) => {
@@ -76,6 +88,9 @@ export default class Canvas extends React.PureComponent {
           {editor.projectName} {editor.isChanged && '*'}
         </div>
         <div className="editor-header editor-header-canvas-buttons">
+          <Button icon="folder-open" onClick={this.handleOpenClick} sm>
+            Open
+          </Button>
           <Button icon="file" disabled={editor.isSaving} onClick={this.handleSaveClick} sm>
             Save
           </Button>
@@ -113,7 +128,7 @@ export default class Canvas extends React.PureComponent {
         <div className="editor-canvas-body h-100">
           <Container className="h-100">
             <Row>
-              <Column xl={8} offsetXl={2}>
+              <Column className="editor-canvas-body-col" xl={8} offsetXl={2}>
                 <Droppable droppableId="canvasBlocks">
                   {(provided) => (
                     <ul className="editor-canvas-blocks" ref={provided.innerRef}>

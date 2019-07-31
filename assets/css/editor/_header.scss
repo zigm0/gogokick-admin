@@ -34,6 +34,7 @@
 
 .editor-header-canvas-buttons {
   flex-grow: 2;
+  justify-content: center;
 
   @include media-xs {
     display: none;
@@ -41,7 +42,7 @@
 }
 
 .editor-header-menu {
-  width: 33%;
+  width: 20%;
   display: flex;
   justify-content: flex-end;
 
@@ -88,5 +89,5 @@
 }
 
 .editor-header-project-name {
-  width: 33%;
+  width: 20%;
 }
