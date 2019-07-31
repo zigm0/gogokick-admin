@@ -106,12 +106,13 @@ class ProjectsController extends ApiController
             throw $this->createAccessDeniedException();
         }
 
+        $name       = $request->json->get('name');
         $blocks     = $request->json->get('blocks', []);
         $screenshot = $request->json->get('screenshot');
         if (!is_array($blocks)) {
             throw new BadRequestHttpException();
         }
-        if (!$screenshot) {
+        if (!$screenshot || !$name) {
             throw new BadRequestHttpException();
         }
 
@@ -135,9 +136,61 @@ class ProjectsController extends ApiController
             }
         }
 
+        $project->setName($name);
         $project->setBlocks($updatedBlocks);
         $project->setScreenshot($screenshot);
 
+        $this->em->flush();
+
+        $projects = $projectRepository->findAll();
+
+        return $this->jsonEntityResponse($projects);
+    }
+
+    /**
+     * @Route(name="_save_new", methods={"PUT"})
+     *
+     * @param Request           $request
+     * @param ProjectRepository $projectRepository
+     * @param BlockRepository   $blockRepository
+     *
+     * @return JsonResponse
+     */
+    public function saveNewAction(Request $request, ProjectRepository $projectRepository, BlockRepository $blockRepository)
+    {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $name       = $request->json->get('name');
+        $blocks     = $request->json->get('blocks', []);
+        $screenshot = $request->json->get('screenshot');
+        if (!is_array($blocks)) {
+            throw new BadRequestHttpException();
+        }
+        if (!$screenshot || !$name) {
+            throw new BadRequestHttpException();
+        }
+
+        $project = (new Project())
+            ->setUser($user)
+            ->setName($name)
+            ->setScreenshot($screenshot);
+        $this->em->persist($project);
+
+        $sortOrder     = 0;
+        $newBlocks = new ArrayCollection();
+        foreach($blocks as $block) {
+            $block = (new Block())
+                ->setType(Block::TYPES[$block['type']])
+                ->setProject($project)
+                ->setSortOrder($sortOrder++);
+            $this->em->persist($block);
+            $newBlocks->add($block);
+        }
+
+        $project->setBlocks($newBlocks);
         $this->em->flush();
 
         $projects = $projectRepository->findAll();

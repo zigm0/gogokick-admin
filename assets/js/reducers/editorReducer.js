@@ -244,7 +244,7 @@ const onEditorNewProject = (state, action) => {
     canvasBlocks,
     projectId:  0,
     blockIndex: 0,
-    isChanged:  false
+    isChanged:  true
   };
 };
 

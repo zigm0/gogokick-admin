@@ -59,7 +59,28 @@ const post = (url, body = {}) => {
   });
 };
 
+/**
+ * @param {string} method
+ * @param {string} url
+ * @param {*} body
+ * @returns {Promise<any> | Promise | Promise}
+ */
+const req = (method, url, body = {}) => {
+  return new Promise((resolve, reject) => {
+    fetch(url, headers(method.toUpperCase(), body))
+      .then((resp) => {
+        if (!resp.ok) {
+          throw new Error(resp.statusText);
+        }
+        return resp.json();
+      })
+      .then(resolve)
+      .catch(reject);
+  });
+};
+
 export default {
   get,
+  req,
   post
 };

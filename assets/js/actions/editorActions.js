@@ -136,12 +136,24 @@ export const editorSaveProject = () => {
     html2canvas(document.querySelector('.editor-canvas-blocks')).then((canvas) => {
       const screenshot = canvas.toDataURL();
 
-      const payload = {
+      const body = {
         screenshot,
+        name:   editor.projectName,
         blocks: editor.canvasBlocks[editor.blockIndex]
       };
 
-      api.post(router.generate('api_projects_save', { id: editor.projectId }), payload)
+      let promise = null;
+      if (editor.projectId === 0) {
+        const url = router.generate('api_projects_save_new');
+        promise = api.req('PUT', url, body);
+      } else {
+        const url = router.generate('api_projects_save', {
+          id: editor.projectId
+        });
+        promise = api.req('POST', url, body);
+      }
+
+      promise
         .then((payload) => {
           dispatch({
             type: EDITOR_PROJECTS,
