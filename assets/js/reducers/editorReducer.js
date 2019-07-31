@@ -27,10 +27,11 @@ const initialState = {
   ],
   blockIndex: 0,
   modals:     {
-    login:    false,
-    settings: false,
-    register: false,
-    member:   false
+    login:      false,
+    settings:   false,
+    register:   false,
+    member:     false,
+    newProject: false
   }
 };
 

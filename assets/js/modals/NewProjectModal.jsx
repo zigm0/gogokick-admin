@@ -8,18 +8,16 @@ import * as editorActions from 'actions/editorActions';
 import * as formActions from 'actions/formActions';
 
 const mapStateToProps = state => ({
-  modals:   state.editor.modals,
-  projects: state.editor.projects
+  modals: state.editor.modals
 });
 
 @connect(
   mapStateToProps,
   mapDispatchToProps(editorActions, formActions)
 )
-export default class OpenModal extends React.PureComponent {
+export default class NewProjectModal extends React.PureComponent {
   static propTypes = {
     modals:              PropTypes.object.isRequired,
-    projects:            PropTypes.array.isRequired,
     editorModal:         PropTypes.func.isRequired,
     editorOpenProject:   PropTypes.func.isRequired,
     editorFetchProjects: PropTypes.func.isRequired
@@ -34,23 +32,14 @@ export default class OpenModal extends React.PureComponent {
   /**
    *
    */
-  componentDidMount() {
-    const { editorFetchProjects } = this.props;
-
-    editorFetchProjects();
-  }
-
-  /**
-   *
-   */
   handleSelectClick = () => {
     const { editorModal, editorOpenProject } = this.props;
     const { selected } = this.state;
 
     this.setState({ selected: 0 });
-    editorOpenProject(selected);
+    // editorOpenProject(selected);
     editorModal({
-      modal: 'open',
+      modal: 'newProject',
       open:  false
     });
   };
@@ -82,12 +71,20 @@ export default class OpenModal extends React.PureComponent {
    * @returns {*}
    */
   renderProjects = () => {
-    const { projects } = this.props;
     const { selected } = this.state;
+
+    const templates = [
+      {
+        id:         666,
+        name:       'Blank',
+        blocks:     [],
+        screenshot: ''
+      }
+    ];
 
     return (
       <Row>
-        {projects.map(project => (
+        {templates.map(project => (
           <Column key={project.id} xl={3}>
             <Card
               className={classNames('card-project', { 'card-selected': selected === project.id })}
@@ -120,9 +117,9 @@ export default class OpenModal extends React.PureComponent {
 
     return (
       <Modal
-        name="open"
-        title="Open"
-        icon="folder-open"
+        name="newProject"
+        title="New"
+        icon="file-alt"
         buttons={buttons}
         onBodyClick={this.handleBodyClick}
         lg

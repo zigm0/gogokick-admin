@@ -37,6 +37,18 @@ export default class Header extends React.PureComponent {
   /**
    *
    */
+  handleNewClick = () => {
+    const { editorModal } = this.props;
+
+    editorModal({
+      modal: 'newProject',
+      open:  true
+    });
+  };
+
+  /**
+   *
+   */
   handleOpenClick = () => {
     const { editorModal } = this.props;
 
@@ -92,7 +104,7 @@ export default class Header extends React.PureComponent {
         </div>
         <div className="editor-header-middle">
           <div className="editor-header-buttons d-none d-lg-block d-xl-block">
-            <Button icon="file-alt" sm>
+            <Button icon="file-alt" onClick={this.handleNewClick} sm>
               New
             </Button>
             <Button icon="folder-open" onClick={this.handleOpenClick} sm>
