@@ -38,8 +38,8 @@ class BlocksController extends ApiController
 
         return $this->jsonEntityResponse($project);*/
 
-/*        $project = (new Project())
-            ->setUser($user)
+        $project = (new Project())
+            ->setUser($user = $this->getUser())
             ->setName('The Flappy Project');
         $this->em->persist($project);
 
@@ -57,9 +57,9 @@ class BlocksController extends ApiController
             $this->em->persist($block);
         }
 
-        $this->em->flush();*/
+        $this->em->flush();
 
-
+/*
         return new JsonResponse([
             'name'   => 'The Flappy Project',
             'blocks' => [
@@ -69,7 +69,7 @@ class BlocksController extends ApiController
                 ['id' => 7, 'type' => 'text'],
                 ['id' => 8, 'type' => 'text']
             ]
-        ]);
+        ]);*/
     }
 
     /**
