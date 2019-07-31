@@ -47,9 +47,9 @@ class BlocksController extends ApiController
         if (!$project) {
             throw $this->createNotFoundException();
         }
-        if ($project->getUser()->getId() !== $user->getId()) {
+/*        if ($project->getUser()->getId() !== $user->getId()) {
             // throw $this->createAccessDeniedException();
-        }
+        }*/
 
         return $this->jsonEntityResponse($project);
 
