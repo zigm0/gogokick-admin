@@ -186,7 +186,22 @@ const onEditorDrop = (state, action) => {
  * @returns {*}
  */
 const onEditorOpenProject = (state, action) => {
-  const canvasBlocks  = [Array.from(action.payload.blocks)];
+  const blocks = Array.from(action.payload.blocks);
+  blocks.forEach((block) => {
+    switch(block.type) {
+      case 1:
+        block.type = 'text';
+        break;
+      case 2:
+        block.type = 'image';
+        break;
+      case 3:
+        block.type = 'video';
+        break;
+    }
+  });
+
+  const canvasBlocks  = [blocks];
   const projectName   = action.payload.name;
   const { projectId } = action.meta;
 

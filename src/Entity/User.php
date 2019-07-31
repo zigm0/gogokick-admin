@@ -2,6 +2,8 @@
 namespace App\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Exception;
 use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
@@ -68,6 +70,12 @@ class User implements UserInterface
     protected $isEnabled;
 
     /**
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="Project", mappedBy="user")
+     */
+    protected $projects;
+
+    /**
      * @var DateTime
      * @ORM\Column(type="datetime")
      */
@@ -86,6 +94,7 @@ class User implements UserInterface
     {
         try {
             $this->roles         = [];
+            $this->projects      = new ArrayCollection();
             $this->dateCreated   = new DateTime();
             $this->dateLastLogin = new DateTime();
         } catch (Exception $e) {

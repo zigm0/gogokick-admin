@@ -1,3 +1,4 @@
+import html2canvas from 'html2canvas';
 import { api, router } from 'utils';
 
 export const EDITOR_INIT         = 'EDITOR_INIT';
@@ -102,20 +103,25 @@ export const editorSaveProject = () => {
       payload: true
     });
 
-    const payload = {
-      blocks: editor.canvasBlocks[editor.blockIndex]
-    };
+    html2canvas(document.querySelector('.editor-canvas-body')).then((canvas) => {
+      const screenshot = canvas.toDataURL();
 
-    api.post(router.generate('api_blocks_save', { id: editor.projectId }), payload)
-      .then(() => {
-        dispatch(editorChanged(false));
-      })
-      .finally(() => {
-        dispatch({
-          type:    EDITOR_SAVING,
-          payload: false
+      const payload = {
+        screenshot,
+        blocks: editor.canvasBlocks[editor.blockIndex]
+      };
+
+      api.post(router.generate('api_blocks_save', { id: editor.projectId }), payload)
+        .then(() => {
+          dispatch(editorChanged(false));
+        })
+        .finally(() => {
+          dispatch({
+            type:    EDITOR_SAVING,
+            payload: false
+          });
         });
-      });
+    });
   };
 };
 
