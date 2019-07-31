@@ -1,7 +1,6 @@
 import html2canvas from 'html2canvas';
 import { api, router } from 'utils';
 
-export const EDITOR_INIT         = 'EDITOR_INIT';
 export const EDITOR_BUSY         = 'EDITOR_BUSY';
 export const EDITOR_CHANGED      = 'EDITOR_CHANGED';
 export const EDITOR_SAVING       = 'EDITOR_SAVING';
@@ -13,19 +12,6 @@ export const EDITOR_NEW_PROJECT  = 'EDITOR_NEW_PROJECT';
 export const EDITOR_OPEN_PROJECT = 'EDITOR_OPEN_PROJECT';
 export const EDITOR_DROP         = 'EDITOR_DROP';
 export const EDITOR_MODAL        = 'EDITOR_MODAL';
-
-/**
- * @param {*} payload
- * @returns {Function}
- */
-export const editorInit = (payload) => {
-  return (dispatch) => {
-    dispatch({
-      type: EDITOR_INIT,
-      payload
-    });
-  };
-};
 
 /**
  * @param {*} payload

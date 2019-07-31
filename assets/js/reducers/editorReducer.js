@@ -52,21 +52,12 @@ const move = (source, destination, droppableSource, droppableDestination) => {
   const sourceBlock = objects.clone(source[droppableSource.index]);
   sourceClone.splice(droppableSource.index, 1);
 
-  sourceBlock.id = idIndex;
+  sourceBlock.id = `n-${idIndex}`;
   idIndex +=1 ;
 
   destClone.splice(droppableDestination.index, 0, sourceBlock);
 
   return destClone;
-};
-
-/**
- * @param {*} state
- * @param {*} action
- * @returns {*}
- */
-const onEditorInit = (state, action) => {
-  return state;
 };
 
 /**
@@ -191,6 +182,10 @@ const onEditorDrop = (state, action) => {
  */
 const onEditorOpenProject = (state, action) => {
   const blocks = Array.from(action.payload.blocks);
+
+  blocks.sort((a, b) => {
+    return (a.sortOrder > b.sortOrder) ? 1 : -1;
+  });
   blocks.forEach((block) => {
     switch(block.type) {
       case 1:
@@ -299,7 +294,6 @@ const onEditorTemplates = (state, action) => {
 };
 
 const handlers = {
-  [types.EDITOR_INIT]:         onEditorInit,
   [types.EDITOR_BUSY]:         onEditorBusy,
   [types.EDITOR_DROP]:         onEditorDrop,
   [types.EDITOR_UNDO]:         onEditorUndo,

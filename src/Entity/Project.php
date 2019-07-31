@@ -52,6 +52,12 @@ class Project
     protected $blocks;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $isTemplate = false;
+
+    /**
      * @var DateTime
      * @ORM\Column(type="datetime")
      * @Groups({"web"})
@@ -160,6 +166,26 @@ class Project
     public function setBlocks(Collection $blocks): Project
     {
         $this->blocks = $blocks;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTemplate(): bool
+    {
+        return $this->isTemplate;
+    }
+
+    /**
+     * @param bool $isTemplate
+     *
+     * @return Project
+     */
+    public function setIsTemplate(bool $isTemplate): Project
+    {
+        $this->isTemplate = $isTemplate;
 
         return $this;
     }

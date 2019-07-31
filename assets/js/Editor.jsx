@@ -25,7 +25,6 @@ export default class Editor extends React.PureComponent {
   static propTypes = {
     editor:            PropTypes.object.isRequired,
     userMe:            PropTypes.func.isRequired,
-    editorInit:        PropTypes.func.isRequired,
     editorDrop:        PropTypes.func.isRequired,
     editorOpenProject: PropTypes.func.isRequired
   };
@@ -34,10 +33,9 @@ export default class Editor extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { userMe, editorInit, editorOpenProject } = this.props;
+    const { userMe, editorOpenProject } = this.props;
 
     userMe();
-    editorInit({});
     editorOpenProject(1);
   }
 

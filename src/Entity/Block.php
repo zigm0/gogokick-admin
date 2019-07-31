@@ -2,7 +2,6 @@
 namespace App\Entity;
 
 use DateTime;
-use Doctrine\Common\Collections\Collection;
 use Exception;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -17,9 +16,9 @@ class Block
     const TYPE_IMAGE = 2;
     const TYPE_VIDEO = 3;
     const TYPES      = [
-        self::TYPE_TEXT,
-        self::TYPE_IMAGE,
-        self::TYPE_VIDEO
+        'text'  => self::TYPE_TEXT,
+        'image' => self::TYPE_IMAGE,
+        'video' => self::TYPE_VIDEO
     ];
 
     /**
@@ -44,6 +43,13 @@ class Block
      * @Groups({"web"})
      */
     protected $type;
+
+    /**
+     * @var int
+     * @ORM\Column(type="smallint", options={"unsigned"=true})
+     * @Groups({"web"})
+     */
+    protected $sortOrder;
 
     /**
      * @var DateTime
@@ -113,6 +119,26 @@ class Block
     public function setType(int $type): Block
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSortOrder(): ?int
+    {
+        return $this->sortOrder;
+    }
+
+    /**
+     * @param int $sortOrder
+     *
+     * @return Block
+     */
+    public function setSortOrder(int $sortOrder): Block
+    {
+        $this->sortOrder = $sortOrder;
 
         return $this;
     }
