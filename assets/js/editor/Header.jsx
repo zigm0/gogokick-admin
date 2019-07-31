@@ -118,11 +118,17 @@ export default class Header extends React.PureComponent {
             </Button>
           </div>
           <div className="editor-header-mobile-buttons d-lg-none">
-            <button className="navbar-toggler toggler-example" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent8" aria-controls="navbarSupportedContent8" aria-expanded="false"
-                    aria-label="Toggle navigation">
-              <span className="dark-teal-text">
-                <i className="fas fa-bars fa-1x" />
+            <button
+              type="button"
+              className="navbar-toggler toggler-example"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent8"
+              aria-controls="navbarSupportedContent8"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span>
+                <Icon name="bars" fas />
               </span>
             </button>
             <Button icon="align-center" className="btn-block-text" sm>
