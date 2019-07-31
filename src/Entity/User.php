@@ -5,6 +5,7 @@ use DateTime;
 use Exception;
 use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -29,14 +30,23 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"web"})
      */
     protected $id;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=255)
+     * @Groups({"web"})
      */
     protected $email;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"web"})
+     */
+    protected $name;
 
     /**
      * @var string
@@ -47,6 +57,7 @@ class User implements UserInterface
     /**
      * @var array
      * @ORM\Column(type="array")
+     * @Groups({"web"})
      */
     protected $roles;
 
@@ -105,6 +116,26 @@ class User implements UserInterface
     public function setEmail(string $email): User
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return User
+     */
+    public function setName(string $name): User
+    {
+        $this->name = $name;
 
         return $this;
     }

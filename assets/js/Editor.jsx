@@ -7,6 +7,7 @@ import { Row, Column } from 'components/bootstrap';
 import { Loading } from 'components';
 import { ProjectSettingsModal } from 'modals';
 import * as editorActions from 'actions/editorActions';
+import * as userActions from 'actions/userActions';
 import Sidebar from 'editor/Sidebar';
 import Canvas from 'editor/Canvas';
 
@@ -16,11 +17,12 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(editorActions)
+  mapDispatchToProps(editorActions, userActions)
 )
 export default class Editor extends React.PureComponent {
   static propTypes = {
     editor:            PropTypes.object.isRequired,
+    userMe:            PropTypes.func.isRequired,
     editorInit:        PropTypes.func.isRequired,
     editorDrop:        PropTypes.func.isRequired,
     editorOpenProject: PropTypes.func.isRequired
@@ -30,8 +32,9 @@ export default class Editor extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { editorInit, editorOpenProject } = this.props;
+    const { userMe, editorInit, editorOpenProject } = this.props;
 
+    userMe();
     editorInit({});
     editorOpenProject(1);
   }
