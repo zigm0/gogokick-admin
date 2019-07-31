@@ -63,6 +63,20 @@ export default class UserMenu extends React.PureComponent {
   };
 
   /**
+   * @param {Event} e
+   */
+  handleRegisterClick = (e) => {
+    const { editorModal } = this.props;
+
+    e.preventDefault();
+
+    editorModal({
+      modal: 'register',
+      open:  true
+    });
+  };
+
+  /**
    * @returns {*}
    */
   render() {
@@ -105,6 +119,10 @@ export default class UserMenu extends React.PureComponent {
               <a className="dropdown-item" href="#" onClick={this.handleLoginClick}>
                 <Icon name="sign-in-alt" />
                 Login
+              </a>
+              <a className="dropdown-item" href="#" onClick={this.handleRegisterClick}>
+                <Icon name="user" />
+                Register
               </a>
             </div>
           )}
