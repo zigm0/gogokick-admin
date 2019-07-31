@@ -87,10 +87,11 @@ export default class Header extends React.PureComponent {
           <Icon name="dice-d20" className="logo" size={2} />
           <h1 className="brand">DragStarter</h1>
         </div>
+        <div className="editor-header-project-name">
+          {editor.projectName} {editor.isChanged && '*'}
+        </div>
         <div className="editor-header-middle">
-          <div className="editor-header-project-name">
-            {editor.projectName} {editor.isChanged && '*'}
-          </div>
+
           <div className="editor-header-buttons">
             <Button icon="file-alt" sm>
               New
