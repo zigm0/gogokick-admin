@@ -85,14 +85,13 @@ export default class Header extends React.PureComponent {
       <header className="editor-header">
         <div className="editor-header-left">
           <Icon name="dice-d20" className="logo" size={2} />
-          <h1 className="brand">DragStarter</h1>
+          <h1 className="brand d-none d-lg-block d-md-block d-xl-block">DragStarter</h1>
         </div>
-        <div className="editor-header-project-name">
+        <div className="editor-header-project-name d-none d-xl-block">
           {editor.projectName} {editor.isChanged && '*'}
         </div>
         <div className="editor-header-middle">
-
-          <div className="editor-header-buttons">
+          <div className="editor-header-buttons d-none d-lg-block d-xl-block">
             <Button icon="file-alt" sm>
               New
             </Button>
@@ -116,6 +115,24 @@ export default class Header extends React.PureComponent {
             </Button>
             <Button icon="question-circle" onClick={this.handleHelpClick} sm>
               Help
+            </Button>
+          </div>
+          <div className="editor-header-mobile-buttons d-lg-none">
+            <button className="navbar-toggler toggler-example" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent8" aria-controls="navbarSupportedContent8" aria-expanded="false"
+                    aria-label="Toggle navigation">
+              <span className="dark-teal-text">
+                <i className="fas fa-bars fa-1x" />
+              </span>
+            </button>
+            <Button icon="align-center" className="btn-block-text" sm>
+              <span className="d-none d-lg-inline d-md-inline d-xl-inline">Add Text</span>
+            </Button>
+            <Button icon="image" className="btn-block-image" sm>
+              <span className="d-none d-lg-inline d-md-inline d-xl-inline">Add Image</span>
+            </Button>
+            <Button icon="video" className="btn-block-video" sm>
+              <span className="d-none d-lg-inline d-md-inline d-xl-inline">Add Video</span>
             </Button>
           </div>
         </div>

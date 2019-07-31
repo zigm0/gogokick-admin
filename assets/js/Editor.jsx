@@ -63,10 +63,10 @@ export default class Editor extends React.PureComponent {
         <DragDropContext onDragEnd={this.handleDragEnd}>
           <Header />
           <Row>
-            <Column className="editor-sidebar-col" xl={2} md={12}>
+            <Column className="editor-sidebar-col d-none d-lg-block d-xl-block" xl={2} lg={3} md={12}>
               <Sidebar />
             </Column>
-            <Column className="editor-canvas-col" xl={10} md={12}>
+            <Column className="editor-canvas-col" xl={10} lg={9} md={12}>
               <Canvas />
             </Column>
           </Row>

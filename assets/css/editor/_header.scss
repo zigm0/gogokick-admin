@@ -19,14 +19,23 @@
   }
 
   .btn {
-    margin-right: 0.25rem;
-    width: auto;
+    .icon {
+      @include media-xl {
+        margin-right: 0.25rem;
+      }
+      @include media-lg {
+        margin-right: 0.25rem;
+      }
+      @include media-md {
+        margin-right: 0.25rem;
+      }
+    }
   }
 }
 
 .editor-header-left {
   flex-grow: 1;
-  width: 14%;
+  width: 16%;
   padding-left: $gutter-size;
   display: flex;
 }
@@ -90,3 +99,14 @@
   width: 22%;
 }
 
+.editor-header-mobile-buttons {
+  width: 100%;
+  justify-content: space-evenly;
+  display: flex;
+  align-items: center;
+
+  .navbar-toggler {
+    color: #FFF;
+    cursor: pointer;
+  }
+}

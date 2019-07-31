@@ -19,7 +19,6 @@
 .editor-canvas-body-col {
   padding-left: 0;
   padding-right: 0;
-  max-width: 680px;
 }
 
 .editor-canvas-block {
@@ -30,8 +29,14 @@
   margin-bottom: $gutter-size-sm;
   border-radius: $border-radius-blocks;
 
+  @include media-md {
+    width: 100% !important;
+  }
+  @include media-sm {
+    width: 100% !important;
+  }
   @include media-xs {
-    width: 100%;
+    width: 100% !important;
   }
 }
 
