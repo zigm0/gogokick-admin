@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { connect, mapDispatchToProps } from 'utils';
+import { connect, arrays, mapDispatchToProps } from 'utils';
 import { Row, Column, Button, Card, CardBody, CardFooter } from 'components/bootstrap';
 import {  Modal } from 'components';
 import * as editorActions from 'actions/editorActions';
 import * as formActions from 'actions/formActions';
 
 const mapStateToProps = state => ({
-  modals: state.editor.modals
+  editor: state.editor
 });
 
 @connect(
@@ -17,10 +17,11 @@ const mapStateToProps = state => ({
 )
 export default class NewProjectModal extends React.PureComponent {
   static propTypes = {
-    modals:              PropTypes.object.isRequired,
-    editorModal:         PropTypes.func.isRequired,
-    editorOpenProject:   PropTypes.func.isRequired,
-    editorFetchProjects: PropTypes.func.isRequired
+    editor:               PropTypes.object.isRequired,
+    editorModal:          PropTypes.func.isRequired,
+    editorNewProject:     PropTypes.func.isRequired,
+    editorOpenProject:    PropTypes.func.isRequired,
+    editorFetchTemplates: PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -32,12 +33,23 @@ export default class NewProjectModal extends React.PureComponent {
   /**
    *
    */
+  componentDidMount() {
+    const { editorFetchTemplates } = this.props;
+
+    editorFetchTemplates();
+  }
+
+  /**
+   *
+   */
   handleSelectClick = () => {
-    const { editorModal, editorOpenProject } = this.props;
+    const { editor, editorModal, editorNewProject } = this.props;
     const { selected } = this.state;
 
+    const template = arrays.findByID(editor.templates, selected);
+
     this.setState({ selected: 0 });
-    // editorOpenProject(selected);
+    editorNewProject(template);
     editorModal({
       modal: 'newProject',
       open:  false
@@ -71,20 +83,12 @@ export default class NewProjectModal extends React.PureComponent {
    * @returns {*}
    */
   renderProjects = () => {
+    const { editor } = this.props;
     const { selected } = this.state;
-
-    const templates = [
-      {
-        id:         666,
-        name:       'Blank',
-        blocks:     [],
-        screenshot: ''
-      }
-    ];
 
     return (
       <Row>
-        {templates.map(project => (
+        {editor.templates.map(project => (
           <Column key={project.id} xl={3}>
             <Card
               className={classNames('card-project', { 'card-selected': selected === project.id })}

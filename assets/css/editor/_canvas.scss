@@ -21,6 +21,10 @@
   padding-right: 0;
 }
 
+.editor-canvas-blocks {
+  min-height: 100px;
+}
+
 .editor-canvas-block {
   width: $width-block !important;
   user-select: none;

@@ -10,6 +10,7 @@ const initialState = {
   projectName:   '',
   mode:          'kickstarter',
   projects:      [],
+  templates:     [],
   canvasBlocks:  [[]],
   sidebarBlocks: [
     {
@@ -223,6 +224,40 @@ const onEditorOpenProject = (state, action) => {
  * @param {*} action
  * @returns {*}
  */
+const onEditorNewProject = (state, action) => {
+  const blocks = Array.from(action.payload.blocks);
+  blocks.forEach((block) => {
+    switch(block.type) {
+      case 1:
+        block.type = 'text';
+        break;
+      case 2:
+        block.type = 'image';
+        break;
+      case 3:
+        block.type = 'video';
+        break;
+    }
+  });
+
+  const canvasBlocks  = [blocks];
+  const projectName   = action.payload.name;
+
+  return {
+    ...state,
+    projectName,
+    canvasBlocks,
+    projectId:  0,
+    blockIndex: 0,
+    isChanged:  false
+  };
+};
+
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
 const onEditorModal = (state, action) => {
   const modals = objects.clone(state.modals);
   const { modal, open } = action.payload;
@@ -249,6 +284,20 @@ const onEditorProjects = (state, action) => {
   };
 };
 
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onEditorTemplates = (state, action) => {
+  const templates = Array.from(action.payload);
+
+  return {
+    ...state,
+    templates
+  };
+};
+
 const handlers = {
   [types.EDITOR_INIT]:         onEditorInit,
   [types.EDITOR_BUSY]:         onEditorBusy,
@@ -257,8 +306,10 @@ const handlers = {
   [types.EDITOR_REDO]:         onEditorRedo,
   [types.EDITOR_MODAL]:        onEditorModal,
   [types.EDITOR_PROJECTS]:     onEditorProjects,
+  [types.EDITOR_TEMPLATES]:    onEditorTemplates,
   [types.EDITOR_SAVING]:       onEditorSaving,
   [types.EDITOR_CHANGED]:      onEditorChanged,
+  [types.EDITOR_NEW_PROJECT]:  onEditorNewProject,
   [types.EDITOR_OPEN_PROJECT]: onEditorOpenProject
 };
 

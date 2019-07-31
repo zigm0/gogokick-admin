@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller\Api;
 
+use App\Entity\Project;
 use App\Http\Request;
 use App\Repository\ProjectRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProjectsController extends ApiController
 {
     /**
-     * @Route("/projects", name="_get", methods={"GET"})
+     * @Route("/", name="_get", methods={"GET"})
      *
      * @param Request $request
      * @param ProjectRepository $projectRepository
@@ -24,6 +25,16 @@ class ProjectsController extends ApiController
         $projects = $projectRepository->findAll();
 
         return $this->jsonEntityResponse($projects);
+    }
+
+    /**
+     * @Route("/templates", name="_templates", methods={"GET"})
+     *
+     * @return JsonResponse
+     */
+    public function templatesAction()
+    {
+        return new JsonResponse($this->getTemplates());
     }
 
     /**
@@ -122,5 +133,30 @@ class ProjectsController extends ApiController
         $projects = $projectRepository->findAll();
 
         return $this->jsonEntityResponse($projects);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getTemplates()
+    {
+        $repo = $this->getDoctrine()->getRepository(Project::class);
+        $project = $repo->find(1);
+        $blocks  = json_decode($this->serializeGroup($project->getBlocks()), true);
+
+        return [
+            [
+                'id'         => 't-1',
+                'name'       => 'Blank',
+                'blocks'     => [],
+                'screenshot' => ''
+            ],
+            [
+                'id'         => 't-2',
+                'name'       => 'Starter',
+                'blocks'     => $blocks,
+                'screenshot' => $project->getScreenshot()
+            ]
+        ];
     }
 }
