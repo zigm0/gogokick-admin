@@ -61,8 +61,17 @@ class ProjectsController extends ApiController
             throw $this->createNotFoundException();
         }
 
-/*        $project2 = clone $project;
+/*        $blocks   = new ArrayCollection();
+        $project2 = clone $project;
         $project2->setIsTemplate(true);
+        foreach($project->getBlocks() as $block) {
+            $b = clone $block;
+            $b->setProject($project2);
+            $blocks->add($b);
+            $this->em->persist($b);
+        }
+        $project2->setName('Starter');
+        $project2->setBlocks($blocks);
         $this->em->persist($project2);
         $this->em->flush();*/
 
