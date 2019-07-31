@@ -22,17 +22,17 @@ export default class Editor extends React.PureComponent {
     editor:            PropTypes.object.isRequired,
     editorInit:        PropTypes.func.isRequired,
     editorDrop:        PropTypes.func.isRequired,
-    editorLoadProject: PropTypes.func.isRequired
+    editorOpenProject: PropTypes.func.isRequired
   };
 
   /**
    *
    */
   componentDidMount() {
-    const { editorInit, editorLoadProject } = this.props;
+    const { editorInit, editorOpenProject } = this.props;
 
     editorInit({});
-    editorLoadProject(1);
+    editorOpenProject(1);
   }
 
   /**

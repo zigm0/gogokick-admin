@@ -1,9 +1,12 @@
-import { api } from 'utils';
+import { api, router } from 'utils';
+
 export const EDITOR_INIT         = 'EDITOR_INIT';
 export const EDITOR_BUSY         = 'EDITOR_BUSY';
+export const EDITOR_CHANGED      = 'EDITOR_CHANGED';
+export const EDITOR_SAVING       = 'EDITOR_SAVING';
 export const EDITOR_UNDO         = 'EDITOR_UNDO';
 export const EDITOR_REDO         = 'EDITOR_REDO';
-export const EDITOR_LOAD_PROJECT = 'EDITOR_LOAD_PROJECT';
+export const EDITOR_OPEN_PROJECT = 'EDITOR_OPEN_PROJECT';
 export const EDITOR_DROP         = 'EDITOR_DROP';
 
 /**
@@ -34,6 +37,17 @@ export const editorBusy = (payload) => {
  * @param {*} payload
  * @returns {{payload: *, type: string}}
  */
+export const editorChanged = (payload) => {
+  return {
+    type: EDITOR_CHANGED,
+    payload
+  }
+};
+
+/**
+ * @param {*} payload
+ * @returns {{payload: *, type: string}}
+ */
 export const editorUndo = (payload) => {
   return {
     type: EDITOR_UNDO,
@@ -53,25 +67,54 @@ export const editorRedo = (payload) => {
 };
 
 /**
- * @param {number} payload
+ * @param {number} projectId
  * @returns {Function}
  */
-export const editorLoadProject = (payload) => {
+export const editorOpenProject = (projectId) => {
   return (dispatch) => {
     dispatch(editorBusy(true));
-    dispatch({
-      type:    EDITOR_LOAD_PROJECT,
-      payload: []
-    });
-    api.fetchBlocks(payload)
+    api.get(router.generate('api_blocks_open', { id: projectId }))
       .then((canvasBlocks) => {
         dispatch({
-          type:    EDITOR_LOAD_PROJECT,
-          payload: canvasBlocks
+          type:    EDITOR_OPEN_PROJECT,
+          payload: canvasBlocks,
+          meta:    {
+            projectId
+          }
         });
       })
       .finally(() => {
         dispatch(editorBusy(false));
+      });
+  };
+};
+
+/**
+ * @returns {Function}
+ */
+export const editorSaveProject = () => {
+  return (dispatch, getState) => {
+    const { editor } = getState();
+
+    dispatch({
+      type:    EDITOR_SAVING,
+      payload: true
+    });
+
+    const payload = {
+      blocks: editor.canvasBlocks
+    };
+
+    api.post(router.generate('api_blocks_save', { id: editor.projectId }), payload)
+      .then((resp) => {
+        console.log(resp);
+        dispatch(editorChanged(false));
+      })
+      .finally(() => {
+        dispatch({
+          type:    EDITOR_SAVING,
+          payload: false
+        });
       });
   };
 };

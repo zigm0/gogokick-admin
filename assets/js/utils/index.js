@@ -1,5 +1,4 @@
 import { connect, mapDispatchToProps } from 'utils/state';
-import * as routes from 'utils/routes';
 
 export { default as api } from './api';
 export { default as browser } from './browser';
@@ -9,8 +8,9 @@ export { default as strings } from './strings';
 export { default as arrays } from './arrays';
 export { default as numbers } from './numbers';
 export { default as dates } from './dates';
+export { default as router } from './router';
+
 export {
-  routes,
   connect,
   mapDispatchToProps
 };

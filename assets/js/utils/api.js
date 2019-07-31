@@ -1,15 +1,53 @@
 /**
- * @param {number} id
- * @returns {Promise<any> | Promise | Promise}
+ * @param {string} method
+ * @param {*} body
+ * @returns {{headers: {"Content-Type": string}, method: string}}
  */
-const fetchBlocks = (id) => {
-  return new Promise((resolve, reject) => {
-    fetch(`/api/blocks/${id}`, {
+const headers = (method, body = {}) => {
+  if (method === 'GET') {
+    return {
       headers: {
         'Content-Type': 'application/json'
       },
-      method: 'GET'
-    })
+      method
+    };
+  } else {
+    return {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body),
+      method
+    };
+  }
+};
+
+/**
+ * @param {string} url
+ * @returns {Promise<any> | Promise | Promise}
+ */
+const get = (url) => {
+  return new Promise((resolve, reject) => {
+    fetch(url, headers('GET'))
+      .then((resp) => {
+        if (!resp.ok) {
+          throw new Error(resp.statusText);
+        }
+        return resp.json();
+      })
+      .then(resolve)
+      .catch(reject);
+  });
+};
+
+/**
+ * @param {string} url
+ * @param {*} body
+ * @returns {Promise<any> | Promise | Promise}
+ */
+const post = (url, body = {}) => {
+  return new Promise((resolve, reject) => {
+    fetch(url, headers('POST', body))
       .then((resp) => {
         if (!resp.ok) {
           throw new Error(resp.statusText);
@@ -22,5 +60,6 @@ const fetchBlocks = (id) => {
 };
 
 export default {
-  fetchBlocks
+  get,
+  post
 };

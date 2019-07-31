@@ -4,7 +4,9 @@ import * as types from 'actions/editorActions';
 const initialState = {
   init:          false,
   isBusy:        false,
+  isSaving:      false,
   isChanged:     false,
+  projectId:     0,
   mode:          'kickstarter',
   canvasBlocks:  [[]],
   sidebarBlocks: [
@@ -111,6 +113,35 @@ const onEditorBusy = (state, action) => {
  * @param {*} action
  * @returns {*}
  */
+const onEditorChanged = (state, action) => {
+  const isChanged = action.payload;
+
+  return {
+    ...state,
+    isChanged
+  };
+};
+
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onEditorSaving = (state, action) => {
+  const isSaving = action.payload;
+
+  return {
+    ...state,
+    isBusy: isSaving,
+    isSaving
+  };
+};
+
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
 const onEditorDrop = (state, action) => {
   const { sidebarBlocks, canvasBlocks } = objects.clone(state);
   let { blockIndex } = state;
@@ -148,11 +179,13 @@ const onEditorDrop = (state, action) => {
  * @param {*} action
  * @returns {*}
  */
-const onEditorLoadProject = (state, action) => {
-  const canvasBlocks = [Array.from(action.payload)];
+const onEditorOpenProject = (state, action) => {
+  const canvasBlocks  = [Array.from(action.payload)];
+  const { projectId } = action.meta;
 
   return {
     ...state,
+    projectId,
     canvasBlocks,
     isChanged: false
   };
@@ -164,7 +197,9 @@ const handlers = {
   [types.EDITOR_DROP]:         onEditorDrop,
   [types.EDITOR_UNDO]:         onEditorUndo,
   [types.EDITOR_REDO]:         onEditorRedo,
-  [types.EDITOR_LOAD_PROJECT]: onEditorLoadProject
+  [types.EDITOR_SAVING]:       onEditorSaving,
+  [types.EDITOR_CHANGED]:      onEditorChanged,
+  [types.EDITOR_OPEN_PROJECT]: onEditorOpenProject
 };
 
 /**

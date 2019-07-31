@@ -17,9 +17,10 @@ const mapStateToProps = state => ({
 )
 export default class Canvas extends React.PureComponent {
   static propTypes = {
-    editor:     PropTypes.object.isRequired,
-    editorUndo: PropTypes.func.isRequired,
-    editorRedo: PropTypes.func.isRequired
+    editor:            PropTypes.object.isRequired,
+    editorUndo:        PropTypes.func.isRequired,
+    editorRedo:        PropTypes.func.isRequired,
+    editorSaveProject: PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -28,7 +29,7 @@ export default class Canvas extends React.PureComponent {
    * @returns {*}
    */
   renderHeader = () => {
-    const { editor, editorUndo, editorRedo } = this.props;
+    const { editor, editorUndo, editorRedo, editorSaveProject } = this.props;
     const { blockIndex, canvasBlocks } = editor;
 
     return (
@@ -37,7 +38,7 @@ export default class Canvas extends React.PureComponent {
           The Flappy Project {editor.isChanged && '*'}
         </div>
         <div className="editor-header editor-header-canvas-buttons">
-          <Button icon="file" sm>
+          <Button icon="file" disabled={editor.isSaving} onClick={editorSaveProject} sm>
             Save
           </Button>
           <Button icon="eye" sm>
