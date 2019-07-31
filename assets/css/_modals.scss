@@ -3,7 +3,7 @@
 .modal-content {
   color: #FFF;
   background-color: $color-modal-bg;
-  border: 1px solid rgb(76, 113, 111);
+  border: 1px solid lighten($color-modal-bg, 5%);
 }
 
 .modal-header,
@@ -21,6 +21,7 @@
 
   .close {
     color: #FFF;
+    margin: -1.1rem -1rem -1rem auto;
 
     .icon {
       font-size: 1rem;

@@ -9,8 +9,8 @@
   {% endif %}
 
   {{ form_start(form) }}
-  {{ form_row(form._email, { attr: { value: lastUsername } } ) }}
-  {{ form_row(form._password) }}
+  {{ form_row(form.email, { attr: { value: lastUsername } } ) }}
+  {{ form_row(form.password) }}
   <button class="btn btn-primary" type="submit">
     Login
   </button>

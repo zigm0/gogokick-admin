@@ -21,8 +21,8 @@ security:
                 login_path: login
                 check_path: login_check
                 default_target_path: home
-                username_parameter: _email
-                password_parameter: _password
+                username_parameter: email
+                password_parameter: password
             logout:
                 path:   /logout
                 target: /

@@ -16,7 +16,13 @@ const commonForms = {
 };
 
 const initialState = {
+  login: {
+    email:    '',
+    password: '',
+    ...commonForms
+  },
   projectSettings: {
+    name: '',
     ...commonForms
   }
 };

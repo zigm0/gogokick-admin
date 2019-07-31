@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, mapDispatchToProps } from 'utils';
+import { connect, router, mapDispatchToProps } from 'utils';
 import { Avatar, Icon } from 'components';
+import * as userActions from 'actions/userActions';
+import * as editorActions from 'actions/editorActions';
 
 const mapStateToProps = state => ({
   user: state.user
@@ -9,11 +11,13 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps()
+  mapDispatchToProps(userActions, editorActions)
 )
 export default class UserMenu extends React.PureComponent {
   static propTypes = {
-    user: PropTypes.object.isRequired
+    user:        PropTypes.object.isRequired,
+    editorModal: PropTypes.func.isRequired,
+    userLogout:  PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -33,6 +37,30 @@ export default class UserMenu extends React.PureComponent {
   componentDidUpdate() {
     $(this.menu.current).dropdown();
   }
+
+  /**
+   * @param {Event} e
+   */
+  handleLoginClick = (e) => {
+    const { editorModal } = this.props;
+
+    e.preventDefault();
+
+    editorModal({
+      modal: 'login',
+      open:  true
+    });
+  };
+
+  /**
+   * @param {Event} e
+   */
+  handleLogoutClick = (e) => {
+    const { userLogout } = this.props;
+
+    e.preventDefault();
+    userLogout();
+  };
 
   /**
    * @returns {*}
@@ -62,20 +90,20 @@ export default class UserMenu extends React.PureComponent {
           </button>
           {user.isAuthenticated ? (
             <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-              <a className="dropdown-item" href="#">
+              <a className="dropdown-item" href={router.generate('profile_index')} target="_blank">
                 <Icon name="user" />
                 Profile
               </a>
               <div className="dropdown-divider" />
-              <a className="dropdown-item" href="#">
+              <a className="dropdown-item" href="#" onClick={this.handleLogoutClick}>
                 <Icon name="sign-out-alt" />
                 Logout
               </a>
             </div>
           ) : (
             <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-              <a className="dropdown-item" href="#">
-                <Icon name="sign-out-alt" />
+              <a className="dropdown-item" href="#" onClick={this.handleLoginClick}>
+                <Icon name="sign-in-alt" />
                 Login
               </a>
             </div>

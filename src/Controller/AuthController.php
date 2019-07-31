@@ -89,7 +89,7 @@ class AuthController extends Controller
     public function logout() {}
 
     /**
-     * @Route("/login_check", name="login_check")
+     * @Route("/login_check", name="login_check", options={"expose"=true})
      */
     public function login_check() {}
 }

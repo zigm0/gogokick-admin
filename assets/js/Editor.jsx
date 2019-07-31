@@ -5,14 +5,15 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import { connect, mapDispatchToProps } from 'utils';
 import { Row, Column } from 'components/bootstrap';
 import { Loading } from 'components';
-import { ProjectSettingsModal } from 'modals';
+import { ProjectSettingsModal, LoginModal } from 'modals';
 import * as editorActions from 'actions/editorActions';
 import * as userActions from 'actions/userActions';
 import Sidebar from 'editor/Sidebar';
 import Canvas from 'editor/Canvas';
 
 const mapStateToProps = state => ({
-  editor: state.editor
+  editor: state.editor,
+  user:   state.user
 });
 
 @connect(
@@ -52,7 +53,7 @@ export default class Editor extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { editor } = this.props;
+    const { user, editor } = this.props;
 
     const classes = classNames('editor h-100', `editor-mode-${editor.mode}`);
 
@@ -68,9 +69,10 @@ export default class Editor extends React.PureComponent {
             </Column>
           </Row>
         </DragDropContext>
-        {editor.isBusy && (
+        {(editor.isBusy || user.isBusy) && (
           <Loading middle />
         )}
+        <LoginModal />
         <ProjectSettingsModal />
       </div>
     );
