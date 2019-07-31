@@ -88,6 +88,9 @@ export default class Canvas extends React.PureComponent {
           {editor.projectName} {editor.isChanged && '*'}
         </div>
         <div className="editor-header editor-header-canvas-buttons">
+          <Button icon="file-alt" sm>
+            New
+          </Button>
           <Button icon="folder-open" onClick={this.handleOpenClick} sm>
             Open
           </Button>
