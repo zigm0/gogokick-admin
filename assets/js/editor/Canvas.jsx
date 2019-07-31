@@ -20,6 +20,7 @@ export default class Canvas extends React.PureComponent {
     editor:            PropTypes.object.isRequired,
     editorUndo:        PropTypes.func.isRequired,
     editorRedo:        PropTypes.func.isRequired,
+    editorModal:       PropTypes.func.isRequired,
     editorSaveProject: PropTypes.func.isRequired
   };
 
@@ -33,6 +34,18 @@ export default class Canvas extends React.PureComponent {
   };
 
   /**
+   * @param {Event} e
+   */
+  handleSettingsClick = (e) => {
+    const { editor, editorModal } = this.props;
+
+    editorModal({
+      modal: 'settings',
+      open:  !editor.modals.settings
+    });
+  };
+
+  /**
    * @returns {*}
    */
   renderHeader = () => {
@@ -42,7 +55,7 @@ export default class Canvas extends React.PureComponent {
     return (
       <div className="editor-header editor-header-canvas">
         <div className="editor-header-project-name">
-          The Flappy Project {editor.isChanged && '*'}
+          {editor.projectName} {editor.isChanged && '*'}
         </div>
         <div className="editor-header editor-header-canvas-buttons">
           <Button icon="file" disabled={editor.isSaving} onClick={editorSaveProject} sm>
@@ -51,7 +64,7 @@ export default class Canvas extends React.PureComponent {
           <Button icon="eye" sm>
             Preview
           </Button>
-          <Button icon="cog" sm>
+          <Button icon="cog" onClick={this.handleSettingsClick} sm>
             Settings
           </Button>
           <Button icon="undo" disabled={blockIndex === 0} onClick={editorUndo} sm>

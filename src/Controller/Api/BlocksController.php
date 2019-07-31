@@ -21,11 +21,14 @@ class BlocksController
     public function openAction($id, Request $request)
     {
         return new JsonResponse([
-            ['id' => 4, 'type' => 'text'],
-            ['id' => 5, 'type' => 'image'],
-            ['id' => 6, 'type' => 'video'],
-            ['id' => 7, 'type' => 'text'],
-            ['id' => 8, 'type' => 'text'],
+            'name'   => 'The Flappy Project',
+            'blocks' => [
+                ['id' => 4, 'type' => 'text'],
+                ['id' => 5, 'type' => 'image'],
+                ['id' => 6, 'type' => 'video'],
+                ['id' => 7, 'type' => 'text'],
+                ['id' => 8, 'type' => 'text']
+            ]
         ]);
     }
 

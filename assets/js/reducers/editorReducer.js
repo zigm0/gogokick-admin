@@ -7,6 +7,7 @@ const initialState = {
   isSaving:      false,
   isChanged:     false,
   projectId:     0,
+  projectName:   '',
   mode:          'kickstarter',
   canvasBlocks:  [[]],
   sidebarBlocks: [
@@ -23,7 +24,10 @@ const initialState = {
       type: 'video'
     }
   ],
-  blockIndex: 0
+  blockIndex: 0,
+  modals:     {
+    settings: false
+  }
 };
 
 let idIndex = 9;
@@ -180,14 +184,33 @@ const onEditorDrop = (state, action) => {
  * @returns {*}
  */
 const onEditorOpenProject = (state, action) => {
-  const canvasBlocks  = [Array.from(action.payload)];
+  const canvasBlocks  = [Array.from(action.payload.blocks)];
+  const projectName   = action.payload.name;
   const { projectId } = action.meta;
 
   return {
     ...state,
     projectId,
+    projectName,
     canvasBlocks,
     isChanged: false
+  };
+};
+
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onEditorModal = (state, action) => {
+  const modals = objects.clone(state.modals);
+  const { modal, open } = action.payload;
+
+  modals[modal] = open;
+
+  return {
+    ...state,
+    modals
   };
 };
 
@@ -197,6 +220,7 @@ const handlers = {
   [types.EDITOR_DROP]:         onEditorDrop,
   [types.EDITOR_UNDO]:         onEditorUndo,
   [types.EDITOR_REDO]:         onEditorRedo,
+  [types.EDITOR_MODAL]:        onEditorModal,
   [types.EDITOR_SAVING]:       onEditorSaving,
   [types.EDITOR_CHANGED]:      onEditorChanged,
   [types.EDITOR_OPEN_PROJECT]: onEditorOpenProject

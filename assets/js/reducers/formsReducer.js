@@ -16,7 +16,7 @@ const commonForms = {
 };
 
 const initialState = {
-  editor: {
+  projectSettings: {
     ...commonForms
   }
 };

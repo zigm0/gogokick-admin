@@ -8,6 +8,7 @@ export const EDITOR_UNDO         = 'EDITOR_UNDO';
 export const EDITOR_REDO         = 'EDITOR_REDO';
 export const EDITOR_OPEN_PROJECT = 'EDITOR_OPEN_PROJECT';
 export const EDITOR_DROP         = 'EDITOR_DROP';
+export const EDITOR_MODAL        = 'EDITOR_MODAL';
 
 /**
  * @param {*} payload
@@ -74,13 +75,13 @@ export const editorOpenProject = (projectId) => {
   return (dispatch) => {
     dispatch(editorBusy(true));
     api.get(router.generate('api_blocks_open', { id: projectId }))
-      .then((canvasBlocks) => {
+      .then((payload) => {
         dispatch({
-          type:    EDITOR_OPEN_PROJECT,
-          payload: canvasBlocks,
-          meta:    {
+          type: EDITOR_OPEN_PROJECT,
+          meta: {
             projectId
-          }
+          },
+          payload,
         });
       })
       .finally(() => {
@@ -106,8 +107,7 @@ export const editorSaveProject = () => {
     };
 
     api.post(router.generate('api_blocks_save', { id: editor.projectId }), payload)
-      .then((resp) => {
-        console.log(resp);
+      .then(() => {
         dispatch(editorChanged(false));
       })
       .finally(() => {
@@ -128,4 +128,15 @@ export const editorDrop = (payload) => {
     type: EDITOR_DROP,
     payload
   }
+};
+
+/**
+ * @param {*} payload
+ * @returns {{payload: *, type: *}}
+ */
+export const editorModal = (payload) => {
+  return {
+    type: EDITOR_MODAL,
+    payload
+  };
 };

@@ -53,21 +53,21 @@ export default class Sidebar extends React.PureComponent {
         </h2>
         <ul className="editor-sidebar-team">
           <li className="editor-sidebar-team-member">
-            <Avatar src="https://i.pravatar.cc/36?img=8" sm />
+            <Avatar src="/images/avatar-1.jpeg" sm />
             <div className="editor-sidebar-team-member-info">
               <span>Scott K.</span>
               <small>Editor/Lead</small>
             </div>
           </li>
           <li className="editor-sidebar-team-member">
-            <Avatar src="https://i.pravatar.cc/36?img=5" sm />
+            <Avatar src="/images/avatar-2.jpeg" sm />
             <div className="editor-sidebar-team-member-info">
               <span>Val S.</span>
               <small>Graphics</small>
             </div>
           </li>
           <li className="editor-sidebar-team-member">
-            <Avatar src="https://i.pravatar.cc/36?img=3" sm />
+            <Avatar src="/images/avatar-3.jpeg" sm />
             <div className="editor-sidebar-team-member-info">
               <span>John R.</span>
               <small>Owner</small>

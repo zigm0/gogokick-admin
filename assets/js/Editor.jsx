@@ -5,6 +5,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import { connect, mapDispatchToProps } from 'utils';
 import { Row, Column } from 'components/bootstrap';
 import { Loading } from 'components';
+import { ProjectSettingsModal } from 'modals';
 import * as editorActions from 'actions/editorActions';
 import Sidebar from 'editor/Sidebar';
 import Canvas from 'editor/Canvas';
@@ -67,6 +68,7 @@ export default class Editor extends React.PureComponent {
         {editor.isBusy && (
           <Loading middle />
         )}
+        <ProjectSettingsModal />
       </div>
     );
   }

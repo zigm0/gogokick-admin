@@ -34,7 +34,7 @@ export default class UserMenu extends React.PureComponent {
             <div className="editor-header-user-menu">
               <div className="avatar-menu" data-toggle="dropdown">
                 <Icon name="angle-down" />
-                <Avatar src="https://i.pravatar.cc/36?img=8" sm />
+                <Avatar src="/images/avatar-1.jpeg" sm />
               </div>
               <div>Scott K.</div>
             </div>
