@@ -38,7 +38,7 @@ class Project
 
     /**
      * @var string
-     * @ORM\Column(type="blob", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      * @Groups({"web"})
      */
     protected $screenshot;
