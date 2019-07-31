@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { connect, mapDispatchToProps } from 'utils';
-import { Row, Column, Modal, ModalHeader, ModalBody, ModalFooter, Button, Card, CardBody, CardFooter } from 'components/bootstrap';
-import { Icon } from 'components';
+import { Row, Column, Button, Card, CardBody, CardFooter } from 'components/bootstrap';
+import {  Modal } from 'components';
 import * as editorActions from 'actions/editorActions';
 import * as formActions from 'actions/formActions';
 
@@ -38,19 +38,6 @@ export default class OpenModal extends React.PureComponent {
 
     editorFetchProjects();
   }
-
-  /**
-   *
-   */
-  handleClosed = () => {
-    const { editorModal } = this.props;
-
-    this.setState({ selected: 0 });
-    editorModal({
-      modal: 'open',
-      open:  false
-    });
-  };
 
   /**
    *
@@ -122,26 +109,24 @@ export default class OpenModal extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { modals } = this.props;
     const { selected } = this.state;
 
+    const buttons = (
+      <Button onClick={this.handleSelectClick} disabled={selected === 0} sm>
+        Select
+      </Button>
+    );
+
     return (
-      <Modal open={modals.open} onClosed={this.handleClosed} lg>
-        <ModalHeader>
-          <Icon name="folder-open" />
-          Open
-        </ModalHeader>
-        <ModalBody onClick={this.handleBodyClick}>
-          {this.renderProjects()}
-        </ModalBody>
-        <ModalFooter>
-          <Button onClick={this.handleSelectClick} disabled={selected === 0} sm>
-            Select
-          </Button>
-          <Button onClick={this.handleClosed} sm>
-            Cancel
-          </Button>
-        </ModalFooter>
+      <Modal
+        name="open"
+        title="Open"
+        icon="folder-open"
+        buttons={buttons}
+        onBodyClick={this.handleBodyClick}
+        lg
+      >
+        {this.renderProjects()}
       </Modal>
     );
   }

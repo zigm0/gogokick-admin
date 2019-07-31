@@ -1,16 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect, mapDispatchToProps } from 'utils';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'components/bootstrap';
+import { Button } from 'components/bootstrap';
 import { Form, Input } from 'components/forms';
-import { Icon } from 'components';
+import { Modal } from 'components';
 import * as userActions from 'actions/userActions';
 import * as editorActions from 'actions/editorActions';
 import * as formActions from 'actions/formActions';
 
 const mapStateToProps = state => ({
-  modals: state.editor.modals,
-  user:   state.user
+  user: state.user
 });
 
 @connect(
@@ -20,7 +19,6 @@ const mapStateToProps = state => ({
 export default class LoginModal extends React.PureComponent {
   static propTypes = {
     user:        PropTypes.object.isRequired,
-    modals:      PropTypes.object.isRequired,
     userLogin:   PropTypes.func.isRequired,
     editorModal: PropTypes.func.isRequired
   };
@@ -40,18 +38,6 @@ export default class LoginModal extends React.PureComponent {
       });
     }
   }
-
-  /**
-   *
-   */
-  handleClosed = () => {
-    const { editorModal } = this.props;
-
-    editorModal({
-      modal: 'login',
-      open:  false
-    });
-  };
 
   /**
    *
@@ -90,30 +76,27 @@ export default class LoginModal extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { user, modals } = this.props;
+    const { user } = this.props;
+
+    const buttons = (
+      <Button onClick={this.handleLoginClick} sm>
+        Login
+      </Button>
+    );
 
     return (
-      <Modal open={modals.login} onClosed={this.handleClosed}>
-        <ModalHeader>
-          <Icon name="sign-in-alt" />
-          Login
-        </ModalHeader>
-        <ModalBody>
-          {user.error && (
-            <div className="alert alert-danger">
-              {user.error}
-            </div>
-          )}
-          {this.renderForm()}
-        </ModalBody>
-        <ModalFooter>
-          <Button onClick={this.handleLoginClick} sm>
-            Login
-          </Button>
-          <Button onClick={this.handleClosed} sm>
-            Cancel
-          </Button>
-        </ModalFooter>
+      <Modal
+        name="login"
+        title="Login"
+        icon="sign-in-alt"
+        buttons={buttons}
+      >
+        {user.error && (
+          <div className="alert alert-danger">
+            {user.error}
+          </div>
+        )}
+        {this.renderForm()}
       </Modal>
     );
   }

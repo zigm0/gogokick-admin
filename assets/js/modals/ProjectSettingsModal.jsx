@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect, mapDispatchToProps } from 'utils';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'components/bootstrap';
+import { Button } from 'components/bootstrap';
 import { Form, Input } from 'components/forms';
-import { Icon } from 'components';
+import { Modal } from 'components';
 import * as editorActions from 'actions/editorActions';
 import * as formActions from 'actions/formActions';
 
 const mapStateToProps = state => ({
-  modals: state.editor.modals,
   editor: state.editor
 });
 
@@ -18,7 +17,6 @@ const mapStateToProps = state => ({
 )
 export default class ProjectSettingsModal extends React.PureComponent {
   static propTypes = {
-    modals:      PropTypes.object.isRequired,
     editor:      PropTypes.object.isRequired,
     editorModal: PropTypes.func.isRequired,
     formChanges: PropTypes.func.isRequired
@@ -51,18 +49,6 @@ export default class ProjectSettingsModal extends React.PureComponent {
   }
 
   /**
-   *
-   */
-  handleClosed = () => {
-    const { editorModal } = this.props;
-
-    editorModal({
-      modal: 'settings',
-      open:  false
-    });
-  };
-
-  /**
    * @returns {*}
    */
   renderForm = () => {
@@ -80,28 +66,35 @@ export default class ProjectSettingsModal extends React.PureComponent {
   };
 
   /**
+   * @param {Event} e
+   */
+  handleSaveClick = (e) => {
+    const { editorModal } = this.props;
+
+    editorModal({
+      modal: 'settings',
+      open:  false
+    });
+  };
+
+  /**
    * @returns {*}
    */
   render() {
-    const { modals } = this.props;
+    const buttons = (
+      <Button onClick={this.handleSaveClick} sm>
+        Save
+      </Button>
+    );
 
     return (
-      <Modal open={modals.settings} onClosed={this.handleClosed}>
-        <ModalHeader>
-          <Icon name="cog" />
-          Settings
-        </ModalHeader>
-        <ModalBody>
-          {this.renderForm()}
-        </ModalBody>
-        <ModalFooter>
-          <Button onClick={this.handleClosed} sm>
-            Save
-          </Button>
-          <Button onClick={this.handleClosed} sm>
-            Cancel
-          </Button>
-        </ModalFooter>
+      <Modal
+        name="settings"
+        title="Settings"
+        icon="cog"
+        buttons={buttons}
+      >
+        {this.renderForm()}
       </Modal>
     );
   }

@@ -29,7 +29,8 @@ const initialState = {
   modals:     {
     login:    false,
     settings: false,
-    register: false
+    register: false,
+    member:   false
   }
 };
 
