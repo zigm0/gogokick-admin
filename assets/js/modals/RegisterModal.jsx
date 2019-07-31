@@ -109,9 +109,9 @@ export default class RegisterModal extends React.PureComponent {
   renderRegistrationForm = () => {
     return (
       <Form name="register" onSubmit={this.handleRegisterSubmit}>
-        <div className="gutter-bottom-sm">
+        <h5 className="gutter-bottom-sm">
           Don't have an account yet?
-        </div>
+        </h5>
         <Input
           name="name"
           type="text"
