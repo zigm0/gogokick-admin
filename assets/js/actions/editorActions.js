@@ -74,16 +74,12 @@ export const editorRedo = (payload) => {
  */
 export const editorFetchProjects = () => {
   return (dispatch) => {
-    dispatch(editorBusy(true));
     api.get(router.generate('api_blocks_projects'))
       .then((payload) => {
         dispatch({
           type: EDITOR_PROJECTS,
           payload
         });
-      })
-      .finally(() => {
-        dispatch(editorBusy(false));
       });
   };
 };

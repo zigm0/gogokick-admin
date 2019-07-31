@@ -2,6 +2,7 @@
 namespace App\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Exception;
 use Doctrine\ORM\Mapping as ORM;
@@ -69,6 +70,7 @@ class Project
     public function __construct()
     {
         try {
+            $this->blocks      = new ArrayCollection();
             $this->dateCreated = new DateTime();
             $this->dateUpdated = new DateTime();
         } catch (Exception $e) {}

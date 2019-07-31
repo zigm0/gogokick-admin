@@ -51,18 +51,18 @@ class BlocksController extends ApiController
             // throw $this->createAccessDeniedException();
         }*/
 
-        return $this->jsonEntityResponse($project);
 
-/*        $project = (new Project())
+
+        $project = (new Project())
             ->setUser($user)
-            ->setName('The Flappy Project');
+            ->setName('BlockStarter');
         $this->em->persist($project);
 
         $blocks = [
-            ['id' => 4, 'type' => 1],
-            ['id' => 5, 'type' => 2],
-            ['id' => 6, 'type' => 3],
-            ['id' => 7, 'type' => 1],
+            ['id' => 4, 'type' => 2],
+            ['id' => 5, 'type' => 1],
+            ['id' => 6, 'type' => 1],
+            ['id' => 7, 'type' => 3],
             ['id' => 8, 'type' => 1]
         ];
         foreach($blocks as $b) {
@@ -72,8 +72,8 @@ class BlocksController extends ApiController
             $this->em->persist($block);
         }
 
-        $this->em->flush();*/
-
+        $this->em->flush();
+        return $this->jsonEntityResponse($project);
 
         return new JsonResponse([
             'name'   => 'The Flappy Project',
@@ -102,7 +102,7 @@ class BlocksController extends ApiController
         if (!$user) {
             throw $this->createAccessDeniedException();
         }
-        $project = $projectRepository->findByID($id);
+        $project = $projectRepository->findByID(2);
         if (!$project) {
             throw $this->createNotFoundException();
         }

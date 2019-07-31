@@ -3,7 +3,7 @@ import * as types from 'actions/editorActions';
 
 const initialState = {
   init:          false,
-  isBusy:        false,
+  isBusy:        true,
   isSaving:      false,
   isChanged:     false,
   projectId:     0,
