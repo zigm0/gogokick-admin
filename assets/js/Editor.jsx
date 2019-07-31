@@ -57,7 +57,7 @@ export default class Editor extends React.PureComponent {
     const { user, editor } = this.props;
 
     const classes = classNames('editor h-100', `editor-mode-${editor.mode}`);
-console.log(editor.isBusy);
+
     return (
       <div className={classes}>
         <DragDropContext onDragEnd={this.handleDragEnd}>
