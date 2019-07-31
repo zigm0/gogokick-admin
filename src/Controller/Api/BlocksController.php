@@ -24,7 +24,7 @@ class BlocksController extends ApiController
      */
     public function openAction($id, Request $request, ProjectRepository $projectRepository)
     {
-        $user = $this->getUser();
+/*        $user = $this->getUser();
         if (!$user) {
             // throw $this->createAccessDeniedException();
         }
@@ -36,7 +36,7 @@ class BlocksController extends ApiController
             // throw $this->createAccessDeniedException();
         }
 
-        return $this->jsonEntityResponse($project);
+        return $this->jsonEntityResponse($project);*/
 
 /*        $project = (new Project())
             ->setUser($user)
@@ -59,7 +59,7 @@ class BlocksController extends ApiController
 
         $this->em->flush();*/
 
-/*
+
         return new JsonResponse([
             'name'   => 'The Flappy Project',
             'blocks' => [
@@ -69,7 +69,7 @@ class BlocksController extends ApiController
                 ['id' => 7, 'type' => 'text'],
                 ['id' => 8, 'type' => 'text']
             ]
-        ]);*/
+        ]);
     }
 
     /**
