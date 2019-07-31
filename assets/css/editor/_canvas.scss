@@ -7,10 +7,12 @@
 }
 
 .editor-canvas-body {
+  max-height: calc(100vh - #{$header-height});
+  overflow-x: hidden;
+  overflow-y: scroll;
+
   .container {
     padding-top: $gutter-size;
-    border-right: 1px solid #ececec;
-    border-left: 1px solid #ececec;
   }
 }
 
