@@ -14,24 +14,7 @@ class FontAwesomeExtension extends AbstractExtension
      * css class can be specified by separating the real icon name
      * by the classes, i.e. "gem far" and "circle fa online".
      */
-    const ICON_ALIASES = [
-        'app-bump'            => 'arrow-alt-circle-up',
-        'app-recently-bumped' => 'burn',
-        'app-upgrade'         => 'gem far',
-        'app-stats'           => 'chart-bar',
-        'app-settings'        => 'cog',
-        'app-team'            => 'users',
-        'app-trending'        => 'chart-line',
-        'app-online'          => 'circle fa server-icon-online',
-        'app-most-online'     => 'user',
-        'app-random'          => 'random',
-        'app-delete'          => 'trash-alt',
-        'app-join'            => 'sign-in-alt',
-        'app-gold'            => 'star',
-        'app-platinum'        => 'shield-alt',
-        'app-master'          => 'crown',
-        'app-invoices'        => 'file-invoice-dollar'
-    ];
+    const ICON_ALIASES = [];
 
     /**
      * @return TwigFunction[]
