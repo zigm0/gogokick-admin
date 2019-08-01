@@ -24,6 +24,7 @@ export default class ProjectCard extends React.PureComponent {
 
     return (
       <Card
+        key={project.dateUpdated}
         className={classNames('card-project', { 'card-selected': selected })}
         onClick={e => onClick(e, project)}
       >

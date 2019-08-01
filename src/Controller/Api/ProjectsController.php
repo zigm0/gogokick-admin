@@ -9,7 +9,9 @@ use App\Http\Request;
 use App\Model\ProjectModel;
 use App\Repository\BlockRepository;
 use App\Repository\ProjectRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Exception;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -106,6 +108,7 @@ class ProjectsController extends ApiController
      * @param ModelRequestHandler $handler
      *
      * @return JsonResponse
+     * @throws Exception
      */
     public function saveAction(
         $id,
@@ -152,6 +155,7 @@ class ProjectsController extends ApiController
 
         $project->setName($model->getName());
         $project->setBlocks($updatedBlocks);
+        $project->setDateUpdated(new DateTime());
         $project->setScreenshot($this->saveScreenshot($user, $project, $model->getScreenshot()));
         $this->em->flush();
 

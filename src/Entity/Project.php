@@ -67,6 +67,7 @@ class Project
     /**
      * @var DateTime
      * @ORM\Column(type="datetime")
+     * @Groups({"web"})
      */
     protected $dateUpdated;
 
