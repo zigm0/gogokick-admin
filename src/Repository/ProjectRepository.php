@@ -43,4 +43,17 @@ class ProjectRepository extends ServiceEntityRepository
             'user'       => $user
         ]);
     }
+
+    /**
+     * @param User $user
+     *
+     * @return object|Project
+     */
+    public function findLastUpdatedByUser(User $user)
+    {
+        return $this->findOneBy([
+            'isTemplate' => false,
+            'user'       => $user
+        ], ['dateUpdated' => 'desc']);
+    }
 }

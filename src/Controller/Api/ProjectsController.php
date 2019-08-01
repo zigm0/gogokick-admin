@@ -61,14 +61,22 @@ class ProjectsController extends ApiController
     public function openAction($id, ProjectRepository $projectRepository)
     {
         $user = $this->getUser();
-        if (!$user || $id == '0') {
+        if (!$user) {
             $templates = $this->getTemplates();
             return new JsonResponse($templates[1]);
         }
 
-        $project = $projectRepository->findByID($id);
-        if (!$project || $project->getUser()->getId() !== $user->getId()) {
-            throw $this->createNotFoundException();
+        if ($id == '0') {
+            $project = $projectRepository->findLastUpdatedByUser($user);
+            if (!$project) {
+                $templates = $this->getTemplates();
+                return new JsonResponse($templates[1]);
+            }
+        } else {
+            $project = $projectRepository->findByID($id);
+            if (!$project || $project->getUser()->getId() !== $user->getId()) {
+                throw $this->createNotFoundException();
+            }
         }
 
         return $this->jsonEntityResponse($project);
