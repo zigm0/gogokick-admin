@@ -1,0 +1,50 @@
+<div class="avatar-header-menu avatar-header-menu-app">
+  <div class="btn-group">
+    <button
+      class="btn"
+      type="button"
+      id="dropdownMenuButton"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
+      <div class="avatar-user-menu">
+        <div class="avatar-menu" data-toggle="dropdown">
+          {{ icon('angle-down') }}
+          <img src="/images/avatar-1.jpeg" alt="Avatar" class="avatar avatar-sm" />
+        </div>
+        <div>
+          {% if app.user %}
+            {{ app.user.name }}
+          {% else %}
+            Guest
+          {% endif %}
+        </div>
+      </div>
+    </button>
+    {% if app.user %}
+      <div class="dropdown-menu dropdown-menu-right navbar-light bg-light" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="{{ path('profile_index') }}">
+          {{ icon('user') }}
+          Profile
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="{{ path('logout') }}">
+          {{ icon('sign-out-alt') }}
+          Logout
+        </a>
+      </div>
+    {% else %}
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="{{ path('login') }}">
+          {{ icon('sign-in-alt') }}
+          Login
+        </a>
+        <a class="dropdown-item" href="{{ path('register') }}">
+          {{ icon('user') }}
+          Register
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</div>

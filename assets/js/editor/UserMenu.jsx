@@ -83,7 +83,7 @@ export default class UserMenu extends React.PureComponent {
     const { user } = this.props;
 
     return (
-      <div className="editor-header-menu">
+      <div className="avatar-header-menu">
         <div className="btn-group">
           <button
             ref={this.menu}
@@ -94,7 +94,7 @@ export default class UserMenu extends React.PureComponent {
             aria-haspopup="true"
             aria-expanded="false"
           >
-            <div className="editor-header-user-menu">
+            <div className="avatar-user-menu">
               <div className="avatar-menu" data-toggle="dropdown">
                 <Icon name="angle-down" />
                 <Avatar src="/images/avatar-1.jpeg" sm />
