@@ -50,12 +50,19 @@ export default class Header extends React.PureComponent {
    *
    */
   handleOpenClick = () => {
-    const { editorModal } = this.props;
+    const { user, editorModal } = this.props;
 
-    editorModal({
-      modal: 'open',
-      open:  true
-    });
+    if (!user.isAuthenticated) {
+      editorModal({
+        modal: 'register',
+        open:  true
+      });
+    } else {
+      editorModal({
+        modal: 'open',
+        open:  true
+      });
+    }
   };
 
   /**

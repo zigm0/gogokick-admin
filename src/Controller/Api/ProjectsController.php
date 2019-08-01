@@ -20,14 +20,18 @@ class ProjectsController extends ApiController
     /**
      * @Route("/", name="_get", methods={"GET"})
      *
-     * @param Request $request
      * @param ProjectRepository $projectRepository
      *
      * @return JsonResponse
      */
-    public function getAction(Request $request, ProjectRepository $projectRepository)
+    public function getAction(ProjectRepository $projectRepository)
     {
-        $projects = $projectRepository->findBy(['isTemplate' => false]);
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $projects = $projectRepository->findByUser($user);
 
         return $this->jsonEntityResponse($projects);
     }
@@ -46,39 +50,20 @@ class ProjectsController extends ApiController
      * @Route("/{id}", name="_open", methods={"GET"})
      *
      * @param int $id
-     * @param Request $request
      * @param ProjectRepository $projectRepository
      *
      * @return JsonResponse
      */
-    public function openAction($id, Request $request, ProjectRepository $projectRepository)
+    public function openAction($id, ProjectRepository $projectRepository)
     {
         $user = $this->getUser();
         if (!$user) {
-            // throw $this->createAccessDeniedException();
+            throw $this->createAccessDeniedException();
         }
         $project = $projectRepository->findByID($id);
-        if (!$project) {
+        if (!$project || $project->getUser()->getId() !== $user->getId()) {
             throw $this->createNotFoundException();
         }
-
-/*        $blocks   = new ArrayCollection();
-        $project2 = clone $project;
-        $project2->setIsTemplate(true);
-        foreach($project->getBlocks() as $block) {
-            $b = clone $block;
-            $b->setProject($project2);
-            $blocks->add($b);
-            $this->em->persist($b);
-        }
-        $project2->setName('Starter');
-        $project2->setBlocks($blocks);
-        $this->em->persist($project2);
-        $this->em->flush();*/
-
-/*        if ($project->getUser()->getId() !== $user->getId()) {
-            // throw $this->createAccessDeniedException();
-        }*/
 
         return $this->jsonEntityResponse($project);
     }
@@ -93,7 +78,12 @@ class ProjectsController extends ApiController
      *
      * @return JsonResponse
      */
-    public function saveAction($id, Request $request, ProjectRepository $projectRepository, BlockRepository $blockRepository)
+    public function saveAction(
+        $id,
+        Request $request,
+        ProjectRepository $projectRepository,
+        BlockRepository $blockRepository
+    )
     {
         $user = $this->getUser();
         if (!$user) {
@@ -166,11 +156,10 @@ class ProjectsController extends ApiController
      *
      * @param Request           $request
      * @param ProjectRepository $projectRepository
-     * @param BlockRepository   $blockRepository
      *
      * @return JsonResponse
      */
-    public function saveNewAction(Request $request, ProjectRepository $projectRepository, BlockRepository $blockRepository)
+    public function saveNewAction(Request $request, ProjectRepository $projectRepository)
     {
         $user = $this->getUser();
         if (!$user) {
