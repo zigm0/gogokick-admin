@@ -73,25 +73,8 @@
 }
 
 .avatar-header-menu-app {
-  .avatar-user-menu {
-    color: #000;
-
-    &:hover {
-      color: #000;
-      opacity: 1;
-    }
-  }
-
   .dropdown-menu {
     top: 7px;
-
-    a {
-      color: #000;
-
-      &:hover {
-        background-color: lighten($color-primary, 5%);
-      }
-    }
   }
 }
 
