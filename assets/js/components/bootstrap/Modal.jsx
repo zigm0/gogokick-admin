@@ -19,6 +19,7 @@ class Modal extends React.PureComponent {
     centered:        PropTypes.bool,
     backdrop:        PropTypes.bool,
     withCloseButton: PropTypes.bool,
+    role:            PropTypes.string,
     title:           PropTypes.string,
     className:       PropTypes.string,
     children:        PropTypes.node,
@@ -35,6 +36,7 @@ class Modal extends React.PureComponent {
     centered:        true,
     backdrop:        true,
     withCloseButton: true,
+    role:            'dialog',
     title:           '',
     className:       '',
     children:        '',
@@ -156,8 +158,10 @@ class Modal extends React.PureComponent {
   /**
    *
    */
-  handleDialogClick = (e) => {
-    if (e.target.getAttribute('role') === 'dialog') {
+  handleDialogClick = () => {
+    const { role } = this.props;
+
+    if (role === 'dialog') {
       this.close();
     }
   };
@@ -166,7 +170,7 @@ class Modal extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { sm, lg, centered, backdrop, title, fade, withCloseButton, className, children, ...props } = this.props;
+    const { sm, lg, role, centered, backdrop, title, fade, withCloseButton, className, children, ...props } = this.props;
 
     let body               = null;
     let header             = null;
@@ -222,7 +226,7 @@ class Modal extends React.PureComponent {
     return (
       <div /* eslint-disable-line */
         tabIndex="-1"
-        role="dialog"
+        role={role}
         ref={this.modalRef}
         className={dialogClasses}
         data-backdrop={dataBackdrop}

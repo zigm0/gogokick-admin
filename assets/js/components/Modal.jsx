@@ -20,6 +20,8 @@ export default class Modal extends React.PureComponent {
     title:       PropTypes.string.isRequired,
     buttons:     PropTypes.node,
     lg:          PropTypes.bool,
+    id:          PropTypes.string,
+    role:        PropTypes.string,
     footer:      PropTypes.bool,
     modals:      PropTypes.object.isRequired,
     editorModal: PropTypes.func.isRequired,
@@ -30,6 +32,8 @@ export default class Modal extends React.PureComponent {
   static defaultProps = {
     lg:          false,
     footer:      true,
+    id:          '',
+    role:        'dialog',
     buttons:     '',
     children:    '',
     onBodyClick: () => {}
@@ -51,10 +55,10 @@ export default class Modal extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { name, title, icon, buttons, footer, lg, modals, children, onBodyClick } = this.props;
+    const { name, title, icon, role, buttons, footer, id, lg, modals, children, onBodyClick } = this.props;
 
     return (
-      <BootstrapModal open={modals[name]} onClosed={this.close} lg={lg}>
+      <BootstrapModal open={modals[name]} onClosed={this.close} role={role} lg={lg} id={id}>
         <ModalHeader>
           <Icon name={icon} />
           {title}

@@ -22,13 +22,17 @@ const initialState = {
     ...commonForms
   },
   register: {
-    name: '',
-    email: '',
+    name:     '',
+    email:    '',
     password: '',
     ...commonForms
   },
   projectSettings: {
     name: '',
+    ...commonForms
+  },
+  confirm: {
+    input: '',
     ...commonForms
   }
 };
