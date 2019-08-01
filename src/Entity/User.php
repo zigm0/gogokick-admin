@@ -57,6 +57,13 @@ class User implements UserInterface
     protected $password;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"web"})
+     */
+    protected $avatar;
+
+    /**
      * @var array
      * @ORM\Column(type="array")
      * @Groups({"web"})
@@ -145,6 +152,46 @@ class User implements UserInterface
     public function setName(string $name): User
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param string $avatar
+     *
+     * @return User
+     */
+    public function setAvatar(string $avatar): User
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getProjects(): Collection
+    {
+        return $this->projects;
+    }
+
+    /**
+     * @param Collection $projects
+     *
+     * @return User
+     */
+    public function setProjects(Collection $projects): User
+    {
+        $this->projects = $projects;
 
         return $this;
     }
