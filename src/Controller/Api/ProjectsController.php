@@ -147,7 +147,6 @@ class ProjectsController extends ApiController
                 throw new RuntimeException();
             }
         }
-
         $filename = sprintf('%s/%d.png', $dir, $project->getId());
         file_put_contents($filename, $data);
 
@@ -208,7 +207,23 @@ class ProjectsController extends ApiController
         $project->setBlocks($newBlocks);
         $this->em->flush();
 
-        $projects = $projectRepository->findAll();
+        list(, $data) = explode(';', $screenshot);
+        list(, $data) = explode(',', $data);
+        $data = base64_decode($data);
+
+        $dir = sprintf('%s/public/cdn/%d', $this->getParameter('kernel.project_dir'), $user->getId());
+        if (!file_exists($dir)) {
+            if (!mkdir($dir)) {
+                throw new RuntimeException();
+            }
+        }
+        $filename = sprintf('%s/%d.png', $dir, $project->getId());
+        file_put_contents($filename, $data);
+
+        $project->setScreenshot(sprintf('/cdn/%d/%d.png', $user->getId(), $project->getId()));
+        $this->em->flush();
+
+        $projects = $projectRepository->findBy(['isTemplate' => false]);
 
         return $this->jsonEntityResponse($projects);
     }
