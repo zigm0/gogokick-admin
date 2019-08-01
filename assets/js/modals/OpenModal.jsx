@@ -119,6 +119,7 @@ export default class OpenModal extends React.PureComponent {
         icon="folder-open"
         buttons={buttons}
         onBodyClick={this.handleBodyClick}
+        fixedHeight
         lg
       >
         {this.renderProjects()}

@@ -19,3 +19,14 @@
   }
 
 }
+
+.modal-body {
+  .column {
+    margin-bottom: $gutter-size-sm;
+  }
+}
+
+.modal-body-fixed-height {
+  max-height: 400px;
+  overflow-y: auto;
+}

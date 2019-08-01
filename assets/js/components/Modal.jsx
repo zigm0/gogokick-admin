@@ -23,6 +23,7 @@ export default class Modal extends React.PureComponent {
     id:          PropTypes.string,
     role:        PropTypes.string,
     footer:      PropTypes.bool,
+    fixedHeight: PropTypes.bool,
     modals:      PropTypes.object.isRequired,
     editorModal: PropTypes.func.isRequired,
     onBodyClick: PropTypes.func,
@@ -32,6 +33,7 @@ export default class Modal extends React.PureComponent {
   static defaultProps = {
     lg:          false,
     footer:      true,
+    fixedHeight: false,
     id:          '',
     role:        'dialog',
     buttons:     '',
@@ -55,7 +57,7 @@ export default class Modal extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { name, title, icon, role, buttons, footer, id, lg, modals, children, onBodyClick } = this.props;
+    const { name, title, icon, role, buttons, fixedHeight, footer, id, lg, modals, children, onBodyClick } = this.props;
 
     return (
       <BootstrapModal open={modals[name]} onClosed={this.close} role={role} lg={lg} id={id}>
@@ -63,7 +65,7 @@ export default class Modal extends React.PureComponent {
           <Icon name={icon} />
           {title}
         </ModalHeader>
-        <ModalBody onClick={onBodyClick}>
+        <ModalBody className={fixedHeight ? 'modal-body-fixed-height' : ''} onClick={onBodyClick}>
           {children}
         </ModalBody>
         {footer && (

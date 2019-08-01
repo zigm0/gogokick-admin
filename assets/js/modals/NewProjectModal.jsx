@@ -124,6 +124,7 @@ export default class NewProjectModal extends React.PureComponent {
         icon="file-alt"
         buttons={buttons}
         onBodyClick={this.handleBodyClick}
+        fixedHeight
         lg
       >
         {this.renderProjects()}

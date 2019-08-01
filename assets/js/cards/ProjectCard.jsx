@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { strings } from 'utils';
 import { Card, CardBody, CardFooter } from 'components/bootstrap';
 
 export default class ProjectCard extends React.PureComponent {
@@ -31,8 +32,8 @@ export default class ProjectCard extends React.PureComponent {
             <img src={project.screenshot} className="card-project-thumb" alt="Screenshot" />
           )}
         </CardBody>
-        <CardFooter>
-          {project.name}
+        <CardFooter title={project.name}>
+          {strings.truncate(project.name, 18)}
         </CardFooter>
       </Card>
     );

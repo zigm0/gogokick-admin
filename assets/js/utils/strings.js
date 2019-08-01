@@ -62,7 +62,21 @@ export function stringPluralize(count, singular, plural) {
   return count === 1 ? singular : plural;
 }
 
+/**
+ * @param {string} str
+ * @param {number} maxLen
+ * @returns {string}
+ */
+export function truncate(str, maxLen) {
+  if (str.length > maxLen) {
+    return str.substring(0, maxLen - 3) + '...';
+  }
+
+  return str;
+}
+
 export default {
+  truncate,
   roundRobin:  stringRoundRobin,
   spaceCommas: stringSpaceCommas,
   ucWords:     stringUcWords,
