@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { connect, system, arrays, mapDispatchToProps } from 'utils';
 import { ProjectCard } from 'cards';
-import { Row, Column, Button, Card, CardBody, CardFooter } from 'components/bootstrap';
+import { Row, Column, Button } from 'components/bootstrap';
 import {  Modal } from 'components';
 import * as editorActions from 'actions/editorActions';
 import * as formActions from 'actions/formActions';
@@ -44,7 +43,7 @@ export default class NewProjectModal extends React.PureComponent {
    *
    */
   handleSelectClick = () => {
-    const { editor, editorNewProject } = this.props;
+    const { editor, editorNewProject, editorModal } = this.props;
     const { selected } = this.state;
 
     this.setState({ selected: 0 });
@@ -56,6 +55,10 @@ export default class NewProjectModal extends React.PureComponent {
         if (name) {
           template.name = name;
           editorNewProject(template);
+          editorModal({
+            modal: 'newProject',
+            open:  false
+          });
         }
       });
   };
