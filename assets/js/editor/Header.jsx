@@ -123,6 +123,9 @@ export default class Header extends React.PureComponent {
             <Button icon="eye" sm>
               Preview
             </Button>
+            <Button icon="download" sm>
+              Export
+            </Button>
             <Button icon="cog" onClick={this.handleSettingsClick} sm>
               Settings
             </Button>
