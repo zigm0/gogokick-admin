@@ -31,6 +31,16 @@
   overflow-y: auto;
 }
 
-#modal-confirm {
+.modal-project-settings-delete-btn {
+  margin-right: auto !important;
+}
+
+.modal-backdrop-confirm {
+  z-index: 1999;
+  opacity: 0.8 !important;
+}
+
+#modal-confirm,
+#modal-prompt {
   z-index: 2000;
 }

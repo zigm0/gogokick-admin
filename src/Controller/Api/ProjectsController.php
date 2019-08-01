@@ -70,6 +70,31 @@ class ProjectsController extends ApiController
     }
 
     /**
+     * @Route("/{id}", name="_delete", methods={"DELETE"})
+     *
+     * @param int $id
+     * @param ProjectRepository $projectRepository
+     *
+     * @return JsonResponse
+     */
+    public function deleteAction($id, ProjectRepository $projectRepository)
+    {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createAccessDeniedException();
+        }
+        $project = $projectRepository->findByID($id);
+        if (!$project || $project->getUser()->getId() !== $user->getId()) {
+            throw $this->createNotFoundException();
+        }
+
+        $this->em->remove($project);
+        $this->em->flush();
+
+        return $this->jsonEntityResponse($projectRepository->findByUser($user));
+    }
+
+    /**
      * @Route("/{id}", name="_save", methods={"POST"})
      *
      * @param int               $id

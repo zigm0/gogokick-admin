@@ -11,6 +11,7 @@ export const EDITOR_REDO           = 'EDITOR_REDO';
 export const EDITOR_NEW_PROJECT    = 'EDITOR_NEW_PROJECT';
 export const EDITOR_OPEN_PROJECT   = 'EDITOR_OPEN_PROJECT';
 export const EDITOR_UPDATE_PROJECT = 'EDITOR_UPDATE_PROJECT';
+export const EDITOR_DELETE_PROJECT = 'EDITOR_DELETE_PROJECT';
 export const EDITOR_DROP           = 'EDITOR_DROP';
 export const EDITOR_MODAL          = 'EDITOR_MODAL';
 
@@ -169,6 +170,30 @@ export const editorSaveProject = () => {
           });
         });
     });
+  };
+};
+
+/**
+ * @returns {Function}
+ */
+export const editorDeleteProject = () => {
+  return (dispatch, getState) => {
+    const { editor } = getState();
+
+    dispatch(editorBusy(true));
+    api.req('DELETE', router.generate('api_projects_delete', { id: editor.projectId }))
+      .then((payload) => {
+        dispatch({
+          type: EDITOR_PROJECTS,
+          payload
+        });
+        dispatch({
+          type: EDITOR_DELETE_PROJECT
+        });
+      })
+      .finally(() => {
+        dispatch(editorBusy(false));
+      });
   };
 };
 

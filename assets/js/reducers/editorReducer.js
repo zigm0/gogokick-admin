@@ -251,6 +251,21 @@ const onEditorNewProject = (state, action) => {
 
 /**
  * @param {*} state
+ * @returns {*}
+ */
+const onEditorDeleteProject = (state) => {
+  return {
+    ...state,
+    projectId:    0,
+    projectName:  'Blank',
+    canvasBlocks: [[]],
+    blockIndex:   0,
+    isChanged:    false
+  }
+};
+
+/**
+ * @param {*} state
  * @param {*} action
  * @returns {*}
  */
@@ -319,6 +334,7 @@ const handlers = {
   [types.EDITOR_TEMPLATES]:      onEditorTemplates,
   [types.EDITOR_SAVING]:         onEditorSaving,
   [types.EDITOR_CHANGED]:        onEditorChanged,
+  [types.EDITOR_DELETE_PROJECT]: onEditorDeleteProject,
   [types.EDITOR_UPDATE_PROJECT]: onEditorUpdateProject,
   [types.EDITOR_NEW_PROJECT]:    onEditorNewProject,
   [types.EDITOR_OPEN_PROJECT]:   onEditorOpenProject

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, mapDispatchToProps } from 'utils';
+import { connect, system, mapDispatchToProps } from 'utils';
 import { Button } from 'components/bootstrap';
 import { Form, Input } from 'components/forms';
 import { Modal } from 'components';
@@ -22,7 +22,8 @@ export default class ProjectSettingsModal extends React.PureComponent {
     editor:              PropTypes.object.isRequired,
     editorModal:         PropTypes.func.isRequired,
     formChanges:         PropTypes.func.isRequired,
-    editorUpdateProject: PropTypes.func.isRequired
+    editorUpdateProject: PropTypes.func.isRequired,
+    editorDeleteProject: PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -67,6 +68,24 @@ export default class ProjectSettingsModal extends React.PureComponent {
   };
 
   /**
+   *
+   */
+  handleDeleteClick = () => {
+    const { editorDeleteProject, editorModal } = this.props;
+
+    system.confirm('Are you SURE you want to delete this project? This action cannot be undone.')
+      .then((resp) => {
+        if (resp) {
+          editorDeleteProject();
+          editorModal({
+            modal: 'settings',
+            open:  false
+          });
+        }
+      });
+  };
+
+  /**
    * @returns {*}
    */
   renderForm = () => {
@@ -88,9 +107,14 @@ export default class ProjectSettingsModal extends React.PureComponent {
    */
   render() {
     const buttons = (
-      <Button onClick={this.handleSaveClick} sm>
-        Save
-      </Button>
+      <>
+        <Button className="modal-project-settings-delete-btn" theme="danger" onClick={this.handleDeleteClick} sm>
+          Delete Project
+        </Button>
+        <Button onClick={this.handleSaveClick} sm>
+          Save
+        </Button>
+      </>
     );
 
     return (
