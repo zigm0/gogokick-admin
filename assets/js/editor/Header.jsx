@@ -107,7 +107,7 @@ export default class Header extends React.PureComponent {
           <h1 className="brand d-none d-lg-block d-md-block d-xl-block">DragStarter</h1>
         </div>
         <div className="editor-header-project-name d-none d-xl-block">
-          {editor.projectName} {editor.isChanged && '*'}
+          <div>{editor.projectName} {editor.isChanged && '*'}</div>
         </div>
         <div className="editor-header-middle">
           <div className="editor-header-buttons d-none d-lg-block d-xl-block">
