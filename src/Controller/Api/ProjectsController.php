@@ -221,9 +221,15 @@ class ProjectsController extends ApiController
      */
     protected function saveScreenshot(User $user, Project $project, $data)
     {
-        list(, $data) = explode(';', $data);
+        list($type, $data) = explode(';', $data);
+        if ($type !== 'data:image/png') {
+            throw new RuntimeException('Invalid screenshot format.');
+        }
         list(, $data) = explode(',', $data);
         $data = base64_decode($data);
+        if (strlen($data) > 500000) {
+            throw new RuntimeException('Screenshot is too big.');
+        }
 
         $dir = sprintf('%s/public/cdn/%d', $this->getParameter('kernel.project_dir'), $user->getId());
         if (!file_exists($dir)) {
@@ -233,6 +239,7 @@ class ProjectsController extends ApiController
                 );
             }
         }
+
         $filename = sprintf('%s/%d.png', $dir, $project->getId());
         if (!file_put_contents($filename, $data)) {
             throw new RuntimeException(
