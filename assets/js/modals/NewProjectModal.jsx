@@ -46,21 +46,34 @@ export default class NewProjectModal extends React.PureComponent {
     const { editor, editorNewProject, editorModal } = this.props;
     const { selected } = this.state;
 
-    this.setState({ selected: 0 });
-    const template = arrays.findByID(editor.templates, selected);
+    const create = () => {
+      this.setState({ selected: 0 });
+      const template = arrays.findByID(editor.templates, selected);
 
-    system.confirm('Project Name', template.name)
-      .then((name) => {
-        name = $.trim(name);
-        if (name) {
-          template.name = name;
-          editorNewProject(template);
-          editorModal({
-            modal: 'newProject',
-            open:  false
-          });
-        }
-      });
+      system.prompt('Project Name', template.name)
+        .then((name) => {
+          name = $.trim(name);
+          if (name) {
+            template.name = name;
+            editorNewProject(template);
+            editorModal({
+              modal: 'newProject',
+              open:  false
+            });
+          }
+        });
+    };
+
+    if (editor.isChanged) {
+      system.confirm('You have unsaved changes to the current project. Create a new project?')
+        .then((resp) => {
+          if (resp) {
+            create();
+          }
+        });
+    } else {
+      create();
+    }
   };
 
   /**

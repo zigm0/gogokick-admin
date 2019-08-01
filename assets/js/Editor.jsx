@@ -5,7 +5,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import { connect, mapDispatchToProps } from 'utils';
 import { Row, Column } from 'components/bootstrap';
 import { Loading } from 'components';
-import { ProjectSettingsModal, LoginModal, RegisterModal, OpenModal, NewProjectModal, ConfirmModal } from 'modals';
+import { ProjectSettingsModal, LoginModal, RegisterModal, OpenModal, NewProjectModal, PromptModal, ConfirmModal } from 'modals';
 import * as editorActions from 'actions/editorActions';
 import * as userActions from 'actions/userActions';
 import Sidebar from 'editor/Sidebar';
@@ -75,6 +75,7 @@ export default class Editor extends React.PureComponent {
         <OpenModal />
         <LoginModal />
         <ConfirmModal />
+        <PromptModal />
         <RegisterModal />
         <NewProjectModal />
         <ProjectSettingsModal />

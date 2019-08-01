@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, mapDispatchToProps } from 'utils';
+import { connect, system, mapDispatchToProps } from 'utils';
 import { ProjectCard } from 'cards';
 import { Row, Column, Button } from 'components/bootstrap';
 import {  Modal } from 'components';
@@ -8,7 +8,7 @@ import * as editorActions from 'actions/editorActions';
 import * as formActions from 'actions/formActions';
 
 const mapStateToProps = state => ({
-  modals:   state.editor.modals,
+  editor:   state.editor,
   projects: state.editor.projects
 });
 
@@ -18,7 +18,7 @@ const mapStateToProps = state => ({
 )
 export default class OpenModal extends React.PureComponent {
   static propTypes = {
-    modals:              PropTypes.object.isRequired,
+    editor:              PropTypes.object.isRequired,
     projects:            PropTypes.array.isRequired,
     editorModal:         PropTypes.func.isRequired,
     editorOpenProject:   PropTypes.func.isRequired,
@@ -44,15 +44,28 @@ export default class OpenModal extends React.PureComponent {
    *
    */
   handleSelectClick = () => {
-    const { editorModal, editorOpenProject } = this.props;
+    const { editor, editorModal, editorOpenProject } = this.props;
     const { selected } = this.state;
 
-    this.setState({ selected: 0 });
-    editorOpenProject(selected);
-    editorModal({
-      modal: 'open',
-      open:  false
-    });
+    const create = () => {
+      this.setState({ selected: 0 });
+      editorOpenProject(selected);
+      editorModal({
+        modal: 'open',
+        open:  false
+      });
+    };
+
+    if (editor.isChanged) {
+      system.confirm('You have unsaved changes to the current project. Open a new project?')
+        .then((resp) => {
+          if (resp) {
+            create();
+          }
+        });
+    } else {
+      create();
+    }
   };
 
   /**

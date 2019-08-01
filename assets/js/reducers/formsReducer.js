@@ -31,7 +31,7 @@ const initialState = {
     projectName: '',
     ...commonForms
   },
-  confirm: {
+  prompt: {
     input: '',
     ...commonForms
   }
