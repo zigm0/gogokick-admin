@@ -3,6 +3,7 @@ namespace App\Controller\Api;
 
 use App\Entity\Block;
 use App\Entity\Project;
+use App\Entity\User;
 use App\Http\Request;
 use App\Repository\BlockRepository;
 use App\Repository\ProjectRepository;
@@ -127,28 +128,12 @@ class ProjectsController extends ApiController
             }
         }
 
-        list(, $data) = explode(';', $screenshot);
-        list(, $data) = explode(',', $data);
-        $data = base64_decode($data);
-
-        $dir = sprintf('%s/public/cdn/%d', $this->getParameter('kernel.project_dir'), $user->getId());
-        if (!file_exists($dir)) {
-            if (!mkdir($dir)) {
-                throw new RuntimeException();
-            }
-        }
-        $filename = sprintf('%s/%d.png', $dir, $project->getId());
-        file_put_contents($filename, $data);
-
         $project->setName($name);
         $project->setBlocks($updatedBlocks);
-        $project->setScreenshot(sprintf('/cdn/%d/%d.png', $user->getId(), $project->getId()));
-
+        $project->setScreenshot($this->saveScreenshot($user, $project, $screenshot));
         $this->em->flush();
 
-        $projects = $projectRepository->findBy(['isTemplate' => false]);
-
-        return $this->jsonEntityResponse($projects);
+        return $this->jsonEntityResponse($projectRepository->findByUser($user));
     }
 
     /**
@@ -182,7 +167,7 @@ class ProjectsController extends ApiController
             ->setScreenshot('');
         $this->em->persist($project);
 
-        $sortOrder     = 0;
+        $sortOrder = 0;
         $newBlocks = new ArrayCollection();
         foreach($blocks as $block) {
             $block = (new Block())
@@ -193,28 +178,44 @@ class ProjectsController extends ApiController
             $newBlocks->add($block);
         }
 
+        // Save project first because the screenshot filename needs the project id.
         $project->setBlocks($newBlocks);
         $this->em->flush();
+        $project->setScreenshot($this->saveScreenshot($user, $project, $screenshot));
+        $this->em->flush();
 
-        list(, $data) = explode(';', $screenshot);
+        return $this->jsonEntityResponse($projectRepository->findByUser($user));
+    }
+
+    /**
+     * @param User    $user
+     * @param Project $project
+     * @param string $data
+     *
+     * @return string
+     */
+    protected function saveScreenshot(User $user, Project $project, $data)
+    {
+        list(, $data) = explode(';', $data);
         list(, $data) = explode(',', $data);
         $data = base64_decode($data);
 
         $dir = sprintf('%s/public/cdn/%d', $this->getParameter('kernel.project_dir'), $user->getId());
         if (!file_exists($dir)) {
             if (!mkdir($dir)) {
-                throw new RuntimeException();
+                throw new RuntimeException(
+                    sprintf('Unable to make directory %s', $dir)
+                );
             }
         }
         $filename = sprintf('%s/%d.png', $dir, $project->getId());
-        file_put_contents($filename, $data);
+        if (!file_put_contents($filename, $data)) {
+            throw new RuntimeException(
+                sprintf('Unable to write file %s', $filename)
+            );
+        }
 
-        $project->setScreenshot(sprintf('/cdn/%d/%d.png', $user->getId(), $project->getId()));
-        $this->em->flush();
-
-        $projects = $projectRepository->findBy(['isTemplate' => false]);
-
-        return $this->jsonEntityResponse($projects);
+        return sprintf('/cdn/%d/%d.png', $user->getId(), $project->getId());
     }
 
     /**
