@@ -4,7 +4,9 @@ namespace App\Controller\Api;
 use App\Entity\Block;
 use App\Entity\Project;
 use App\Entity\User;
+use App\Http\ModelRequestHandler;
 use App\Http\Request;
+use App\Model\ProjectModel;
 use App\Repository\BlockRepository;
 use App\Repository\ProjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -97,10 +99,11 @@ class ProjectsController extends ApiController
     /**
      * @Route("/{id}", name="_save", methods={"POST"})
      *
-     * @param int               $id
-     * @param Request           $request
-     * @param ProjectRepository $projectRepository
-     * @param BlockRepository   $blockRepository
+     * @param int                 $id
+     * @param Request             $request
+     * @param ProjectRepository   $projectRepository
+     * @param BlockRepository     $blockRepository
+     * @param ModelRequestHandler $handler
      *
      * @return JsonResponse
      */
@@ -108,7 +111,8 @@ class ProjectsController extends ApiController
         $id,
         Request $request,
         ProjectRepository $projectRepository,
-        BlockRepository $blockRepository
+        BlockRepository $blockRepository,
+        ModelRequestHandler $handler
     )
     {
         $user = $this->getUser();
@@ -123,19 +127,12 @@ class ProjectsController extends ApiController
             throw $this->createAccessDeniedException();
         }
 
-        $name       = $request->json->get('name');
-        $blocks     = $request->json->get('blocks', []);
-        $screenshot = $request->json->get('screenshot');
-        if (!is_array($blocks)) {
-            throw new BadRequestHttpException();
-        }
-        if (!$screenshot || !$name) {
-            throw new BadRequestHttpException();
-        }
+        $model = new ProjectModel();
+        $handler->handleRequest($model, $request);
 
         $sortOrder     = 0;
         $updatedBlocks = new ArrayCollection();
-        foreach($blocks as $block) {
+        foreach($model->getBlocks() as $block) {
             if ($block['id'][0] === 'n') {
                 $block = (new Block())
                     ->setType(Block::TYPES[$block['type']])
@@ -153,9 +150,9 @@ class ProjectsController extends ApiController
             }
         }
 
-        $project->setName($name);
+        $project->setName($model->getName());
         $project->setBlocks($updatedBlocks);
-        $project->setScreenshot($this->saveScreenshot($user, $project, $screenshot));
+        $project->setScreenshot($this->saveScreenshot($user, $project, $model->getScreenshot()));
         $this->em->flush();
 
         return $this->jsonEntityResponse($projectRepository->findByUser($user));
@@ -164,37 +161,31 @@ class ProjectsController extends ApiController
     /**
      * @Route(name="_save_new", methods={"PUT"})
      *
-     * @param Request           $request
-     * @param ProjectRepository $projectRepository
+     * @param Request             $request
+     * @param ProjectRepository   $projectRepository
+     * @param ModelRequestHandler $handler
      *
      * @return JsonResponse
      */
-    public function saveNewAction(Request $request, ProjectRepository $projectRepository)
+    public function saveNewAction(Request $request, ProjectRepository $projectRepository, ModelRequestHandler $handler)
     {
         $user = $this->getUser();
         if (!$user) {
             throw $this->createAccessDeniedException();
         }
 
-        $name       = $request->json->get('name');
-        $blocks     = $request->json->get('blocks', []);
-        $screenshot = $request->json->get('screenshot');
-        if (!is_array($blocks)) {
-            throw new BadRequestHttpException();
-        }
-        if (!$screenshot || !$name) {
-            throw new BadRequestHttpException();
-        }
+        $model = new ProjectModel();
+        $handler->handleRequest($model, $request);
 
         $project = (new Project())
             ->setUser($user)
-            ->setName($name)
+            ->setName($model->getName())
             ->setScreenshot('');
         $this->em->persist($project);
 
         $sortOrder = 0;
         $newBlocks = new ArrayCollection();
-        foreach($blocks as $block) {
+        foreach($model->getBlocks() as $block) {
             $block = (new Block())
                 ->setType(Block::TYPES[$block['type']])
                 ->setProject($project)
@@ -206,7 +197,7 @@ class ProjectsController extends ApiController
         // Save project first because the screenshot filename needs the project id.
         $project->setBlocks($newBlocks);
         $this->em->flush();
-        $project->setScreenshot($this->saveScreenshot($user, $project, $screenshot));
+        $project->setScreenshot($this->saveScreenshot($user, $project, $model->getScreenshot()));
         $this->em->flush();
 
         return $this->jsonEntityResponse($projectRepository->findByUser($user));
