@@ -1,6 +1,7 @@
 .idea
 public/build
 node_modules
+public/cdn
 
 ###> symfony/framework-bundle ###
 /.env.local

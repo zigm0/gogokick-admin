@@ -7,6 +7,7 @@ use App\Http\Request;
 use App\Repository\BlockRepository;
 use App\Repository\ProjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -136,13 +137,27 @@ class ProjectsController extends ApiController
             }
         }
 
+        list(, $data) = explode(';', $screenshot);
+        list(, $data) = explode(',', $data);
+        $data = base64_decode($data);
+
+        $dir = sprintf('%s/public/cdn/%d', $this->getParameter('kernel.project_dir'), $user->getId());
+        if (!file_exists($dir)) {
+            if (!mkdir($dir)) {
+                throw new RuntimeException();
+            }
+        }
+
+        $filename = sprintf('%s/%d.png', $dir, $project->getId());
+        file_put_contents($filename, $data);
+
         $project->setName($name);
         $project->setBlocks($updatedBlocks);
-        $project->setScreenshot($screenshot);
+        $project->setScreenshot(sprintf('/cdn/%d/%d.png', $user->getId(), $project->getId()));
 
         $this->em->flush();
 
-        $projects = $projectRepository->findAll();
+        $projects = $projectRepository->findBy(['isTemplate' => false]);
 
         return $this->jsonEntityResponse($projects);
     }
