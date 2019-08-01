@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect, mapDispatchToProps } from 'utils';
 import { Modal as BootstrapModal, ModalHeader, ModalBody, ModalFooter, Button } from 'components/bootstrap';
-import { Icon } from 'components';
+import { Icon, Avatar } from 'components';
 import * as editorActions from 'actions/editorActions';
 
 const mapStateToProps = state => ({
@@ -16,8 +16,9 @@ const mapStateToProps = state => ({
 export default class Modal extends React.PureComponent {
   static propTypes = {
     name:        PropTypes.string.isRequired,
-    icon:        PropTypes.string.isRequired,
     title:       PropTypes.string.isRequired,
+    icon:        PropTypes.string,
+    avatar:      PropTypes.string,
     buttons:     PropTypes.node,
     lg:          PropTypes.bool,
     id:          PropTypes.string,
@@ -35,6 +36,8 @@ export default class Modal extends React.PureComponent {
     footer:      true,
     fixedHeight: false,
     id:          '',
+    icon:        '',
+    avatar:      '',
     role:        'dialog',
     buttons:     '',
     children:    '',
@@ -57,12 +60,17 @@ export default class Modal extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { name, title, icon, role, buttons, fixedHeight, footer, id, lg, modals, children, onBodyClick } = this.props;
+    const { name, title, icon, avatar, role, buttons, fixedHeight, footer, id, lg, modals, children, onBodyClick } = this.props;
 
     return (
       <BootstrapModal open={modals[name]} onClosed={this.close} role={role} lg={lg} id={id}>
         <ModalHeader>
-          <Icon name={icon} />
+          {icon && (
+            <Icon name={icon} />
+          )}
+          {avatar && (
+            <Avatar src={avatar} sm />
+          )}
           {title}
         </ModalHeader>
         <ModalBody className={fixedHeight ? 'modal-body-fixed-height' : ''} onClick={onBodyClick}>

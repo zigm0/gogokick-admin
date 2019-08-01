@@ -11,6 +11,7 @@ const initialState = {
   mode:          'kickstarter',
   projects:      [],
   templates:     [],
+  teamMember:    null,
   canvasBlocks:  [[]],
   sidebarBlocks: [
     {
@@ -32,9 +33,29 @@ const initialState = {
     confirm:    false,
     settings:   false,
     register:   false,
-    member:     false,
-    newProject: false
-  }
+    newProject: false,
+    teamMember: false
+  },
+  teamMembers: [
+    {
+      id:     1,
+      name:   'Scott K.',
+      role:   'Editor/Lead',
+      avatar: '/images/avatar-1.jpeg'
+    },
+    {
+      id:     2,
+      name:   'Val S.',
+      role:   'Graphics',
+      avatar: '/images/avatar-2.jpeg'
+    },
+    {
+      id:     3,
+      name:   'John R.',
+      role:   'Owner',
+      avatar: '/images/avatar-3.jpeg'
+    },
+  ],
 };
 
 let idIndex = 9;
@@ -324,12 +345,27 @@ const onEditorUpdateProject = (state, action) => {
   }
 };
 
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onEditorTeamMember = (state, action) => {
+  const teamMember = objects.clone(action.payload);
+
+  return {
+    ...state,
+    teamMember
+  };
+};
+
 const handlers = {
   [types.EDITOR_BUSY]:           onEditorBusy,
   [types.EDITOR_DROP]:           onEditorDrop,
   [types.EDITOR_UNDO]:           onEditorUndo,
   [types.EDITOR_REDO]:           onEditorRedo,
   [types.EDITOR_MODAL]:          onEditorModal,
+  [types.EDITOR_TEAM_MEMBER]:    onEditorTeamMember,
   [types.EDITOR_PROJECTS]:       onEditorProjects,
   [types.EDITOR_TEMPLATES]:      onEditorTemplates,
   [types.EDITOR_SAVING]:         onEditorSaving,

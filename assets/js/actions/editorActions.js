@@ -14,6 +14,7 @@ export const EDITOR_UPDATE_PROJECT = 'EDITOR_UPDATE_PROJECT';
 export const EDITOR_DELETE_PROJECT = 'EDITOR_DELETE_PROJECT';
 export const EDITOR_DROP           = 'EDITOR_DROP';
 export const EDITOR_MODAL          = 'EDITOR_MODAL';
+export const EDITOR_TEAM_MEMBER    = 'EDITOR_TEAM_MEMBER';
 
 /**
  * @param {*} payload
@@ -57,6 +58,17 @@ export const editorRedo = (payload) => {
     type: EDITOR_REDO,
     payload
   }
+};
+
+/**
+ * @param {*} payload
+ * @returns {{payload: *, type: string}}
+ */
+export const editorTeamMember = (payload) => {
+  return {
+    type: EDITOR_TEAM_MEMBER,
+    payload
+  };
 };
 
 /**
