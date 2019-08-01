@@ -36,7 +36,7 @@ export default class Editor extends React.PureComponent {
     const { userMe, editorOpenProject } = this.props;
 
     userMe();
-    editorOpenProject(1);
+    editorOpenProject(0);
   }
 
   /**

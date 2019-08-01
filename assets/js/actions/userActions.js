@@ -1,4 +1,5 @@
 import { api, router } from 'utils';
+import { editorFetchProjects } from './editorActions';
 
 export const USER_ME    = 'USER_ME';
 export const USER_ERROR = 'USER_ERROR';
@@ -59,6 +60,7 @@ export const userLogin = () => {
             type: USER_ME,
             payload
           });
+          dispatch(editorFetchProjects());
         }
       })
       .finally(() => {

@@ -11,7 +11,6 @@ use App\Repository\BlockRepository;
 use App\Repository\ProjectRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
-use Exception;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -62,9 +61,11 @@ class ProjectsController extends ApiController
     public function openAction($id, ProjectRepository $projectRepository)
     {
         $user = $this->getUser();
-        if (!$user) {
-            throw $this->createAccessDeniedException();
+        if (!$user || $id == '0') {
+            $templates = $this->getTemplates();
+            return new JsonResponse($templates[1]);
         }
+
         $project = $projectRepository->findByID($id);
         if (!$project || $project->getUser()->getId() !== $user->getId()) {
             throw $this->createNotFoundException();
@@ -108,7 +109,7 @@ class ProjectsController extends ApiController
      * @param ModelRequestHandler $handler
      *
      * @return JsonResponse
-     * @throws Exception
+     * @throws \Exception
      */
     public function saveAction(
         $id,
