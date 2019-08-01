@@ -294,18 +294,34 @@ const onEditorTemplates = (state, action) => {
   };
 };
 
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onEditorUpdateProject = (state, action) => {
+  const settings = objects.clone(action.payload);
+
+  return {
+    ...state,
+    projectName: settings.projectName,
+    isChanged:   true
+  }
+};
+
 const handlers = {
-  [types.EDITOR_BUSY]:         onEditorBusy,
-  [types.EDITOR_DROP]:         onEditorDrop,
-  [types.EDITOR_UNDO]:         onEditorUndo,
-  [types.EDITOR_REDO]:         onEditorRedo,
-  [types.EDITOR_MODAL]:        onEditorModal,
-  [types.EDITOR_PROJECTS]:     onEditorProjects,
-  [types.EDITOR_TEMPLATES]:    onEditorTemplates,
-  [types.EDITOR_SAVING]:       onEditorSaving,
-  [types.EDITOR_CHANGED]:      onEditorChanged,
-  [types.EDITOR_NEW_PROJECT]:  onEditorNewProject,
-  [types.EDITOR_OPEN_PROJECT]: onEditorOpenProject
+  [types.EDITOR_BUSY]:           onEditorBusy,
+  [types.EDITOR_DROP]:           onEditorDrop,
+  [types.EDITOR_UNDO]:           onEditorUndo,
+  [types.EDITOR_REDO]:           onEditorRedo,
+  [types.EDITOR_MODAL]:          onEditorModal,
+  [types.EDITOR_PROJECTS]:       onEditorProjects,
+  [types.EDITOR_TEMPLATES]:      onEditorTemplates,
+  [types.EDITOR_SAVING]:         onEditorSaving,
+  [types.EDITOR_CHANGED]:        onEditorChanged,
+  [types.EDITOR_UPDATE_PROJECT]: onEditorUpdateProject,
+  [types.EDITOR_NEW_PROJECT]:    onEditorNewProject,
+  [types.EDITOR_OPEN_PROJECT]:   onEditorOpenProject
 };
 
 /**

@@ -162,7 +162,7 @@ class Modal extends React.PureComponent {
     const { role } = this.props;
 
     if (role === 'dialog') {
-      this.close();
+      // this.close();
     }
   };
 

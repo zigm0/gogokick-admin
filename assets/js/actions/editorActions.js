@@ -1,17 +1,18 @@
 import html2canvas from 'html2canvas';
 import { api, router } from 'utils';
 
-export const EDITOR_BUSY         = 'EDITOR_BUSY';
-export const EDITOR_CHANGED      = 'EDITOR_CHANGED';
-export const EDITOR_SAVING       = 'EDITOR_SAVING';
-export const EDITOR_PROJECTS     = 'EDITOR_PROJECTS';
-export const EDITOR_TEMPLATES    = 'EDITOR_TEMPLATES';
-export const EDITOR_UNDO         = 'EDITOR_UNDO';
-export const EDITOR_REDO         = 'EDITOR_REDO';
-export const EDITOR_NEW_PROJECT  = 'EDITOR_NEW_PROJECT';
-export const EDITOR_OPEN_PROJECT = 'EDITOR_OPEN_PROJECT';
-export const EDITOR_DROP         = 'EDITOR_DROP';
-export const EDITOR_MODAL        = 'EDITOR_MODAL';
+export const EDITOR_BUSY           = 'EDITOR_BUSY';
+export const EDITOR_CHANGED        = 'EDITOR_CHANGED';
+export const EDITOR_SAVING         = 'EDITOR_SAVING';
+export const EDITOR_PROJECTS       = 'EDITOR_PROJECTS';
+export const EDITOR_TEMPLATES      = 'EDITOR_TEMPLATES';
+export const EDITOR_UNDO           = 'EDITOR_UNDO';
+export const EDITOR_REDO           = 'EDITOR_REDO';
+export const EDITOR_NEW_PROJECT    = 'EDITOR_NEW_PROJECT';
+export const EDITOR_OPEN_PROJECT   = 'EDITOR_OPEN_PROJECT';
+export const EDITOR_UPDATE_PROJECT = 'EDITOR_UPDATE_PROJECT';
+export const EDITOR_DROP           = 'EDITOR_DROP';
+export const EDITOR_MODAL          = 'EDITOR_MODAL';
 
 /**
  * @param {*} payload
@@ -168,6 +169,17 @@ export const editorSaveProject = () => {
           });
         });
     });
+  };
+};
+
+/**
+ * @param {*} payload
+ * @returns {{payload: *, type: string}}
+ */
+export const editorUpdateProject = (payload) => {
+  return {
+    type: EDITOR_UPDATE_PROJECT,
+    payload
   };
 };
 

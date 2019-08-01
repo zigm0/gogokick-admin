@@ -8,6 +8,7 @@ import * as editorActions from 'actions/editorActions';
 import * as formActions from 'actions/formActions';
 
 const mapStateToProps = state => ({
+  forms:  state.forms,
   editor: state.editor
 });
 
@@ -17,9 +18,11 @@ const mapStateToProps = state => ({
 )
 export default class ProjectSettingsModal extends React.PureComponent {
   static propTypes = {
-    editor:      PropTypes.object.isRequired,
-    editorModal: PropTypes.func.isRequired,
-    formChanges: PropTypes.func.isRequired
+    forms:               PropTypes.object.isRequired,
+    editor:              PropTypes.object.isRequired,
+    editorModal:         PropTypes.func.isRequired,
+    formChanges:         PropTypes.func.isRequired,
+    editorUpdateProject: PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -31,7 +34,7 @@ export default class ProjectSettingsModal extends React.PureComponent {
     const { editor, formChanges } = this.props;
 
     formChanges('projectSettings', {
-      name: editor.projectName
+      projectName: editor.projectName
     });
   }
 
@@ -43,10 +46,25 @@ export default class ProjectSettingsModal extends React.PureComponent {
 
     if (prevProps.editor.projectName !== editor.projectName) {
       formChanges('projectSettings', {
-        name: editor.projectName
+        projectName: editor.projectName
       });
     }
   }
+
+  /**
+   *
+   */
+  handleSaveClick = () => {
+    const { forms, editorModal, editorUpdateProject } = this.props;
+
+    editorUpdateProject({
+      projectName: forms.projectSettings.projectName
+    });
+    editorModal({
+      modal: 'settings',
+      open:  false
+    });
+  };
 
   /**
    * @returns {*}
@@ -55,7 +73,7 @@ export default class ProjectSettingsModal extends React.PureComponent {
     return (
       <Form name="projectSettings">
         <Input
-          name="name"
+          name="projectName"
           type="text"
           label="Project Name"
           id="input-project-settings-name"
@@ -63,18 +81,6 @@ export default class ProjectSettingsModal extends React.PureComponent {
         />
       </Form>
     );
-  };
-
-  /**
-   * @param {Event} e
-   */
-  handleSaveClick = (e) => {
-    const { editorModal } = this.props;
-
-    editorModal({
-      modal: 'settings',
-      open:  false
-    });
   };
 
   /**

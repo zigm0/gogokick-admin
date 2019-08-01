@@ -28,7 +28,7 @@ const initialState = {
     ...commonForms
   },
   projectSettings: {
-    name: '',
+    projectName: '',
     ...commonForms
   },
   confirm: {
