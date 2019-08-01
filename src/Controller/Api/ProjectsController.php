@@ -190,7 +190,7 @@ class ProjectsController extends ApiController
         $project = (new Project())
             ->setUser($user)
             ->setName($name)
-            ->setScreenshot($screenshot);
+            ->setScreenshot('');
         $this->em->persist($project);
 
         $sortOrder     = 0;
