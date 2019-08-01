@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { connect, system, arrays, mapDispatchToProps } from 'utils';
+import { ProjectCard } from 'cards';
 import { Row, Column, Button, Card, CardBody, CardFooter } from 'components/bootstrap';
 import {  Modal } from 'components';
 import * as editorActions from 'actions/editorActions';
@@ -93,17 +94,11 @@ export default class NewProjectModal extends React.PureComponent {
       <Row>
         {editor.templates.map(project => (
           <Column key={project.id} xl={3}>
-            <Card
-              className={classNames('card-project', { 'card-selected': selected === project.id })}
-              onClick={e => this.handleCardClick(e, project)}
-            >
-              <CardBody>
-                <div className="card-project-thumb" style={{ backgroundImage: `url(${project.screenshot})`}} />
-              </CardBody>
-              <CardFooter>
-                {project.name}
-              </CardFooter>
-            </Card>
+            <ProjectCard
+              project={project}
+              selected={selected === project.id}
+              onClick={this.handleCardClick}
+            />
           </Column>
         ))}
       </Row>

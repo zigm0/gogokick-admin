@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { connect, mapDispatchToProps } from 'utils';
-import { Row, Column, Button, Card, CardBody, CardFooter } from 'components/bootstrap';
+import { ProjectCard } from 'cards';
+import { Row, Column, Button } from 'components/bootstrap';
 import {  Modal } from 'components';
 import * as editorActions from 'actions/editorActions';
 import * as formActions from 'actions/formActions';
@@ -89,17 +89,11 @@ export default class OpenModal extends React.PureComponent {
       <Row>
         {projects.map(project => (
           <Column key={project.id} xl={3}>
-            <Card
-              className={classNames('card-project', { 'card-selected': selected === project.id })}
-              onClick={e => this.handleCardClick(e, project)}
-            >
-              <CardBody>
-                <div className="card-project-thumb" style={{ backgroundImage: `url(${project.screenshot})`}} />
-              </CardBody>
-              <CardFooter>
-                {project.name}
-              </CardFooter>
-            </Card>
+            <ProjectCard
+              project={project}
+              selected={selected === project.id}
+              onClick={this.handleCardClick}
+            />
           </Column>
         ))}
       </Row>
