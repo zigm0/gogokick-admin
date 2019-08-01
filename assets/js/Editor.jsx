@@ -60,7 +60,7 @@ export default class Editor extends React.PureComponent {
       <div className={classes}>
         <DragDropContext onDragEnd={this.handleDragEnd}>
           <Header />
-          <Row>
+          <Row className="editor-body">
             <Column className="editor-sidebar-col d-none d-lg-block d-xl-block" xl={2} lg={3} md={12}>
               <Sidebar />
             </Column>
