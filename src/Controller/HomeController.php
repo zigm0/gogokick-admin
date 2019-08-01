@@ -15,4 +15,12 @@ class HomeController extends Controller
     {
         return $this->render('home/index.html.twig');
     }
+
+    /**
+     * @Route("/editor", name="editor")
+     */
+    public function editorAction()
+    {
+        return $this->render('editor/index.html.twig');
+    }
 }

@@ -1,0 +1,29 @@
+@import "../vars";
+
+html, body {
+  height: 100%;
+  font-weight: 300;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+}
+
+body {
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  background-color: #FFF;
+  overflow-x: hidden;
+}
+
+a {
+  color: $color-link;
+
+  &:hover {
+    color: lighten($color-link, 10%);
+  }
+}
+
+
+.app-container {
+  min-height: calc(100vh - #{$footer-height} - #{$header-height});
+}

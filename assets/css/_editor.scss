@@ -1,7 +1,0 @@
-@import "editor/sidebar";
-@import "editor/canvas";
-@import "editor/header";
-
-.editor-body {
-  height: calc(100vh - #{$header-height});
-}

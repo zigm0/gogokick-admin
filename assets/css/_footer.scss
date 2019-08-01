@@ -2,9 +2,26 @@
 
 .footer {
   color: #FFF;
-  flex-shrink: 0;
-  text-align: center;
-  padding: $gutter-size;
-  border-top: 1px solid #333a58;
-  background-color: darken($color-primary, 10%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: $footer-height;
+  background-color: $color-secondary;
+}
+
+.footer-links {
+  margin-bottom: 0;
+
+  li {
+    display: inline;
+
+    &:after {
+      content: '·';
+    }
+
+    &:last-child:after {
+      content: '';
+    }
+  }
 }

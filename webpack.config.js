@@ -5,7 +5,8 @@ const ManifestPlugin       = require('webpack-manifest-plugin');
 module.exports = {
   mode:    'development',
   entry:   {
-    app: ['./assets/js/index.jsx', './assets/css/app.scss']
+    app:    ['./assets/css/app.scss'],
+    editor: ['./assets/js/editor.jsx', './assets/css/editor.scss']
   },
   output:  {
     path:     path.resolve(__dirname, 'public/build'),
