@@ -6,3 +6,4 @@ export { default as NewProjectModal } from './NewProjectModal';
 export { default as PromptModal } from './PromptModal';
 export { default as ConfirmModal } from './ConfirmModal';
 export { default as TeamMemberModal } from './TeamMemberModal';
+export { default as AddMemberModal } from './AddMemberModal';

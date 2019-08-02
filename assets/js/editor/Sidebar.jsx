@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Droppable } from 'react-beautiful-dnd';
 import { connect, mapDispatchToProps } from 'utils';
-import { Icon, Avatar, TeamMemberItem } from 'components';
+import { Icon, TeamMemberItem } from 'components';
 import { Button } from 'components/bootstrap';
 import { SidebarBlock } from 'blocks';
 import * as editorActions from 'actions/editorActions';
@@ -32,6 +32,18 @@ export default class Sidebar extends React.PureComponent {
     editorTeamMember(user);
     editorModal({
       modal: 'teamMember',
+      open:  true
+    });
+  };
+
+  /**
+   *
+   */
+  handleAddMemberClick = () => {
+    const { editorModal } = this.props;
+
+    editorModal({
+      modal: 'addMember',
       open:  true
     });
   };
@@ -75,7 +87,7 @@ export default class Sidebar extends React.PureComponent {
             <TeamMemberItem key={user.id} user={user} onClick={this.handleMemberClick} />
           ))}
         </ul>
-        <Button theme="none" className="editor-sidebar-team-btn">
+        <Button theme="none" className="editor-sidebar-team-btn" onClick={this.handleAddMemberClick}>
           <Icon name="plus-circle" />
           Add Member
         </Button>

@@ -36,7 +36,16 @@ const initialState = {
     ...commonForms
   },
   teamMember: {
-    roleEditor: false,
+    roleEditor:   false,
+    roleGraphics: false,
+    roleLead:     false,
+    ...commonForms
+  },
+  addMember: {
+    email:        '',
+    roleEditor:   false,
+    roleGraphics: false,
+    roleLead:     false,
     ...commonForms
   }
 };

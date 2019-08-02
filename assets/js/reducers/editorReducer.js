@@ -34,7 +34,8 @@ const initialState = {
     settings:   false,
     register:   false,
     newProject: false,
-    teamMember: false
+    teamMember: false,
+    addMember:  false
   },
   teamMembers: [
     {
