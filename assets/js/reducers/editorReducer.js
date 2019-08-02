@@ -2,12 +2,12 @@ import { objects } from 'utils';
 import * as types from 'actions/editorActions';
 
 const initialState = {
-  init:          false,
   isBusy:        false,
   isChanged:     false,
   projects:      [],
   templates:     [],
   teamMember:    null,
+  blockIndex:    0,
   canvasBlocks:  [[]],
   sidebarBlocks: [
     {
@@ -23,8 +23,7 @@ const initialState = {
       type: 'video'
     }
   ],
-  blockIndex: 0,
-  modals:     {
+  modals: {
     login:         false,
     preview:       false,
     confirm:       false,
@@ -34,8 +33,7 @@ const initialState = {
     teamMember:    false,
     addMember:     false,
     memberActions: false
-  },
-
+  }
 };
 
 let idIndex = 9;

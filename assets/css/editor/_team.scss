@@ -1,14 +1,14 @@
 @import "../vars";
 
 .editor-team {
-  margin-bottom: $gutter-size;
+  margin-bottom: $gutter-size-sm;
 }
 
 .editor-team-member {
   display: flex;
   cursor: pointer;
   align-items: center;
-  padding: ($gutter-size-sm / 2) $gutter-size-sm;
+  padding: $gutter-size-sm;
   border-radius: $border-radius-blocks;
 
   &:hover {
@@ -17,6 +17,8 @@
 
   .avatar {
     margin-right: 0.5rem;
+    height: 32px;
+    width: 32px;
   }
 
   .badge {
@@ -27,6 +29,10 @@
 .editor-team-member-info {
   display: flex;
   flex-direction: column;
+
+  span {
+    line-height: 1rem;
+  }
 }
 
 .editor-team-btn {
