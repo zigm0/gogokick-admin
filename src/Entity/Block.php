@@ -45,6 +45,13 @@ class Block
     protected $type;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=60)
+     * @Groups({"web"})
+     */
+    protected $description;
+
+    /**
      * @var int
      * @ORM\Column(type="smallint", options={"unsigned"=true})
      * @Groups({"web"})
@@ -72,6 +79,7 @@ class Block
         try {
             $this->dateCreated = new DateTime();
             $this->dateUpdated = new DateTime();
+            $this->description = 'Description';
         } catch (Exception $e) {}
     }
 
@@ -119,6 +127,26 @@ class Block
     public function setType(int $type): Block
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     *
+     * @return Block
+     */
+    public function setDescription(string $description): Block
+    {
+        $this->description = $description;
 
         return $this;
     }

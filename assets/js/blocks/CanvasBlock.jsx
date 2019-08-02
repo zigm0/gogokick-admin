@@ -30,7 +30,7 @@ export default class CanvasBlock extends React.PureComponent {
             style={provided.draggableProps.style}
           >
             <h2 className="editor-canvas-block-description">
-              Description
+              {block.description || 'Description'}
             </h2>
             {provided.placeholder}
           </li>
