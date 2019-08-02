@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { Droppable } from 'react-beautiful-dnd';
 import { connect, mapDispatchToProps } from 'utils';
 import { Container, Row, Column } from 'components/bootstrap';
@@ -16,21 +17,28 @@ const mapStateToProps = state => ({
 )
 export default class Canvas extends React.PureComponent {
   static propTypes = {
-    editor: PropTypes.object.isRequired
+    editor:   PropTypes.object.isRequired,
+    dragging: PropTypes.bool
   };
 
-  static defaultProps = {};
+  static defaultProps = {
+    dragging: false
+  };
 
   /**
    * @returns {*}
    */
   render() {
-    const { editor } = this.props;
+    const { editor, dragging } = this.props;
     const { canvasBlocks, blockIndex } = editor;
+
+    const bodyClasses = classNames('editor-canvas-body h-100', {
+      'editor-canvas-body-dragging': dragging
+    });
 
     return (
       <div className="editor-canvas h-100">
-        <div className="editor-canvas-body h-100">
+        <div className={bodyClasses}>
           <Container className="h-100">
             <Row>
               <Column className="editor-canvas-body-col" xl={8} offsetXl={2}>

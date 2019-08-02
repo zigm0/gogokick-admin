@@ -33,6 +33,17 @@ export default class Editor extends React.PureComponent {
   };
 
   /**
+   * @param {*} props
+   */
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      dragging: false
+    };
+  }
+
+  /**
    *
    */
   componentDidMount() {
@@ -49,6 +60,14 @@ export default class Editor extends React.PureComponent {
     const { editorDrop } = this.props;
 
     editorDrop(e);
+    this.setState({ dragging: false });
+  };
+
+  /**
+   *
+   */
+  handleDragStart = () => {
+    this.setState({ dragging: true });
   };
 
   /**
@@ -56,19 +75,20 @@ export default class Editor extends React.PureComponent {
    */
   render() {
     const { user, editor, project } = this.props;
+    const { dragging } = this.state;
 
     const classes = classNames('editor h-100', `editor-mode-${editor.mode}`);
 
     return (
       <div className={classes}>
-        <DragDropContext onDragEnd={this.handleDragEnd}>
+        <DragDropContext onDragStart={this.handleDragStart} onDragEnd={this.handleDragEnd}>
           <Header />
           <Row className="editor-body">
             <Column className="editor-sidebar-col d-none d-lg-block d-xl-block" xl={2} lg={3} md={12}>
               <Sidebar />
             </Column>
             <Column className="editor-canvas-col" xl={10} lg={9} md={12}>
-              <Canvas />
+              <Canvas dragging={dragging} />
             </Column>
           </Row>
         </DragDropContext>
