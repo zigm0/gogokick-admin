@@ -19,6 +19,7 @@
 .editor-canvas-body-col {
   padding-left: 0;
   padding-right: 0;
+  max-width: 680px;
 }
 
 .editor-canvas-blocks {
@@ -28,9 +29,10 @@
 }
 
 .editor-canvas-block {
+  position: relative;
   width: $width-block !important;
   user-select: none;
-  background-color: #efefef;
+  background-color: $color-canvas-block-bg;
   background-size: contain;
   margin-bottom: $gutter-size-sm;
   border-radius: $border-radius-blocks;
@@ -46,6 +48,26 @@
   @include media-xs {
     width: 100% !important;
   }
+
+  &::before {
+    font-weight: 900;
+    font-size: 5rem;
+    line-height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #E1E1E1;
+    font-family: "Font Awesome 5 Free";
+  }
+
+  &::after {
+    position: absolute;
+    bottom: $gutter-size-sm;
+    right: $gutter-size;
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: #E1E1E1;
+  }
 }
 
 .canvas-block-highlighted {
@@ -53,16 +75,40 @@
 }
 
 .editor-canvas-block-text {
-  height: 100px !important;
-  background-image: url(/images/block-placeholder-text.png);
+  height: 100px;
+
+  &::before {
+    content: '\f037';
+    height: 100px;
+  }
+
+  &::after {
+    content: '680x100';
+  }
 }
 
 .editor-canvas-block-image {
-  height: 400px !important;
-  background-image: url(/images/block-placeholder-image.png);
+  height: 400px;
+
+  &::before {
+    content: '\f03e';
+    height: 400px;
+  }
+
+  &::after {
+    content: '400x100';
+  }
 }
 
 .editor-canvas-block-video {
-  height: 382px !important;
-  background-image: url(/images/block-placeholder-video.png);
+  height: 382px;
+
+  &::before {
+    content: '\f03d';
+    height: 382px;
+  }
+
+  &::after {
+    content: '382x100';
+  }
 }
