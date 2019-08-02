@@ -29,7 +29,9 @@ export default class CanvasBlock extends React.PureComponent {
             className={`editor-canvas-block editor-canvas-block-${block.type}`}
             style={provided.draggableProps.style}
           >
-            &nbsp;
+            <h2 className="editor-canvas-block-description">
+              Description
+            </h2>
             {provided.placeholder}
           </li>
         )}

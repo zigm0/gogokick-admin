@@ -55,7 +55,7 @@
 
     &::before,
     &::after {
-      color: darken($color-canvas-block, 2%);
+      color: darken($color-canvas-block-icon, 2%);
     }
   }
 
@@ -66,7 +66,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: $color-canvas-block;
+    color: $color-canvas-block-icon;
     font-family: "Font Awesome 5 Free";
   }
 
@@ -76,8 +76,24 @@
     right: $gutter-size;
     font-weight: 800;
     font-size: 1.5rem;
-    color: $color-canvas-block;
+    color: $color-canvas-block-icon;
   }
+}
+
+.editor-canvas-block-description {
+  position: absolute;
+  width: 680px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  text-align: center;
+  color: $color-canvas-block;
 }
 
 .canvas-block-highlighted {
