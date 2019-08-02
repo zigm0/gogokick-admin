@@ -52,22 +52,6 @@
 
   &:hover {
     box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.25);
-
-    &::before,
-    &::after {
-      color: darken($color-canvas-block-icon, 2%);
-    }
-  }
-
-  &::before {
-    font-weight: 900;
-    font-size: 5rem;
-    line-height: 5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: $color-canvas-block-icon;
-    font-family: 'Font Awesome 5 Free';
   }
 
   &::after {
@@ -110,11 +94,7 @@
 
 .editor-canvas-block-text {
   height: 100px;
-
-  &::before {
-    content: '\f037';
-    height: 100px;
-  }
+  background: $color-canvas-block-bg center center url(/images/block-placeholder-text.png) no-repeat;
 
   &::after {
     content: '680x100';
@@ -123,11 +103,7 @@
 
 .editor-canvas-block-image {
   height: 400px;
-
-  &::before {
-    content: '\f03e';
-    height: 400px;
-  }
+  background: $color-canvas-block-bg center center url(/images/block-placeholder-image.png) no-repeat;
 
   &::after {
     content: '400x100';
@@ -136,11 +112,7 @@
 
 .editor-canvas-block-video {
   height: 382px;
-
-  &::before {
-    content: '\f03d';
-    height: 382px;
-  }
+  background: $color-canvas-block-bg center center url(/images/block-placeholder-video.png) no-repeat;
 
   &::after {
     content: '382x100';

@@ -116,7 +116,7 @@ export const projectSave = () => {
             });
             dispatch(projectBusy(false));
           });
-    });
+      });
   };
 };
 
