@@ -48,11 +48,17 @@ export default class TeamMemberModal extends React.PureComponent {
    *
    */
   handleUpdate = () => {
-    const { teamMember, formChange } = this.props;
+    const { teamMember, formChange, formChanges } = this.props;
 
     if (!teamMember) {
       return;
     }
+
+    formChanges('teamMember', {
+      roleEditor:   false,
+      roleLead:     false,
+      roleGraphics: false
+    });
 
     teamMember.projectRoles.forEach((role) => {
       formChange('teamMember', `role${role}`, true);
