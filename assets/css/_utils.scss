@@ -8,6 +8,10 @@
   padding: $gutter-size / 2;
 }
 
+.gutter-lg {
+  padding: $gutter-size-sm * 2;
+}
+
 .gutter-bottom {
   padding-bottom: $gutter-size;
 }
