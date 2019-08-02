@@ -37,6 +37,7 @@ export default class PreviewModal extends React.PureComponent {
           <input
             className="form-control"
             value="https://..."
+            readOnly
           />
         </div>
         <div className="form-group btn-spaced-group">
@@ -60,7 +61,6 @@ export default class PreviewModal extends React.PureComponent {
         name="preview"
         title="Preview"
         icon="eye"
-        cancelText="Close"
       >
         <p>
           Share this link...

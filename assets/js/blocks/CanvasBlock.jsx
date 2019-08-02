@@ -22,6 +22,7 @@ export default class CanvasBlock extends React.PureComponent {
       <Draggable key={block.id} draggableId={block.id} index={index}>
         {(provided) => (
           <li
+            id={`canvas-block-${block.id}`}
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}

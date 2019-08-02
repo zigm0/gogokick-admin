@@ -34,6 +34,8 @@
   background-size: contain;
   margin-bottom: $gutter-size-sm;
   border-radius: $border-radius-blocks;
+  border: 1px solid transparent;
+  transition: box-shadow 0.3s ease-in-out;
 
   @include media-md {
     width: 100% !important;
@@ -44,6 +46,10 @@
   @include media-xs {
     width: 100% !important;
   }
+}
+
+.canvas-block-highlighted {
+  box-shadow: 0 0 3px 2px rgba($color-primary, 0.5);
 }
 
 .editor-canvas-block-text {

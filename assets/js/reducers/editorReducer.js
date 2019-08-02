@@ -1,4 +1,4 @@
-import { objects } from 'utils';
+import { objects, arrays } from 'utils';
 import * as types from 'actions/editorActions';
 
 const initialState = {
@@ -29,33 +29,60 @@ const initialState = {
   ],
   blockIndex: 0,
   modals:     {
-    login:      false,
-    preview:    false,
-    confirm:    false,
-    settings:   false,
-    register:   false,
-    newProject: false,
-    teamMember: false,
-    addMember:  false
+    login:         false,
+    preview:       false,
+    confirm:       false,
+    settings:      false,
+    register:      false,
+    newProject:    false,
+    teamMember:    false,
+    addMember:     false,
+    memberActions: false
   },
   teamMembers: [
     {
       id:           1,
       name:         'Scott K.',
       avatar:       '/images/avatar-1.jpeg',
-      projectRoles: ['Editor', 'Lead']
+      projectRoles: ['Editor', 'Lead'],
+      actions:      [
+        {
+          id:    1,
+          block: 5,
+          date:  '5 hours ago',
+          title: 'Adds text block',
+          memo:  ''
+        }
+      ]
     },
     {
       id:           2,
       name:         'Val S.',
       avatar:       '/images/avatar-2.jpeg',
-      projectRoles: ['Graphics']
+      projectRoles: ['Graphics'],
+      actions:      [
+        {
+          id:    2,
+          block: 4,
+          date:  'Yesterday',
+          title: 'Updated image block',
+          memo:  'Uses new product prototype images.'
+        },
+        {
+          id:    3,
+          block: 5,
+          date:  '3 days ago',
+          title: 'Updated image block',
+          memo:  ''
+        },
+      ]
     },
     {
       id:           3,
       name:         'John R.',
       avatar:       '/images/avatar-3.jpeg',
-      projectRoles: ['Owner']
+      projectRoles: ['Owner'],
+      actions:      []
     },
   ],
 };
@@ -361,6 +388,24 @@ const onEditorTeamMember = (state, action) => {
   };
 };
 
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onEditorMarkRead = (state, action) => {
+  const teamMembers = objects.clone(state.teamMembers);
+  const teamMember  = action.payload;
+
+  const user = arrays.findByID(teamMembers, teamMember.id);
+  user.actions = [];
+
+  return {
+    ...state,
+    teamMembers
+  };
+};
+
 const handlers = {
   [types.EDITOR_BUSY]:           onEditorBusy,
   [types.EDITOR_DROP]:           onEditorDrop,
@@ -372,6 +417,7 @@ const handlers = {
   [types.EDITOR_TEMPLATES]:      onEditorTemplates,
   [types.EDITOR_SAVING]:         onEditorSaving,
   [types.EDITOR_CHANGED]:        onEditorChanged,
+  [types.EDITOR_MARK_READ]:      onEditorMarkRead,
   [types.EDITOR_DELETE_PROJECT]: onEditorDeleteProject,
   [types.EDITOR_UPDATE_PROJECT]: onEditorUpdateProject,
   [types.EDITOR_NEW_PROJECT]:    onEditorNewProject,

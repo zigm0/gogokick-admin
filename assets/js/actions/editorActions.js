@@ -14,6 +14,7 @@ export const EDITOR_UPDATE_PROJECT = 'EDITOR_UPDATE_PROJECT';
 export const EDITOR_DELETE_PROJECT = 'EDITOR_DELETE_PROJECT';
 export const EDITOR_DROP           = 'EDITOR_DROP';
 export const EDITOR_MODAL          = 'EDITOR_MODAL';
+export const EDITOR_MARK_READ      = 'EDITOR_MARK_READ';
 export const EDITOR_TEAM_MEMBER    = 'EDITOR_TEAM_MEMBER';
 
 /**
@@ -238,6 +239,17 @@ export const editorDrop = (payload) => {
 export const editorModal = (payload) => {
   return {
     type: EDITOR_MODAL,
+    payload
+  };
+};
+
+/**
+ * @param {*} payload
+ * @returns {{payload: *, type: string}}
+ */
+export const editorMarkRead = (payload) => {
+  return {
+    type: EDITOR_MARK_READ,
     payload
   };
 };

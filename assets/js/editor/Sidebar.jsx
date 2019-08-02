@@ -49,6 +49,22 @@ export default class Sidebar extends React.PureComponent {
   };
 
   /**
+   * @param {Event} e
+   * @param {*} user
+   */
+  handleMemberBadgeClick = (e, user) => {
+    e.stopPropagation();
+
+    const { editorModal, editorTeamMember } = this.props;
+
+    editorTeamMember(user);
+    editorModal({
+      modal: 'memberActions',
+      open:  true
+    });
+  };
+
+  /**
    * @returns {*}
    */
   renderBlocks = () => {
@@ -82,12 +98,17 @@ export default class Sidebar extends React.PureComponent {
         <h2 className="editor-sidebar-title">
           Team
         </h2>
-        <ul className="editor-sidebar-team">
+        <ul className="editor-team">
           {editor.teamMembers.map(user => (
-            <TeamMemberItem key={user.id} user={user} onClick={this.handleMemberClick} />
+            <TeamMemberItem
+              key={user.id}
+              user={user}
+              onClick={this.handleMemberClick}
+              onBadgeClick={this.handleMemberBadgeClick}
+            />
           ))}
         </ul>
-        <Button theme="none" className="editor-sidebar-team-btn" onClick={this.handleAddMemberClick}>
+        <Button theme="none" className="editor-team-btn" onClick={this.handleAddMemberClick}>
           <Icon name="plus-circle" />
           Add Member
         </Button>

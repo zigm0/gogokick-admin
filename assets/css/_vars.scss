@@ -43,7 +43,7 @@ $footer-height: 100px;
 $width-block: 680px;
 $border-radius-blocks: 0.2rem;
 
-$text-sm: 0.9rem;
+$font-size-sm: 0.9rem;
 
 @mixin media-xs {
   @media (min-width: #{$break-xs}) and (max-width: #{$break-sm - 1px}) {

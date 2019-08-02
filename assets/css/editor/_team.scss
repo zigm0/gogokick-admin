@@ -1,0 +1,71 @@
+@import "../vars";
+
+.editor-team {
+  margin-bottom: $gutter-size;
+}
+
+.editor-team-member {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  padding: ($gutter-size-sm / 2) $gutter-size-sm;
+  border-radius: $border-radius-blocks;
+
+  &:hover {
+    background-color: lighten($color-secondary, 10%);
+  }
+
+  .avatar {
+    margin-right: 0.5rem;
+  }
+
+  .badge {
+    margin-left: auto;
+  }
+}
+
+.editor-team-member-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-team-btn {
+  color: #FFF;
+  opacity: 0.9;
+  font-size: 0.9rem;
+  padding: 0 0 0 0.25rem;
+
+  .icon {
+    margin-right: 0.5rem;
+  }
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: #FFF;
+    box-shadow: none;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.editor-team-actions {
+  margin: -$gutter-size;
+
+  h6 {
+    margin-bottom: 0.25rem;
+  }
+}
+
+.editor-team-action-heading {
+  display: flex;
+  justify-content: space-between;
+}
+
+.editor-team-action-buttons {
+  .btn {
+    padding: 0;
+  }
+}

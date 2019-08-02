@@ -77,6 +77,7 @@ export default class Editor extends React.PureComponent {
         <Modals.PreviewModal />
         <Modals.ConfirmModal />
         <Modals.PromptModal />
+        <Modals.MemberActionsModal />
         <Modals.RegisterModal />
         <Modals.AddMemberModal />
         <Modals.TeamMemberModal />
