@@ -67,7 +67,7 @@
     align-items: center;
     justify-content: center;
     color: $color-canvas-block-icon;
-    font-family: "Font Awesome 5 Free";
+    font-family: 'Font Awesome 5 Free';
   }
 
   &::after {
@@ -95,6 +95,13 @@
   text-align: center;
   color: $color-canvas-block;
   font-family: 'Baloo Chettan', cursive;
+}
+
+.editor-canvas-block-notice-icon {
+  position: absolute;
+  top: $gutter-size-sm;
+  right: $gutter-size-sm;
+  color: $color-canvas-block;
 }
 
 .canvas-block-highlighted {

@@ -2,12 +2,13 @@ import { arrays, objects } from 'utils';
 import * as types from 'actions/projectActions';
 
 const initialState = {
-  id:          0,
-  name:        '',
-  isBusy:      true,
-  isSaving:    false,
-  mode:        'kickstarter',
-  teamMembers: [
+  id:               0,
+  name:             '',
+  isBusy:           true,
+  isSaving:         false,
+  isScreenshotting: false,
+  mode:             'kickstarter',
+  teamMembers:      [
     {
       id:           1,
       name:         'Scott K.',
@@ -89,6 +90,20 @@ const onProjectSaving = (state, action) => {
  * @param {*} action
  * @returns {*}
  */
+const onProjectScreenshotting = (state, action) => {
+  const isScreenshotting = action.payload;
+
+  return {
+    ...state,
+    isScreenshotting
+  };
+};
+
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
 const onProjectMarkRead = (state, action) => {
   const teamMembers = objects.clone(state.teamMembers);
   const teamMember  = action.payload;
@@ -159,13 +174,14 @@ const onProjectOpen = (state, action) => {
 };
 
 const handlers = {
-  [types.PROJECT_BUSY]:      onProjectBusy,
-  [types.PROJECT_SAVING]:    onProjectSaving,
-  [types.PROJECT_MARK_READ]: onProjectMarkRead,
-  [types.PROJECT_DELETE]:    onProjectDelete,
-  [types.PROJECT_UPDATE]:    onProjectUpdate,
-  [types.PROJECT_NEW]:       onProjectNew,
-  [types.PROJECT_OPEN]:      onProjectOpen
+  [types.PROJECT_BUSY]:           onProjectBusy,
+  [types.PROJECT_SAVING]:         onProjectSaving,
+  [types.PROJECT_SCREENSHOTTING]: onProjectScreenshotting,
+  [types.PROJECT_MARK_READ]:      onProjectMarkRead,
+  [types.PROJECT_DELETE]:         onProjectDelete,
+  [types.PROJECT_UPDATE]:         onProjectUpdate,
+  [types.PROJECT_NEW]:            onProjectNew,
+  [types.PROJECT_OPEN]:           onProjectOpen
 };
 
 /**

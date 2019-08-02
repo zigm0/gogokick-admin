@@ -8,7 +8,8 @@ import { CanvasBlock } from 'blocks';
 import * as editorActions from 'actions/editorActions';
 
 const mapStateToProps = state => ({
-  editor: state.editor
+  editor:  state.editor,
+  project: state.project
 });
 
 @connect(
@@ -18,6 +19,7 @@ const mapStateToProps = state => ({
 export default class Canvas extends React.PureComponent {
   static propTypes = {
     editor:   PropTypes.object.isRequired,
+    project:  PropTypes.object.isRequired,
     dragging: PropTypes.bool
   };
 
@@ -29,7 +31,7 @@ export default class Canvas extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { editor, dragging } = this.props;
+    const { editor, project, dragging } = this.props;
     const { canvasBlocks, blockIndex } = editor;
 
     const bodyClasses = classNames('editor-canvas-body h-100', {
@@ -50,6 +52,7 @@ export default class Canvas extends React.PureComponent {
                           key={block.id}
                           block={block}
                           index={index}
+                          showAssignment={false}
                         />
                       ))}
                     </ul>
