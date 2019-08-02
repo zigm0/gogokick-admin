@@ -7,36 +7,39 @@ import { Row, Column } from 'components/bootstrap';
 import { Loading } from 'components';
 import * as editorActions from 'actions/editorActions';
 import * as userActions from 'actions/userActions';
+import * as projectActions from 'actions/projectActions';
 import Sidebar from 'editor/Sidebar';
 import Canvas from 'editor/Canvas';
 import Header from 'editor/Header';
 import * as Modals from 'modals';
 
 const mapStateToProps = state => ({
-  editor: state.editor,
-  user:   state.user
+  project: state.project,
+  editor:  state.editor,
+  user:    state.user
 });
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(editorActions, userActions)
+  mapDispatchToProps(editorActions, userActions, projectActions)
 )
 export default class Editor extends React.PureComponent {
   static propTypes = {
-    editor:            PropTypes.object.isRequired,
-    userMe:            PropTypes.func.isRequired,
-    editorDrop:        PropTypes.func.isRequired,
-    editorOpenProject: PropTypes.func.isRequired
+    project:     PropTypes.object.isRequired,
+    editor:      PropTypes.object.isRequired,
+    userMe:      PropTypes.func.isRequired,
+    editorDrop:  PropTypes.func.isRequired,
+    projectOpen: PropTypes.func.isRequired
   };
 
   /**
    *
    */
   componentDidMount() {
-    const { userMe, editorOpenProject } = this.props;
+    const { userMe, projectOpen } = this.props;
 
     userMe();
-    editorOpenProject(0);
+    projectOpen(0);
   }
 
   /**
@@ -52,7 +55,7 @@ export default class Editor extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { user, editor } = this.props;
+    const { user, editor, project } = this.props;
 
     const classes = classNames('editor h-100', `editor-mode-${editor.mode}`);
 
@@ -69,7 +72,7 @@ export default class Editor extends React.PureComponent {
             </Column>
           </Row>
         </DragDropContext>
-        {(editor.isBusy || user.isBusy) && (
+        {(editor.isBusy || user.isBusy || project.isBusy) && (
           <Loading middle />
         )}
         <Modals.OpenModal />

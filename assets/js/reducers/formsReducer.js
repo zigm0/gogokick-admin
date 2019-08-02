@@ -28,7 +28,7 @@ const initialState = {
     ...commonForms
   },
   projectSettings: {
-    projectName: '',
+    name: '',
     ...commonForms
   },
   prompt: {

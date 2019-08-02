@@ -6,6 +6,7 @@ import { Modal } from 'components';
 import * as userActions from 'actions/userActions';
 import * as editorActions from 'actions/editorActions';
 import * as formActions from 'actions/formActions';
+import * as projectActions from 'actions/projectActions';
 
 const mapStateToProps = state => ({
   teamMember: state.editor.teamMember
@@ -13,13 +14,13 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(userActions, editorActions, formActions)
+  mapDispatchToProps(userActions, editorActions, formActions, projectActions)
 )
 export default class MemberActionsModal extends React.PureComponent {
   static propTypes = {
-    teamMember:     PropTypes.object,
-    editorModal:    PropTypes.func.isRequired,
-    editorMarkRead: PropTypes.func.isRequired
+    teamMember:      PropTypes.object,
+    editorModal:     PropTypes.func.isRequired,
+    projectMarkRead: PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -52,9 +53,9 @@ export default class MemberActionsModal extends React.PureComponent {
    *
    */
   handleMarkReadClick = () => {
-    const { teamMember, editorMarkRead, editorModal } = this.props;
+    const { teamMember, projectMarkRead, editorModal } = this.props;
 
-    editorMarkRead(teamMember);
+    projectMarkRead(teamMember);
     editorModal({
       modal: 'memberActions',
       open:  false

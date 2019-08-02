@@ -20,9 +20,7 @@ export default class PreviewModal extends React.PureComponent {
     forms:               PropTypes.object.isRequired,
     editor:              PropTypes.object.isRequired,
     editorModal:         PropTypes.func.isRequired,
-    formChanges:         PropTypes.func.isRequired,
-    editorUpdateProject: PropTypes.func.isRequired,
-    editorDeleteProject: PropTypes.func.isRequired
+    formChanges:         PropTypes.func.isRequired
   };
 
   static defaultProps = {};

@@ -1,14 +1,10 @@
-import { objects, arrays } from 'utils';
+import { objects } from 'utils';
 import * as types from 'actions/editorActions';
 
 const initialState = {
   init:          false,
-  isBusy:        true,
-  isSaving:      false,
+  isBusy:        false,
   isChanged:     false,
-  projectId:     0,
-  projectName:   '',
-  mode:          'kickstarter',
   projects:      [],
   templates:     [],
   teamMember:    null,
@@ -39,52 +35,7 @@ const initialState = {
     addMember:     false,
     memberActions: false
   },
-  teamMembers: [
-    {
-      id:           1,
-      name:         'Scott K.',
-      avatar:       '/images/avatar-1.jpeg',
-      projectRoles: ['Editor', 'Lead'],
-      actions:      [
-        {
-          id:    1,
-          block: 5,
-          date:  '5 hours ago',
-          title: 'Adds text block',
-          memo:  ''
-        }
-      ]
-    },
-    {
-      id:           2,
-      name:         'Val S.',
-      avatar:       '/images/avatar-2.jpeg',
-      projectRoles: ['Graphics'],
-      actions:      [
-        {
-          id:    2,
-          block: 4,
-          date:  'Yesterday',
-          title: 'Updated image block',
-          memo:  'Uses new product prototype images.'
-        },
-        {
-          id:    3,
-          block: 5,
-          date:  '3 days ago',
-          title: 'Updated image block',
-          memo:  ''
-        },
-      ]
-    },
-    {
-      id:           3,
-      name:         'John R.',
-      avatar:       '/images/avatar-3.jpeg',
-      projectRoles: ['Owner'],
-      actions:      []
-    },
-  ],
+
 };
 
 let idIndex = 9;
@@ -109,6 +60,19 @@ const move = (source, destination, droppableSource, droppableDestination) => {
   destClone.splice(droppableDestination.index, 0, sourceBlock);
 
   return destClone;
+};
+
+/**
+ * @param {*} state
+ * @returns {*}
+ */
+const onEditorReset = (state) => {
+  return {
+    ...state,
+    canvasBlocks: [[]],
+    blockIndex:   0,
+    isChanged:    false
+  }
 };
 
 /**
@@ -179,13 +143,33 @@ const onEditorChanged = (state, action) => {
  * @param {*} action
  * @returns {*}
  */
-const onEditorSaving = (state, action) => {
-  const isSaving = action.payload;
+const onEditorNew = (state, action) => {
+  const blocks = Array.from(action.payload.blocks);
+
+  blocks.sort((a, b) => {
+    return (a.sortOrder > b.sortOrder) ? 1 : -1;
+  });
+  blocks.forEach((block) => {
+    switch(block.type) {
+      case 1:
+        block.type = 'text';
+        break;
+      case 2:
+        block.type = 'image';
+        break;
+      case 3:
+        block.type = 'video';
+        break;
+    }
+  });
+
+  const canvasBlocks = [blocks];
 
   return {
     ...state,
-    isBusy: isSaving,
-    isSaving
+    canvasBlocks,
+    blockIndex: 0,
+    isChanged:  false
   };
 };
 
@@ -224,94 +208,6 @@ const onEditorDrop = (state, action) => {
     blockIndex,
     isChanged: true
   };
-};
-
-/**
- * @param {*} state
- * @param {*} action
- * @returns {*}
- */
-const onEditorOpenProject = (state, action) => {
-  const blocks = Array.from(action.payload.blocks);
-
-  blocks.sort((a, b) => {
-    return (a.sortOrder > b.sortOrder) ? 1 : -1;
-  });
-  blocks.forEach((block) => {
-    switch(block.type) {
-      case 1:
-        block.type = 'text';
-        break;
-      case 2:
-        block.type = 'image';
-        break;
-      case 3:
-        block.type = 'video';
-        break;
-    }
-  });
-
-  const canvasBlocks  = [blocks];
-  const projectName   = action.payload.name;
-  const { projectId } = action.meta;
-
-  return {
-    ...state,
-    projectId,
-    projectName,
-    canvasBlocks,
-    blockIndex: 0,
-    isChanged:  false
-  };
-};
-
-/**
- * @param {*} state
- * @param {*} action
- * @returns {*}
- */
-const onEditorNewProject = (state, action) => {
-  const blocks = Array.from(action.payload.blocks);
-  blocks.forEach((block) => {
-    switch(block.type) {
-      case 1:
-        block.type = 'text';
-        break;
-      case 2:
-        block.type = 'image';
-        break;
-      case 3:
-        block.type = 'video';
-        break;
-    }
-  });
-
-  const canvasBlocks  = [blocks];
-  const projectName   = action.payload.name;
-
-  return {
-    ...state,
-    projectName,
-    canvasBlocks,
-    projectId:  0,
-    blockIndex: 0,
-    isChanged:  true
-  };
-};
-
-/**
- * @param {*} state
- * @returns {*}
- */
-const onEditorDeleteProject = (state) => {
-  return {
-    ...state,
-    projectId:    0,
-    projectName:  'Blank',
-    canvasBlocks: [[]],
-    blockIndex:   0,
-    isChanged:    false
-  }
 };
 
 /**
@@ -359,20 +255,7 @@ const onEditorTemplates = (state, action) => {
   };
 };
 
-/**
- * @param {*} state
- * @param {*} action
- * @returns {*}
- */
-const onEditorUpdateProject = (state, action) => {
-  const settings = objects.clone(action.payload);
 
-  return {
-    ...state,
-    projectName: settings.projectName,
-    isChanged:   true
-  }
-};
 
 /**
  * @param {*} state
@@ -388,40 +271,18 @@ const onEditorTeamMember = (state, action) => {
   };
 };
 
-/**
- * @param {*} state
- * @param {*} action
- * @returns {*}
- */
-const onEditorMarkRead = (state, action) => {
-  const teamMembers = objects.clone(state.teamMembers);
-  const teamMember  = action.payload;
-
-  const user = arrays.findByID(teamMembers, teamMember.id);
-  user.actions = [];
-
-  return {
-    ...state,
-    teamMembers
-  };
-};
-
 const handlers = {
-  [types.EDITOR_BUSY]:           onEditorBusy,
-  [types.EDITOR_DROP]:           onEditorDrop,
-  [types.EDITOR_UNDO]:           onEditorUndo,
-  [types.EDITOR_REDO]:           onEditorRedo,
-  [types.EDITOR_MODAL]:          onEditorModal,
-  [types.EDITOR_TEAM_MEMBER]:    onEditorTeamMember,
-  [types.EDITOR_PROJECTS]:       onEditorProjects,
-  [types.EDITOR_TEMPLATES]:      onEditorTemplates,
-  [types.EDITOR_SAVING]:         onEditorSaving,
-  [types.EDITOR_CHANGED]:        onEditorChanged,
-  [types.EDITOR_MARK_READ]:      onEditorMarkRead,
-  [types.EDITOR_DELETE_PROJECT]: onEditorDeleteProject,
-  [types.EDITOR_UPDATE_PROJECT]: onEditorUpdateProject,
-  [types.EDITOR_NEW_PROJECT]:    onEditorNewProject,
-  [types.EDITOR_OPEN_PROJECT]:   onEditorOpenProject
+  [types.EDITOR_RESET]:       onEditorReset,
+  [types.EDITOR_BUSY]:        onEditorBusy,
+  [types.EDITOR_NEW]:         onEditorNew,
+  [types.EDITOR_DROP]:        onEditorDrop,
+  [types.EDITOR_UNDO]:        onEditorUndo,
+  [types.EDITOR_REDO]:        onEditorRedo,
+  [types.EDITOR_MODAL]:       onEditorModal,
+  [types.EDITOR_TEAM_MEMBER]: onEditorTeamMember,
+  [types.EDITOR_PROJECTS]:    onEditorProjects,
+  [types.EDITOR_TEMPLATES]:   onEditorTemplates,
+  [types.EDITOR_CHANGED]:     onEditorChanged
 };
 
 /**

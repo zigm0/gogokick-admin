@@ -6,6 +6,7 @@ import { Row, Column, Button } from 'components/bootstrap';
 import {  Modal } from 'components';
 import * as editorActions from 'actions/editorActions';
 import * as formActions from 'actions/formActions';
+import * as projectActions from 'actions/projectActions';
 
 const mapStateToProps = state => ({
   editor:   state.editor,
@@ -14,14 +15,14 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(editorActions, formActions)
+  mapDispatchToProps(editorActions, formActions, projectActions)
 )
 export default class OpenModal extends React.PureComponent {
   static propTypes = {
     editor:              PropTypes.object.isRequired,
     projects:            PropTypes.array.isRequired,
     editorModal:         PropTypes.func.isRequired,
-    editorOpenProject:   PropTypes.func.isRequired,
+    projectOpen:         PropTypes.func.isRequired,
     editorFetchProjects: PropTypes.func.isRequired
   };
 
@@ -44,12 +45,12 @@ export default class OpenModal extends React.PureComponent {
    *
    */
   handleSelectClick = () => {
-    const { editor, editorModal, editorOpenProject } = this.props;
+    const { editor, editorModal, projectOpen } = this.props;
     const { selected } = this.state;
 
     const create = () => {
       this.setState({ selected: 0 });
-      editorOpenProject(selected);
+      projectOpen(selected);
       editorModal({
         modal: 'open',
         open:  false

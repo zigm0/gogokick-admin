@@ -6,24 +6,27 @@ import { Form, Input } from 'components/forms';
 import { Modal } from 'components';
 import * as editorActions from 'actions/editorActions';
 import * as formActions from 'actions/formActions';
+import * as projectActions from 'actions/projectActions';
 
 const mapStateToProps = state => ({
-  forms:  state.forms,
-  editor: state.editor
+  forms:   state.forms,
+  project: state.project,
+  editor:  state.editor
 });
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(editorActions, formActions)
+  mapDispatchToProps(editorActions, formActions, projectActions)
 )
 export default class ProjectSettingsModal extends React.PureComponent {
   static propTypes = {
-    forms:               PropTypes.object.isRequired,
-    editor:              PropTypes.object.isRequired,
-    editorModal:         PropTypes.func.isRequired,
-    formChanges:         PropTypes.func.isRequired,
-    editorUpdateProject: PropTypes.func.isRequired,
-    editorDeleteProject: PropTypes.func.isRequired
+    forms:         PropTypes.object.isRequired,
+    editor:        PropTypes.object.isRequired,
+    project:       PropTypes.object.isRequired,
+    editorModal:   PropTypes.func.isRequired,
+    formChanges:   PropTypes.func.isRequired,
+    projectUpdate: PropTypes.func.isRequired,
+    projectDelete: PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -32,10 +35,10 @@ export default class ProjectSettingsModal extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { editor, formChanges } = this.props;
+    const { project, formChanges } = this.props;
 
     formChanges('projectSettings', {
-      projectName: editor.projectName
+      name: project.name
     });
   }
 
@@ -43,11 +46,11 @@ export default class ProjectSettingsModal extends React.PureComponent {
    * @param {*} prevProps
    */
   componentDidUpdate(prevProps) {
-    const { editor, formChanges } = this.props;
+    const { project, formChanges } = this.props;
 
-    if (prevProps.editor.projectName !== editor.projectName) {
+    if (prevProps.project.name !== project.name) {
       formChanges('projectSettings', {
-        projectName: editor.projectName
+        name: project.name
       });
     }
   }
@@ -56,10 +59,10 @@ export default class ProjectSettingsModal extends React.PureComponent {
    *
    */
   handleSaveClick = () => {
-    const { forms, editorModal, editorUpdateProject } = this.props;
+    const { forms, editorModal, projectUpdate } = this.props;
 
-    editorUpdateProject({
-      projectName: forms.projectSettings.projectName
+    projectUpdate({
+      name: forms.projectSettings.name
     });
     editorModal({
       modal: 'settings',
@@ -71,12 +74,12 @@ export default class ProjectSettingsModal extends React.PureComponent {
    *
    */
   handleDeleteClick = () => {
-    const { editorDeleteProject, editorModal } = this.props;
+    const { projectDelete, editorModal } = this.props;
 
     system.confirm('Are you SURE you want to delete this project? This action cannot be undone.')
       .then((resp) => {
         if (resp) {
-          editorDeleteProject();
+          projectDelete();
           editorModal({
             modal: 'settings',
             open:  false
@@ -92,7 +95,7 @@ export default class ProjectSettingsModal extends React.PureComponent {
     return (
       <Form name="projectSettings">
         <Input
-          name="projectName"
+          name="name"
           type="text"
           label="Project Name"
           id="input-project-settings-name"

@@ -5,24 +5,27 @@ import { Icon } from 'components';
 import { Button } from 'components/bootstrap';
 import UserMenu from './UserMenu';
 import * as editorActions from 'actions/editorActions';
+import * as projectActions from 'actions/projectActions';
 
 const mapStateToProps = state => ({
-  editor: state.editor,
-  user:   state.user
+  editor:  state.editor,
+  project: state.project,
+  user:    state.user
 });
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(editorActions)
+  mapDispatchToProps(editorActions, projectActions)
 )
 export default class Header extends React.PureComponent {
   static propTypes = {
-    user:              PropTypes.object.isRequired,
-    editor:            PropTypes.object.isRequired,
-    editorUndo:        PropTypes.func.isRequired,
-    editorRedo:        PropTypes.func.isRequired,
-    editorModal:       PropTypes.func.isRequired,
-    editorSaveProject: PropTypes.func.isRequired
+    user:        PropTypes.object.isRequired,
+    editor:      PropTypes.object.isRequired,
+    project:     PropTypes.object.isRequired,
+    editorUndo:  PropTypes.func.isRequired,
+    editorRedo:  PropTypes.func.isRequired,
+    editorModal: PropTypes.func.isRequired,
+    projectSave: PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -81,7 +84,7 @@ export default class Header extends React.PureComponent {
    *
    */
   handleSaveClick = () => {
-    const { user, editorModal, editorSaveProject } = this.props;
+    const { user, editorModal, projectSave } = this.props;
 
     if (!user.isAuthenticated) {
       editorModal({
@@ -89,7 +92,7 @@ export default class Header extends React.PureComponent {
         open:  true
       });
     } else {
-      editorSaveProject();
+      projectSave();
     }
   };
 
@@ -109,7 +112,7 @@ export default class Header extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { editor, editorUndo, editorRedo } = this.props;
+    const { editor, project, editorUndo, editorRedo } = this.props;
     const { canvasBlocks, blockIndex } = editor;
 
     return (
@@ -119,7 +122,7 @@ export default class Header extends React.PureComponent {
           <h1 className="brand d-none d-lg-block d-md-block d-xl-block">DragStarter</h1>
         </div>
         <div className="editor-header-project-name d-none d-xl-block">
-          <div>{editor.projectName} {editor.isChanged && '*'}</div>
+          <div>{project.name} {editor.isChanged && '*'}</div>
         </div>
         <div className="editor-header-middle">
           <div className="editor-header-buttons d-none d-lg-block d-xl-block">
@@ -129,7 +132,7 @@ export default class Header extends React.PureComponent {
             <Button icon="folder-open" onClick={this.handleOpenClick} sm>
               Open
             </Button>
-            <Button icon="file" disabled={editor.isSaving} onClick={this.handleSaveClick} sm>
+            <Button icon="file" disabled={project.isSaving} onClick={this.handleSaveClick} sm>
               Save
             </Button>
             <Button icon="eye" onClick={this.handlePreviewClick} sm>

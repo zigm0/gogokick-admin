@@ -8,7 +8,8 @@ import { SidebarBlock } from 'blocks';
 import * as editorActions from 'actions/editorActions';
 
 const mapStateToProps = state => ({
-  editor: state.editor
+  editor:  state.editor,
+  project: state.project
 });
 
 @connect(
@@ -17,6 +18,7 @@ const mapStateToProps = state => ({
 )
 export default class Sidebar extends React.PureComponent {
   static propTypes = {
+    project:          PropTypes.object.isRequired,
     editor:           PropTypes.object.isRequired,
     editorModal:      PropTypes.func.isRequired,
     editorTeamMember: PropTypes.func.isRequired
@@ -91,7 +93,7 @@ export default class Sidebar extends React.PureComponent {
    * @returns {*}
    */
   renderTeam = () => {
-    const { editor } = this.props;
+    const { project } = this.props;
 
     return (
       <>
@@ -99,7 +101,7 @@ export default class Sidebar extends React.PureComponent {
           Team
         </h2>
         <ul className="editor-team">
-          {editor.teamMembers.map(user => (
+          {project.teamMembers.map(user => (
             <TeamMemberItem
               key={user.id}
               user={user}
