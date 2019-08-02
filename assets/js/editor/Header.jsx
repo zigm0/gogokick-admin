@@ -94,6 +94,18 @@ export default class Header extends React.PureComponent {
   };
 
   /**
+   *
+   */
+  handlePreviewClick = () => {
+    const { editorModal } = this.props;
+
+    editorModal({
+      modal: 'preview',
+      open:  true
+    });
+  };
+
+  /**
    * @returns {*}
    */
   render() {
@@ -120,7 +132,7 @@ export default class Header extends React.PureComponent {
             <Button icon="file" disabled={editor.isSaving} onClick={this.handleSaveClick} sm>
               Save
             </Button>
-            <Button icon="eye" sm>
+            <Button icon="eye" onClick={this.handlePreviewClick} sm>
               Preview
             </Button>
             <Button icon="download" sm>

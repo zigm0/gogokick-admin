@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import { connect, mapDispatchToProps } from 'utils';
-import { Form, Input, Checkbox } from 'components/forms';
+import { Form, Checkbox } from 'components/forms';
 import { Row, Column, Button } from 'components/bootstrap';
 import { Modal } from 'components';
 import * as userActions from 'actions/userActions';

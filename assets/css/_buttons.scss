@@ -11,3 +11,13 @@
 .btn-block-video {
   background-color: $color-block-video;
 }
+
+.btn-spaced-group {
+  .btn {
+    margin-right: 0.5rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

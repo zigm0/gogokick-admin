@@ -30,6 +30,7 @@ const initialState = {
   blockIndex: 0,
   modals:     {
     login:      false,
+    preview:    false,
     confirm:    false,
     settings:   false,
     register:   false,

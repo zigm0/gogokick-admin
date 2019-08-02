@@ -23,6 +23,7 @@ export default class Modal extends React.PureComponent {
     lg:          PropTypes.bool,
     id:          PropTypes.string,
     role:        PropTypes.string,
+    cancelText:  PropTypes.string,
     footer:      PropTypes.bool,
     fixedHeight: PropTypes.bool,
     modals:      PropTypes.object.isRequired,
@@ -39,6 +40,7 @@ export default class Modal extends React.PureComponent {
     icon:        '',
     avatar:      '',
     role:        'dialog',
+    cancelText:  'Cancel',
     buttons:     '',
     children:    '',
     onBodyClick: () => {}
@@ -60,7 +62,7 @@ export default class Modal extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { name, title, icon, avatar, role, buttons, fixedHeight, footer, id, lg, modals, children, onBodyClick } = this.props;
+    const { name, title, icon, avatar, role, buttons, fixedHeight, cancelText, footer, id, lg, modals, children, onBodyClick } = this.props;
 
     return (
       <BootstrapModal open={modals[name]} onClosed={this.close} role={role} lg={lg} id={id}>
@@ -80,7 +82,7 @@ export default class Modal extends React.PureComponent {
           <ModalFooter>
             {buttons && React.cloneElement(buttons)}
             <Button onClick={this.close} sm>
-              Cancel
+              {cancelText}
             </Button>
           </ModalFooter>
         )}

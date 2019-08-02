@@ -5,12 +5,12 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import { connect, mapDispatchToProps } from 'utils';
 import { Row, Column } from 'components/bootstrap';
 import { Loading } from 'components';
-import { ProjectSettingsModal, LoginModal, RegisterModal, OpenModal, NewProjectModal, PromptModal, ConfirmModal, TeamMemberModal, AddMemberModal } from 'modals';
 import * as editorActions from 'actions/editorActions';
 import * as userActions from 'actions/userActions';
 import Sidebar from 'editor/Sidebar';
 import Canvas from 'editor/Canvas';
 import Header from 'editor/Header';
+import * as Modals from 'modals';
 
 const mapStateToProps = state => ({
   editor: state.editor,
@@ -72,15 +72,16 @@ export default class Editor extends React.PureComponent {
         {(editor.isBusy || user.isBusy) && (
           <Loading middle />
         )}
-        <OpenModal />
-        <LoginModal />
-        <ConfirmModal />
-        <PromptModal />
-        <RegisterModal />
-        <AddMemberModal />
-        <TeamMemberModal />
-        <NewProjectModal />
-        <ProjectSettingsModal />
+        <Modals.OpenModal />
+        <Modals.LoginModal />
+        <Modals.PreviewModal />
+        <Modals.ConfirmModal />
+        <Modals.PromptModal />
+        <Modals.RegisterModal />
+        <Modals.AddMemberModal />
+        <Modals.TeamMemberModal />
+        <Modals.NewProjectModal />
+        <Modals.ProjectSettingsModal />
       </div>
     );
   }
