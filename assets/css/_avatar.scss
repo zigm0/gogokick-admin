@@ -31,8 +31,10 @@
 
 .avatar-header-menu {
   .dropdown-menu {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
     background-color: $color-primary;
-    transform: translate3d(1px, 49px, 0px) !important;
+    transform: translate3d(-4px, 51px, 0px) !important;
 
     a {
       color: #FFF;
@@ -74,7 +76,8 @@
 
 .avatar-header-menu-app {
   .dropdown-menu {
-    top: 7px;
+    top: 0;
+    right: -20px;
   }
 }
 
