@@ -1,0 +1,107 @@
+@import "vars";
+
+/**
+ * Checkboxes
+ *
+ * @see https://bootsnipp.com/snippets/ZkMKE
+ */
+.forms-custom-checkbox {
+  padding-left: 8px;
+
+  label {
+    font-size: 1rem;
+    user-select: none;
+    padding-left: $gutter-size;
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+
+    &::before {
+      left: 0;
+      width: 24px;
+      height: 24px;
+      content: "";
+      position: absolute;
+      margin-left: -20px;
+      display: inline-block;
+      background-color: #fff;
+      border: 1px solid #cccccc;
+      transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+    }
+
+    &::after {
+      top: 0;
+      left: 0;
+      width: 16px;
+      height: 16px;
+      color: #555555;
+      font-size: 15px;
+      padding-top: 1px;
+      margin-left: -20px;
+      padding-left: 5px;
+      position: absolute;
+      display: inline-block;
+    }
+  }
+}
+
+.forms-custom-checkbox input[type="checkbox"],
+.forms-custom-checkbox input[type="radio"] {
+  opacity: 0;
+
+  &:focus + label::before {
+    outline-offset: -2px;
+    outline: thin dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+  }
+
+  &:checked + label::after {
+    content: "\f00c";
+    font-weight: 900;
+    font-family: "Font Awesome 5 Free";
+  }
+
+  &:disabled + label {
+    opacity: 0.65;
+  }
+
+  &:disabled + label::before {
+    cursor: not-allowed;
+    background-color: #eeeeee;
+  }
+}
+
+.forms-custom-checkbox-inline {
+  margin-top: 0;
+}
+
+.forms-custom-checkbox-circle label::before {
+  border-radius: 50%;
+}
+
+@each $name in $color-names-list {
+  $i: index($color-names-list, $name);
+  $color: nth($colors-list, $i);
+
+  .forms-custom-checkbox-#{$name} input[type="checkbox"]:checked + label::before {
+    border-color: $color-primary;
+    background-color: $color-primary;
+  }
+
+  .forms-custom-checkbox-#{$name} input[type="checkbox"]:checked + label::after {
+    color: #fff;
+  }
+
+  .forms-custom-checkbox-#{$name} input[type="radio"] + label::after {
+    background-color: $color-primary;
+  }
+
+  .forms-custom-checkbox-#{$name} input[type="radio"]:checked + label::before {
+    border-color: $color-primary;
+    background-color: $color-primary;
+  }
+
+  .forms-custom-checkbox-#{$name} input[type="radio"]:checked + label::after {
+    color: #fff;
+  }
+}

@@ -23,7 +23,7 @@ export default class TeamMemberItem extends React.PureComponent {
         <Avatar src={user.avatar} sm />
         <div className="editor-sidebar-team-member-info">
           <span>{user.name}</span>
-          <small>{user.role}</small>
+          <small>{user.projectRoles.join('/')}</small>
         </div>
       </li>
     );

@@ -108,7 +108,7 @@ export default class ProjectSettingsModal extends React.PureComponent {
   render() {
     const buttons = (
       <>
-        <Button className="modal-project-settings-delete-btn" theme="danger" onClick={this.handleDeleteClick} sm>
+        <Button className="modal-delete-btn" theme="danger" onClick={this.handleDeleteClick} sm>
           Delete Project
         </Button>
         <Button onClick={this.handleSaveClick} sm>

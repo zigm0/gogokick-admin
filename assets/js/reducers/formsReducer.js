@@ -34,6 +34,10 @@ const initialState = {
   prompt: {
     input: '',
     ...commonForms
+  },
+  teamMember: {
+    roleEditor: false,
+    ...commonForms
   }
 };
 

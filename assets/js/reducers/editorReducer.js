@@ -38,22 +38,22 @@ const initialState = {
   },
   teamMembers: [
     {
-      id:     1,
-      name:   'Scott K.',
-      role:   'Editor/Lead',
-      avatar: '/images/avatar-1.jpeg'
+      id:           1,
+      name:         'Scott K.',
+      avatar:       '/images/avatar-1.jpeg',
+      projectRoles: ['Editor', 'Lead']
     },
     {
-      id:     2,
-      name:   'Val S.',
-      role:   'Graphics',
-      avatar: '/images/avatar-2.jpeg'
+      id:           2,
+      name:         'Val S.',
+      avatar:       '/images/avatar-2.jpeg',
+      projectRoles: ['Graphics']
     },
     {
-      id:     3,
-      name:   'John R.',
-      role:   'Owner',
-      avatar: '/images/avatar-3.jpeg'
+      id:           3,
+      name:         'John R.',
+      avatar:       '/images/avatar-3.jpeg',
+      projectRoles: ['Owner']
     },
   ],
 };
