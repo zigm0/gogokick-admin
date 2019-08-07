@@ -31,6 +31,12 @@ class Project
     protected $user;
 
     /**
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="ProjectUser", mappedBy="project")
+     */
+    protected $team;
+
+    /**
      * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"web"})
@@ -77,6 +83,7 @@ class Project
     public function __construct()
     {
         try {
+            $this->team        = new ArrayCollection();
             $this->blocks      = new ArrayCollection();
             $this->dateCreated = new DateTime();
             $this->dateUpdated = new DateTime();
@@ -187,6 +194,38 @@ class Project
     public function setIsTemplate(bool $isTemplate): Project
     {
         $this->isTemplate = $isTemplate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getTeam(): Collection
+    {
+        return $this->team;
+    }
+
+    /**
+     * @param Collection $team
+     *
+     * @return Project
+     */
+    public function setTeam(Collection $team): Project
+    {
+        $this->team = $team;
+
+        return $this;
+    }
+
+    /**
+     * @param ProjectUser $user
+     *
+     * @return Project
+     */
+    public function addTeamUser(ProjectUser $user): Project
+    {
+        $this->team->add($user);
 
         return $this;
     }

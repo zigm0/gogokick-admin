@@ -83,6 +83,12 @@ class User implements UserInterface
     protected $projects;
 
     /**
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="ProjectUser", mappedBy="user")
+     */
+    protected $teamProjects;
+
+    /**
      * @var DateTime
      * @ORM\Column(type="datetime")
      */
@@ -102,6 +108,7 @@ class User implements UserInterface
         try {
             $this->roles         = [];
             $this->projects      = new ArrayCollection();
+            $this->teamProjects  = new ArrayCollection();
             $this->dateCreated   = new DateTime();
             $this->dateLastLogin = new DateTime();
         } catch (Exception $e) {
