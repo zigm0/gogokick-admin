@@ -118,8 +118,9 @@ export default class Header extends React.PureComponent {
     return (
       <header className="editor-header">
         <div className="editor-header-left">
-          <Icon name="dice-d20" className="logo" size={2} />
-          <h1 className="brand d-none d-lg-block d-md-block d-xl-block">DragStarter</h1>
+          <h1 className="brand d-none d-lg-block d-md-block d-xl-block">
+            <img src="/images/logo.png" alt="Logo" />
+          </h1>
         </div>
         <div className="editor-header-project-name d-none d-xl-block">
           <div>{project.name} {editor.isChanged && '*'}</div>

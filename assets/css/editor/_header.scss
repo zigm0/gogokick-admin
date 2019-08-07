@@ -9,13 +9,12 @@
   background-color: $color-header;
   border-bottom: darken($color-header, 10%);
 
-  .logo {
-    margin-right: 0.5rem;
-  }
-
   .brand {
-    font-size: 1.5rem;
     margin: 0;
+
+    img {
+      height: 50px;
+    }
   }
 
   .btn {
