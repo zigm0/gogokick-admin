@@ -27,12 +27,14 @@ class Project
      * @var User
      * @ORM\ManyToOne(targetEntity="User", inversedBy="projects")
      * @ORM\JoinColumn(name="user_id", onDelete="CASCADE", referencedColumnName="id")
+     * @Groups({"web"})
      */
     protected $user;
 
     /**
      * @var Collection
      * @ORM\OneToMany(targetEntity="ProjectUser", mappedBy="project")
+     * @Groups({"web"})
      */
     protected $team;
 

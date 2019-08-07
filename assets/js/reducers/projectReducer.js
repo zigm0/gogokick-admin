@@ -4,11 +4,13 @@ import * as types from 'actions/projectActions';
 const initialState = {
   id:               0,
   name:             '',
+  owner:            {},
   isBusy:           true,
   isSaving:         false,
   isScreenshotting: false,
   mode:             'kickstarter',
-  teamMembers:      [
+  team:             [],
+/*  teamMembers:      [
     {
       id:           1,
       name:         'Scott K.',
@@ -53,7 +55,7 @@ const initialState = {
       projectRoles: ['Owner'],
       actions:      []
     },
-  ]
+  ]*/
 };
 
 /**
@@ -164,12 +166,14 @@ const onProjectNew = (state, action) => {
  * @returns {*}
  */
 const onProjectOpen = (state, action) => {
-  const { id, name } = action.payload;
+  const { id, name, user, team } = action.payload;
 
   return {
     ...state,
     id,
-    name
+    name,
+    team,
+    owner: user
   };
 };
 

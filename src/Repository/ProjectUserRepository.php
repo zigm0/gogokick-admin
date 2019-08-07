@@ -1,6 +1,7 @@
 <?php
 namespace App\Repository;
 
+use App\Entity\Project;
 use App\Entity\ProjectUser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -28,5 +29,15 @@ class ProjectUserRepository extends ServiceEntityRepository
     public function findByID($id)
     {
         return $this->findOneBy(['id' => $id]);
+    }
+
+    /**
+     * @param Project $project
+     *
+     * @return ProjectUser[]|array
+     */
+    public function findByProject(Project $project)
+    {
+        return $this->findBy(['project' => $project]);
     }
 }

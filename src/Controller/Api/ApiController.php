@@ -58,4 +58,17 @@ class ApiController extends Controller
 
         return new JsonResponse($json, $statusCode, $headers, true);
     }
+
+    /**
+     * @param object $entity
+     * @param string $group
+     *
+     * @return array
+     */
+    public function arrayEntityGroup($entity, $group = 'web')
+    {
+        $json = $this->serializeGroup($entity, $group);
+
+        return json_decode($json, true);
+    }
 }

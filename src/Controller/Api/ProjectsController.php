@@ -9,6 +9,7 @@ use App\Http\Request;
 use App\Model\ProjectModel;
 use App\Repository\BlockRepository;
 use App\Repository\ProjectRepository;
+use App\Repository\ProjectUserRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use RuntimeException;
@@ -78,6 +79,8 @@ class ProjectsController extends ApiController
                 throw $this->createNotFoundException();
             }
         }
+
+        $project->getUser();
 
         return $this->jsonEntityResponse($project);
     }

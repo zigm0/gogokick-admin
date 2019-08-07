@@ -10,6 +10,7 @@ export { default as numbers } from './numbers';
 export { default as dates } from './dates';
 export { default as router } from './router';
 export { default as system } from './system';
+export { default as team } from './team';
 
 export {
   connect,

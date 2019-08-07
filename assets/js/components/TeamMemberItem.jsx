@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { team } from 'utils';
 import { strings} from 'utils';
 import { Avatar } from 'components';
 
 export default class TeamMemberItem extends React.PureComponent {
   static propTypes = {
-    user:         PropTypes.object.isRequired,
+    projectUser:  PropTypes.object.isRequired,
     onClick:      PropTypes.func,
     onBadgeClick: PropTypes.func
   };
@@ -18,22 +19,22 @@ export default class TeamMemberItem extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { user, onClick, onBadgeClick } = this.props;
+    const { projectUser, onClick, onBadgeClick } = this.props;
 
-    const actionsLength = user.actions.length;
+    const actionsLength = projectUser.actions ? projectUser.actions.length : 0;
 
     return (
-      <li className="editor-team-member" onClick={e => onClick(e, user)}>
-        <Avatar src={user.avatar} sm />
+      <li className="editor-team-member" onClick={e => onClick(e, projectUser)}>
+        <Avatar src={projectUser.user.avatar || ''} sm />
         <div className="editor-team-member-info">
-          <span>{user.name}</span>
-          <small>{user.projectRoles.join('/')}</small>
+          <span>{projectUser.user.name}</span>
+          <small>{team.roleToString(projectUser.role)}</small>
         </div>
         {actionsLength > 0 && (
           <span
             className="badge badge-primary"
             title={`${actionsLength} new ${strings.pluralize(actionsLength, 'action', 'actions')}`}
-            onClick={e => onBadgeClick(e, user)}
+            onClick={e => onBadgeClick(e, projectUser)}
           >
             {actionsLength}
           </span>

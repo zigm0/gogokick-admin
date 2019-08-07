@@ -101,10 +101,18 @@ export default class Sidebar extends React.PureComponent {
           Team
         </h2>
         <ul className="editor-team">
-          {project.teamMembers.map(user => (
+          <TeamMemberItem
+            projectUser={{
+              user: project.owner,
+              role: 0
+            }}
+            onClick={this.handleMemberClick}
+            onBadgeClick={this.handleMemberBadgeClick}
+          />
+          {project.team.map(projectUser => (
             <TeamMemberItem
-              key={user.id}
-              user={user}
+              key={projectUser.id}
+              projectUser={projectUser}
               onClick={this.handleMemberClick}
               onBadgeClick={this.handleMemberBadgeClick}
             />

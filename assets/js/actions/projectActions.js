@@ -156,7 +156,6 @@ export const projectUpdate = (payload) => {
   };
 };
 
-
 /**
  * @param {*} payload
  * @returns {{payload: *, type: string}}

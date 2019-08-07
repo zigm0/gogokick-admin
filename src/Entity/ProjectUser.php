@@ -17,9 +17,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class ProjectUser
 {
+    const ROLE_OWNER = 0;
     const ROLE_LEAD  = 1;
     const ROLE_GUEST = 2;
     const ROLES = [
+        'owner' => self::ROLE_OWNER,
         'lead'  => self::ROLE_LEAD,
         'guest' => self::ROLE_GUEST
     ];
@@ -37,6 +39,7 @@ class ProjectUser
      * @var User
      * @ORM\ManyToOne(targetEntity="User", inversedBy="teamProjects")
      * @ORM\JoinColumn(name="user_id", onDelete="CASCADE", referencedColumnName="id")
+     * @Groups({"web"})
      */
     protected $user;
 
@@ -50,6 +53,7 @@ class ProjectUser
     /**
      * @var int
      * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @Groups({"web"})
      */
     protected $role;
 
