@@ -10,6 +10,7 @@ export const EDITOR_TEMPLATES   = 'EDITOR_TEMPLATES';
 export const EDITOR_UNDO        = 'EDITOR_UNDO';
 export const EDITOR_REDO        = 'EDITOR_REDO';
 export const EDITOR_DROP        = 'EDITOR_DROP';
+export const EDITOR_REMOVE      = 'EDITOR_REMOVE';
 export const EDITOR_MODAL       = 'EDITOR_MODAL';
 export const EDITOR_TEAM_MEMBER = 'EDITOR_TEAM_MEMBER';
 
@@ -133,6 +134,17 @@ export const editorFetchTemplates = () => {
 export const editorDrop = (payload) => {
   return {
     type: EDITOR_DROP,
+    payload
+  }
+};
+
+/**
+ * @param {*} payload
+ * @returns {{payload: *, type: string}}
+ */
+export const editorRemove = (payload) => {
+  return {
+    type: EDITOR_REMOVE,
     payload
   }
 };

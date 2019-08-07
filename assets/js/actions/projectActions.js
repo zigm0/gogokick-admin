@@ -89,8 +89,9 @@ export const projectSave = () => {
 
         const body = {
           screenshot,
-          name:   project.name,
-          blocks: editor.canvasBlocks[editor.blockIndex]
+          name:    project.name,
+          blocks:  editor.canvasBlocks[editor.blockIndex],
+          removed: editor.removedBlocks
         };
 
         let promise = null;

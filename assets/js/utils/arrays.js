@@ -38,6 +38,21 @@ const arrayFindByID = (items, id) => {
 };
 
 /**
+ * @param {Array} items
+ * @param {number} id
+ * @returns {number}
+ */
+const arrayFindIndexByID = (items, id) => {
+  for (let i = 0, l = items.length; i < l; i++) {
+    if (items[i].id === id) {
+      return i;
+    }
+  }
+
+  return -1;
+};
+
+/**
  * @param {number} start
  * @param {number} size
  * @returns {number[]}
@@ -48,7 +63,8 @@ const range = (start, size) => {
 
 export default {
   range,
-  shuffle:    arrayShuffle,
-  findByID:   arrayFindByID,
-  randomItem: arrayRandomItem
+  shuffle:       arrayShuffle,
+  findByID:      arrayFindByID,
+  randomItem:    arrayRandomItem,
+  findIndexByID: arrayFindIndexByID
 };

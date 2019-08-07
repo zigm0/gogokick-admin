@@ -27,6 +27,12 @@ class ProjectModel
     protected $blocks;
 
     /**
+     * @var array
+     * @Assert\Type("array")
+     */
+    protected $removed;
+
+    /**
      * @return string
      */
     public function getName(): string
@@ -82,6 +88,26 @@ class ProjectModel
     public function setBlocks(array $blocks): ProjectModel
     {
         $this->blocks = $blocks;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRemoved(): array
+    {
+        return $this->removed;
+    }
+
+    /**
+     * @param array $removed
+     *
+     * @return ProjectModel
+     */
+    public function setRemoved(array $removed): ProjectModel
+    {
+        $this->removed = $removed;
 
         return $this;
     }

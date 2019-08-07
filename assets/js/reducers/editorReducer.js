@@ -1,4 +1,4 @@
-import { objects } from 'utils';
+import { objects, arrays } from 'utils';
 import * as types from 'actions/editorActions';
 
 const initialState = {
@@ -8,6 +8,7 @@ const initialState = {
   templates:     [],
   teamMember:    null,
   blockIndex:    0,
+  removedBlocks: [],
   canvasBlocks:  [[]],
   sidebarBlocks: [
     {
@@ -213,6 +214,34 @@ const onEditorDrop = (state, action) => {
  * @param {*} action
  * @returns {*}
  */
+const onEditorRemove = (state, action) => {
+  let { canvasBlocks, blockIndex, removedBlocks, isChanged } = objects.clone(state);
+  const block = objects.clone(action.payload);
+
+  const blocks = canvasBlocks[blockIndex].slice(0);
+  const index  = arrays.findIndexByID(blocks, block.id);
+  if (index !== -1) {
+    blocks.splice(index, 1);
+    canvasBlocks[blockIndex + 1] = blocks;
+    removedBlocks.push(block.id);
+    blockIndex += 1;
+    isChanged = true;
+  }
+
+  return {
+    ...state,
+    blockIndex,
+    canvasBlocks,
+    removedBlocks,
+    isChanged
+  }
+};
+
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
 const onEditorModal = (state, action) => {
   const modals = objects.clone(state.modals);
   const { modal, open } = action.payload;
@@ -274,6 +303,7 @@ const handlers = {
   [types.EDITOR_BUSY]:        onEditorBusy,
   [types.EDITOR_NEW]:         onEditorNew,
   [types.EDITOR_DROP]:        onEditorDrop,
+  [types.EDITOR_REMOVE]:      onEditorRemove,
   [types.EDITOR_UNDO]:        onEditorUndo,
   [types.EDITOR_REDO]:        onEditorRedo,
   [types.EDITOR_MODAL]:       onEditorModal,

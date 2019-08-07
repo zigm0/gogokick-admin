@@ -154,11 +154,17 @@ class ProjectsController extends ApiController
                 $updatedBlocks->add($block);
             } else {
                 $block = $blockRepository->findByID($block['id']);
-                if (!$block) {
-                    continue;
+                if ($block) {
+                    $block->setSortOrder($sortOrder++);
+                    $updatedBlocks->add($block);
                 }
-                $block->setSortOrder($sortOrder++);
-                $updatedBlocks->add($block);
+            }
+        }
+
+        foreach($model->getRemoved() as $id) {
+            $block = $blockRepository->findByID($id);
+            if ($block) {
+                $this->em->remove($block);
             }
         }
 

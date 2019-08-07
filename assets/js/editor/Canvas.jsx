@@ -52,7 +52,6 @@ export default class Canvas extends React.PureComponent {
                           key={block.id}
                           block={block}
                           index={index}
-                          showAssignment={false}
                         />
                       ))}
                     </ul>

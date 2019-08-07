@@ -1,15 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Draggable } from 'react-beautiful-dnd';
+import { connect, mapDispatchToProps } from 'utils';
 import { Icon } from 'components';
+import * as editorActions from "../actions/editorActions";
+import { editorEvents } from "react-ace/lib/editorOptions";
 
+const mapStateToProps = state => ({
+  editor:  state.editor,
+  project: state.project
+});
+
+@connect(
+  mapStateToProps,
+  mapDispatchToProps(editorActions)
+)
 export default class CanvasBlock extends React.PureComponent {
   static propTypes = {
     block: PropTypes.shape({
       type: PropTypes.oneOf(['text', 'image', 'video']).isRequired
     }).isRequired,
     index:          PropTypes.number.isRequired,
-    showAssignment: PropTypes.bool
+    editorRemove:   PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -17,10 +29,19 @@ export default class CanvasBlock extends React.PureComponent {
   };
 
   /**
+   *
+   */
+  handleRemoveClick = () => {
+    const { block, editorRemove } = this.props;
+
+    editorRemove(block);
+  };
+
+  /**
    * @returns {*}
    */
   render() {
-    const { block, index, showAssignment } = this.props;
+    const { block, index } = this.props;
 
     return (
       <Draggable key={block.id} draggableId={block.id} index={index}>
@@ -33,13 +54,12 @@ export default class CanvasBlock extends React.PureComponent {
             className={`editor-canvas-block editor-canvas-block-${block.type}`}
             style={provided.draggableProps.style}
           >
-            {showAssignment && (
-              <Icon
-                name="exclamation-circle"
-                title="Assigned to you"
-                className="editor-canvas-block-notice-icon"
-              />
-            )}
+            <Icon
+              name="trash"
+              title="Remove"
+              className="editor-canvas-block-notice-icon"
+              onClick={this.handleRemoveClick}
+            />
             <h2 className="editor-canvas-block-description">
               {block.description || 'Description'}
             </h2>
