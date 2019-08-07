@@ -4,5 +4,5 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes: ['_forms/bootstrap_4_layout.html.twig']
     globals:
-        siteName: DragStarter
-        titleSuffix: - DragStarter
+        siteName: GoGoKick
+        titleSuffix: - GoGoKick
