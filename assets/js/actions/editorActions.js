@@ -143,10 +143,27 @@ export const editorDrop = (payload) => {
  * @returns {{payload: *, type: string}}
  */
 export const editorRemove = (payload) => {
-  return {
-    type: EDITOR_REMOVE,
-    payload
-  }
+  return (dispatch) => {
+    if (!confirm('Remove this block?')) {
+      return;
+    }
+
+    const id = payload.id;
+    const $element = $(`#canvas-block-${id}`);
+    if ($element.length > 0) {
+      $element.fadeOut('slow', () => {
+        dispatch({
+          type: EDITOR_REMOVE,
+          payload
+        });
+      });
+    } else {
+      dispatch({
+        type: EDITOR_REMOVE,
+        payload
+      });
+    }
+  };
 };
 
 /**

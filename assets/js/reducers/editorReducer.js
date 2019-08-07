@@ -223,9 +223,12 @@ const onEditorRemove = (state, action) => {
   if (index !== -1) {
     blocks.splice(index, 1);
     canvasBlocks[blockIndex + 1] = blocks;
-    removedBlocks.push(block.id);
     blockIndex += 1;
     isChanged = true;
+
+    if (typeof block.id !== 'string' || !block.id.startsWith('n-')) {
+      removedBlocks.push(block.id);
+    }
   }
 
   return {
