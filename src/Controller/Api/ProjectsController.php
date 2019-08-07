@@ -143,7 +143,9 @@ class ProjectsController extends ApiController
         $handler->handleRequest($model, $request);
 
         $sortOrder     = 0;
+        $removeBlocks  = $blockRepository->findByProject($project);
         $updatedBlocks = new ArrayCollection();
+
         foreach($model->getBlocks() as $block) {
             if ($block['id'][0] === 'n') {
                 $block = (new Block())
@@ -157,15 +159,16 @@ class ProjectsController extends ApiController
                 if ($block) {
                     $block->setSortOrder($sortOrder++);
                     $updatedBlocks->add($block);
+
+                    $removeBlocks = array_filter($removeBlocks, function(Block $item) use($block) {
+                        return $item->getId() !== $block->getId();
+                    });
                 }
             }
         }
 
-        foreach($model->getRemoved() as $id) {
-            $block = $blockRepository->findByID($id);
-            if ($block) {
-                $this->em->remove($block);
-            }
+        foreach($removeBlocks as $block) {
+            $this->em->remove($block);
         }
 
         $project->setName($model->getName());

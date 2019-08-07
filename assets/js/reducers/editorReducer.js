@@ -8,7 +8,6 @@ const initialState = {
   templates:     [],
   teamMember:    null,
   blockIndex:    0,
-  removedBlocks: [],
   canvasBlocks:  [[]],
   sidebarBlocks: [
     {
@@ -215,7 +214,7 @@ const onEditorDrop = (state, action) => {
  * @returns {*}
  */
 const onEditorRemove = (state, action) => {
-  let { canvasBlocks, blockIndex, removedBlocks, isChanged } = objects.clone(state);
+  let { canvasBlocks, blockIndex, isChanged } = objects.clone(state);
   const block = objects.clone(action.payload);
 
   const blocks = canvasBlocks[blockIndex].slice(0);
@@ -225,17 +224,12 @@ const onEditorRemove = (state, action) => {
     canvasBlocks[blockIndex + 1] = blocks;
     blockIndex += 1;
     isChanged = true;
-
-    if (typeof block.id !== 'string' || !block.id.startsWith('n-')) {
-      removedBlocks.push(block.id);
-    }
   }
 
   return {
     ...state,
     blockIndex,
     canvasBlocks,
-    removedBlocks,
     isChanged
   }
 };
