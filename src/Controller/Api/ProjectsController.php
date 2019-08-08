@@ -4,7 +4,6 @@ namespace App\Controller\Api;
 use App\Entity\Block;
 use App\Entity\Media;
 use App\Entity\Project;
-use App\Entity\User;
 use App\Http\ModelRequestHandler;
 use App\Http\Request;
 use App\Model\ProjectModel;
@@ -177,7 +176,7 @@ class ProjectsController extends ApiController
         $project->setName($model->getName());
         $project->setBlocks($updatedBlocks);
         $project->setDateUpdated(new DateTime());
-        $project->setScreenshot($this->saveScreenshot($project, $model->getScreenshot()));
+        $project->setScreenshot($this->saveScreenshot($model->getScreenshot()));
         $this->em->flush();
 
         return $this->jsonEntityResponse($projectRepository->findByUser($user));
@@ -205,7 +204,7 @@ class ProjectsController extends ApiController
         $project = (new Project())
             ->setUser($user)
             ->setName($model->getName())
-            ->setScreenshot('');
+            ->setScreenshot($this->saveScreenshot($model->getScreenshot()));
         $this->em->persist($project);
 
         $sortOrder = 0;
@@ -219,10 +218,7 @@ class ProjectsController extends ApiController
             $newBlocks->add($block);
         }
 
-        // Save project first because the screenshot filename needs the project id.
         $project->setBlocks($newBlocks);
-        $this->em->flush();
-        $project->setScreenshot($this->saveScreenshot($project, $model->getScreenshot()));
         $this->em->flush();
 
         return $this->jsonEntityResponse($projectRepository->findByUser($user));
@@ -260,12 +256,11 @@ class ProjectsController extends ApiController
     }
 
     /**
-     * @param Project $project
      * @param string $data
      *
      * @return Media
      */
-    protected function saveScreenshot(Project $project, $data)
+    protected function saveScreenshot($data)
     {
         list($type, $data) = explode(';', $data);
         if ($type !== 'data:image/png') {
@@ -277,7 +272,7 @@ class ProjectsController extends ApiController
             throw new RuntimeException('Screenshot is too big.');
         }
 
-        $path = sprintf('%d/%d.png', $project->getId(), microtime(true));
+        $path = sprintf('%d-%d.png', microtime(true), mt_rand());
         $url  = $this->cdn->upload('screenshots', $path, $data);
 
         $media = (new Media())
