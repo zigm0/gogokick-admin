@@ -124,7 +124,10 @@ export default class ProjectSettingsModal extends React.PureComponent {
   renderForm = () => {
     const { project } = this.props;
 
-    const backgroundImage = project.image.url || '/images/block-placeholder-image.png';
+    let image = '/images/block-placeholder-image.png';
+    if (project.image && project.image.url) {
+      image = project.image.url;
+    }
 
     return (
       <Form name="projectSettings">
@@ -138,7 +141,7 @@ export default class ProjectSettingsModal extends React.PureComponent {
 
         <div className="form-group">
           <div
-            style={{ backgroundImage: `url(${backgroundImage})` }}
+            style={{ backgroundImage: `url(${image})` }}
             className="project-settings-banner"
           />
           <div>
