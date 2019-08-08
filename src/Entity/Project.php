@@ -46,11 +46,18 @@ class Project
     protected $name;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var Media
+     * @ORM\OneToOne(targetEntity="Media")
      * @Groups({"web"})
      */
     protected $screenshot;
+
+    /**
+     * @var Media
+     * @ORM\OneToOne(targetEntity="Media")
+     * @Groups({"web"})
+     */
+    protected $image;
 
     /**
      * @var Collection
@@ -64,13 +71,6 @@ class Project
      * @ORM\Column(type="boolean")
      */
     protected $isTemplate = false;
-
-    /**
-     * @var Media
-     * @ORM\OneToOne(targetEntity="Media")
-     * @Groups({"web"})
-     */
-    protected $image;
 
     /**
      * @var string
@@ -155,19 +155,19 @@ class Project
     }
 
     /**
-     * @return string
+     * @return Media
      */
-    public function getScreenshot(): ?string
+    public function getScreenshot(): ?Media
     {
         return $this->screenshot;
     }
 
     /**
-     * @param string $screenshot
+     * @param Media $screenshot
      *
      * @return Project
      */
-    public function setScreenshot(string $screenshot): Project
+    public function setScreenshot(Media $screenshot): Project
     {
         $this->screenshot = $screenshot;
 

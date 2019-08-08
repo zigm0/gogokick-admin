@@ -3,6 +3,7 @@ namespace App\Controller\Api;
 
 use App\Controller\Controller;
 use App\Entity\Project;
+use App\Media\CDNInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,20 +20,28 @@ class ApiController extends Controller
     protected $serializer;
 
     /**
+     * @var CDNInterface
+     */
+    protected $cdn;
+
+    /**
      * Constructor
      *
      * @param EntityManagerInterface   $em
      * @param EventDispatcherInterface $eventDispatcher
      * @param SerializerInterface      $serializer
+     * @param CDNInterface             $cdn
      */
     public function __construct(
         EntityManagerInterface $em,
         EventDispatcherInterface $eventDispatcher,
-        SerializerInterface $serializer
+        SerializerInterface $serializer,
+        CDNInterface $cdn
     )
     {
         parent::__construct($em, $eventDispatcher);
         $this->serializer = $serializer;
+        $this->cdn        = $cdn;
     }
 
     /**

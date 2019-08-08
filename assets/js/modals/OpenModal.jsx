@@ -98,7 +98,7 @@ export default class OpenModal extends React.PureComponent {
   renderProjects = () => {
     const { projects } = this.props;
     const { selected } = this.state;
-
+console.log(projects);
     return (
       <Row>
         {projects.map(project => (

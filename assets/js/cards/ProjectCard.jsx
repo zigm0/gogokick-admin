@@ -30,7 +30,7 @@ export default class ProjectCard extends React.PureComponent {
       >
         <CardBody>
           {project.screenshot && (
-            <img src={project.screenshot} className="card-project-thumb" alt="Screenshot" />
+            <img src={project.screenshot.url} className="card-project-thumb" alt="Screenshot" />
           )}
         </CardBody>
         <CardFooter title={project.name}>

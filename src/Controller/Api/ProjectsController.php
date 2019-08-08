@@ -2,6 +2,7 @@
 namespace App\Controller\Api;
 
 use App\Entity\Block;
+use App\Entity\Media;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Http\ModelRequestHandler;
@@ -10,12 +11,10 @@ use App\Model\ProjectModel;
 use App\Repository\BlockRepository;
 use App\Repository\MediaRepository;
 use App\Repository\ProjectRepository;
-use App\Repository\ProjectUserRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -178,7 +177,7 @@ class ProjectsController extends ApiController
         $project->setName($model->getName());
         $project->setBlocks($updatedBlocks);
         $project->setDateUpdated(new DateTime());
-        $project->setScreenshot($this->saveScreenshot($user, $project, $model->getScreenshot()));
+        $project->setScreenshot($this->saveScreenshot($project, $model->getScreenshot()));
         $this->em->flush();
 
         return $this->jsonEntityResponse($projectRepository->findByUser($user));
@@ -223,7 +222,7 @@ class ProjectsController extends ApiController
         // Save project first because the screenshot filename needs the project id.
         $project->setBlocks($newBlocks);
         $this->em->flush();
-        $project->setScreenshot($this->saveScreenshot($user, $project, $model->getScreenshot()));
+        $project->setScreenshot($this->saveScreenshot($project, $model->getScreenshot()));
         $this->em->flush();
 
         return $this->jsonEntityResponse($projectRepository->findByUser($user));
@@ -261,13 +260,12 @@ class ProjectsController extends ApiController
     }
 
     /**
-     * @param User    $user
      * @param Project $project
      * @param string $data
      *
-     * @return string
+     * @return Media
      */
-    protected function saveScreenshot(User $user, Project $project, $data)
+    protected function saveScreenshot(Project $project, $data)
     {
         list($type, $data) = explode(';', $data);
         if ($type !== 'data:image/png') {
@@ -279,23 +277,15 @@ class ProjectsController extends ApiController
             throw new RuntimeException('Screenshot is too big.');
         }
 
-        $dir = sprintf('%s/public/cdn/%d', $this->getParameter('kernel.project_dir'), $user->getId());
-        if (!file_exists($dir)) {
-            if (!mkdir($dir)) {
-                throw new RuntimeException(
-                    sprintf('Unable to make directory %s', $dir)
-                );
-            }
-        }
+        $path = sprintf('%d/%d.png', $project->getId(), microtime(true));
+        $url  = $this->cdn->upload('screenshots', $path, $data);
 
-        $filename = sprintf('%s/%d.png', $dir, $project->getId());
-        if (!file_put_contents($filename, $data)) {
-            throw new RuntimeException(
-                sprintf('Unable to write file %s', $filename)
-            );
-        }
+        $media = (new Media())
+            ->setUrl($url);
+        $this->em->persist($media);
+        $this->em->flush();
 
-        return sprintf('/cdn/%d/%d.png', $user->getId(), $project->getId());
+        return $media;
     }
 
     /**
