@@ -1,47 +1,58 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typeahead } from 'react-bootstrap-typeahead';
 import { connect, mapDispatchToProps } from 'utils';
-import { Form, Checkbox } from 'components/forms';
+import { Form, Checkbox, Input } from 'components/forms';
 import { Row, Column, Button } from 'components/bootstrap';
 import { Modal } from 'components';
-import * as userActions from 'actions/userActions';
-import * as editorActions from 'actions/editorActions';
+import * as teamActions from 'actions/teamActions';
 import * as formActions from 'actions/formActions';
 
 const mapStateToProps = state => ({
-
+  form: state.forms.addMember
 });
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(userActions, editorActions, formActions)
+  mapDispatchToProps(teamActions, formActions)
 )
 export default class AddMemberModal extends React.PureComponent {
   static propTypes = {
-    editorModal: PropTypes.func.isRequired,
-    formChange:  PropTypes.func.isRequired
+    form:       PropTypes.object.isRequired,
+    formChange: PropTypes.func.isRequired,
+    teamInvite: PropTypes.func.isRequired
   };
 
   static defaultProps = {};
 
   /**
+   *
+   */
+  handleAddClick = () => {
+    const { form, teamInvite } = this.props;
+    const { email, roleEditor, roleGraphics, roleLead } = form;
+
+    if (form.email) {
+      teamInvite({
+        email,
+        roleEditor,
+        roleGraphics,
+        roleLead
+      });
+    }
+  };
+
+  /**
    * @returns {*}
    */
   renderForm = () => {
-    const { formChange } = this.props;
-
     return (
       <Form name="addMember">
         <Row className="gutter-bottom-sm">
           <Column>
-            <Typeahead
+            <Input
+              name="email"
+              label="Email address"
               id="input-add-member-email"
-              placeholder="Email address:"
-              onInputChange={(value) => {
-                formChange('addMember', 'email', value);
-              }}
-              options={[ /* Array of objects or strings */ ]}
             />
           </Column>
         </Row>
@@ -77,7 +88,7 @@ export default class AddMemberModal extends React.PureComponent {
    */
   render() {
     const buttons = (
-      <Button sm>Add</Button>
+      <Button onClick={this.handleAddClick} sm>Add</Button>
     );
 
     return (

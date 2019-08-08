@@ -53,7 +53,6 @@
     "react": "^16.8.6",
     "react-ace": "^7.0.2",
     "react-beautiful-dnd": "^11.0.5",
-    "react-bootstrap-typeahead": "^3.4.6",
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.8.6",
     "react-draggable": "^3.3.0",
