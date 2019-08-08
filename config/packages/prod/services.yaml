@@ -22,3 +22,12 @@ parameters:
             cloudfront:
                 id:  'E34SMF4C1NLPCH'
                 url: 'dawo3jgs9j8n8.cloudfront.net'
+
+        project_images:
+            s3:
+                folder:       'project-images'
+                bucket:       'arb.headzoo.io'
+                cacheControl: 'max-age=31536000'
+            cloudfront:
+                id:  'E34SMF4C1NLPCH'
+                url: 'dawo3jgs9j8n8.cloudfront.net'

@@ -66,6 +66,20 @@ class Project
     protected $isTemplate = false;
 
     /**
+     * @var Media
+     * @ORM\OneToOne(targetEntity="Media")
+     * @Groups({"web"})
+     */
+    protected $image;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"web"})
+     */
+    protected $description;
+
+    /**
      * @var DateTime
      * @ORM\Column(type="datetime")
      * @Groups({"web"})
@@ -196,6 +210,46 @@ class Project
     public function setIsTemplate(bool $isTemplate): Project
     {
         $this->isTemplate = $isTemplate;
+
+        return $this;
+    }
+
+    /**
+     * @return Media
+     */
+    public function getImage(): ?Media
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param Media $image
+     *
+     * @return Project
+     */
+    public function setImage(Media $image): Project
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     *
+     * @return Project
+     */
+    public function setDescription(string $description): Project
+    {
+        $this->description = $description;
 
         return $this;
     }

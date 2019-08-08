@@ -3,12 +3,12 @@ import html2canvas from "html2canvas";
 import { editorReset, editorNew, editorChanged, editorProjects } from "./editorActions";
 
 export const PROJECT_BUSY           = 'PROJECT_BUSY';
-export const PROJECT_SAVING         = 'EDITOR_SAVING';
-export const PROJECT_NEW            = 'EDITOR_NEW_PROJECT';
-export const PROJECT_OPEN           = 'EDITOR_OPEN_PROJECT';
-export const PROJECT_UPDATE         = 'EDITOR_UPDATE_PROJECT';
-export const PROJECT_DELETE         = 'EDITOR_DELETE_PROJECT';
-export const PROJECT_MARK_READ      = 'EDITOR_MARK_READ';
+export const PROJECT_SAVING         = 'PROJECT_SAVING';
+export const PROJECT_NEW            = 'PROJECT_NEW_PROJECT';
+export const PROJECT_OPEN           = 'PROJECT_OPEN_PROJECT';
+export const PROJECT_SETTINGS       = 'PROJECT_SETTINGS';
+export const PROJECT_DELETE         = 'PROJECT_DELETE_PROJECT';
+export const PROJECT_MARK_READ      = 'PROJECT_MARK_READ';
 export const PROJECT_SCREENSHOTTING = 'PROJECT_SCREENSHOTTING';
 
 /**
@@ -146,13 +146,19 @@ export const projectDelete = () => {
  * @param {*} payload
  * @returns {{payload: *, type: string}}
  */
-export const projectUpdate = (payload) => {
-  return (dispatch) => {
+export const projectSettings = (payload) => {
+  return (dispatch, getState) => {
     dispatch(editorChanged(true));
     dispatch({
-      type: PROJECT_UPDATE,
+      type: PROJECT_SETTINGS,
       payload
     });
+
+    const { project } = getState();
+    api.post(router.generate('api_projects_settings', { id: project.id }), project)
+      .then((resp) => {
+        console.log(resp);
+      });
   };
 };
 
@@ -166,4 +172,3 @@ export const projectMarkRead = (payload) => {
     payload
   };
 };
-

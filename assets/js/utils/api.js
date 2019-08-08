@@ -1,43 +1,12 @@
-/**
- * @param {string} method
- * @param {*} body
- * @returns {{headers: {"Content-Type": string}, method: string}}
- */
-const headers = (method, body = {}) => {
-  if (method === 'GET') {
-    return {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method
-    };
-  } else {
-    return {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body),
-      method
-    };
-  }
-};
+import axios from 'axios';
 
 /**
  * @param {string} url
  * @returns {Promise<any> | Promise | Promise}
  */
 const get = (url) => {
-  return new Promise((resolve, reject) => {
-    fetch(url, headers('GET'))
-      .then((resp) => {
-        if (!resp.ok) {
-          throw new Error(resp.statusText);
-        }
-        return resp.json();
-      })
-      .then(resolve)
-      .catch(reject);
-  });
+  return axios.get(url)
+    .then(resp => resp.data);
 };
 
 /**
@@ -46,37 +15,22 @@ const get = (url) => {
  * @returns {Promise<any> | Promise | Promise}
  */
 const post = (url, body = {}) => {
-  return new Promise((resolve, reject) => {
-    fetch(url, headers('POST', body))
-      .then((resp) => {
-        if (!resp.ok) {
-          throw new Error(resp.statusText);
-        }
-        return resp.json();
-      })
-      .then(resolve)
-      .catch(reject);
-  });
+  return axios.post(url, body)
+    .then(resp => resp.data);
 };
 
 /**
  * @param {string} method
  * @param {string} url
- * @param {*} body
+ * @param {*} data
  * @returns {Promise<any> | Promise | Promise}
  */
-const req = (method, url, body = {}) => {
-  return new Promise((resolve, reject) => {
-    fetch(url, headers(method.toUpperCase(), body))
-      .then((resp) => {
-        if (!resp.ok) {
-          throw new Error(resp.statusText);
-        }
-        return resp.json();
-      })
-      .then(resolve)
-      .catch(reject);
-  });
+const req = (method, url, data = {}) => {
+  return axios.request({
+    url,
+    data,
+    method
+  }).then(resp => resp.data);
 };
 
 export default {

@@ -4,6 +4,7 @@ import * as types from 'actions/projectActions';
 const initialState = {
   id:               0,
   name:             '',
+  image:            {},
   owner:            {},
   isBusy:           true,
   isSaving:         false,
@@ -136,12 +137,13 @@ const onProjectDelete = (state) => {
  * @param {*} action
  * @returns {*}
  */
-const onProjectUpdate = (state, action) => {
-  const settings = objects.clone(action.payload);
+const onProjectSettings = (state, action) => {
+  const settings = objects.merge(state, action.payload);
 
   return {
     ...state,
-    name: settings.name
+    name:  settings.name,
+    image: settings.image
   }
 };
 
@@ -166,13 +168,14 @@ const onProjectNew = (state, action) => {
  * @returns {*}
  */
 const onProjectOpen = (state, action) => {
-  const { id, name, user, team } = action.payload;
+  const { id, name, image, user, team } = action.payload;
 
   return {
     ...state,
     id,
     name,
     team,
+    image,
     owner: user
   };
 };
@@ -183,7 +186,7 @@ const handlers = {
   [types.PROJECT_SCREENSHOTTING]: onProjectScreenshotting,
   [types.PROJECT_MARK_READ]:      onProjectMarkRead,
   [types.PROJECT_DELETE]:         onProjectDelete,
-  [types.PROJECT_UPDATE]:         onProjectUpdate,
+  [types.PROJECT_SETTINGS]:       onProjectSettings,
   [types.PROJECT_NEW]:            onProjectNew,
   [types.PROJECT_OPEN]:           onProjectOpen
 };

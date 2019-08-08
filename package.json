@@ -39,6 +39,7 @@
     "webpack-manifest-plugin": "^2.0.4"
   },
   "dependencies": {
+    "axios": "^0.19.0",
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.3.1",
     "brace": "^0.11.1",

@@ -8,6 +8,7 @@ use App\Http\ModelRequestHandler;
 use App\Http\Request;
 use App\Model\ProjectModel;
 use App\Repository\BlockRepository;
+use App\Repository\MediaRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\ProjectUserRepository;
 use DateTime;
@@ -226,6 +227,37 @@ class ProjectsController extends ApiController
         $this->em->flush();
 
         return $this->jsonEntityResponse($projectRepository->findByUser($user));
+    }
+
+    /**
+     * @Route("/{id}/settings", name="_settings", methods={"POST"})
+     *
+     * @param int             $id
+     * @param Request         $request
+     * @param MediaRepository $mediaRepository
+     *
+     * @return JsonResponse
+     */
+    public function settingsAction($id, Request $request, MediaRepository $mediaRepository)
+    {
+        $project = $this->getProject($id);
+
+        $name = $request->json->get('name');
+        if ($name) {
+            $project->setName($name);
+        }
+
+        $image = $request->json->get('image');
+        if ($image) {
+            $media = $mediaRepository->findByID($image['id']);
+            if ($media) {
+                $project->setImage($media);
+            }
+        }
+
+        $this->em->flush();
+
+        return $this->jsonEntityResponse($project);
     }
 
     /**

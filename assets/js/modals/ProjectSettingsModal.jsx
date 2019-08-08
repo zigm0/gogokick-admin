@@ -7,6 +7,7 @@ import { Modal } from 'components';
 import * as editorActions from 'actions/editorActions';
 import * as formActions from 'actions/formActions';
 import * as projectActions from 'actions/projectActions';
+import * as mediaActions from 'actions/mediaActions';
 
 const mapStateToProps = state => ({
   forms:   state.forms,
@@ -16,20 +17,30 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(editorActions, formActions, projectActions)
+  mapDispatchToProps(editorActions, formActions, projectActions, mediaActions)
 )
 export default class ProjectSettingsModal extends React.PureComponent {
   static propTypes = {
-    forms:         PropTypes.object.isRequired,
-    editor:        PropTypes.object.isRequired,
-    project:       PropTypes.object.isRequired,
-    editorModal:   PropTypes.func.isRequired,
-    formChanges:   PropTypes.func.isRequired,
-    projectUpdate: PropTypes.func.isRequired,
-    projectDelete: PropTypes.func.isRequired
+    forms:           PropTypes.object.isRequired,
+    editor:          PropTypes.object.isRequired,
+    project:         PropTypes.object.isRequired,
+    editorModal:     PropTypes.func.isRequired,
+    formChanges:     PropTypes.func.isRequired,
+    projectSettings: PropTypes.func.isRequired,
+    projectDelete:   PropTypes.func.isRequired,
+    mediaUpload:     PropTypes.func.isRequired
   };
 
   static defaultProps = {};
+
+  /**
+   * @param {*} props
+   */
+  constructor(props) {
+    super(props);
+
+    this.file = React.createRef();
+  }
 
   /**
    *
@@ -59,9 +70,9 @@ export default class ProjectSettingsModal extends React.PureComponent {
    *
    */
   handleSaveClick = () => {
-    const { forms, editorModal, projectUpdate } = this.props;
+    const { forms, editorModal, projectSettings } = this.props;
 
-    projectUpdate({
+    projectSettings({
       name: forms.projectSettings.name
     });
     editorModal({
@@ -89,9 +100,32 @@ export default class ProjectSettingsModal extends React.PureComponent {
   };
 
   /**
+   *
+   */
+  handleUploadClick = () => {
+    this.file.current.click();
+  };
+
+  /**
+   *
+   */
+  handleFileChange = () => {
+    const { mediaUpload } = this.props;
+
+    mediaUpload({
+      file:   this.file.current.files[0],
+      system: 'project_images'
+    });
+  };
+
+  /**
    * @returns {*}
    */
   renderForm = () => {
+    const { project } = this.props;
+
+    const backgroundImage = project.image.url || '/images/block-placeholder-image.png';
+
     return (
       <Form name="projectSettings">
         <Input
@@ -100,6 +134,25 @@ export default class ProjectSettingsModal extends React.PureComponent {
           label="Project Name"
           id="input-project-settings-name"
           sm
+        />
+
+        <div className="form-group">
+          <div
+            style={{ backgroundImage: `url(${backgroundImage})` }}
+            className="project-settings-banner"
+          />
+          <div>
+            <Button type="button" onClick={this.handleUploadClick} sm>
+              Upload
+            </Button>
+          </div>
+        </div>
+        <input
+          type="file"
+          accept="image/*"
+          ref={this.file}
+          onChange={this.handleFileChange}
+          style={{ display: 'none' }}
         />
       </Form>
     );

@@ -2,6 +2,7 @@
 namespace App\Controller\Api;
 
 use App\Controller\Controller;
+use App\Entity\Project;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -70,5 +71,20 @@ class ApiController extends Controller
         $json = $this->serializeGroup($entity, $group);
 
         return json_decode($json, true);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return Project|object
+     */
+    public function getProject($id)
+    {
+        $project = $this->em->getRepository(Project::class)->findByID($id);
+        if (!$project) {
+            throw $this->createNotFoundException();
+        }
+
+        return $project;
     }
 }
