@@ -62,3 +62,7 @@ services:
             - '@Aws\S3\S3Client'
             - '@Aws\CloudFront\CloudFrontClient'
             - '%cdn%'
+
+    App\Service\ScreenshotService:
+        arguments:
+            - 'http://127.0.0.1:8080'

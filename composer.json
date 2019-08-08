@@ -9,6 +9,7 @@
     "aws/aws-sdk-php": "^3.109",
     "aws/aws-sdk-php-symfony": "^2.0",
     "friendsofsymfony/jsrouting-bundle": "^2.3",
+    "guzzlehttp/guzzle": "^6.3",
     "symfony/asset": "4.2.*",
     "symfony/cache": "4.2.*",
     "symfony/console": "4.2.*",
