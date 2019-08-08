@@ -1,0 +1,24 @@
+parameters:
+    aws.region:  'us-east-1'
+    aws.version: 'latest'
+    aws.key:     '%env(AWS_KEY)%'
+    aws.secret:  '%env(AWS_SECRET)%'
+
+    cdn:
+        screenshots:
+            s3:
+                folder:       'gogokick-screenshots'
+                bucket:       'arb.headzoo.io'
+                cacheControl: 'max-age=300'
+            cloudfront:
+                id:  'E34SMF4C1NLPCH'
+                url: 'dawo3jgs9j8n8.cloudfront.net'
+
+        assets:
+            s3:
+                folder:       'gogokick-assets'
+                bucket:       'arb.headzoo.io'
+                cacheControl: 'max-age=31536000'
+            cloudfront:
+                id:  'E34SMF4C1NLPCH'
+                url: 'dawo3jgs9j8n8.cloudfront.net'

@@ -37,3 +37,28 @@ services:
     Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
         arguments:
             - '@Redis'
+
+    Aws\S3\S3Client:
+        arguments:
+            -
+                region:  '%aws.region%'
+                version: '%aws.version%'
+                credentials:
+                    key:    '%aws.key%'
+                    secret: '%aws.secret%'
+
+    Aws\CloudFront\CloudFrontClient:
+        arguments:
+            -
+                region:  '%aws.region%'
+                version: '%aws.version%'
+                credentials:
+                    key:    '%aws.key%'
+                    secret: '%aws.secret%'
+
+    App\Media\CDNInterface:
+        class: App\Media\AmazonCDN
+        arguments:
+            - '@Aws\S3\S3Client'
+            - '@Aws\CloudFront\CloudFrontClient'
+            - '%cdn%'
