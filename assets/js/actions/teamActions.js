@@ -21,7 +21,6 @@ export const teamInvite = (payload) => {
 
     api.post(router.generate('api_team_invite'), body)
       .then((resp) => {
-        console.log(resp);
         dispatch(editorModal({
           modal: 'addMember',
           open:  false

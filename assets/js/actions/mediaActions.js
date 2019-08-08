@@ -20,7 +20,6 @@ export const mediaUpload = (payload) => {
 
     api.post(router.generate('api_media_upload'), body)
       .then((media) => {
-        console.log(media);
         if (system === 'project_images') {
           dispatch(projectSettings({
             image: media

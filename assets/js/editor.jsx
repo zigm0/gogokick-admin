@@ -3,11 +3,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import configureStore from 'store/configureStore';
-import Editor from 'editor/Editor';
+import App from 'App';
 
 ReactDOM.render(
   <Provider store={configureStore()}>
-    <Editor />
+    <App />
   </Provider>,
   document.getElementById('mount')
 );

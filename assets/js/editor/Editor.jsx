@@ -25,6 +25,7 @@ const mapStateToProps = state => ({
 )
 export default class Editor extends React.PureComponent {
   static propTypes = {
+    match:       PropTypes.object.isRequired,
     project:     PropTypes.object.isRequired,
     editor:      PropTypes.object.isRequired,
     userMe:      PropTypes.func.isRequired,
@@ -47,10 +48,21 @@ export default class Editor extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { userMe, projectOpen } = this.props;
+    const { match, userMe, projectOpen } = this.props;
 
     userMe();
-    projectOpen(0);
+    projectOpen(match.params.id || 0);
+  }
+
+  /**
+   * @param {*} prevProps
+   */
+  componentDidUpdate(prevProps) {
+    const { match, projectOpen } = this.props;
+
+    if (match.params.id !== prevProps.match.params.id) {
+      projectOpen(match.params.id || 0);
+    }
   }
 
   /**

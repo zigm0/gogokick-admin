@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, system, mapDispatchToProps } from 'utils';
+import { connect, system, history, mapDispatchToProps } from 'utils';
 import { ProjectCard } from 'cards';
 import { Row, Column, Button } from 'components/bootstrap';
 import {  Modal } from 'components';
 import * as editorActions from 'actions/editorActions';
 import * as formActions from 'actions/formActions';
-import * as projectActions from 'actions/projectActions';
 
 const mapStateToProps = state => ({
   editor:   state.editor,
@@ -15,14 +14,13 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(editorActions, formActions, projectActions)
+  mapDispatchToProps(editorActions, formActions)
 )
 export default class OpenModal extends React.PureComponent {
   static propTypes = {
     editor:              PropTypes.object.isRequired,
     projects:            PropTypes.array.isRequired,
     editorModal:         PropTypes.func.isRequired,
-    projectOpen:         PropTypes.func.isRequired,
     editorFetchProjects: PropTypes.func.isRequired
   };
 
@@ -45,12 +43,12 @@ export default class OpenModal extends React.PureComponent {
    *
    */
   handleSelectClick = () => {
-    const { editor, editorModal, projectOpen } = this.props;
+    const { editor, editorModal } = this.props;
     const { selected } = this.state;
 
     const create = () => {
+      history.push(`/editor/${selected}`);
       this.setState({ selected: 0 });
-      projectOpen(selected);
       editorModal({
         modal: 'open',
         open:  false
@@ -98,7 +96,7 @@ export default class OpenModal extends React.PureComponent {
   renderProjects = () => {
     const { projects } = this.props;
     const { selected } = this.state;
-console.log(projects);
+
     return (
       <Row>
         {projects.map(project => (

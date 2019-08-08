@@ -1,4 +1,5 @@
 import { connect, mapDispatchToProps } from 'utils/state';
+import history from 'store/history';
 
 export { default as api } from './api';
 export { default as browser } from './browser';
@@ -14,5 +15,6 @@ export { default as team } from './team';
 
 export {
   connect,
+  history,
   mapDispatchToProps
 };
