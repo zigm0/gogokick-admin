@@ -180,6 +180,15 @@ const onProjectOpen = (state, action) => {
   };
 };
 
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onProjectSet = (state, action) => {
+  return onProjectOpen(state, action);
+};
+
 const handlers = {
   [types.PROJECT_BUSY]:           onProjectBusy,
   [types.PROJECT_SAVING]:         onProjectSaving,
@@ -187,6 +196,8 @@ const handlers = {
   [types.PROJECT_MARK_READ]:      onProjectMarkRead,
   [types.PROJECT_DELETE]:         onProjectDelete,
   [types.PROJECT_SETTINGS]:       onProjectSettings,
+  [types.PROJECT_SAVING]:         onProjectSaving,
+  [types.PROJECT_SET]:            onProjectSet,
   [types.PROJECT_NEW]:            onProjectNew,
   [types.PROJECT_OPEN]:           onProjectOpen
 };

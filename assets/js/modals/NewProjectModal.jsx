@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, system, arrays, mapDispatchToProps } from 'utils';
+import { connect, system, arrays, objects, mapDispatchToProps } from 'utils';
 import { ProjectCard } from 'cards';
 import { Row, Column, Button } from 'components/bootstrap';
 import {  Modal } from 'components';
@@ -49,7 +49,7 @@ export default class NewProjectModal extends React.PureComponent {
 
     const create = () => {
       this.setState({ selected: 0 });
-      const template = arrays.findByID(editor.templates, selected);
+      const template = objects.clone(arrays.findByID(editor.templates, selected));
 
       system.prompt('Project Name', template.name)
         .then((name) => {

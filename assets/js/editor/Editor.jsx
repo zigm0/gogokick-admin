@@ -58,9 +58,9 @@ export default class Editor extends React.PureComponent {
    * @param {*} prevProps
    */
   componentDidUpdate(prevProps) {
-    const { match, projectOpen } = this.props;
+    const { match, project, projectOpen } = this.props;
 
-    if (match.params.id !== prevProps.match.params.id) {
+    if (!project.isSaving && match.params.id && match.params.id !== prevProps.match.params.id) {
       projectOpen(match.params.id || 0);
     }
   }

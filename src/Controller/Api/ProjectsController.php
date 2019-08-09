@@ -221,7 +221,12 @@ class ProjectsController extends ApiController
         $project->setBlocks($newBlocks);
         $this->em->flush();
 
-        return $this->jsonEntityResponse($projectRepository->findByUser($user));
+        $resp = [
+            'project'  => $this->arrayEntityGroup($project),
+            'projects' => $this->arrayEntityGroup($projectRepository->findByUser($user))
+        ];
+
+        return new JsonResponse($resp);
     }
 
     /**

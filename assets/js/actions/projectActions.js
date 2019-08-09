@@ -1,9 +1,10 @@
-import { api, router } from 'utils';
+import { api, router, history } from 'utils';
 import html2canvas from "html2canvas";
 import { editorReset, editorNew, editorChanged, editorProjects } from "./editorActions";
 
 export const PROJECT_BUSY           = 'PROJECT_BUSY';
 export const PROJECT_SAVING         = 'PROJECT_SAVING';
+export const PROJECT_SET            = 'PROJECT_SET';
 export const PROJECT_NEW            = 'PROJECT_NEW_PROJECT';
 export const PROJECT_OPEN           = 'PROJECT_OPEN_PROJECT';
 export const PROJECT_SETTINGS       = 'PROJECT_SETTINGS';
@@ -39,6 +40,7 @@ export const projectScreenshotting = (payload) => {
  */
 export const projectNew = (payload) => {
   return (dispatch) => {
+    history.push('/editor');
     dispatch(editorNew(payload));
     dispatch({
       type: PROJECT_NEW,
@@ -56,6 +58,7 @@ export const projectOpen = (id) => {
     dispatch(projectBusy(true));
     api.get(router.generate('api_projects_open', { id }))
       .then((payload) => {
+        history.push(`/editor/${payload.id}`);
         dispatch(editorNew(payload));
         dispatch({
           type: PROJECT_OPEN,
@@ -106,7 +109,12 @@ export const projectSave = () => {
 
         promise
           .then((payload) => {
-            dispatch(editorProjects(payload));
+            history.push(`/editor/${payload.project.id}`);
+            dispatch({
+              type:    PROJECT_SET,
+              payload: payload.project
+            });
+            dispatch(editorProjects(payload.projects));
             dispatch(editorChanged(false));
           })
           .finally(() => {
