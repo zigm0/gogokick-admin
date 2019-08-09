@@ -29,6 +29,20 @@ class Media
     protected $url;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=60)
+     * @Groups({"web"})
+     */
+    protected $system;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"web"})
+     */
+    protected $path;
+
+    /**
      * @var DateTime
      * @ORM\Column(type="datetime")
      * @Groups({"web"})
@@ -69,6 +83,46 @@ class Media
     public function setUrl(string $url): Media
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSystem(): ?string
+    {
+        return $this->system;
+    }
+
+    /**
+     * @param string $system
+     *
+     * @return Media
+     */
+    public function setSystem(string $system): Media
+    {
+        $this->system = $system;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath(): ?string
+    {
+        return $this->path;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return Media
+     */
+    public function setPath(string $path): Media
+    {
+        $this->path = $path;
 
         return $this;
     }

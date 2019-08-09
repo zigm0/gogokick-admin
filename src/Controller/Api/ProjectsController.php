@@ -162,10 +162,16 @@ class ProjectsController extends ApiController
             $this->em->remove($block);
         }
 
-        $project->setName($model->getName());
-        $project->setBlocks($updatedBlocks);
-        $project->setDateUpdated(new DateTime());
-        $project->setScreenshot($this->saveScreenshot($model->getScreenshot()));
+        $project->setName($model->getName())
+            ->setBlocks($updatedBlocks)
+            ->setDateUpdated(new DateTime());
+
+        $screenshot = $this->saveScreenshot(
+            $model->getScreenshot(),
+            $project->getScreenshot()
+        );
+        $project->setScreenshot($screenshot);
+
         $this->em->flush();
 
         $resp = [
@@ -256,10 +262,11 @@ class ProjectsController extends ApiController
 
     /**
      * @param string $data
+     * @param Media  $previous
      *
      * @return Media
      */
-    protected function saveScreenshot($data)
+    protected function saveScreenshot($data, Media $previous = null)
     {
         list($type, $data) = explode(';', $data);
         if ($type !== 'data:image/png') {
@@ -274,10 +281,22 @@ class ProjectsController extends ApiController
         $path = sprintf('%d-%d.png', microtime(true), mt_rand());
         $url  = $this->cdn->upload('screenshots', $path, $data);
 
-        $media = (new Media())
-            ->setUrl($url);
-        $this->em->persist($media);
-        $this->em->flush();
+        if (!$previous) {
+            $media = (new Media())
+                ->setUrl($url)
+                ->setSystem('screenshots')
+                ->setPath($path);
+            $this->em->persist($media);
+        } else {
+            if ($previous->getSystem()) {
+                $this->cdn->remove($previous->getSystem(), $previous->getPath());
+            }
+            $previous
+                ->setUrl($url)
+                ->setSystem('screenshots')
+                ->setPath($path);
+            $media = $previous;
+        }
 
         return $media;
     }

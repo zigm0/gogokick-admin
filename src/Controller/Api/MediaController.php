@@ -45,7 +45,9 @@ class MediaController extends ApiController
         $url  = $this->cdn->upload($system, $path, $data);
 
         $media = (new Media())
-            ->setUrl($url);
+            ->setUrl($url)
+            ->setSystem($system)
+            ->setPath($path);
         $this->em->persist($media);
         $this->em->flush();
 
