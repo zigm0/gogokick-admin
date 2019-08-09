@@ -2,33 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { connect, mapDispatchToProps } from 'utils';
-import { Row, Column } from 'components/bootstrap';
-import { Loading } from 'components';
-import * as editorActions from 'actions/editorActions';
-import * as userActions from 'actions/userActions';
-import * as projectActions from 'actions/projectActions';
-import Sidebar from 'editor/Sidebar';
-import Canvas from 'editor/Canvas';
+import { Route, Router, Switch } from 'react-router-dom';
+import { connect, history, mapDispatchToProps } from 'utils';
 import Header from 'editor/Header';
+import EditorBody from 'editor/EditorBody';
+import * as editorActions from 'actions/editorActions';
+import * as projectActions from 'actions/projectActions';
 import * as Modals from 'modals';
 
 const mapStateToProps = state => ({
   project: state.project,
   editor:  state.editor,
-  user:    state.user
 });
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(editorActions, userActions, projectActions)
+  mapDispatchToProps(editorActions, projectActions)
 )
 export default class Editor extends React.PureComponent {
   static propTypes = {
     match:       PropTypes.object.isRequired,
     project:     PropTypes.object.isRequired,
     editor:      PropTypes.object.isRequired,
-    userMe:      PropTypes.func.isRequired,
     editorDrop:  PropTypes.func.isRequired,
     projectOpen: PropTypes.func.isRequired
   };
@@ -48,9 +43,8 @@ export default class Editor extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { match, userMe, projectOpen } = this.props;
+    const { match, projectOpen } = this.props;
 
-    userMe();
     projectOpen(match.params.id || 0);
   }
 
@@ -86,8 +80,7 @@ export default class Editor extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { user, editor, project } = this.props;
-    const { dragging } = this.state;
+    const { editor } = this.props;
 
     const classes = classNames('editor h-100', `editor-mode-${editor.mode}`);
 
@@ -95,18 +88,13 @@ export default class Editor extends React.PureComponent {
       <div className={classes}>
         <DragDropContext onDragStart={this.handleDragStart} onDragEnd={this.handleDragEnd}>
           <Header />
-          <Row className="editor-body">
-            <Column className="editor-sidebar-col d-none d-lg-block d-xl-block" xl={2} lg={3} md={12}>
-              <Sidebar />
-            </Column>
-            <Column className="editor-canvas-col" xl={10} lg={9} md={12}>
-              <Canvas dragging={dragging} />
-            </Column>
-          </Row>
+          <Router history={history}>
+            <Switch>
+              <Route exact path="/editor/:id?" component={EditorBody} />
+            </Switch>
+          </Router>
         </DragDropContext>
-        {(editor.isBusy || user.isBusy || project.isBusy) && (
-          <Loading middle />
-        )}
+
         <Modals.OpenModal />
         <Modals.LoginModal />
         <Modals.PreviewModal />
