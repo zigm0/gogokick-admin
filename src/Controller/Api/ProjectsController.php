@@ -129,19 +129,8 @@ class ProjectsController extends ApiController
         ModelRequestHandler $handler
     )
     {
-        $user = $this->getUser();
-        if (!$user) {
-            throw $this->createAccessDeniedException();
-        }
-        $project = $projectRepository->findByID($id);
-        if (!$project) {
-            throw $this->createNotFoundException();
-        }
-        if ($project->getUser()->getId() !== $user->getId()) {
-            throw $this->createAccessDeniedException();
-        }
-
-        $model = new ProjectModel();
+        $project = $this->getProject($id);
+        $model   = new ProjectModel();
         $handler->handleRequest($model, $request);
 
         $sortOrder     = 0;
@@ -179,7 +168,12 @@ class ProjectsController extends ApiController
         $project->setScreenshot($this->saveScreenshot($model->getScreenshot()));
         $this->em->flush();
 
-        return $this->jsonEntityResponse($projectRepository->findByUser($user));
+        $resp = [
+            'project'  => $this->arrayEntityGroup($project),
+            'projects' => $this->arrayEntityGroup($projectRepository->findByUser($this->getUser()))
+        ];
+
+        return new JsonResponse($resp);
     }
 
     /**
