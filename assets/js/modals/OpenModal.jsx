@@ -6,6 +6,7 @@ import { Row, Column, Button } from 'components/bootstrap';
 import {  Modal } from 'components';
 import * as editorActions from 'actions/editorActions';
 import * as formActions from 'actions/formActions';
+import * as projectActions from 'actions/projectActions';
 
 const mapStateToProps = state => ({
   editor:   state.editor,
@@ -14,12 +15,13 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(editorActions, formActions)
+  mapDispatchToProps(editorActions, formActions, projectActions)
 )
 export default class OpenModal extends React.PureComponent {
   static propTypes = {
     editor:              PropTypes.object.isRequired,
     projects:            PropTypes.array.isRequired,
+    projectDelete:       PropTypes.func.isRequired,
     editorModal:         PropTypes.func.isRequired,
     editorFetchProjects: PropTypes.func.isRequired
   };
@@ -65,6 +67,24 @@ export default class OpenModal extends React.PureComponent {
     } else {
       create();
     }
+  };
+
+  /**
+   *
+   */
+  handleDeleteClick = () => {
+    const { projectDelete, editorModal } = this.props;
+
+    system.confirm('Are you SURE you want to delete this project? This action cannot be undone.')
+      .then((resp) => {
+        if (resp) {
+          projectDelete();
+          editorModal({
+            modal: 'open',
+            open:  false
+          });
+        }
+      });
   };
 
   /**
@@ -119,9 +139,14 @@ export default class OpenModal extends React.PureComponent {
     const { selected } = this.state;
 
     const buttons = (
-      <Button onClick={this.handleSelectClick} disabled={selected === 0} sm>
-        Select
-      </Button>
+      <>
+        <Button onClick={this.handleDeleteClick} disabled={selected === 0} theme="danger" sm>
+          Delete
+        </Button>
+        <Button onClick={this.handleSelectClick} disabled={selected === 0} sm>
+          Select
+        </Button>
+      </>
     );
 
     return (
