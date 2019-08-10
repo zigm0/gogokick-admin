@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, mapDispatchToProps, router } from 'utils';
+import { connect, history, mapDispatchToProps, router } from 'utils';
 import { Icon } from 'components';
 import { Button } from 'components/bootstrap';
 import UserMenu from './UserMenu';
@@ -69,15 +69,12 @@ export default class Header extends React.PureComponent {
   };
 
   /**
-   * @param {Event} e
+   *
    */
-  handleSettingsClick = (e) => {
-    const { editor, editorModal } = this.props;
+  handleSettingsClick = () => {
+    const { project } = this.props;
 
-    editorModal({
-      modal: 'settings',
-      open:  !editor.modals.settings
-    });
+    history.push(`/editor/${project.id}/settings`);
   };
 
   /**

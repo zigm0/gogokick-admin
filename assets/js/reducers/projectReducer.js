@@ -6,7 +6,7 @@ const initialState = {
   name:             '',
   image:            {},
   owner:            {},
-  isBusy:           true,
+  isBusy:           false,
   isSaving:         false,
   isScreenshotting: false,
   mode:             'kickstarter',
