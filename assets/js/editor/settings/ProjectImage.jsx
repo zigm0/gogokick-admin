@@ -1,5 +1,7 @@
 import React, {useCallback} from 'react'
-import {useDropzone} from 'react-dropzone'
+import { useDropzone } from 'react-dropzone';
+import classNames from 'classnames';
+import { Icon } from 'components';
 
 /**
  *
@@ -8,9 +10,9 @@ import {useDropzone} from 'react-dropzone'
  * @returns {*}
  */
 const ProjectImage = ({ project, mediaUpload }) => {
-  let image = '/images/block-placeholder-image.png';
+  const styles = {};
   if (project.image && project.image.url) {
-    image = project.image.url;
+    styles.backgroundImage = `url(${project.image.url})`;
   }
 
   const onDrop = useCallback(acceptedFiles => {
@@ -20,20 +22,32 @@ const ProjectImage = ({ project, mediaUpload }) => {
     });
   }, []);
 
-  const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+  const classes = classNames('project-settings-banner', {
+    'hover': isDragActive
+  });
 
   return (
     <div
-      style={{ backgroundImage: `url(${image})` }}
-      className="project-settings-banner"
+      className={classes}
+      style={styles}
       {...getRootProps()}
     >
       <input {...getInputProps()} />
-      {
-        isDragActive ?
-          <p>Drop the files here ...</p> :
-          <p>Drag 'n' drop some files here, or click to select files</p>
-      }
+      {(!project.image || !project.image.url) && (
+        <div className="d-flex flex-column justify-content-center text-center">
+          <div className="project-settings-banner-circle">
+            <Icon name="image" size={2} far />
+          </div>
+          <div className="project-settings-banner-top">
+            Drop an image here, or click to select a file.
+          </div>
+          <div className="project-settings-banner-bottom">
+            It must be a JPG, PNG, GIF, TIFF or BMP. No larger than 2MB.
+          </div>
+        </div>
+      )}
     </div>
   )
 };

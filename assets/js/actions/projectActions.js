@@ -129,14 +129,13 @@ export const projectSave = () => {
 };
 
 /**
+ * @param {number} id
  * @returns {Function}
  */
-export const projectDelete = () => {
-  return (dispatch, getState) => {
-    const { project } = getState();
-
+export const projectDelete = (id) => {
+  return (dispatch) => {
     dispatch(projectBusy(true));
-    api.req('DELETE', router.generate('api_projects_delete', { id: project.id }))
+    api.req('DELETE', router.generate('api_projects_delete', { id }))
       .then((payload) => {
         dispatch(editorReset());
         dispatch(editorProjects(payload));

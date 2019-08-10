@@ -74,11 +74,12 @@ export default class OpenModal extends React.PureComponent {
    */
   handleDeleteClick = () => {
     const { projectDelete, editorModal } = this.props;
+    const { selected } = this.state;
 
     system.confirm('Are you SURE you want to delete this project? This action cannot be undone.')
       .then((resp) => {
         if (resp) {
-          projectDelete();
+          projectDelete(selected);
           editorModal({
             modal: 'open',
             open:  false

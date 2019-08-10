@@ -92,25 +92,6 @@ export default class EditorSettings extends React.PureComponent {
   /**
    *
    */
-  handleUploadClick = () => {
-    this.file.current.click();
-  };
-
-  /**
-   *
-   */
-  handleFileChange = () => {
-    const { mediaUpload } = this.props;
-
-    mediaUpload({
-      file:   this.file.current.files[0],
-      system: 'project_images'
-    });
-  };
-
-  /**
-   *
-   */
   handleCloseClick = () => {
     const { project } = this.props;
 
@@ -133,7 +114,13 @@ export default class EditorSettings extends React.PureComponent {
           sm
         />
         <div className="form-group">
+          <label>Project Image</label>
           <ProjectImage project={project} mediaUpload={mediaUpload} />
+        </div>
+        <div className="text-right">
+          <Button theme="success">
+            Save
+          </Button>
         </div>
       </Form>
     );
@@ -147,7 +134,7 @@ export default class EditorSettings extends React.PureComponent {
       <Container className="gutter-top">
         <Row>
           <Column xs={8} offsetXl={2} className="gutter-bottom">
-            <Button icon="arrow-left" onClick={this.handleCloseClick}>
+            <Button icon="caret-left" onClick={this.handleCloseClick}>
               Back to project
             </Button>
           </Column>
