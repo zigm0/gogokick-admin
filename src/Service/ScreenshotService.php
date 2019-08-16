@@ -26,20 +26,94 @@ class ScreenshotService
     }
 
     /**
-     * @param string $url
-     * @param string $selector
+     * @param string $html
+     * @param array $options "width", "height", "selector"
      *
      * @return string
      * @throws Exception
      */
-    public function fetch($url, $selector = 'body')
+    public function screenshot($html, array $options = [])
     {
         try {
             $guzzle   = new Client();
             $response = $guzzle->post(sprintf('%s/screenshot', $this->puppetUrl), [
                 RequestOptions::JSON => [
-                    'url'      => $url,
-                    'selector' => $selector
+                    'html'    => $html,
+                    'options' => $options
+                ]
+            ]);
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+        return (string)$response->getBody();
+    }
+
+    /**
+     * @param string $url
+     * @param array $options "width", "height", "selector"
+     *
+     * @return string
+     * @throws Exception
+     */
+    public function screenshotURL($url, array $options = [])
+    {
+        try {
+            $guzzle   = new Client();
+            $response = $guzzle->post(sprintf('%s/screenshot', $this->puppetUrl), [
+                RequestOptions::JSON => [
+                    'url'     => $url,
+                    'options' => $options
+                ]
+            ]);
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+        return (string)$response->getBody();
+    }
+
+    /**
+     * @param string $url
+     * @param array $options "width", "height", "selector"
+     *
+     * @return string
+     * @throws Exception
+     */
+    public function htmlURL($url, array $options = [])
+    {
+        try {
+            $guzzle   = new Client();
+            $response = $guzzle->post(sprintf('%s/html', $this->puppetUrl), [
+                RequestOptions::JSON => [
+                    'url'     => $url,
+                    'options' => $options
+                ]
+            ]);
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+        return (string)$response->getBody();
+    }
+
+    /**
+     * @see https://pptr.dev/#?product=Puppeteer&version=v1.19.0&show=api-pagepdfoptions
+     *
+     * @param string $html
+     * @param array $options
+     *
+     * @return string
+     * @throws Exception
+     */
+    public function pdf($html, array $options = [])
+    {
+        try {
+            $guzzle   = new Client();
+            $response = $guzzle->post(sprintf('%s/pdf', $this->puppetUrl), [
+                RequestOptions::JSON => [
+                    'html'    => $html,
+                    'options' => $options
                 ]
             ]);
         } catch (Exception $e) {

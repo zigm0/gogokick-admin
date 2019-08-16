@@ -1,0 +1,31 @@
+{% extends "editor.html.twig" %}
+{% block body %}
+<div class="row editor-body">
+  <div class="column col-xl-10 offset-xl-1 editor-canvas-col">
+    <div class="editor-canvas h-100">
+      <div class="editor-canvas-body h-100" style="overflow: hidden;">
+        <div class="container h-100">
+          <div class="row">
+            <div class="column col-xl-8 offset-xl-2 editor-canvas-body-col">
+              <ul class="editor-canvas-blocks">
+                {% for block in project.blocks %}
+                  {% if block.type == 1 %}
+                    {% set type = 'text' %}
+                  {% elseif block.type == 2 %}
+                    {% set type = 'image' %}
+                  {% else %}
+                    {% set type = 'video' %}
+                  {% endif %}
+                  <li id="canvas-block-{{ block.id }}" class="editor-canvas-block editor-canvas-block-{{ type }}">
+                    <h2 class="editor-canvas-block-description">Description</h2>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

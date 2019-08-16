@@ -1,8 +1,10 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
-state_page:
+editor:
     path: "/editor/{catchAll}"
     defaults: { _controller: 'App\Controller\HomeController::editorAction' }
     requirements:
         catchAll: ".*"
+
+
