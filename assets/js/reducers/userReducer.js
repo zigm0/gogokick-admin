@@ -1,12 +1,12 @@
 import { objects } from 'utils';
 import * as types from 'actions/userActions';
 
-const initialState = {
+const initialState = objects.merge({
   name:            'Guest',
   error:           '',
   isBusy:          false,
   isAuthenticated: false
-};
+}, window.initialState);
 
 /**
  * @param {*} state

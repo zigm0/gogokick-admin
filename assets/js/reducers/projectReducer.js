@@ -1,7 +1,7 @@
 import { arrays, objects } from 'utils';
 import * as types from 'actions/projectActions';
 
-const initialState = {
+const initialState = objects.merge({
   id:               0,
   name:             '',
   image:            {},
@@ -9,7 +9,7 @@ const initialState = {
   isBusy:           false,
   isSaving:         false,
   isScreenshotting: false,
-  mode:             'kickstarter',
+  campaignType:     0,
   team:             [],
 /*  teamMembers:      [
     {
@@ -57,7 +57,7 @@ const initialState = {
       actions:      []
     },
   ]*/
-};
+}, window.initialState.project);
 
 /**
  * @param {*} state
@@ -168,7 +168,7 @@ const onProjectNew = (state, action) => {
  * @returns {*}
  */
 const onProjectOpen = (state, action) => {
-  const { id, name, image, user, team } = action.payload;
+  const { id, name, image, user, team, campaignType } = action.payload;
 
   return {
     ...state,
@@ -176,6 +176,7 @@ const onProjectOpen = (state, action) => {
     name,
     team,
     image,
+    campaignType,
     owner: user
   };
 };

@@ -8,7 +8,6 @@ import { SidebarBlock } from 'blocks';
 import * as editorActions from 'actions/editorActions';
 
 const mapStateToProps = state => ({
-  editor:  state.editor,
   project: state.project
 });
 
@@ -19,7 +18,6 @@ const mapStateToProps = state => ({
 export default class Sidebar extends React.PureComponent {
   static propTypes = {
     project:          PropTypes.object.isRequired,
-    editor:           PropTypes.object.isRequired,
     editorModal:      PropTypes.func.isRequired,
     editorTeamMember: PropTypes.func.isRequired
   };
@@ -70,13 +68,26 @@ export default class Sidebar extends React.PureComponent {
    * @returns {*}
    */
   renderBlocks = () => {
-    const { editor } = this.props;
+    const blocks = [
+      {
+        id:   1,
+        type: 'text'
+      },
+      {
+        id:   2,
+        type: 'image'
+      },
+      {
+        id:   3,
+        type: 'video'
+      }
+    ];
 
     return (
       <Droppable droppableId="sidebarBlocks" isDropDisabled>
         {(provided) => (
           <ul className="editor-sidebar-blocks" ref={provided.innerRef}>
-            {editor.sidebarBlocks.map((block, index) => (
+            {blocks.map((block, index) => (
               <SidebarBlock
                 key={block.type}
                 type={block.type}

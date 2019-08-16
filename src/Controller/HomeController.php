@@ -1,6 +1,8 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Block;
+use App\Entity\Project;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -21,6 +23,17 @@ class HomeController extends Controller
      */
     public function editorAction()
     {
-        return $this->render('editor/index.html.twig');
+        $constants = [
+            'blockTypes'    => array_flip(Block::TYPES),
+            'campaignTypes' => array_flip(Project::CAMPAIGN_TYPES)
+        ];
+
+        return $this->render('editor/index.html.twig', [
+            'constants'    => $constants,
+            'initialState' => [
+                'editor'  => [],
+                'project' => []
+            ]
+        ]);
     }
 }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from "classnames";
 import { Route, Router, Switch } from 'react-router-dom';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { connect, history, mapDispatchToProps } from 'utils';
+import { connect, history, constants, mapDispatchToProps } from 'utils';
 import { Loading } from 'components';
 import EditorController from 'editor/EditorController';
 
@@ -16,7 +16,7 @@ import * as Modals from 'modals';
 import { Column, Row } from "./components/bootstrap";
 
 const mapStateToProps = state => ({
-  mode:          state.project.mode,
+  campaignType:  state.project.campaignType,
   projectIsBusy: state.project.isBusy,
   editorIsBusy:  state.editor.isBusy,
   userIsBusy:    state.user.isBusy
@@ -28,7 +28,7 @@ const mapStateToProps = state => ({
 )
 export default class App extends React.Component {
   static propTypes = {
-    mode:          PropTypes.string.isRequired,
+    campaignType:  PropTypes.number.isRequired,
     userIsBusy:    PropTypes.bool.isRequired,
     projectIsBusy: PropTypes.bool.isRequired,
     editorIsBusy:  PropTypes.bool.isRequired,
@@ -96,9 +96,9 @@ export default class App extends React.Component {
    * @returns {*}
    */
   render() {
-    const { mode, userIsBusy, editorIsBusy, projectIsBusy } = this.props;
+    const { campaignType, userIsBusy, editorIsBusy, projectIsBusy } = this.props;
 
-    const classes = classNames('editor h-100', `editor-mode-${mode}`);
+    const classes = classNames('editor h-100', `editor-campaign-type-${constants.campaignTypeString(campaignType)}`);
 
     return (
       <div className={classes}>

@@ -1,7 +1,7 @@
 import { objects, arrays } from 'utils';
 import * as types from 'actions/editorActions';
 
-const initialState = {
+const initialState = objects.merge({
   isBusy:        false,
   isChanged:     false,
   projects:      [],
@@ -11,21 +11,7 @@ const initialState = {
   activeBlockID: 0,
   hoverBlockID:  0,
   canvasBlocks:  [[]],
-  sidebarBlocks: [
-    {
-      id:   1,
-      type: 'text'
-    },
-    {
-      id:   2,
-      type: 'image'
-    },
-    {
-      id:   3,
-      type: 'video'
-    }
-  ],
-  modals: {
+  modals:        {
     login:         false,
     preview:       false,
     confirm:       false,
@@ -36,7 +22,7 @@ const initialState = {
     addMember:     false,
     memberActions: false
   }
-};
+}, window.initialState.editor);
 
 let idIndex = 9;
 
@@ -148,19 +134,6 @@ const onEditorNew = (state, action) => {
 
   blocks.sort((a, b) => {
     return (a.sortOrder > b.sortOrder) ? 1 : -1;
-  });
-  blocks.forEach((block) => {
-    switch(block.type) {
-      case 1:
-        block.type = 'text';
-        break;
-      case 2:
-        block.type = 'image';
-        break;
-      case 3:
-        block.type = 'video';
-        break;
-    }
   });
 
   const canvasBlocks = [blocks];

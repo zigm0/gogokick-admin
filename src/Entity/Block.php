@@ -59,6 +59,29 @@ class Block
     protected $sortOrder;
 
     /**
+     * @var string
+     * @ORM\Column(type="text")
+     * @Groups({"web"})
+     */
+    protected $text = '';
+
+    /**
+     * @var Media
+     * @ORM\OneToOne(targetEntity="Media")
+     * @ORM\Column(nullable=true)
+     * @Groups({"web"})
+     */
+    protected $image;
+
+    /**
+     * @var Media
+     * @ORM\OneToOne(targetEntity="Media")
+     * @ORM\Column(nullable=true)
+     * @Groups({"web"})
+     */
+    protected $video;
+
+    /**
      * @var DateTime
      * @ORM\Column(type="datetime")
      * @Groups({"web"})
@@ -133,6 +156,19 @@ class Block
 
     /**
      * @return string
+     * @Groups({"web"})
+     */
+    public function getTypeString(): ?string
+    {
+        if ($this->type === null) {
+            return '';
+        }
+
+        return (string)array_search($this->type, self::TYPES);
+    }
+
+    /**
+     * @return string
      */
     public function getDescription(): ?string
     {
@@ -147,6 +183,66 @@ class Block
     public function setDescription(string $description): Block
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getText(): ?string
+    {
+        return $this->text;
+    }
+
+    /**
+     * @param string $text
+     *
+     * @return Block
+     */
+    public function setText(string $text): Block
+    {
+        $this->text = $text;
+
+        return $this;
+    }
+
+    /**
+     * @return Media
+     */
+    public function getImage(): ?Media
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param Media $image
+     *
+     * @return Block
+     */
+    public function setImage(Media $image): Block
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return Media
+     */
+    public function getVideo(): ?Media
+    {
+        return $this->video;
+    }
+
+    /**
+     * @param Media $video
+     *
+     * @return Block
+     */
+    public function setVideo(Media $video): Block
+    {
+        $this->video = $video;
 
         return $this;
     }

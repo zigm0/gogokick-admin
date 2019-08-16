@@ -14,6 +14,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Project
 {
+    const CAMPAIGN_TYPE_KICKSTARTER  = 1;
+    const CAMPAIGN_TYPE_INDIEGOGO    = 2;
+    const CAMPAIGN_TYPES             = [
+        'kickstarter' => self::CAMPAIGN_TYPE_KICKSTARTER,
+        'indiegogo'   => self::CAMPAIGN_TYPE_INDIEGOGO
+    ];
+
     /**
      * @var int
      * @ORM\Id
@@ -30,6 +37,13 @@ class Project
      * @Groups({"web"})
      */
     protected $user;
+
+    /**
+     * @var int
+     * @ORM\Column(type="smallint")
+     * @Groups({"web"})
+     */
+    protected $campaignType;
 
     /**
      * @var Collection
@@ -130,6 +144,39 @@ class Project
     public function setUser(User $user): Project
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCampaignType(): ?int
+    {
+        return $this->campaignType;
+    }
+
+    /**
+     * @return string
+     * @Groups({"web"})
+     */
+    public function getCampaignTypeString(): ?string
+    {
+        if ($this->campaignType === null) {
+            return '';
+        }
+
+        return (string)array_search($this->campaignType, self::CAMPAIGN_TYPES);
+    }
+
+    /**
+     * @param int $campaignType
+     *
+     * @return Project
+     */
+    public function setCampaignType(int $campaignType): Project
+    {
+        $this->campaignType = $campaignType;
 
         return $this;
     }

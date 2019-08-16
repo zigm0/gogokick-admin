@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
-import { connect, mapDispatchToProps } from 'utils';
+import { connect, constants, mapDispatchToProps } from 'utils';
 import { Icon } from 'components';
 import * as editorActions from 'actions/editorActions';
 import EditingBlockText from './EditingBlockText';
@@ -19,7 +19,7 @@ const mapStateToProps = state => ({
 export default class CanvasBlock extends React.PureComponent {
   static propTypes = {
     block: PropTypes.shape({
-      type: PropTypes.oneOf(['text', 'image', 'video']).isRequired
+      type: PropTypes.number.isRequired
     }).isRequired,
     index:               PropTypes.number.isRequired,
     hoverBlockID:        PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
@@ -76,7 +76,7 @@ export default class CanvasBlock extends React.PureComponent {
   renderBlock = (provided) => {
     const { block, hoverBlockID, activeBlockID } = this.props;
 
-    const classes = classNames(`block block-${block.type}`, {
+    const classes = classNames(`block block-${constants.blockTypeString(block.type)}`, {
       'block-active': activeBlockID === block.id,
       'block-hover':  hoverBlockID === block.id
     });
