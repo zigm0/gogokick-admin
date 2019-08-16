@@ -34,7 +34,7 @@ export default class MemberActionsModal extends React.PureComponent {
 
     const selector = `canvas-block-${block}`;
     // const canvasBlock = document.getElementById(selector);
-    const canvasBlock = document.querySelector('.editor-canvas-block:last-child');
+    const canvasBlock = document.querySelector('.block:last-child');
 
     if (canvasBlock) {
       editorModal({

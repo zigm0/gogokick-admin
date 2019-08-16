@@ -156,6 +156,22 @@ export function browserIFrameSrc(iframe, html) {
   iframe.srcdoc = html;
 }
 
+/**
+ * @param {HTMLElement|Node} element
+ * @param {string} className
+ * @returns {boolean}
+ */
+export function browserHasParentClass(element, className) {
+  do {
+    if (element.classList && element.classList.contains(className)) {
+      return true;
+    }
+    element = element.parentNode;
+  } while (element);
+
+  return false;
+}
+
 export default {
   title:            browserTitle,
   scroll:           browserScroll,
@@ -166,6 +182,7 @@ export default {
   showScrollbars:   browserShowScrollbars,
   serializeForm:    browserSerializeForm,
   extractFormValue: browserExtractFormValue,
+  hasParentClass:   browserHasParentClass,
   storage:          {
     getItem:  browserStorageGetItem,
     setItem:  browserStorageSetItem,

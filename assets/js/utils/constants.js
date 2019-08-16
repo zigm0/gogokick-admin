@@ -1,4 +1,0 @@
-export const CALCULATOR_MAX_HOME_PRICE = 5000000;
-export const CALCULATOR_STEP_PRICE     = 1000;
-export const CALCULATOR_STEP_PAYMENT   = 1000;
-export const CALCULATOR_STEP_PERCENT   = 1;

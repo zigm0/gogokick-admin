@@ -8,6 +8,8 @@ const initialState = {
   templates:     [],
   teamMember:    null,
   blockIndex:    0,
+  activeBlockID: 0,
+  hoverBlockID:  0,
   canvasBlocks:  [[]],
   sidebarBlocks: [
     {
@@ -295,19 +297,49 @@ const onEditorTeamMember = (state, action) => {
   };
 };
 
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onEditorActiveBlock = (state, action) => {
+  const activeBlockID = action.payload;
+
+  return {
+    ...state,
+    activeBlockID
+  };
+};
+
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onEditorHoverBlock = (state, action) => {
+  const hoverBlockID = action.payload;
+
+  return {
+    ...state,
+    hoverBlockID
+  };
+};
+
 const handlers = {
-  [types.EDITOR_RESET]:       onEditorReset,
-  [types.EDITOR_BUSY]:        onEditorBusy,
-  [types.EDITOR_NEW]:         onEditorNew,
-  [types.EDITOR_DROP]:        onEditorDrop,
-  [types.EDITOR_REMOVE]:      onEditorRemove,
-  [types.EDITOR_UNDO]:        onEditorUndo,
-  [types.EDITOR_REDO]:        onEditorRedo,
-  [types.EDITOR_MODAL]:       onEditorModal,
-  [types.EDITOR_TEAM_MEMBER]: onEditorTeamMember,
-  [types.EDITOR_PROJECTS]:    onEditorProjects,
-  [types.EDITOR_TEMPLATES]:   onEditorTemplates,
-  [types.EDITOR_CHANGED]:     onEditorChanged
+  [types.EDITOR_RESET]:          onEditorReset,
+  [types.EDITOR_BUSY]:           onEditorBusy,
+  [types.EDITOR_NEW]:            onEditorNew,
+  [types.EDITOR_DROP]:           onEditorDrop,
+  [types.EDITOR_REMOVE]:         onEditorRemove,
+  [types.EDITOR_UNDO]:           onEditorUndo,
+  [types.EDITOR_REDO]:           onEditorRedo,
+  [types.EDITOR_MODAL]:          onEditorModal,
+  [types.EDITOR_TEAM_MEMBER]:    onEditorTeamMember,
+  [types.EDITOR_PROJECTS]:       onEditorProjects,
+  [types.EDITOR_TEMPLATES]:      onEditorTemplates,
+  [types.EDITOR_CHANGED]:        onEditorChanged,
+  [types.EDITOR_ACTIVATE_BLOCK]: onEditorActiveBlock,
+  [types.EDITOR_HOVER_BLOCK]:    onEditorHoverBlock
 };
 
 /**

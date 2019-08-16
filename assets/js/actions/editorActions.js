@@ -1,18 +1,20 @@
 import { api, router } from 'utils';
 
-export const EDITOR_RESET       = 'EDITOR_RESET';
-export const EDITOR_BUSY        = 'EDITOR_BUSY';
-export const EDITOR_CHANGED     = 'EDITOR_CHANGED';
-export const EDITOR_NEW         = 'EDITOR_NEW';
-export const EDITOR_SAVING      = 'EDITOR_SAVING';
-export const EDITOR_PROJECTS    = 'EDITOR_PROJECTS';
-export const EDITOR_TEMPLATES   = 'EDITOR_TEMPLATES';
-export const EDITOR_UNDO        = 'EDITOR_UNDO';
-export const EDITOR_REDO        = 'EDITOR_REDO';
-export const EDITOR_DROP        = 'EDITOR_DROP';
-export const EDITOR_REMOVE      = 'EDITOR_REMOVE';
-export const EDITOR_MODAL       = 'EDITOR_MODAL';
-export const EDITOR_TEAM_MEMBER = 'EDITOR_TEAM_MEMBER';
+export const EDITOR_RESET          = 'EDITOR_RESET';
+export const EDITOR_BUSY           = 'EDITOR_BUSY';
+export const EDITOR_CHANGED        = 'EDITOR_CHANGED';
+export const EDITOR_NEW            = 'EDITOR_NEW';
+export const EDITOR_SAVING         = 'EDITOR_SAVING';
+export const EDITOR_PROJECTS       = 'EDITOR_PROJECTS';
+export const EDITOR_TEMPLATES      = 'EDITOR_TEMPLATES';
+export const EDITOR_UNDO           = 'EDITOR_UNDO';
+export const EDITOR_REDO           = 'EDITOR_REDO';
+export const EDITOR_DROP           = 'EDITOR_DROP';
+export const EDITOR_REMOVE         = 'EDITOR_REMOVE';
+export const EDITOR_MODAL          = 'EDITOR_MODAL';
+export const EDITOR_TEAM_MEMBER    = 'EDITOR_TEAM_MEMBER';
+export const EDITOR_HOVER_BLOCK    = 'EDITOR_HOVER_BLOCK';
+export const EDITOR_ACTIVATE_BLOCK = 'EDITOR_ACTIVATE_BLOCK';
 
 /**
  * @returns {{type: string}}
@@ -174,5 +176,27 @@ export const editorModal = (payload) => {
   return {
     type: EDITOR_MODAL,
     payload
+  };
+};
+
+/**
+ * @param {number} activeBlockID
+ * @returns {{payload: *, type: string}}
+ */
+export const editorActivateBlock = (activeBlockID) => {
+  return {
+    type:    EDITOR_ACTIVATE_BLOCK,
+    payload: activeBlockID
+  };
+};
+
+/**
+ * @param {number} hoverBlockID
+ * @returns {{payload: *, type: string}}
+ */
+export const editorHoverBlock = (hoverBlockID) => {
+  return {
+    type:    EDITOR_HOVER_BLOCK,
+    payload: hoverBlockID
   };
 };

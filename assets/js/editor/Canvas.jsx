@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Droppable } from 'react-beautiful-dnd';
-import { connect, mapDispatchToProps } from 'utils';
+import { connect, browser, mapDispatchToProps } from 'utils';
 import { Container, Row, Column } from 'components/bootstrap';
 import { CanvasBlock } from 'blocks';
 import * as editorActions from 'actions/editorActions';
@@ -18,13 +18,25 @@ const mapStateToProps = state => ({
 )
 export default class Canvas extends React.PureComponent {
   static propTypes = {
-    editor:   PropTypes.object.isRequired,
-    project:  PropTypes.object.isRequired,
-    dragging: PropTypes.bool
+    editor:              PropTypes.object.isRequired,
+    project:             PropTypes.object.isRequired,
+    dragging:            PropTypes.bool,
+    editorActivateBlock: PropTypes.func.isRequired
   };
 
   static defaultProps = {
     dragging: false
+  };
+
+  /**
+   * @param {Event} e
+   */
+  handleClick = (e) => {
+    const { editorActivateBlock} = this.props;
+
+    if (!browser.hasParentClass(e.target, 'block')) {
+      editorActivateBlock(0);
+    }
   };
 
   /**
@@ -39,7 +51,7 @@ export default class Canvas extends React.PureComponent {
     });
 
     return (
-      <div className="editor-canvas h-100">
+      <div className="editor-canvas h-100" onClick={this.handleClick}>
         <div className={bodyClasses}>
           <Container className="h-100">
             <Row>
