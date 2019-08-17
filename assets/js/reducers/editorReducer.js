@@ -214,6 +214,43 @@ const onEditorRemove = (state, action) => {
  * @param {*} action
  * @returns {*}
  */
+const onEditorChange = (state, action) => {
+  let { canvasBlocks, blockIndex, isChanged } = objects.clone(state);
+  const { blockID, text, image, video } = action.payload;
+
+  const blocks = Array.from(canvasBlocks[blockIndex]);
+  const index = arrays.findIndexByID(blocks, blockID);
+  blocks[index].text = text;
+  canvasBlocks[blockIndex + 1] = blocks;
+  blockIndex += 1;
+  isChanged = true;
+
+/*  const blocks = canvasBlocks[blockIndex].slice(0);
+  const index  = arrays.findIndexByID(blocks, blockID);
+  if (index !== -1) {
+    blocks.splice(index, 1);
+    canvasBlocks[blockIndex + 1] = blocks;
+    blockIndex += 1;
+    isChanged = true;
+  }
+
+  if (typeof action.payload.text !== 'undefined') {
+    canvasBlocks[blockIndex][blockIndex].text = text;
+  }*/
+
+  return {
+    ...state,
+    blockIndex,
+    canvasBlocks,
+    isChanged
+  }
+};
+
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
 const onEditorModal = (state, action) => {
   const modals = objects.clone(state.modals);
   const { modal, open } = action.payload;
@@ -304,6 +341,7 @@ const handlers = {
   [types.EDITOR_NEW]:            onEditorNew,
   [types.EDITOR_DROP]:           onEditorDrop,
   [types.EDITOR_REMOVE]:         onEditorRemove,
+  [types.EDITOR_CHANGE]:         onEditorChange,
   [types.EDITOR_UNDO]:           onEditorUndo,
   [types.EDITOR_REDO]:           onEditorRedo,
   [types.EDITOR_MODAL]:          onEditorModal,

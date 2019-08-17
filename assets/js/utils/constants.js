@@ -2,7 +2,7 @@
  * @param {number} type
  * @returns {string}
  */
-export function blockTypeString(type) {
+export function blockType(type) {
   return window.constants.blockTypes[type];
 }
 
@@ -10,11 +10,11 @@ export function blockTypeString(type) {
  * @param {number} type
  * @returns {string}
  */
-export function campaignTypeString(type) {
+export function campaignType(type) {
   return window.constants.campaignTypes[type];
 }
 
 export default {
-  blockTypeString,
-  campaignTypeString
+  blockType,
+  campaignType
 }

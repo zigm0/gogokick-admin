@@ -42,9 +42,9 @@ export default class MemberActionsModal extends React.PureComponent {
         open:  false
       });
       canvasBlock.scrollIntoView({ behavior: 'smooth' });
-      canvasBlock.classList.add('canvas-block-highlighted');
+      canvasBlock.classList.add('block-highlighted');
       setTimeout(() => {
-        canvasBlock.classList.remove('canvas-block-highlighted');
+        canvasBlock.classList.remove('block-highlighted');
       }, 2000);
     }
   };

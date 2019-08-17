@@ -1,17 +1,19 @@
 @import "../vars";
 
+.block-container {
+  position: relative;
+  margin-bottom: $gutter-size-sm;
+}
+
 .block {
   position: relative;
   width: $width-block !important;
-  user-select: none;
-  background-color: $color-canvas-block-bg;
-  background-size: contain;
-  margin-bottom: $gutter-size-sm;
   border-radius: $border-radius-blocks;
   border: 1px solid transparent;
-  border-left-width: 4px;
-  transition: box-shadow 0.1s ease-in-out, color 0.2s ease-in-out;
-  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.25);
+
+  &.block-hover {
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+  }
 
   @include media-md {
     width: 100% !important;
@@ -22,10 +24,15 @@
   @include media-xs {
     width: 100% !important;
   }
+}
 
-  &:hover:not(.block-active) {
-    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.25);
-  }
+.block-empty {
+  user-select: none;
+  background-color: $color-canvas-block-bg;
+  background-size: contain;
+  border-left-width: 4px;
+  transition: box-shadow 0.1s ease-in-out, color 0.2s ease-in-out;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.25);
 
   &::after {
     position: absolute;
@@ -35,20 +42,96 @@
     font-size: 1.5rem;
     color: $color-canvas-block-icon;
   }
+
+  &.block-text {
+    height: 100px;
+    border-left-color: $color-block-text;
+    background: $color-canvas-block-bg center center url(/images/block-placeholder-text.png) no-repeat;
+
+    &::after {
+      content: '680x100';
+    }
+
+    &.block-active {
+      background-color: $color-canvas-block-active-bg;
+      background-image: none;
+
+      &::after {
+        content: '';
+      }
+    }
+  }
+
+
+  &.block-image {
+    height: 400px;
+    border-left-color: $color-block-image;
+    background: $color-canvas-block-bg center center url(/images/block-placeholder-image.png) no-repeat;
+
+    &::after {
+      content: '400x100';
+    }
+
+    &.block-active {
+      background-color: $color-canvas-block-active-bg;
+      background-image: none;
+
+      &::after {
+        content: '';
+      }
+    }
+  }
+
+  &.block-video {
+    height: 382px;
+    border-left-color: $color-block-video;
+    background: $color-canvas-block-bg center center url(/images/block-placeholder-video.png) no-repeat;
+
+    &::after {
+      content: '382x100';
+    }
+
+    &.block-active {
+      background-color: $color-canvas-block-active-bg;
+      background-image: none;
+
+      &::after {
+        content: '';
+      }
+    }
+  }
 }
 
-.block-active {
-  box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.25);
+.block-text:not(.block-empty) {
+  font-family: "Maison Neue Book", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 30px;
+  color: #282828;
 }
 
-.block-controls {
-  opacity: 0;
+.block-menu {
   padding: $gutter-size-sm;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
+  z-index: 2;
   display: flex;
+}
+
+.block-menu-item {
+  cursor: pointer;
+  color: $color-canvas-block;
+}
+
+.block-menu-item-remove {
+  margin-left: auto;
+}
+
+.block-container-menu {
+  opacity: 0;
   transition: opacity 0.1s ease-in-out;
 
   .block-hover & {
@@ -58,15 +141,6 @@
   .block-active & {
     opacity: 0;
   }
-}
-
-.block-control {
-  cursor: pointer;
-  color: $color-canvas-block;
-}
-
-.block-control-remove {
-  margin-left: auto;
 }
 
 .block-description {
@@ -86,63 +160,6 @@
   font-family: 'Baloo Chettan', cursive;
 }
 
-.canvas-block-highlighted {
+.block-highlighted {
   box-shadow: 0 0 3px 2px rgba($color-primary, 0.5);
-}
-
-.block-text {
-  height: 100px;
-  border-left-color: $color-block-text;
-  background: $color-canvas-block-bg center center url(/images/block-placeholder-text.png) no-repeat;
-
-  &::after {
-    content: '680x100';
-  }
-
-  &.block-active {
-    background-color: $color-canvas-block-active-bg;
-    background-image: none;
-
-    &::after {
-      content: '';
-    }
-  }
-}
-
-.block-image {
-  height: 400px;
-  border-left-color: $color-block-image;
-  background: $color-canvas-block-bg center center url(/images/block-placeholder-image.png) no-repeat;
-
-  &::after {
-    content: '400x100';
-  }
-
-  &.block-active {
-    background-color: $color-canvas-block-active-bg;
-    background-image: none;
-
-    &::after {
-      content: '';
-    }
-  }
-}
-
-.block-video {
-  height: 382px;
-  border-left-color: $color-block-video;
-  background: $color-canvas-block-bg center center url(/images/block-placeholder-video.png) no-repeat;
-
-  &::after {
-    content: '382x100';
-  }
-
-  &.block-active {
-    background-color: $color-canvas-block-active-bg;
-    background-image: none;
-
-    &::after {
-      content: '';
-    }
-  }
 }

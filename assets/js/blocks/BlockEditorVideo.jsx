@@ -10,10 +10,8 @@ const mapStateToProps = state => ({
   mapStateToProps,
   mapDispatchToProps()
 )
-export default class EditingBlockText extends React.PureComponent {
-  static propTypes = {
-    block: PropTypes.object.isRequired
-  };
+export default class BlockEditorVideo extends React.PureComponent {
+  static propTypes = {};
 
   static defaultProps = {};
 
@@ -23,7 +21,7 @@ export default class EditingBlockText extends React.PureComponent {
   render() {
     return (
       <div>
-        Editing
+        Component
       </div>
     );
   }

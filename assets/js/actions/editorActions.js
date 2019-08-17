@@ -10,6 +10,7 @@ export const EDITOR_TEMPLATES      = 'EDITOR_TEMPLATES';
 export const EDITOR_UNDO           = 'EDITOR_UNDO';
 export const EDITOR_REDO           = 'EDITOR_REDO';
 export const EDITOR_DROP           = 'EDITOR_DROP';
+export const EDITOR_CHANGE         = 'EDITOR_CHANGE';
 export const EDITOR_REMOVE         = 'EDITOR_REMOVE';
 export const EDITOR_MODAL          = 'EDITOR_MODAL';
 export const EDITOR_TEAM_MEMBER    = 'EDITOR_TEAM_MEMBER';
@@ -180,23 +181,34 @@ export const editorModal = (payload) => {
 };
 
 /**
- * @param {number} activeBlockID
+ * @param {number} payload
  * @returns {{payload: *, type: string}}
  */
-export const editorActivateBlock = (activeBlockID) => {
+export const editorActivateBlock = (payload) => {
   return {
-    type:    EDITOR_ACTIVATE_BLOCK,
-    payload: activeBlockID
+    type: EDITOR_ACTIVATE_BLOCK,
+    payload
   };
 };
 
 /**
- * @param {number} hoverBlockID
+ * @param {number} payload
  * @returns {{payload: *, type: string}}
  */
-export const editorHoverBlock = (hoverBlockID) => {
+export const editorHoverBlock = (payload) => {
   return {
-    type:    EDITOR_HOVER_BLOCK,
-    payload: hoverBlockID
+    type: EDITOR_HOVER_BLOCK,
+    payload
+  };
+};
+
+/**
+ * @param {*} payload
+ * @returns {{payload: *, type: *}}
+ */
+export const editorChange = (payload) => {
+  return {
+    type: EDITOR_CHANGE,
+    payload
   };
 };

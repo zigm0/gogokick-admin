@@ -98,7 +98,7 @@ export default class App extends React.Component {
   render() {
     const { campaignType, userIsBusy, editorIsBusy, projectIsBusy } = this.props;
 
-    const classes = classNames('editor h-100', `editor-campaign-type-${constants.campaignTypeString(campaignType)}`);
+    const classes = classNames('editor h-100', `editor-campaign-type-${constants.campaignType(campaignType)}`);
 
     return (
       <div className={classes}>

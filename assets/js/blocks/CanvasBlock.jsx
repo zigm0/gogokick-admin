@@ -5,7 +5,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import { connect, constants, mapDispatchToProps } from 'utils';
 import { Icon } from 'components';
 import * as editorActions from 'actions/editorActions';
-import EditingBlockText from './EditingBlockText';
+import BlockBody from './BlockBody';
 
 const mapStateToProps = state => ({
   hoverBlockID:  state.editor.hoverBlockID,
@@ -76,9 +76,11 @@ export default class CanvasBlock extends React.PureComponent {
   renderBlock = (provided) => {
     const { block, hoverBlockID, activeBlockID } = this.props;
 
-    const classes = classNames(`block block-${constants.blockTypeString(block.type)}`, {
-      'block-active': activeBlockID === block.id,
-      'block-hover':  hoverBlockID === block.id
+    const isActive = activeBlockID === block.id;
+    const isHover  = hoverBlockID === block.id;
+    const classes  = classNames('block-container', {
+      'block-hover':  isHover,
+      'block-active': isActive
     });
 
     return (
@@ -87,34 +89,29 @@ export default class CanvasBlock extends React.PureComponent {
         ref={provided.innerRef}
         {...provided.draggableProps}
         {...provided.dragHandleProps}
-        id={`canvas-block-${block.id}`}
         style={provided.draggableProps.style}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        <div className="block-controls">
+        <div className="block-menu block-container-menu">
           <Icon
             name="edit"
             title="Edit"
-            className="block-control"
+            className="block-menu-item"
             onClick={this.handleEditClick}
           />
-
           <Icon
             name="trash"
             title="Remove"
-            className="block-control block-control-remove"
+            className="block-menu-item block-menu-item-remove"
             onClick={this.handleRemoveClick}
           />
         </div>
-          {activeBlockID === block.id ? (
-            <EditingBlockText block={block} />
-          ) : (
-            <h2 className="block-description">
-              {block.description || 'Description'}
-            </h2>
-          )}
-        {provided.placeholder}
+        <BlockBody
+          block={block}
+          isActive={isActive}
+          isHover={isHover}
+        />
       </li>
     );
   };

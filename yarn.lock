@@ -666,6 +666,10 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@types/prop-types@^15.7.1":
+  version "15.7.1"
+  resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.1.tgz#f1a11e7babb0c3cad68100be381d1e064c68f1f6"
+
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.8.5.tgz#51b1c5fe6576a34953bf4b253df9f0d490d9e359"
@@ -4102,6 +4106,13 @@ react-beautiful-dnd@^11.0.5:
     redux "^4.0.1"
     tiny-invariant "^1.0.4"
     use-memo-one "^1.1.0"
+
+react-contenteditable@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/react-contenteditable/-/react-contenteditable-3.3.1.tgz#a3a6d7d040e57cb33d36f4e0d3aa0f9574d18475"
+  dependencies:
+    "@types/prop-types" "^15.7.1"
+    fast-deep-equal "^2.0.1"
 
 react-custom-scrollbars@^4.2.1:
   version "4.2.1"

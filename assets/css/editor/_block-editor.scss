@@ -1,0 +1,24 @@
+@import "../vars";
+
+.block-editor {
+  padding-top: 2rem;
+  margin-bottom: $gutter-size-sm;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.25);
+}
+
+.block-editor-text {
+
+}
+
+.block-editor-image {
+
+}
+
+.block-editor-video {
+
+}
+
+.block-editor-text-textarea {
+  width: 100%;
+  border: 0;
+}
