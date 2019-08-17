@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
 import { connect, constants, mapDispatchToProps } from 'utils';
-import { Icon } from 'components';
+import { Icon, Button } from 'components';
 import * as editorActions from 'actions/editorActions';
 import BlockBody from './BlockBody';
 
@@ -93,16 +93,15 @@ export default class CanvasBlock extends React.PureComponent {
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        <div className="block-menu block-container-menu">
-          <Icon
-            name="edit"
-            title="Edit"
+        <div className={`block-menu block-menu-${constants.blockType(block.type)} block-container-menu`}>
+          <Button
+            icon="pen-square"
             className="block-menu-item"
             onClick={this.handleEditClick}
+            fas
           />
-          <Icon
-            name="trash"
-            title="Remove"
+          <Button
+            icon="times"
             className="block-menu-item block-menu-item-remove"
             onClick={this.handleRemoveClick}
           />

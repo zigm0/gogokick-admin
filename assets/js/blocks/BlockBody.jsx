@@ -1,28 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { connect, constants, mapDispatchToProps } from 'utils';
+import { constants } from 'utils';
 import BlockEditorText from './BlockEditorText';
 import BlockEditorImage from './BlockEditorImage';
 import BlockEditorVideo from './BlockEditorVideo';
+import BlockText from './BlockText';
+import BlockImage from './BlockImage';
+import BlockVideo from './BlockVideo';
 
-const mapStateToProps = state => ({
-
-});
-
-@connect(
-  mapStateToProps,
-  mapDispatchToProps()
-)
 export default class BlockBody extends React.PureComponent {
   static propTypes = {
     block: PropTypes.shape({
       text: PropTypes.string,
       type: PropTypes.number.isRequired
     }).isRequired,
-    isActive:     PropTypes.bool.isRequired,
-    isHover:      PropTypes.bool.isRequired,
-    editorChange: PropTypes.func.isRequired
+    isActive: PropTypes.bool.isRequired,
+    isHover:  PropTypes.bool.isRequired
   };
 
   static defaultProps = {};
@@ -32,6 +26,7 @@ export default class BlockBody extends React.PureComponent {
    */
   render() {
     const { block, isActive, isHover } = this.props;
+    const isEmpty = block.text === '';
 
     if (isActive) {
       switch (block.type) {
@@ -47,23 +42,29 @@ export default class BlockBody extends React.PureComponent {
       }
     }
 
-    const isEmpty  = block.text === '';
     const classes  = classNames(`block block-${constants.blockType(block.type)}`, {
       'block-empty':  isEmpty && !isActive,
       'block-active': isActive,
       'block-hover':  isHover
     });
 
-    return (
-      <div className={classes}>
-        {isEmpty && (
+    if (isEmpty) {
+      return (
+        <div className={classes}>
           <h2 className="block-description">
             {block.description || 'Description'}
           </h2>
-        )}
-        {!isEmpty && (
-          block.text
-        )}
+        </div>
+      );
+    }
+
+    return (
+      <div className={classes}>
+        {{
+          1: <BlockText block={block} />,
+          2: <BlockImage block={block} />,
+          3: <BlockVideo block={block} />
+        }[block.type]}
       </div>
     );
   }

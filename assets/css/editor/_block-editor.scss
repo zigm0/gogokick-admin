@@ -1,9 +1,10 @@
 @import "../vars";
 
 .block-editor {
-  padding-top: 2rem;
+  cursor: default;
   margin-bottom: $gutter-size-sm;
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.25);
+  padding: $block-menu-height $gutter-size-sm 0 $gutter-size-sm;
 }
 
 .block-editor-text {
@@ -21,4 +22,10 @@
 .block-editor-text-textarea {
   width: 100%;
   border: 0;
+  outline: 0;
+
+  &:focus,
+  &:active {
+    outline: 0;
+  }
 }

@@ -109,21 +109,61 @@
   font-size: 16px;
   line-height: 30px;
   color: #282828;
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+
+  i {
+    font-style: italic;
+  }
+
+  h3 {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 30px;
+    margin-bottom: 3rem;
+  }
 }
 
 .block-menu {
-  padding: $gutter-size-sm;
+  height: $block-menu-height;
+  padding: 0 $gutter-size-sm;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   z-index: 2;
   display: flex;
+  align-items: center;
+}
+
+.block-menu-text {
+  background-color: $color-block-text;
 }
 
 .block-menu-item {
   cursor: pointer;
-  color: $color-canvas-block;
+  color: #EEE;
+  border: 0;
+  opacity: 0.8;
+  background-color: transparent;
+
+  &:hover:not(:disabled) {
+    opacity: 1;
+  }
+
+  &.btn-editor-active {
+    color: #FFF;
+    background-color: rgba(0, 0, 0, 0.15);
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
 }
 
 .block-menu-item-remove {

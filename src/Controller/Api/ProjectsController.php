@@ -137,20 +137,31 @@ class ProjectsController extends ApiController
         $removeBlocks  = $blockRepository->findByProject($project);
         $updatedBlocks = new ArrayCollection();
 
-        foreach($model->getBlocks() as $block) {
-            if ($block['id'][0] === 'n') {
+        foreach($model->getBlocks() as $blockData) {
+            if ($blockData['id'][0] === 'n') {
                 $block = (new Block())
-                    ->setType(Block::TYPES[$block['type']])
+                    ->setType($blockData['type'])
                     ->setProject($project)
                     ->setSortOrder($sortOrder++);
+                switch($block->getType()) {
+                    case Block::TYPE_TEXT:
+                        $block->setText($blockData['text']);
+                        break;
+                }
+
                 $this->em->persist($block);
                 $updatedBlocks->add($block);
             } else {
-                $block = $blockRepository->findByID($block['id']);
+                $block = $blockRepository->findByID($blockData['id']);
                 if ($block) {
                     $block->setSortOrder($sortOrder++);
-                    $updatedBlocks->add($block);
+                    switch($block->getType()) {
+                        case Block::TYPE_TEXT:
+                            $block->setText($blockData['text']);
+                            break;
+                    }
 
+                    $updatedBlocks->add($block);
                     $removeBlocks = array_filter($removeBlocks, function(Block $item) use($block) {
                         return $item->getId() !== $block->getId();
                     });
