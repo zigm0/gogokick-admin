@@ -1,4 +1,4 @@
-import { objects, arrays } from 'utils';
+import { objects, constants, arrays } from 'utils';
 import * as types from 'actions/editorActions';
 
 const initialState = objects.merge({
@@ -21,7 +21,30 @@ const initialState = objects.merge({
     teamMember:    false,
     addMember:     false,
     memberActions: false
-  }
+  },
+  sidebarBlocks: [
+    {
+      id:    1,
+      type:  'text',
+      text:  '',
+      image: null,
+      video: null
+    },
+    {
+      id:    2,
+      type:  'image',
+      text:  '',
+      image: null,
+      video: null
+    },
+    {
+      id:    3,
+      type:  'video',
+      text:  '',
+      image: null,
+      video: null
+    }
+  ]
 }, window.initialState.editor);
 
 let idIndex = 9;
@@ -41,6 +64,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
   sourceClone.splice(droppableSource.index, 1);
 
   sourceBlock.id = `n-${idIndex}`;
+  sourceBlock.type = constants.blockType(sourceBlock.type);
   idIndex +=1 ;
 
   destClone.splice(droppableDestination.index, 0, sourceBlock);
