@@ -1,7 +1,15 @@
-const blockTypesStr = {};
-Object.keys(window.constants.blockTypes).forEach((key) => {
-  const value = window.constants.blockTypes[key];
+const { constants }    = window;
+const blockTypesStr    = {};
+const campaignTypesStr = {};
+
+Object.keys(constants.blockTypes).forEach((key) => {
+  const value = constants.blockTypes[key];
   blockTypesStr[value] = parseInt(key, 10);
+});
+
+Object.keys(constants.campaignTypes).forEach((key) => {
+  const value = constants.campaignTypes[key];
+  campaignTypesStr[value] = parseInt(key, 10);
 });
 
 /**
@@ -12,7 +20,7 @@ export function blockType(type) {
   if (typeof type === 'string') {
     return blockTypesStr[type];
   }
-  return window.constants.blockTypes[type];
+  return constants.blockTypes[type];
 }
 
 /**
@@ -20,7 +28,10 @@ export function blockType(type) {
  * @returns {string}
  */
 export function campaignType(type) {
-  return window.constants.campaignTypes[type];
+  if (typeof type === 'string') {
+    return campaignTypesStr[type];
+  }
+  return constants.campaignTypes[type];
 }
 
 export default {
