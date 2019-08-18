@@ -77,6 +77,7 @@
 
   &.block-text {
     height: $height-block-text;
+    border-left-style: solid;
     border-left-color: $color-block-text;
     background: $color-canvas-block-bg center center url(/images/block-placeholder-text.png) no-repeat;
 
@@ -96,6 +97,7 @@
 
   &.block-image {
     height: $height-block-image;
+    border-left-style: solid;
     border-left-color: $color-block-image;
     background: $color-canvas-block-bg center center url(/images/block-placeholder-image.png) no-repeat;
 
@@ -115,6 +117,7 @@
 
   &.block-video {
     height: $height-block-video;
+    border-left-style: solid;
     border-left-color: $color-block-video;
     background: $color-canvas-block-bg center center url(/images/block-placeholder-video.png) no-repeat;
 

@@ -146,6 +146,7 @@ class ProjectsController extends ApiController
                 switch($block->getType()) {
                     case Block::TYPE_TEXT:
                         $block->setText($blockData['text']);
+                        $block->setIsHeadline($blockData['isHeadline']);
                         break;
                     case Block::TYPE_IMAGE:
                         $block->setCaption($blockData['caption']);
@@ -165,6 +166,7 @@ class ProjectsController extends ApiController
                     switch($block->getType()) {
                         case Block::TYPE_TEXT:
                             $block->setText($blockData['text']);
+                            $block->setIsHeadline($blockData['isHeadline']);
                             break;
                         case Block::TYPE_IMAGE:
                             $block->setCaption($blockData['caption']);

@@ -60,7 +60,7 @@ export default class BlockBody extends React.PureComponent {
       'block-expanded':      (isActive || isHover) && !isEmpty,
       'block-hover':         isHover,
       'block-dragging':      isDragging,
-      'block-text-headline': block.type === 1 && block.text.indexOf('<h3>') !== -1
+      'block-text-headline': block.isHeadline
     });
 
     if (isEmpty) {

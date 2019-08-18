@@ -263,24 +263,18 @@ const onEditorRemove = (state, action) => {
  */
 const onEditorChange = (state, action) => {
   let { canvasBlocks, blockIndex, isChanged } = objects.clone(state);
-  const { blockID, text, caption } = action.payload;
+  const { id, text, caption, isHeadline } = action.payload;
 
   const blocks = Array.from(canvasBlocks[blockIndex]);
-  const index  = arrays.findIndexByID(blocks, blockID);
+  const index  = arrays.findIndexByID(blocks, id);
 
   if (index !== -1) {
-    switch (blocks[index].type) {
-      case constants.blockType('text'):
-        blocks[index].text = text;
-        break;
-      case constants.blockType('image'):
-        blocks[index].caption = caption;
-        break;
-    }
-
+    blocks[index].text           = text;
+    blocks[index].caption        = caption;
+    blocks[index].isHeadline     = isHeadline;
+    isChanged                    = true;
     canvasBlocks[blockIndex + 1] = blocks;
     blockIndex += 1;
-    isChanged                    = true;
   }
 
   return {

@@ -29,12 +29,9 @@ export default class BlockEditorText extends React.PureComponent {
     super(props);
 
     let { text } = props.block;
-    const isHeadline = text.indexOf('<h3>') === 0;
-
     this.content = React.createRef();
     this.state   = {
       text,
-      isHeadline,
       cmds:       {
         insertUnorderedList: false,
         createLink:          false,
@@ -61,10 +58,7 @@ export default class BlockEditorText extends React.PureComponent {
     const { block, editorChange } = this.props;
     const { text } = this.state;
 
-    editorChange({
-      blockID: block.id,
-      text
-    });
+    editorChange(objects.merge(block, { text }));
   }
 
   /**
@@ -85,16 +79,13 @@ export default class BlockEditorText extends React.PureComponent {
    * @param {string} value
    */
   handleMenuItemClick = (e, cmd, value = '') => {
-    if (cmd === 'headline') {
-      const { isHeadline } = this.state;
-      let { text }         = this.state;
+    const { block, editorChange, onChange } = this.props;
 
-      if (!isHeadline) {
-        text = `<h3>${text}</h3>`;
-      } else {
-        text = text.replace(/<\/?h3>/g, '');
-      }
-      this.setState({ text, isHeadline: !isHeadline });
+    if (cmd === 'headline') {
+      editorChange(objects.merge(block, {
+        isHeadline: !block.isHeadline
+      }));
+      onChange(e, value);
     } else if (cmd === 'createLink') {
       const url = prompt('Enter link URL');
       if (url) {
@@ -130,7 +121,9 @@ export default class BlockEditorText extends React.PureComponent {
    */
   render() {
     const { block, onRemove } = this.props;
-    const { text, isHeadline, cmds } = this.state;
+    const { text, cmds } = this.state;
+
+    const html = block.isHeadline ? `<h3>${text}</h3>` : text;
 
     return (
       <>
@@ -155,7 +148,7 @@ export default class BlockEditorText extends React.PureComponent {
           </div>
           <div className="flex-grow-1">
             <Button
-              active={isHeadline}
+              active={block.isHeadline}
               className="block-menu-item"
               onClick={e => this.handleMenuItemClick(e, 'headline')}
             >
@@ -164,28 +157,28 @@ export default class BlockEditorText extends React.PureComponent {
             <Button
               icon="list"
               active={cmds.insertUnorderedList}
-              disabled={isHeadline}
+              disabled={block.isHeadline}
               className="block-menu-item"
               onClick={e => this.handleMenuItemClick(e, 'insertUnorderedList')}
             />
             <Button
               icon="bold"
               active={cmds.bold}
-              disabled={isHeadline}
+              disabled={block.isHeadline}
               className="block-menu-item"
               onClick={e => this.handleMenuItemClick(e, 'bold')}
             />
             <Button
               icon="italic"
               active={cmds.italic}
-              disabled={isHeadline}
+              disabled={block.isHeadline}
               className="block-menu-item"
               onClick={e => this.handleMenuItemClick(e, 'italic')}
             />
             <Button
               icon="link"
               active={cmds.createLink}
-              disabled={isHeadline}
+              disabled={block.isHeadline}
               className="block-menu-item"
               onClick={e => this.handleMenuItemClick(e, cmds.createLink ? 'unlink' : 'createLink')}
             />
@@ -200,7 +193,7 @@ export default class BlockEditorText extends React.PureComponent {
         </div>
         <div className="block-editor block-editor-text block-expanded">
           <ContentEditable
-            html={text}
+            html={html}
             innerRef={this.content}
             className="block-editor-text-editable block-text"
             onChange={this.handleChange}

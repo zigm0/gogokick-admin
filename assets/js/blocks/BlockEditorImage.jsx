@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, mapDispatchToProps } from 'utils';
+import { connect, objects, mapDispatchToProps } from 'utils';
 import { Button, ImageUpload } from 'components';
 import * as mediaActions from 'actions/mediaActions';
 import * as editorActions from 'actions/editorActions';
@@ -44,10 +44,7 @@ export default class BlockEditorImage extends React.PureComponent {
     const { block, editorChange } = this.props;
     const { caption } = this.state;
 
-    editorChange({
-      blockID: block.id,
-      caption
-    });
+    editorChange(objects.merge(block, { caption }));
   }
 
   /**

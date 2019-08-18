@@ -81,6 +81,13 @@ class Block
     protected $caption = '';
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     * @Groups({"web"})
+     */
+    protected $isHeadline = false;
+
+    /**
      * @var DateTime
      * @ORM\Column(type="datetime")
      * @Groups({"web"})
@@ -222,6 +229,26 @@ class Block
     public function setText(string $text): Block
     {
         $this->text = $text;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHeadline(): ?bool
+    {
+        return $this->isHeadline;
+    }
+
+    /**
+     * @param bool $isHeadline
+     *
+     * @return Block
+     */
+    public function setIsHeadline(bool $isHeadline): Block
+    {
+        $this->isHeadline = $isHeadline;
 
         return $this;
     }

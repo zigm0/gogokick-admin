@@ -66,7 +66,7 @@ export default class CanvasBlock extends React.PureComponent {
     const isHover    = hoverBlockID === block.id;
     const willActive = nextProps.activeBlockID === nextProps.block.id;
     const willHover  = nextProps.hoverBlockID === nextProps.block.id;
-    // const isEmpty    = nextBlock.text === '' && !nextBlock.video && !nextBlock.image;
+    // const isEmpty    = nextBlock.text === '' && !nextBlock.media;
     const isEmpty = false;
 
     if (!isEmpty && (isActive !== willActive || isHover !== willHover)) {
@@ -75,7 +75,7 @@ export default class CanvasBlock extends React.PureComponent {
           .height(1)
           .height(this.$inner[0].scrollHeight);
       } else {
-        this.$inner.css('height', 'auto');
+        //this.$inner.css('height', 'auto');
       }
     }
   }
@@ -84,11 +84,11 @@ export default class CanvasBlock extends React.PureComponent {
    *
    */
   handleChange = () => {
-    if (this.inner.current.style.height !== 'auto') {
+    // if (this.inner.current.style.height !== 'auto') {
       this.$inner
         .height(1)
         .height(this.$inner[0].scrollHeight);
-    }
+    // }
   };
 
   /**
