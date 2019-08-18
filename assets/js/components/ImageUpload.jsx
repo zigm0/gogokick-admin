@@ -34,19 +34,22 @@ const ImageUpload = ({ media, onDrop: handleDrop }) => {
           <img src={media.url} alt="" />
         </figure>
       )}
-      {(!media || !media.url) && (
-        <div className="d-flex flex-column justify-content-center text-center">
-          <div className="upload-container-circle">
-            <Icon name="image" size={2} far />
-          </div>
-          <div className="upload-container-top">
-            Drop an image here, or click to select a file.
-          </div>
-          <div className="upload-container-bottom">
-            It must be a JPG, PNG, GIF, TIFF or BMP. No larger than {maxSizeMB}MB.
-          </div>
+
+      <div className="upload-container-circle-container">
+        <div className="upload-container-circle upload-container-circle-image">
+          <Icon name="image" size={2} far />
         </div>
-      )}
+        {(!media || !media.url) && (
+          <>
+            <div className="upload-container-top">
+              Drop an image here, or click to select a file.
+            </div>
+            <div className="upload-container-bottom">
+              It must be a JPG, PNG, GIF, TIFF or BMP. No larger than {maxSizeMB}MB.
+            </div>
+          </>
+        )}
+      </div>
     </div>
   )
 };

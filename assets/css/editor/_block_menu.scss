@@ -3,13 +3,16 @@
 .block-menu {
   height: $height-block-menu;
   position: absolute;
-  top: -$height-block-menu;
+  top: -$height-block-menu + 1px;
   left: -$gutter-size;
   width: $width-block + ($gutter-size * 2) !important;
+  border-top-left-radius: $border-radius-blocks;
+  border-top-right-radius: $border-radius-blocks;
   right: 0;
   z-index: 3;
   display: flex;
   align-items: center;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
 
   .block-empty & {
     top: 0;

@@ -268,18 +268,20 @@ const onEditorChange = (state, action) => {
   const blocks = Array.from(canvasBlocks[blockIndex]);
   const index  = arrays.findIndexByID(blocks, blockID);
 
-  switch (blocks[index].type) {
-    case constants.blockType('text'):
-      blocks[index].text = text;
-      break;
-    case constants.blockType('image'):
-      blocks[index].caption = caption;
-      break;
-  }
+  if (index !== -1) {
+    switch (blocks[index].type) {
+      case constants.blockType('text'):
+        blocks[index].text = text;
+        break;
+      case constants.blockType('image'):
+        blocks[index].caption = caption;
+        break;
+    }
 
-  canvasBlocks[blockIndex + 1] = blocks;
-  blockIndex += 1;
-  isChanged = true;
+    canvasBlocks[blockIndex + 1] = blocks;
+    blockIndex += 1;
+    isChanged                    = true;
+  }
 
   return {
     ...state,

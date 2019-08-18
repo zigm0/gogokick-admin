@@ -71,10 +71,11 @@ export default class CanvasBlock extends React.PureComponent {
   }
 
   /**
-   *
+   * @param {Event} e
+   * @param {*} block
    */
-  handleRemoveClick = () => {
-    const { block, editorRemove } = this.props;
+  handleRemoveClick = (e, block) => {
+    const { editorRemove } = this.props;
 
     editorRemove(block);
   };
@@ -144,7 +145,7 @@ export default class CanvasBlock extends React.PureComponent {
             <Button
               icon="times"
               className="block-menu-item block-menu-item-remove"
-              onClick={this.handleRemoveClick}
+              onClick={e => this.handleRemoveClick(e, block)}
             />
           </div>
           <BlockBody
@@ -152,6 +153,7 @@ export default class CanvasBlock extends React.PureComponent {
             isActive={isActive}
             isHover={isHover}
             isDragging={source.isDragging}
+            onRemove={this.handleRemoveClick}
           />
         </div>
       </li>

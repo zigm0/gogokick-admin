@@ -49,6 +49,8 @@
   padding: 0 $gutter-size;
   background-color: #FFF;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 .block-empty {

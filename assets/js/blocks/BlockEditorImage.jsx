@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect, mapDispatchToProps } from 'utils';
-import { ImageUpload } from 'components';
+import { Button, ImageUpload } from 'components';
 import * as mediaActions from 'actions/mediaActions';
 import * as editorActions from 'actions/editorActions';
 
@@ -20,7 +20,8 @@ export default class BlockEditorImage extends React.PureComponent {
       type: PropTypes.number.isRequired
     }).isRequired,
     mediaUpload:  PropTypes.func.isRequired,
-    editorChange: PropTypes.func.isRequired
+    editorChange: PropTypes.func.isRequired,
+    onRemove:     PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -73,12 +74,18 @@ export default class BlockEditorImage extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { block } = this.props;
+    const { block, onRemove } = this.props;
     const { caption } = this.state;
 
     return (
       <>
-        <div className="block-menu block-menu-image" />
+        <div className="block-menu block-menu-image">
+          <Button
+            icon="times"
+            className="block-menu-item block-menu-item-remove"
+            onClick={e => onRemove(e, block)}
+          />
+        </div>
         <div className="block-editor block-editor-image">
           <ImageUpload media={block.media} onDrop={this.handleDrop} />
           <div className="block-editor-image-caption">

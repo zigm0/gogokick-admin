@@ -15,7 +15,8 @@ export default class BlockEditorText extends React.PureComponent {
       text: PropTypes.string,
       type: PropTypes.number.isRequired
     }).isRequired,
-    editorChange: PropTypes.func.isRequired
+    editorChange: PropTypes.func.isRequired,
+    onRemove:     PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -119,6 +120,7 @@ export default class BlockEditorText extends React.PureComponent {
    * @returns {*}
    */
   render() {
+    const { block, onRemove } = this.props;
     const { text, isHeadline, cmds } = this.state;
 
     return (
@@ -161,9 +163,8 @@ export default class BlockEditorText extends React.PureComponent {
           />
           <Button
             icon="times"
-            active={cmds.link}
             className="block-menu-item block-menu-item-remove"
-            onClick={this.handleRemoveClick}
+            onClick={e => onRemove(e, block)}
           />
         </div>
         <div className="block-editor block-editor-text block-expanded">

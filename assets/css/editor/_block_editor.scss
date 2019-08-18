@@ -1,8 +1,15 @@
 @import "../vars";
 
 .block-editor {
-  padding: 1px $gutter-size 0 $gutter-size + 1px !important;
   margin-bottom: $margin-bottom-block;
+
+  &.block-editor-text {
+    padding: 1px $gutter-size 0 $gutter-size + 1px !important;
+  }
+
+  &.block-editor-image {
+    padding: 1px !important;
+  }
 }
 
 .block-editor-text {

@@ -17,11 +17,16 @@ export default class BlockBody extends React.PureComponent {
     }).isRequired,
     isActive:   PropTypes.bool.isRequired,
     isHover:    PropTypes.bool.isRequired,
-    isDragging: PropTypes.bool.isRequired
+    isDragging: PropTypes.bool.isRequired,
+    onRemove:   PropTypes.func.isRequired
   };
 
   static defaultProps = {};
 
+  /**
+   *
+   * @param props
+   */
   constructor(props) {
     super(props);
     this.container = React.createRef();
@@ -31,17 +36,17 @@ export default class BlockBody extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { block, isActive, isHover, isDragging } = this.props;
+    const { block, isActive, isHover, isDragging, onRemove } = this.props;
     const isEmpty = block.text === '' && !block.media;
 
     if (isActive) {
       switch (block.type) {
         case 1:
-          return <BlockEditorText block={block} />;
+          return <BlockEditorText block={block} onRemove={onRemove} />;
         case 2:
-          return <BlockEditorImage block={block} />;
+          return <BlockEditorImage block={block} onRemove={onRemove} />;
         case 3:
-          return <BlockEditorVideo block={block} />;
+          return <BlockEditorVideo block={block} onRemove={onRemove} />;
         default:
           console.error(`Invalid block type ${block.type}`);
           return null;

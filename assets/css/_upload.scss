@@ -16,6 +16,14 @@
   }
 }
 
+.upload-container-circle-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
 .upload-container-circle {
   background-color: #FFF;
   border-radius: 50%;
@@ -30,6 +38,11 @@
   .icon {
     font-size: 1.4rem;
   }
+}
+
+.upload-container-circle-image {
+  color: #FFF;
+  background-color: $color-block-image;
 }
 
 .upload-container-top {
