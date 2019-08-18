@@ -50,7 +50,7 @@ export default class BlockEditorText extends React.PureComponent {
   componentDidMount() {
     const { onChange } = this.props;
 
-    this.content.current.focus();
+    browser.caretAtEnd(this.content.current);
     onChange(null, null);
   }
 

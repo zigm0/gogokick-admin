@@ -19,6 +19,7 @@ const mapStateToProps = state => ({
 export default class CanvasBlock extends React.PureComponent {
   static propTypes = {
     block: PropTypes.shape({
+      id:   PropTypes.number.isRequired,
       type: PropTypes.number.isRequired
     }).isRequired,
     index:               PropTypes.number.isRequired,
@@ -128,6 +129,17 @@ export default class CanvasBlock extends React.PureComponent {
   };
 
   /**
+   *
+   */
+  handleClick = () => {
+    const { block, activeBlockID, editorActivateBlock } = this.props;
+
+    if (block.id !== activeBlockID) {
+      editorActivateBlock(block.id);
+    }
+  };
+
+  /**
    * @param {*} provided
    * @param {*} source
    * @returns {*}
@@ -154,6 +166,7 @@ export default class CanvasBlock extends React.PureComponent {
         style={provided.draggableProps.style}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
+        onClick={this.handleClick}
       >
         <div ref={this.inner} className="block-container-inner">
           <div className={`block-menu block-menu-${constants.blockType(block.type)} block-container-menu`}>
