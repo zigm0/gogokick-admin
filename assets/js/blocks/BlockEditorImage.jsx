@@ -21,7 +21,7 @@ export default class BlockEditorImage extends React.PureComponent {
   render() {
     return (
       <div>
-        Component
+        Not implemented yet
       </div>
     );
   }

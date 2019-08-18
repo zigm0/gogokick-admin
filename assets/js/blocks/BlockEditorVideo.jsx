@@ -21,7 +21,7 @@ export default class BlockEditorVideo extends React.PureComponent {
   render() {
     return (
       <div>
-        Component
+        Not implemented yet
       </div>
     );
   }
