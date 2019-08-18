@@ -25,25 +25,28 @@ const initialState = objects.merge({
   },
   sidebarBlocks: [
     {
-      id:      1,
-      type:    'text',
-      text:    '',
-      caption: '',
-      media:   null
+      id:         1,
+      type:       'text',
+      text:       '',
+      caption:    '',
+      media:      null,
+      isHeadline: false
     },
     {
-      id:      2,
-      type:    'image',
-      text:    '',
-      caption: '',
-      media:   null
+      id:         2,
+      type:       'image',
+      text:       '',
+      caption:    '',
+      media:      null,
+      isHeadline: false
     },
     {
-      id:      3,
-      type:    'video',
-      text:    '',
-      caption: '',
-      media:   null
+      id:         3,
+      type:       'video',
+      text:       '',
+      caption:    '',
+      media:      null,
+      isHeadline: false
     }
   ]
 }, window.initialState.editor);
