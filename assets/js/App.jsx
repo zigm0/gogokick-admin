@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { Route, Router, Switch } from 'react-router-dom';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { connect, history, constants, mapDispatchToProps } from 'utils';
-import { Loading } from 'components';
+import { Loading, ErrorBoundary } from 'components';
 import EditorController from 'editor/EditorController';
 
 import Header from 'editor/Header';
@@ -77,7 +77,7 @@ export default class App extends React.Component {
    */
   renderModals = () => {
     return (
-      <>
+      <ErrorBoundary>
         <Modals.OpenModal />
         <Modals.LoginModal />
         <Modals.PreviewModal />
@@ -89,7 +89,7 @@ export default class App extends React.Component {
         <Modals.TeamMemberModal />
         <Modals.NewProjectModal />
         <Modals.BlockSettingsModal />
-      </>
+      </ErrorBoundary>
     );
   };
 

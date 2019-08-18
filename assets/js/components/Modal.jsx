@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect, mapDispatchToProps } from 'utils';
 import { Modal as BootstrapModal, ModalHeader, ModalBody, ModalFooter, Button } from 'components/bootstrap';
-import { Icon, Avatar } from 'components';
+import { Icon, Avatar, ErrorBoundary } from 'components';
 import * as editorActions from 'actions/editorActions';
 
 const mapStateToProps = state => ({
