@@ -2,7 +2,6 @@
 
 .block-container {
   position: relative;
-  margin-bottom: $gutter-size-sm;
 }
 
 .block-container-inner {
@@ -14,6 +13,11 @@
   width: $width-block !important;
   border-radius: $border-radius-blocks;
   border: 1px solid transparent;
+  margin-bottom: 30px;
+
+  &.block-text-headline {
+    margin-bottom: 20px;
+  }
 
   &.block-hover {
     cursor: grab !important;
@@ -123,13 +127,6 @@
 }
 
 .block-text:not(.block-empty) {
-  font-family: "Maison Neue Book", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 30px;
-  color: #282828;
-
   p {
     margin: 0;
     padding: 0;
@@ -144,12 +141,25 @@
     font-style: italic;
   }
 
+  ul {
+    list-style: disc;
+    margin-bottom: 20px;
+    padding-left: 0;
+
+    li {
+      margin-left: 20px;
+      margin-bottom: 6px;
+      font-size: 17px;
+      line-height: 16px;
+      list-style-type: disc;
+    }
+  }
+
   h3 {
     font-style: normal;
     font-weight: 400;
     font-size: 21px;
     line-height: 30px;
-    margin-bottom: 24px;
   }
 }
 

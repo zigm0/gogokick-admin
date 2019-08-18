@@ -28,3 +28,13 @@
   padding-bottom: 50px;
   min-height: calc(100vh - #{$header-height});
 }
+
+.editor-canvas-campaign-kickstarter {
+  font-family: "Maison Neue Book", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 30px;
+  color: #282828;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

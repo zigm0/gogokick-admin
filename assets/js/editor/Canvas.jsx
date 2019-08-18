@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Droppable } from 'react-beautiful-dnd';
-import { connect, browser, mapDispatchToProps } from 'utils';
+import { connect, browser, constants, mapDispatchToProps } from 'utils';
 import { Container, Row, Column } from 'components/bootstrap';
 import { CanvasBlock } from 'blocks';
 import * as editorActions from 'actions/editorActions';
 
 const mapStateToProps = state => ({
-  editor:  state.editor
+  editor:       state.editor,
+  campaignType: state.project.campaignType
 });
 
 @connect(
@@ -18,6 +19,7 @@ const mapStateToProps = state => ({
 export default class Canvas extends React.PureComponent {
   static propTypes = {
     editor:              PropTypes.object.isRequired,
+    campaignType:        PropTypes.string.isRequired,
     dragging:            PropTypes.bool,
     editorActivateBlock: PropTypes.func.isRequired
   };
@@ -41,7 +43,7 @@ export default class Canvas extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { editor, dragging } = this.props;
+    const { editor, dragging, campaignType } = this.props;
     const { canvasBlocks, blockIndex } = editor;
 
     const bodyClasses = classNames('editor-canvas-body h-100', {
@@ -49,7 +51,10 @@ export default class Canvas extends React.PureComponent {
     });
 
     return (
-      <div className="editor-canvas h-100" onClick={this.handleClick}>
+      <div
+        className={`editor-canvas editor-canvas-campaign-${constants.campaignType(campaignType)} h-100`}
+        onClick={this.handleClick}
+      >
         <div className={bodyClasses}>
           <Container className="h-100">
             <Row>

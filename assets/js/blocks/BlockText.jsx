@@ -17,7 +17,7 @@ export default class BlockText extends React.PureComponent {
   render() {
     const { block } = this.props;
 
-    const text = strings.stripTags(block.text, '<div><b><i><a><h3>');
+    const text = strings.stripTags(block.text, '<div><b><i><a><h3><ul><li>');
 
     return (
       <div dangerouslySetInnerHTML={{ __html: text }} />
