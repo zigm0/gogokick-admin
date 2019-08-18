@@ -18,6 +18,11 @@
     border-top-left-radius: $border-radius-blocks;
     border-top-right-radius: $border-radius-blocks;
   }
+
+  &.block-menu-image {
+    left: 0;
+    width: $width-block !important;
+  }
 }
 
 .block-container-menu {
