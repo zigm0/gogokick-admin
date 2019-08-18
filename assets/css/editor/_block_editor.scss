@@ -4,11 +4,7 @@
   margin-bottom: $margin-bottom-block;
 
   &.block-editor-text {
-    padding: 1px $gutter-size 0 $gutter-size + 1px !important;
-  }
-
-  &.block-editor-image {
-    padding: 1px !important;
+    padding: 0 $gutter-size !important;
   }
 }
 
@@ -18,8 +14,8 @@
 
 .block-editor-image {
   // min-height: $height-block-image;
+  position: absolute;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
-  padding: 0 !important;
 
   img {
     max-width: 100%;
@@ -39,9 +35,6 @@
       text-align: center;
       line-height: 20px;
       color: #9B9E9E;
-      padding-top: 1px;
-      padding-bottom: 0;
-      top: -1px;
       display: block;
     }
   }

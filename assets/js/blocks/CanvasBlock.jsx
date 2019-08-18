@@ -58,7 +58,7 @@ export default class CanvasBlock extends React.PureComponent {
     const { block, hoverBlockID, activeBlockID } = this.props;
 
     if (block.type !== 1) {
-      return;
+      // return;
     }
 
     const nextBlock  = nextProps.block;

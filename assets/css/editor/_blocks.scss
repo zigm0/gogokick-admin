@@ -12,7 +12,6 @@
   position: relative;
   width: $width-block !important;
   border-radius: $border-radius-blocks;
-  border: 1px solid transparent;
   margin-bottom: $margin-bottom-block;
 
   &.block-text-headline {
@@ -195,6 +194,7 @@
     color: #9B9E9E;
     padding-top: 10px;
     padding-bottom: 10px;
+    border: 1px solid transparent;
   }
 
   &.block-dragging {
