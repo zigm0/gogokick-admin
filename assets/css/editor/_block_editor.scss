@@ -17,7 +17,7 @@
 }
 
 .block-editor-image {
-  min-height: $height-block-image;
+  // min-height: $height-block-image;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
   padding: 0 !important;
 
@@ -39,8 +39,10 @@
       text-align: center;
       line-height: 20px;
       color: #9B9E9E;
-      padding-top: 0;
+      padding-top: 1px;
       padding-bottom: 0;
+      top: -1px;
+      display: block;
     }
   }
 }

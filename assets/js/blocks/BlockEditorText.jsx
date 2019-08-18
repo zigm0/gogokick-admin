@@ -112,7 +112,7 @@ export default class BlockEditorText extends React.PureComponent {
     if (browser.hasParentTag(node, 'A')) {
       cmds.createLink = true;
     }
-
+console.log(document.queryCommandState('bold'));
     this.setState({ cmds });
   };
 
