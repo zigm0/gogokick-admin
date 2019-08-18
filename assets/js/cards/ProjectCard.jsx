@@ -36,7 +36,7 @@ export default class ProjectCard extends React.PureComponent {
           )}
         </CardBody>
         <CardFooter title={project.name}>
-          {strings.truncate(project.name || '', 18)}
+          {strings.truncate(project.name || '', 26)}
         </CardFooter>
       </Card>
     );
