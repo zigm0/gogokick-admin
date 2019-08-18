@@ -65,7 +65,7 @@
   }
 
   &.block-text {
-    height: 100px;
+    height: $height-block-text;
     border-left-color: $color-block-text;
     background: $color-canvas-block-bg center center url(/images/block-placeholder-text.png) no-repeat;
 
@@ -84,7 +84,7 @@
   }
 
   &.block-image {
-    height: 400px;
+    height: $height-block-image;
     border-left-color: $color-block-image;
     background: $color-canvas-block-bg center center url(/images/block-placeholder-image.png) no-repeat;
 
@@ -103,7 +103,7 @@
   }
 
   &.block-video {
-    height: 382px;
+    height: $height-block-video;
     border-left-color: $color-block-video;
     background: $color-canvas-block-bg center center url(/images/block-placeholder-video.png) no-repeat;
 
