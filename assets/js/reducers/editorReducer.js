@@ -49,6 +49,28 @@ const initialState = objects.merge({
 
 let idIndex = 9;
 
+/**
+ * Remove formatting from text when pasted into the content editable
+ * regions
+ * @see https://stackoverflow.com/a/34876744/401019
+ */
+$(document).on('paste', '[contenteditable]', (e) => {
+  e.preventDefault();
+
+  let text = '';
+  if (e.clipboardData || e.originalEvent.clipboardData) {
+    text = (e.originalEvent || e).clipboardData.getData('text/plain');
+  } else if (window.clipboardData) {
+    text = window.clipboardData.getData('Text');
+  }
+
+  if (document.queryCommandSupported('insertText')) {
+    document.execCommand('insertText', false, text);
+  } else {
+    document.execCommand('paste', false, text);
+  }
+});
+
 const reorder = (list, startIndex, endIndex) => {
   const result    = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
