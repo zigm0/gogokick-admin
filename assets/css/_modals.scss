@@ -1,10 +1,16 @@
 @import "vars";
 
 .modal-content {
-  color: #777;
+  color: #695D46;
+  background-color: $color-canvas-block-bg;
 }
 
 .modal-header {
+  padding: 11.5px 7.5px 4px 7.5px;
+
+  background:
+    linear-gradient(to left, #ef7138 0, #ef7138 50%, #a3e7d8 50%, #a3e7d8 80%, #cfc194 80%, #cfc194) no-repeat;
+  background-size:100% 7px ;
 
   .icon,
   .avatar {
@@ -30,6 +36,10 @@
 .modal-body-fixed-height {
   max-height: 400px;
   overflow-y: auto;
+}
+
+.modal-footer {
+  padding: $gutter-size-sm;
 }
 
 .modal-delete-btn {
