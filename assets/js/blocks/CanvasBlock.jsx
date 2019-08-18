@@ -39,7 +39,15 @@ export default class CanvasBlock extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.inner = React.createRef();
+    this.inner  = React.createRef();
+    this.$inner = null;
+  }
+
+  /**
+   *
+   */
+  componentDidMount() {
+    this.$inner = $(this.inner.current);
   }
 
   /**
@@ -62,13 +70,25 @@ export default class CanvasBlock extends React.PureComponent {
 
     if (!isEmpty && (isActive !== willActive || isHover !== willHover)) {
       if (willActive || willHover) {
-        const height = this.inner.current.scrollHeight;
-        this.inner.current.style.height = `${height}px`;
+        this.$inner
+          .height(1)
+          .height(this.$inner[0].scrollHeight);
       } else {
-        this.inner.current.style.height = 'auto';
+        this.$inner.css('height', 'auto');
       }
     }
   }
+
+  /**
+   *
+   */
+  handleChange = () => {
+    if (this.inner.current.style.height !== 'auto') {
+      this.$inner
+        .height(1)
+        .height(this.$inner[0].scrollHeight);
+    }
+  };
 
   /**
    * @param {Event} e
@@ -155,6 +175,7 @@ export default class CanvasBlock extends React.PureComponent {
             isHover={isHover}
             isDragging={source.isDragging}
             onRemove={this.handleRemoveClick}
+            onChange={this.handleChange}
           />
         </div>
       </li>

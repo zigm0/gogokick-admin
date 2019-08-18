@@ -13,7 +13,7 @@
 }
 
 .block-editor-text {
-  min-height: $height-block-text;
+  // min-height: $height-block-text;
 }
 
 .block-editor-image {
@@ -62,6 +62,6 @@
   }
 
   &.block-text {
-    min-height: $height-block-text;
+    // min-height: $height-block-text;
   }
 }

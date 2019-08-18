@@ -16,7 +16,8 @@ export default class BlockEditorText extends React.PureComponent {
       type: PropTypes.number.isRequired
     }).isRequired,
     editorChange: PropTypes.func.isRequired,
-    onRemove:     PropTypes.func.isRequired
+    onRemove:     PropTypes.func.isRequired,
+    onChange:     PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -47,7 +48,10 @@ export default class BlockEditorText extends React.PureComponent {
    *
    */
   componentDidMount() {
+    const { onChange } = this.props;
+
     this.content.current.focus();
+    onChange(null, null);
   }
 
   /**
@@ -67,7 +71,12 @@ export default class BlockEditorText extends React.PureComponent {
    * @param {Event} e
    */
   handleChange = (e) => {
-    this.setState({ text: e.target.value });
+    const { onChange } = this.props;
+    const { value } = e.target;
+
+    this.setState({ text: value }, () => {
+      onChange(e, value);
+    });
   };
 
   /**
@@ -112,7 +121,7 @@ export default class BlockEditorText extends React.PureComponent {
     if (browser.hasParentTag(node, 'A')) {
       cmds.createLink = true;
     }
-console.log(document.queryCommandState('bold'));
+
     this.setState({ cmds });
   };
 
