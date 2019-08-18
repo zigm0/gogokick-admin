@@ -9,7 +9,9 @@
 }
 
 .block-editor-image {
-
+  img {
+    max-width: 100%;
+  }
 }
 
 .block-editor-video {

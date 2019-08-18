@@ -163,6 +163,12 @@
   }
 }
 
+.block-image {
+  img {
+    max-width: 100%;
+  }
+}
+
 .block-description {
   position: absolute;
   width: 680px;

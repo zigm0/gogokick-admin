@@ -32,7 +32,7 @@ export default class BlockBody extends React.PureComponent {
    */
   render() {
     const { block, isActive, isHover, isDragging } = this.props;
-    const isEmpty = block.text === '';
+    const isEmpty = block.text === '' && !block.image && !block.video;
 
     if (isActive) {
       switch (block.type) {
@@ -48,12 +48,12 @@ export default class BlockBody extends React.PureComponent {
       }
     }
 
-    const classes  = classNames(`block block-${constants.blockType(block.type)}`, {
-      'block-empty':    isEmpty && !isActive,
-      'block-active':   isActive,
-      'block-expanded': (isActive || isHover) && !isEmpty,
-      'block-hover':    isHover,
-      'block-dragging': isDragging,
+    const classes = classNames(`block block-${constants.blockType(block.type)}`, {
+      'block-empty':         isEmpty && !isActive,
+      'block-active':        isActive,
+      'block-expanded':      (isActive || isHover) && !isEmpty,
+      'block-hover':         isHover,
+      'block-dragging':      isDragging,
       'block-text-headline': block.type === 1 && block.text.indexOf('<h3>') !== -1
     });
 

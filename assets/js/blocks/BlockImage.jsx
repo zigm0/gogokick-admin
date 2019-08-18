@@ -11,7 +11,11 @@ const mapStateToProps = state => ({
   mapDispatchToProps()
 )
 export default class BlockImage extends React.PureComponent {
-  static propTypes = {};
+  static propTypes = {
+    block: PropTypes.shape({
+      image: PropTypes.object
+    }).isRequired
+  };
 
   static defaultProps = {};
 
@@ -19,10 +23,10 @@ export default class BlockImage extends React.PureComponent {
    * @returns {*}
    */
   render() {
+    const { block } = this.props;
+
     return (
-      <div>
-        Component
-      </div>
+      <img src={block.image.url} alt="" />
     );
   }
 }

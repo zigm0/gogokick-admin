@@ -1,5 +1,6 @@
 import { api, router } from 'utils';
 import { projectSettings } from './projectActions';
+import { editorBlockMedia } from './editorActions';
 
 export const MEDIA_UPLOAD = 'MEDIA_UPLOAD';
 
@@ -11,12 +12,15 @@ export const MEDIA_UPLOAD = 'MEDIA_UPLOAD';
 export const mediaUpload = (payload) => {
   return (dispatch, getState) => {
     const { project } = getState();
-    const { file, system } = payload;
+    const { file, block, system } = payload;
 
     const body = new FormData();
     body.append('file', file);
     body.append('system', system);
     body.append('project', project.id);
+    if (block) {
+      body.append('block', block);
+    }
 
     api.post(router.generate('api_media_upload'), body)
       .then((media) => {
@@ -24,6 +28,8 @@ export const mediaUpload = (payload) => {
           dispatch(projectSettings({
             image: media
           }));
+        } else if (system === 'block_images') {
+          dispatch(editorBlockMedia(media));
         }
       })
       .catch((err) => {

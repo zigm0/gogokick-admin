@@ -1,5 +1,6 @@
 import { objects, constants, arrays } from 'utils';
 import * as types from 'actions/editorActions';
+import { EDITOR_BLOCK_MEDIA } from "actions/editorActions";
 
 const initialState = objects.merge({
   isBusy:        false,
@@ -337,8 +338,6 @@ const onEditorTemplates = (state, action) => {
   };
 };
 
-
-
 /**
  * @param {*} state
  * @param {*} action
@@ -381,6 +380,33 @@ const onEditorHoverBlock = (state, action) => {
   };
 };
 
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onEditorBlockMedia = (state, action) => {
+  let { canvasBlocks, blockIndex, isChanged } = objects.clone(state);
+  const { block, url } = action.payload;
+
+  const blocks = Array.from(canvasBlocks[blockIndex]);
+  const index = arrays.findIndexByID(blocks, parseInt(block, 10));
+  blocks[index].image = {
+    url
+  };
+
+  canvasBlocks[blockIndex + 1] = blocks;
+  blockIndex += 1;
+  isChanged = true;
+
+  return {
+    ...state,
+    blockIndex,
+    canvasBlocks,
+    isChanged
+  };
+};
+
 const handlers = {
   [types.EDITOR_RESET]:          onEditorReset,
   [types.EDITOR_BUSY]:           onEditorBusy,
@@ -391,6 +417,7 @@ const handlers = {
   [types.EDITOR_UNDO]:           onEditorUndo,
   [types.EDITOR_REDO]:           onEditorRedo,
   [types.EDITOR_MODAL]:          onEditorModal,
+  [types.EDITOR_BLOCK_MEDIA]:    onEditorBlockMedia,
   [types.EDITOR_TEAM_MEMBER]:    onEditorTeamMember,
   [types.EDITOR_PROJECTS]:       onEditorProjects,
   [types.EDITOR_TEMPLATES]:      onEditorTemplates,

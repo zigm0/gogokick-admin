@@ -25,6 +25,7 @@ class MediaController extends ApiController
         $file    = $request->files->get('file');
         $system  = $request->request->get('system');
         $project = $request->request->get('project');
+        $block   = $request->request->get('block');
 
         if (!$file || $file->getError()) {
             throw new BadRequestHttpException();
@@ -51,6 +52,9 @@ class MediaController extends ApiController
         $this->em->persist($media);
         $this->em->flush();
 
-        return $this->jsonEntityResponse($media);
+        $media = $this->arrayEntityGroup($media);
+        $media['block'] = $block;
+
+        return new JsonResponse($media);
     }
 }
