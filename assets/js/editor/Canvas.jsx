@@ -59,6 +59,9 @@ export default class Canvas extends React.PureComponent {
           <Container className="h-100">
             <Row>
               <Column className="editor-canvas-body-col" xl={8} offsetXl={2}>
+                <div className="block-text">
+                  <h3 className="block-text-headline-about">About</h3>
+                </div>
                 <Droppable droppableId="canvasBlocks">
                   {(provided) => (
                     <ul className="editor-canvas-blocks" ref={provided.innerRef}>
