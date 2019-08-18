@@ -90,7 +90,7 @@ export default class BlockEditorImage extends React.PureComponent {
           <ImageUpload media={block.media} onDrop={this.handleDrop} />
           <div className="block-editor-image-caption">
             <input
-              className="form-control text-center"
+              className="text-center"
               placeholder="Caption"
               value={caption}
               onChange={this.handleCaptionChange}
