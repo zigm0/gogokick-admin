@@ -64,13 +64,6 @@ class Project
      * @ORM\OneToOne(targetEntity="Media")
      * @Groups({"web"})
      */
-    protected $screenshot;
-
-    /**
-     * @var Media
-     * @ORM\OneToOne(targetEntity="Media")
-     * @Groups({"web"})
-     */
     protected $image;
 
     /**
@@ -197,26 +190,6 @@ class Project
     public function setName(string $name): Project
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return Media
-     */
-    public function getScreenshot(): ?Media
-    {
-        return $this->screenshot;
-    }
-
-    /**
-     * @param Media $screenshot
-     *
-     * @return Project
-     */
-    public function setScreenshot(Media $screenshot): Project
-    {
-        $this->screenshot = $screenshot;
 
         return $this;
     }

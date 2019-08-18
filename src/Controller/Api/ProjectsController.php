@@ -191,12 +191,6 @@ class ProjectsController extends ApiController
             ->setBlocks($updatedBlocks)
             ->setDateUpdated(new DateTime());
 
-        $screenshot = $this->saveScreenshot(
-            $model->getScreenshot(),
-            $project->getScreenshot()
-        );
-        $project->setScreenshot($screenshot);
-
         $this->em->flush();
 
         $resp = [
@@ -228,8 +222,7 @@ class ProjectsController extends ApiController
 
         $project = (new Project())
             ->setUser($user)
-            ->setName($model->getName())
-            ->setScreenshot($this->saveScreenshot($model->getScreenshot()));
+            ->setName($model->getName());
         $this->em->persist($project);
 
         $sortOrder = 0;
@@ -283,47 +276,6 @@ class ProjectsController extends ApiController
         $this->em->flush();
 
         return $this->jsonEntityResponse($project);
-    }
-
-    /**
-     * @param string $data
-     * @param Media  $previous
-     *
-     * @return Media
-     */
-    protected function saveScreenshot($data, Media $previous = null)
-    {
-        list($type, $data) = explode(';', $data);
-        if ($type !== 'data:image/png') {
-            throw new RuntimeException('Invalid screenshot format.');
-        }
-        list(, $data) = explode(',', $data);
-        $data = base64_decode($data);
-        if (strlen($data) > 500000) {
-            throw new RuntimeException('Screenshot is too big.');
-        }
-
-        $path = sprintf('%d-%d.png', microtime(true), mt_rand());
-        $url  = $this->cdn->upload('screenshots', $path, $data);
-
-        if (!$previous) {
-            $media = (new Media())
-                ->setUrl($url)
-                ->setSystem('screenshots')
-                ->setPath($path);
-            $this->em->persist($media);
-        } else {
-            if ($previous->getSystem()) {
-                $this->cdn->remove($previous->getSystem(), $previous->getPath());
-            }
-            $previous
-                ->setUrl($url)
-                ->setSystem('screenshots')
-                ->setPath($path);
-            $media = $previous;
-        }
-
-        return $media;
     }
 
     /**

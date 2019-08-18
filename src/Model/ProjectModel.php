@@ -15,12 +15,6 @@ class ProjectModel
     protected $name;
 
     /**
-     * @var string
-     * @Assert\Type("string")
-     */
-    protected $screenshot;
-
-    /**
      * @var array
      * @Assert\Type("array")
      */
@@ -48,26 +42,6 @@ class ProjectModel
     public function setName(string $name): ProjectModel
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getScreenshot(): string
-    {
-        return $this->screenshot;
-    }
-
-    /**
-     * @param string $screenshot
-     *
-     * @return ProjectModel
-     */
-    public function setScreenshot(string $screenshot): ProjectModel
-    {
-        $this->screenshot = $screenshot;
 
         return $this;
     }

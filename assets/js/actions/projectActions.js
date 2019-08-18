@@ -1,16 +1,14 @@
 import { api, router, history } from 'utils';
-import html2canvas from "html2canvas";
 import { editorReset, editorNew, editorChanged, editorProjects } from "./editorActions";
 
-export const PROJECT_BUSY           = 'PROJECT_BUSY';
-export const PROJECT_SAVING         = 'PROJECT_SAVING';
-export const PROJECT_SET            = 'PROJECT_SET';
-export const PROJECT_NEW            = 'PROJECT_NEW_PROJECT';
-export const PROJECT_OPEN           = 'PROJECT_OPEN_PROJECT';
-export const PROJECT_SETTINGS       = 'PROJECT_SETTINGS';
-export const PROJECT_DELETE         = 'PROJECT_DELETE_PROJECT';
-export const PROJECT_MARK_READ      = 'PROJECT_MARK_READ';
-export const PROJECT_SCREENSHOTTING = 'PROJECT_SCREENSHOTTING';
+export const PROJECT_BUSY      = 'PROJECT_BUSY';
+export const PROJECT_SAVING    = 'PROJECT_SAVING';
+export const PROJECT_SET       = 'PROJECT_SET';
+export const PROJECT_NEW       = 'PROJECT_NEW_PROJECT';
+export const PROJECT_OPEN      = 'PROJECT_OPEN_PROJECT';
+export const PROJECT_SETTINGS  = 'PROJECT_SETTINGS';
+export const PROJECT_DELETE    = 'PROJECT_DELETE_PROJECT';
+export const PROJECT_MARK_READ = 'PROJECT_MARK_READ';
 
 /**
  * @param {*} payload
@@ -19,17 +17,6 @@ export const PROJECT_SCREENSHOTTING = 'PROJECT_SCREENSHOTTING';
 export const projectBusy = (payload) => {
   return {
     type: PROJECT_BUSY,
-    payload
-  }
-};
-
-/**
- * @param {*} payload
- * @returns {{payload: *, type: string}}
- */
-export const projectScreenshotting = (payload) => {
-  return {
-    type: PROJECT_SCREENSHOTTING,
     payload
   }
 };
@@ -84,46 +71,38 @@ export const projectSave = () => {
       payload: true
     });
 
-    dispatch(projectScreenshotting(true));
-    html2canvas(document.querySelector('.editor-canvas-blocks'))
-      .then((canvas) => {
-        dispatch(projectScreenshotting(false));
-        const screenshot = canvas.toDataURL();
+    const body = {
+      name:   project.name,
+      blocks: editor.canvasBlocks[editor.blockIndex]
+    };
 
-        const body = {
-          screenshot,
-          name:   project.name,
-          blocks: editor.canvasBlocks[editor.blockIndex]
-        };
+    let promise = null;
+    if (project.id === 0) {
+      const url = router.generate('api_projects_save_new');
+      promise = api.req('PUT', url, body);
+    } else {
+      const url = router.generate('api_projects_save', {
+        id: project.id
+      });
+      promise = api.req('POST', url, body);
+    }
 
-        let promise = null;
-        if (project.id === 0) {
-          const url = router.generate('api_projects_save_new');
-          promise = api.req('PUT', url, body);
-        } else {
-          const url = router.generate('api_projects_save', {
-            id: project.id
-          });
-          promise = api.req('POST', url, body);
-        }
-
-        promise
-          .then((payload) => {
-            history.push(`/editor/${payload.project.id}`);
-            dispatch({
-              type:    PROJECT_SET,
-              payload: payload.project
-            });
-            dispatch(editorProjects(payload.projects));
-            dispatch(editorChanged(false));
-          })
-          .finally(() => {
-            dispatch({
-              type:    PROJECT_SAVING,
-              payload: false
-            });
-            dispatch(projectBusy(false));
-          });
+    promise
+      .then((payload) => {
+        history.push(`/editor/${payload.project.id}`);
+        dispatch({
+          type:    PROJECT_SET,
+          payload: payload.project
+        });
+        dispatch(editorProjects(payload.projects));
+        dispatch(editorChanged(false));
+      })
+      .finally(() => {
+        dispatch({
+          type:    PROJECT_SAVING,
+          payload: false
+        });
+        dispatch(projectBusy(false));
       });
   };
 };

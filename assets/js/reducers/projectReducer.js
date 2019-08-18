@@ -2,61 +2,60 @@ import { arrays, objects } from 'utils';
 import * as types from 'actions/projectActions';
 
 const initialState = objects.merge({
-  id:               0,
-  name:             '',
-  image:            {},
-  owner:            {},
-  isBusy:           false,
-  isSaving:         false,
-  isScreenshotting: false,
-  campaignType:     0,
-  team:             [],
-/*  teamMembers:      [
-    {
-      id:           1,
-      name:         'Scott K.',
-      avatar:       '/images/avatar-1.jpeg',
-      projectRoles: ['Editor', 'Lead'],
-      actions:      [
-        {
-          id:    1,
-          block: 5,
-          date:  '5 hours ago',
-          title: 'Adds text block',
-          memo:  ''
-        }
-      ]
-    },
-    {
-      id:           2,
-      name:         'Val S.',
-      avatar:       '/images/avatar-2.jpeg',
-      projectRoles: ['Graphics'],
-      actions:      [
-        {
-          id:    2,
-          block: 4,
-          date:  'Yesterday',
-          title: 'Updated image block',
-          memo:  'Uses new product prototype images.'
-        },
-        {
-          id:    3,
-          block: 5,
-          date:  '3 days ago',
-          title: 'Updated image block',
-          memo:  ''
-        },
-      ]
-    },
-    {
-      id:           3,
-      name:         'John R.',
-      avatar:       '/images/avatar-3.jpeg',
-      projectRoles: ['Owner'],
-      actions:      []
-    },
-  ]*/
+  id:           0,
+  name:         '',
+  image:        {},
+  owner:        {},
+  isBusy:       false,
+  isSaving:     false,
+  campaignType: 0,
+  team:         [],
+  /*  teamMembers:      [
+      {
+        id:           1,
+        name:         'Scott K.',
+        avatar:       '/images/avatar-1.jpeg',
+        projectRoles: ['Editor', 'Lead'],
+        actions:      [
+          {
+            id:    1,
+            block: 5,
+            date:  '5 hours ago',
+            title: 'Adds text block',
+            memo:  ''
+          }
+        ]
+      },
+      {
+        id:           2,
+        name:         'Val S.',
+        avatar:       '/images/avatar-2.jpeg',
+        projectRoles: ['Graphics'],
+        actions:      [
+          {
+            id:    2,
+            block: 4,
+            date:  'Yesterday',
+            title: 'Updated image block',
+            memo:  'Uses new product prototype images.'
+          },
+          {
+            id:    3,
+            block: 5,
+            date:  '3 days ago',
+            title: 'Updated image block',
+            memo:  ''
+          },
+        ]
+      },
+      {
+        id:           3,
+        name:         'John R.',
+        avatar:       '/images/avatar-3.jpeg',
+        projectRoles: ['Owner'],
+        actions:      []
+      },
+    ]*/
 }, window.initialState.project);
 
 /**
@@ -85,20 +84,6 @@ const onProjectSaving = (state, action) => {
     ...state,
     isBusy: isSaving,
     isSaving
-  };
-};
-
-/**
- * @param {*} state
- * @param {*} action
- * @returns {*}
- */
-const onProjectScreenshotting = (state, action) => {
-  const isScreenshotting = action.payload;
-
-  return {
-    ...state,
-    isScreenshotting
   };
 };
 
@@ -191,16 +176,15 @@ const onProjectSet = (state, action) => {
 };
 
 const handlers = {
-  [types.PROJECT_BUSY]:           onProjectBusy,
-  [types.PROJECT_SAVING]:         onProjectSaving,
-  [types.PROJECT_SCREENSHOTTING]: onProjectScreenshotting,
-  [types.PROJECT_MARK_READ]:      onProjectMarkRead,
-  [types.PROJECT_DELETE]:         onProjectDelete,
-  [types.PROJECT_SETTINGS]:       onProjectSettings,
-  [types.PROJECT_SAVING]:         onProjectSaving,
-  [types.PROJECT_SET]:            onProjectSet,
-  [types.PROJECT_NEW]:            onProjectNew,
-  [types.PROJECT_OPEN]:           onProjectOpen
+  [types.PROJECT_BUSY]:      onProjectBusy,
+  [types.PROJECT_SAVING]:    onProjectSaving,
+  [types.PROJECT_MARK_READ]: onProjectMarkRead,
+  [types.PROJECT_DELETE]:    onProjectDelete,
+  [types.PROJECT_SETTINGS]:  onProjectSettings,
+  [types.PROJECT_SAVING]:    onProjectSaving,
+  [types.PROJECT_SET]:       onProjectSet,
+  [types.PROJECT_NEW]:       onProjectNew,
+  [types.PROJECT_OPEN]:      onProjectOpen
 };
 
 /**
