@@ -25,7 +25,6 @@
 
   &.block-dragging {
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
-    padding: 0 $gutter-size-sm;
   }
 
   @include media-md {
@@ -167,6 +166,14 @@
     font-size: 21px;
     line-height: 30px;
   }
+
+  &.block-dragging {
+    background-color: #FFF;
+    width: $width-block + ($gutter-size * 2) !important;
+    left: -$gutter-size;
+    right: -$gutter-size;
+    padding: 0 $gutter-size;
+  }
 }
 
 .block-image {
@@ -184,6 +191,10 @@
     color: #9B9E9E;
     padding-top: 10px;
     padding-bottom: 10px;
+  }
+
+  &.block-dragging {
+    background-color: #FFF;
   }
 }
 
