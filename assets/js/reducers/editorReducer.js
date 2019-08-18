@@ -386,7 +386,8 @@ const onEditorBlockMedia = (state, action) => {
   const { block, id, url } = action.payload;
 
   const blocks = Array.from(canvasBlocks[blockIndex]);
-  const index = arrays.findIndexByID(blocks, parseInt(block, 10));
+  const index = arrays.findIndexByID(blocks, block.indexOf('n-') === 0 ? block : parseInt(block, 10));
+
   blocks[index].media = {
     id,
     url
