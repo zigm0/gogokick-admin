@@ -135,46 +135,68 @@ export default class BlockEditorText extends React.PureComponent {
     return (
       <>
         <div className="block-menu block-menu-text">
-          <Button
-            active={isHeadline}
-            className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, 'headline')}
-          >
-            Headline
-          </Button>
-          <Button
-            icon="list"
-            active={cmds.insertUnorderedList}
-            disabled={isHeadline}
-            className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, 'insertUnorderedList')}
-          />
-          <Button
-            icon="bold"
-            active={cmds.bold}
-            disabled={isHeadline}
-            className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, 'bold')}
-          />
-          <Button
-            icon="italic"
-            active={cmds.italic}
-            disabled={isHeadline}
-            className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, 'italic')}
-          />
-          <Button
-            icon="link"
-            active={cmds.createLink}
-            disabled={isHeadline}
-            className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, cmds.createLink ? 'unlink' : 'createLink')}
-          />
-          <Button
-            icon="times"
-            className="block-menu-item block-menu-item-remove"
-            onClick={e => onRemove(e, block)}
-          />
+          <div className="flex-grow-1">
+            <Button
+              title="Settings"
+              icon="cog"
+              className="block-menu-item"
+              onClick={this.handleSettingsClick}
+            />
+            <Button
+              title="Move up"
+              icon="caret-up"
+              className="block-menu-item"
+            />
+            <Button
+              title="Move down"
+              icon="caret-down"
+              className="block-menu-item"
+            />
+          </div>
+          <div className="flex-grow-1">
+            <Button
+              active={isHeadline}
+              className="block-menu-item"
+              onClick={e => this.handleMenuItemClick(e, 'headline')}
+            >
+              Headline
+            </Button>
+            <Button
+              icon="list"
+              active={cmds.insertUnorderedList}
+              disabled={isHeadline}
+              className="block-menu-item"
+              onClick={e => this.handleMenuItemClick(e, 'insertUnorderedList')}
+            />
+            <Button
+              icon="bold"
+              active={cmds.bold}
+              disabled={isHeadline}
+              className="block-menu-item"
+              onClick={e => this.handleMenuItemClick(e, 'bold')}
+            />
+            <Button
+              icon="italic"
+              active={cmds.italic}
+              disabled={isHeadline}
+              className="block-menu-item"
+              onClick={e => this.handleMenuItemClick(e, 'italic')}
+            />
+            <Button
+              icon="link"
+              active={cmds.createLink}
+              disabled={isHeadline}
+              className="block-menu-item"
+              onClick={e => this.handleMenuItemClick(e, cmds.createLink ? 'unlink' : 'createLink')}
+            />
+          </div>
+          <div className="flex-grow-1 text-right">
+            <Button
+              icon="times"
+              className="block-menu-item block-menu-item-remove"
+              onClick={e => onRemove(e, block)}
+            />
+          </div>
         </div>
         <div className="block-editor block-editor-text block-expanded">
           <ContentEditable

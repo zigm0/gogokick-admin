@@ -2,6 +2,13 @@
 
 .block-container {
   position: relative;
+  outline: 0;
+
+  &:hover,
+  &:focus,
+  &:active {
+    outline: 0;
+  }
 }
 
 .block-container-inner {
