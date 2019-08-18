@@ -12,6 +12,7 @@ const initialState = objects.merge({
   activeBlockID: 0,
   hoverBlockID:  0,
   canvasBlocks:  [[]],
+  modalMeta:     null,
   modals:        {
     login:         false,
     preview:       false,
@@ -21,7 +22,8 @@ const initialState = objects.merge({
     newProject:    false,
     teamMember:    false,
     addMember:     false,
-    memberActions: false
+    memberActions: false,
+    blockSettings: false
   },
   sidebarBlocks: [
     {
@@ -266,7 +268,7 @@ const onEditorRemove = (state, action) => {
  */
 const onEditorChange = (state, action) => {
   let { canvasBlocks, blockIndex, isChanged } = objects.clone(state);
-  const { id, text, caption, isHeadline } = action.payload;
+  const { id, text, caption, description, isHeadline } = action.payload;
 
   const blocks = Array.from(canvasBlocks[blockIndex]);
   const index  = arrays.findIndexByID(blocks, id);
@@ -275,6 +277,7 @@ const onEditorChange = (state, action) => {
     blocks[index].text           = text;
     blocks[index].caption        = caption;
     blocks[index].isHeadline     = isHeadline;
+    blocks[index].description    = description;
     isChanged                    = true;
     canvasBlocks[blockIndex + 1] = blocks;
     blockIndex += 1;
@@ -295,13 +298,14 @@ const onEditorChange = (state, action) => {
  */
 const onEditorModal = (state, action) => {
   const modals = objects.clone(state.modals);
-  const { modal, open } = action.payload;
+  const { modal, open, meta } = action.payload;
 
   modals[modal] = open;
 
   return {
     ...state,
-    modals
+    modals,
+    modalMeta: meta
   };
 };
 

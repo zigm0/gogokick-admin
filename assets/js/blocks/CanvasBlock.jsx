@@ -25,6 +25,7 @@ export default class CanvasBlock extends React.PureComponent {
     index:               PropTypes.number.isRequired,
     hoverBlockID:        PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     activeBlockID:       PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+    editorModal:         PropTypes.func.isRequired,
     editorRemove:        PropTypes.func.isRequired,
     editorHoverBlock:    PropTypes.func.isRequired,
     editorActivateBlock: PropTypes.func.isRequired
@@ -144,6 +145,13 @@ export default class CanvasBlock extends React.PureComponent {
    */
   handleSettingsClick = (e) => {
     e.preventDefault();
+    const { block, editorModal } = this.props;
+
+    editorModal({
+      modal: 'blockSettings',
+      open:  true,
+      meta:  block
+    });
   };
 
   /**

@@ -29,6 +29,7 @@ export default class Modal extends React.PureComponent {
     modals:      PropTypes.object.isRequired,
     editorModal: PropTypes.func.isRequired,
     onBodyClick: PropTypes.func,
+    onClosed:    PropTypes.func,
     children:    PropTypes.node
   };
 
@@ -43,6 +44,7 @@ export default class Modal extends React.PureComponent {
     closeText:   'Close',
     buttons:     '',
     children:    '',
+    onClosed:    () => {},
     onBodyClick: () => {}
   };
 
@@ -50,8 +52,9 @@ export default class Modal extends React.PureComponent {
    *
    */
   close = () => {
-    const { name, editorModal } = this.props;
+    const { name, editorModal, onClosed } = this.props;
 
+    onClosed();
     editorModal({
       modal: name,
       open:  false

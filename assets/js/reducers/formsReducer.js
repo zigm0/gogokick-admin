@@ -31,6 +31,10 @@ const initialState = {
     name: '',
     ...commonForms
   },
+  blockSettings: {
+    description: '',
+    ...commonForms
+  },
   prompt: {
     input: '',
     ...commonForms

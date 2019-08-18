@@ -142,7 +142,8 @@ class ProjectsController extends ApiController
                 $block = (new Block())
                     ->setType($blockData['type'])
                     ->setProject($project)
-                    ->setSortOrder($sortOrder++);
+                    ->setSortOrder($sortOrder++)
+                    ->setDescription($blockData['description']);
                 switch($block->getType()) {
                     case Block::TYPE_TEXT:
                         $block->setText($blockData['text']);
@@ -162,7 +163,9 @@ class ProjectsController extends ApiController
             } else {
                 $block = $blockRepository->findByID($blockData['id']);
                 if ($block) {
-                    $block->setSortOrder($sortOrder++);
+                    $block
+                        ->setSortOrder($sortOrder++)
+                        ->setDescription($blockData['description']);
                     switch($block->getType()) {
                         case Block::TYPE_TEXT:
                             $block->setText($blockData['text']);
