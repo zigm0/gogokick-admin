@@ -1,16 +1,18 @@
 @import "vars";
 
 .modal-content {
-  color: #695D46;
-  background-color: $color-canvas-block-bg;
+  color: #FFF;
+  background-color: #242424;
 }
 
 .modal-header {
-  padding: 14.5px 7.5px 4px 15.5px;
+  padding: 20.5px 7.5px 2px 15.5px;
 
-  background:
-    linear-gradient(to left, #ef7138 0, #ef7138 50%, #a3e7d8 50%, #a3e7d8 80%, #cfc194 80%, #cfc194) no-repeat;
+  background: linear-gradient(to left, #ef7138 0, #ef7138 50%, #a3e7d8 50%, #a3e7d8 80%, #cfc194 80%, #cfc194) no-repeat;
   background-size:100% 7px ;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom: 0;
 
   .icon,
   .avatar {
@@ -18,6 +20,7 @@
   }
 
   .close {
+    color: #FFF;
     margin: -1.25rem -1rem -1rem auto;
 
     .icon {
@@ -33,7 +36,7 @@
 
 .modal-body {
   .column {
-    margin-bottom: $gutter-size-sm;
+    margin-bottom: $gutter-size;
   }
 }
 
@@ -44,6 +47,7 @@
 
 .modal-footer {
   padding: $gutter-size-sm;
+  border-top: 0;
 }
 
 .modal-delete-btn {

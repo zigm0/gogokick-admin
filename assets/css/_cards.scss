@@ -1,5 +1,9 @@
 @import "vars";
 
+.card {
+  background-color: transparent;
+}
+
 .card-footer {
   font-size: $font-size-sm;
   color: #FFF;
@@ -7,10 +11,8 @@
 }
 
 .card-selected {
-  background-color: $color-primary;
-
   .card-footer {
-    border-top-color: $color-primary;
+    background-color: lighten($color-primary, 5%);
   }
 }
 
