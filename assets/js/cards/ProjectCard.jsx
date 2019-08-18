@@ -29,8 +29,10 @@ export default class ProjectCard extends React.PureComponent {
         onClick={e => onClick(e, project)}
       >
         <CardBody>
-          {project.screenshot && (
-            <img src={project.screenshot.url} className="card-project-thumb" alt="Screenshot" />
+          {(project.image && project.image.url) ? (
+            <img src={project.image.url} className="card-project-thumb" alt="Thumbnail" />
+          ) : (
+            <img src="/images/block-placeholder-image.png" className="card-project-thumb" alt="Thumbnail" />
           )}
         </CardBody>
         <CardFooter title={project.name}>

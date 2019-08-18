@@ -121,7 +121,7 @@ export default class OpenModal extends React.PureComponent {
     return (
       <Row>
         {projects.map(project => (
-          <Column key={project.id} xl={3}>
+          <Column key={project.id} xl={4}>
             <ProjectCard
               project={project}
               selected={selected === project.id}

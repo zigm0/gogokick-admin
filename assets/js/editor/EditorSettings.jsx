@@ -57,9 +57,10 @@ export default class EditorSettings extends React.PureComponent {
   }
 
   /**
-   *
+   * @param {Event} e
    */
-  handleSaveClick = () => {
+  handleUpdateClick = (e) => {
+    e.preventDefault();
     const { forms, editorModal, projectSettings } = this.props;
 
     projectSettings({
@@ -118,8 +119,8 @@ export default class EditorSettings extends React.PureComponent {
           <ProjectImage project={project} mediaUpload={mediaUpload} />
         </div>
         <div className="text-right">
-          <Button theme="success">
-            Save
+          <Button theme="success" onClick={this.handleUpdateClick}>
+            Update
           </Button>
         </div>
       </Form>

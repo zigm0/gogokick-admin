@@ -16,10 +16,16 @@
 
 .card-project {
   cursor: pointer;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.25);
+  transition: box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+  }
 
   .card-body {
-    height: 180px;
-    padding: 2px;
+    height: 110px;
+    padding: 0;
     overflow: hidden;
     background-color: #FFF;
   }
