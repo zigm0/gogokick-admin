@@ -19,7 +19,7 @@ const mapStateToProps = state => ({
 export default class CanvasBlock extends React.PureComponent {
   static propTypes = {
     block: PropTypes.shape({
-      id:   PropTypes.number.isRequired,
+      id:   PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
       type: PropTypes.number.isRequired
     }).isRequired,
     index:               PropTypes.number.isRequired,
