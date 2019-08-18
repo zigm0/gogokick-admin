@@ -2,6 +2,7 @@
 
 .block-editor {
   padding: 1px $gutter-size 0 $gutter-size + 1px !important;
+  margin-bottom: $margin-bottom-block;
 }
 
 .block-editor-text {
@@ -9,8 +10,24 @@
 }
 
 .block-editor-image {
+  min-height: $height-block-image;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+  padding: 0 !important;
+
   img {
     max-width: 100%;
+  }
+
+  figure {
+    margin-bottom: 0;
+  }
+
+  .block-editor-image-caption {
+    padding: $gutter-size-sm;
+
+    input {
+      width: 100%;
+    }
   }
 }
 

@@ -1,7 +1,9 @@
-import React, {useCallback} from 'react'
+import React, { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone';
 import classNames from 'classnames';
 import { Icon } from 'components';
+
+const maxSizeMB = 20;
 
 /**
  *
@@ -14,20 +16,23 @@ const ImageUpload = ({ media, onDrop: handleDrop }) => {
     handleDrop(acceptedFiles[0]);
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    maxSize: maxSizeMB * 1024 * 1024,
+    accept:  'image/*'
+  });
 
   const classes = classNames('upload-container', {
     'hover': isDragActive
   });
 
   return (
-    <div
-      className={classes}
-      {...getRootProps()}
-    >
+    <div className={classes} {...getRootProps()}>
       <input {...getInputProps()} />
       {(media && media.url) && (
-        <img src={media.url} alt="" />
+        <figure>
+          <img src={media.url} alt="" />
+        </figure>
       )}
       {(!media || !media.url) && (
         <div className="d-flex flex-column justify-content-center text-center">
@@ -38,7 +43,7 @@ const ImageUpload = ({ media, onDrop: handleDrop }) => {
             Drop an image here, or click to select a file.
           </div>
           <div className="upload-container-bottom">
-            It must be a JPG, PNG, GIF, TIFF or BMP. No larger than 2MB.
+            It must be a JPG, PNG, GIF, TIFF or BMP. No larger than {maxSizeMB}MB.
           </div>
         </div>
       )}

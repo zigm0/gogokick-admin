@@ -13,7 +13,7 @@
   width: $width-block !important;
   border-radius: $border-radius-blocks;
   border: 1px solid transparent;
-  margin-bottom: 30px;
+  margin-bottom: $margin-bottom-block;
 
   &.block-text-headline {
     margin-bottom: 20px;
@@ -166,6 +166,16 @@
 .block-image {
   img {
     max-width: 100%;
+  }
+
+  figcaption {
+    font-size: 14px;
+    font-style: italic;
+    text-align: center;
+    line-height: 20px;
+    color: #9B9E9E;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 }
 

@@ -43,14 +43,15 @@ $colors-list: $color-primary $color-success $color-info $color-danger $color-war
 $gutter-size: 15px;
 $gutter-size-lg: $gutter-size * 2;
 $gutter-size-sm: $gutter-size / 2;
-$header-height: 56px;
-$footer-height: 100px;
+$height-header: 56px;
+$height-footer: 100px;
 $width-block: 680px;
 $border-radius-blocks: 0.3rem;
-$block-menu-height: 2.2rem;
+$height-block-menu: 35px;
 $height-block-text: 100px;
-$height-block-image: 400px;
+$height-block-image: 300px;
 $height-block-video: 382px;
+$margin-bottom-block: 30px;
 
 $font-size-sm: 0.9rem;
 

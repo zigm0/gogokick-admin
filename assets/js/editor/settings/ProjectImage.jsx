@@ -22,7 +22,10 @@ const ProjectImage = ({ project, mediaUpload }) => {
     });
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: 'image/*'
+  });
 
   const classes = classNames('project-settings-banner', {
     'hover': isDragActive

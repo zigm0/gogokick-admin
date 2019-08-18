@@ -25,25 +25,25 @@ const initialState = objects.merge({
   },
   sidebarBlocks: [
     {
-      id:    1,
-      type:  'text',
-      text:  '',
-      image: null,
-      video: null
+      id:      1,
+      type:    'text',
+      text:    '',
+      caption: '',
+      media:   null
     },
     {
-      id:    2,
-      type:  'image',
-      text:  '',
-      image: null,
-      video: null
+      id:      2,
+      type:    'image',
+      text:    '',
+      caption: '',
+      media:   null
     },
     {
-      id:    3,
-      type:  'video',
-      text:  '',
-      image: null,
-      video: null
+      id:      3,
+      type:    'video',
+      text:    '',
+      caption: '',
+      media:   null
     }
   ]
 }, window.initialState.editor);
@@ -263,27 +263,23 @@ const onEditorRemove = (state, action) => {
  */
 const onEditorChange = (state, action) => {
   let { canvasBlocks, blockIndex, isChanged } = objects.clone(state);
-  const { blockID, text, image, video } = action.payload;
+  const { blockID, text, caption } = action.payload;
 
   const blocks = Array.from(canvasBlocks[blockIndex]);
-  const index = arrays.findIndexByID(blocks, blockID);
-  blocks[index].text = text;
+  const index  = arrays.findIndexByID(blocks, blockID);
+
+  switch (blocks[index].type) {
+    case constants.blockType('text'):
+      blocks[index].text = text;
+      break;
+    case constants.blockType('image'):
+      blocks[index].caption = caption;
+      break;
+  }
+
   canvasBlocks[blockIndex + 1] = blocks;
   blockIndex += 1;
   isChanged = true;
-
-/*  const blocks = canvasBlocks[blockIndex].slice(0);
-  const index  = arrays.findIndexByID(blocks, blockID);
-  if (index !== -1) {
-    blocks.splice(index, 1);
-    canvasBlocks[blockIndex + 1] = blocks;
-    blockIndex += 1;
-    isChanged = true;
-  }
-
-  if (typeof action.payload.text !== 'undefined') {
-    canvasBlocks[blockIndex][blockIndex].text = text;
-  }*/
 
   return {
     ...state,
@@ -387,11 +383,12 @@ const onEditorHoverBlock = (state, action) => {
  */
 const onEditorBlockMedia = (state, action) => {
   let { canvasBlocks, blockIndex, isChanged } = objects.clone(state);
-  const { block, url } = action.payload;
+  const { block, id, url } = action.payload;
 
   const blocks = Array.from(canvasBlocks[blockIndex]);
   const index = arrays.findIndexByID(blocks, parseInt(block, 10));
-  blocks[index].image = {
+  blocks[index].media = {
+    id,
     url
   };
 

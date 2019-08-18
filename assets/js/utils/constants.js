@@ -1,19 +1,21 @@
-const { constants }    = window;
-const blockTypesStr    = {};
-const campaignTypesStr = {};
+const { constants }        = window;
+export const blockTypes    = constants.blockTypes;
+export const campaignTypes = constants.campaignTypes;
+const blockTypesStr        = {};
+const campaignTypesStr     = {};
 
-Object.keys(constants.blockTypes).forEach((key) => {
-  const value = constants.blockTypes[key];
+Object.keys(blockTypes).forEach((key) => {
+  const value = blockTypes[key];
   blockTypesStr[value] = parseInt(key, 10);
 });
 
-Object.keys(constants.campaignTypes).forEach((key) => {
-  const value = constants.campaignTypes[key];
+Object.keys(campaignTypes).forEach((key) => {
+  const value = campaignTypes[key];
   campaignTypesStr[value] = parseInt(key, 10);
 });
 
 /**
- * @param {number} type
+ * @param {number|string} type
  * @returns {string}
  */
 export function blockType(type) {
@@ -24,7 +26,7 @@ export function blockType(type) {
 }
 
 /**
- * @param {number} type
+ * @param {number|string} type
  * @returns {string}
  */
 export function campaignType(type) {

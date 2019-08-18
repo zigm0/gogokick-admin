@@ -147,6 +147,13 @@ class ProjectsController extends ApiController
                     case Block::TYPE_TEXT:
                         $block->setText($blockData['text']);
                         break;
+                    case Block::TYPE_IMAGE:
+                        $block->setCaption($blockData['caption']);
+                        if (!empty($blockData['media']) && !empty($blockData['media']['id'])) {
+                            $media = $this->getMedia($blockData['media']['id']);
+                            $block->setMedia($media);
+                        }
+                        break;
                 }
 
                 $this->em->persist($block);
@@ -158,6 +165,13 @@ class ProjectsController extends ApiController
                     switch($block->getType()) {
                         case Block::TYPE_TEXT:
                             $block->setText($blockData['text']);
+                            break;
+                        case Block::TYPE_IMAGE:
+                            $block->setCaption($blockData['caption']);
+                            if (!empty($blockData['media']) && !empty($blockData['media']['id'])) {
+                                $media = $this->getMedia($blockData['media']['id']);
+                                $block->setMedia($media);
+                            }
                             break;
                     }
 

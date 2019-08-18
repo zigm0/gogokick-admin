@@ -68,18 +68,17 @@ class Block
     /**
      * @var Media
      * @ORM\OneToOne(targetEntity="Media")
-     * @ORM\Column(nullable=true)
+     * @ORM\JoinColumn(name="media_id", referencedColumnName="id", nullable=true)
      * @Groups({"web"})
      */
-    protected $image;
+    protected $media;
 
     /**
-     * @var Media
-     * @ORM\OneToOne(targetEntity="Media")
-     * @ORM\Column(nullable=true)
+     * @var string
+     * @ORM\Column(type="string", length=255)
      * @Groups({"web"})
      */
-    protected $video;
+    protected $caption = '';
 
     /**
      * @var DateTime
@@ -190,6 +189,26 @@ class Block
     /**
      * @return string
      */
+    public function getCaption(): ?string
+    {
+        return $this->caption;
+    }
+
+    /**
+     * @param string $caption
+     *
+     * @return Block
+     */
+    public function setCaption(string $caption): Block
+    {
+        $this->caption = $caption;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getText(): ?string
     {
         return $this->text;
@@ -210,39 +229,19 @@ class Block
     /**
      * @return Media
      */
-    public function getImage(): ?Media
+    public function getMedia(): ?Media
     {
-        return $this->image;
+        return $this->media;
     }
 
     /**
-     * @param Media $image
+     * @param Media $media
      *
      * @return Block
      */
-    public function setImage(Media $image): Block
+    public function setMedia(Media $media): Block
     {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * @return Media
-     */
-    public function getVideo(): ?Media
-    {
-        return $this->video;
-    }
-
-    /**
-     * @param Media $video
-     *
-     * @return Block
-     */
-    public function setVideo(Media $video): Block
-    {
-        $this->video = $video;
+        $this->media = $media;
 
         return $this;
     }

@@ -1,9 +1,9 @@
 @import "../vars";
 
 .block-menu {
-  height: $block-menu-height;
+  height: $height-block-menu;
   position: absolute;
-  top: -$block-menu-height;
+  top: -$height-block-menu;
   left: -$gutter-size;
   width: $width-block + ($gutter-size * 2) !important;
   right: 0;

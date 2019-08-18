@@ -7,8 +7,8 @@
 }
 
 .editor-canvas-body {
-  max-height: calc(100vh - #{$header-height});
-  padding-top: $block-menu-height - 0.8rem;
+  max-height: calc(100vh - #{$height-header});
+  padding-top: $height-block-menu - 14px;
   overflow-x: hidden;
   overflow-y: scroll;
 
@@ -26,7 +26,7 @@
 .editor-canvas-blocks {
   margin-bottom: 0;
   padding-bottom: 50px;
-  min-height: calc(100vh - #{$header-height});
+  min-height: calc(100vh - #{$height-header});
 }
 
 .editor-canvas-campaign-kickstarter {

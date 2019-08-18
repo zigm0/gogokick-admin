@@ -13,7 +13,8 @@ const mapStateToProps = state => ({
 export default class BlockImage extends React.PureComponent {
   static propTypes = {
     block: PropTypes.shape({
-      image: PropTypes.object
+      image:   PropTypes.object,
+      caption: PropTypes.string
     }).isRequired
   };
 
@@ -26,7 +27,12 @@ export default class BlockImage extends React.PureComponent {
     const { block } = this.props;
 
     return (
-      <img src={block.image.url} alt="" />
+      <figure>
+        <img src={block.media.url} alt="" />
+        {block.caption && (
+          <figcaption className="px2">{block.caption}</figcaption>
+        )}
+      </figure>
     );
   }
 }

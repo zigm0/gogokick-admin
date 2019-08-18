@@ -32,7 +32,7 @@ export default class BlockBody extends React.PureComponent {
    */
   render() {
     const { block, isActive, isHover, isDragging } = this.props;
-    const isEmpty = block.text === '' && !block.image && !block.video;
+    const isEmpty = block.text === '' && !block.media;
 
     if (isActive) {
       switch (block.type) {

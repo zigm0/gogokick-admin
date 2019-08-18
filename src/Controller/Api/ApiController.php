@@ -2,6 +2,7 @@
 namespace App\Controller\Api;
 
 use App\Controller\Controller;
+use App\Entity\Media;
 use App\Entity\Project;
 use App\Media\CDNInterface;
 use App\Service\ScreenshotService;
@@ -104,5 +105,20 @@ class ApiController extends Controller
         }
 
         return $project;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return Media|object
+     */
+    public function getMedia($id)
+    {
+        $media = $this->em->getRepository(Media::class)->findByID($id);
+        if (!$media) {
+            throw $this->createNotFoundException();
+        }
+
+        return $media;
     }
 }
