@@ -222,7 +222,8 @@ class ProjectsController extends ApiController
 
         $project = (new Project())
             ->setUser($user)
-            ->setName($model->getName());
+            ->setName($model->getName())
+            ->setCampaignType($model->getCampaignType());
         $this->em->persist($project);
 
         $sortOrder = 0;
@@ -287,10 +288,10 @@ class ProjectsController extends ApiController
 
         $templates = [
             [
-                'id'         => 't-1',
-                'name'       => 'Blank',
-                'blocks'     => [],
-                'screenshot' => ''
+                'id'           => 't-1',
+                'name'         => 'Blank',
+                'blocks'       => [],
+                'campaignType' => 1
             ]
         ];
 

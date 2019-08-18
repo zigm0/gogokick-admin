@@ -27,6 +27,12 @@ class ProjectModel
     protected $removed;
 
     /**
+     * @var int
+     * @Assert\Type("integer")
+     */
+    protected $campaignType;
+
+    /**
      * @return string
      */
     public function getName(): string
@@ -82,6 +88,26 @@ class ProjectModel
     public function setRemoved(array $removed): ProjectModel
     {
         $this->removed = $removed;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCampaignType(): ?int
+    {
+        return $this->campaignType;
+    }
+
+    /**
+     * @param int $campaignType
+     *
+     * @return ProjectModel
+     */
+    public function setCampaignType(int $campaignType): ProjectModel
+    {
+        $this->campaignType = $campaignType;
 
         return $this;
     }

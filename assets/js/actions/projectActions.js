@@ -72,7 +72,7 @@ export const projectSave = () => {
     });
 
     const body = {
-      name:   project.name,
+      ...project,
       blocks: editor.canvasBlocks[editor.blockIndex]
     };
 

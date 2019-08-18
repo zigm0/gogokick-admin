@@ -62,7 +62,9 @@ class ModelRequestHandler
         }
 
         foreach($request as $key => $value) {
-            $this->propertyAccessor->setValue($obj, $key, $value);
+            if ($this->propertyAccessor->isWritable($obj, $key)) {
+                $this->propertyAccessor->setValue($obj, $key, $value);
+            }
         }
 
         if ($validate && !$this->isValid($obj)) {
