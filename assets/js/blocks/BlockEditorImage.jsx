@@ -6,7 +6,7 @@ import * as mediaActions from 'actions/mediaActions';
 import * as editorActions from 'actions/editorActions';
 
 const mapStateToProps = state => ({
-
+  isUploading: state.media.isUploading
 });
 
 @connect(
@@ -19,6 +19,7 @@ export default class BlockEditorImage extends React.PureComponent {
       text: PropTypes.string,
       type: PropTypes.number.isRequired
     }).isRequired,
+    isUploading:  PropTypes.bool.isRequired,
     mediaUpload:  PropTypes.func.isRequired,
     editorChange: PropTypes.func.isRequired,
     onRemove:     PropTypes.func.isRequired
@@ -71,7 +72,7 @@ export default class BlockEditorImage extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { block, onRemove } = this.props;
+    const { block, isUploading, onRemove } = this.props;
     const { caption } = this.state;
 
     return (
@@ -104,7 +105,11 @@ export default class BlockEditorImage extends React.PureComponent {
           </div>
         </div>
         <div className="block-editor block-editor-image">
-          <ImageUpload media={block.media} onDrop={this.handleDrop} />
+          <ImageUpload
+            media={block.media}
+            onDrop={this.handleDrop}
+            isUploading={isUploading}
+          />
           <div className="block-editor-image-caption">
             <input
               className="text-center"

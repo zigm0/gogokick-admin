@@ -1,17 +1,18 @@
 import React, { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone';
 import classNames from 'classnames';
-import { Icon } from 'components';
+import { Icon, Loading } from 'components';
 
 const maxSizeMB = 20;
 
 /**
  *
  * @param {*} project
+ * @param {boolean} isUploading
  * @param {Function} handleDrop
  * @returns {*}
  */
-const ImageUpload = ({ media, onDrop: handleDrop }) => {
+const ImageUpload = ({ media, isUploading, onDrop: handleDrop }) => {
   const onDrop = useCallback(acceptedFiles => {
     handleDrop(acceptedFiles[0]);
   }, []);
@@ -38,6 +39,9 @@ const ImageUpload = ({ media, onDrop: handleDrop }) => {
       <div className="upload-container-circle-container">
         <div className="upload-container-circle upload-container-circle-image">
           <Icon name="image" size={2} far />
+          {isUploading && (
+            <Loading white />
+          )}
         </div>
         {(!media || !media.url) && (
           <>

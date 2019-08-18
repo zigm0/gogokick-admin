@@ -1,8 +1,8 @@
-import { api, router } from 'utils';
+import { api, router, system } from 'utils';
 import { projectSettings } from './projectActions';
 import { editorBlockMedia } from './editorActions';
 
-export const MEDIA_UPLOAD = 'MEDIA_UPLOAD';
+export const MEDIA_UPLOADING = 'MEDIA_UPLOADING';
 
 
 /**
@@ -22,6 +22,11 @@ export const mediaUpload = (payload) => {
       body.append('block', block);
     }
 
+    dispatch({
+      type:    MEDIA_UPLOADING,
+      payload: true
+    });
+
     api.post(router.generate('api_media_upload'), body)
       .then((media) => {
         if (system === 'project_images') {
@@ -33,10 +38,14 @@ export const mediaUpload = (payload) => {
         }
       })
       .catch((err) => {
-        // prompts.alert('Upload error', err);
+        system.prompt('Upload error', err);
       })
       .finally(() => {
         // prompts.loading(false);
+        dispatch({
+          type:    MEDIA_UPLOADING,
+          payload: false
+        });
       });
 
   };
