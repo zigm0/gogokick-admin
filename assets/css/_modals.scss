@@ -6,7 +6,7 @@
 }
 
 .modal-header {
-  padding: 11.5px 7.5px 4px 7.5px;
+  padding: 14.5px 7.5px 4px 15.5px;
 
   background:
     linear-gradient(to left, #ef7138 0, #ef7138 50%, #a3e7d8 50%, #a3e7d8 80%, #cfc194 80%, #cfc194) no-repeat;
@@ -18,13 +18,17 @@
   }
 
   .close {
-    margin: -0.9rem -1rem -1rem auto;
+    margin: -1.25rem -1rem -1rem auto;
 
     .icon {
       font-size: 1rem;
     }
   }
 
+}
+
+.modal-title {
+  font-size: 1rem;
 }
 
 .modal-body {
