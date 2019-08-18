@@ -47,12 +47,15 @@ export default class CanvasBlock extends React.PureComponent {
    */
   componentWillUpdate(nextProps) {
     const { block, hoverBlockID, activeBlockID } = this.props;
-    const isActive = activeBlockID === block.id;
-    const isHover  = hoverBlockID === block.id;
+
+    const nextBlock  = nextProps.block;
+    const isActive   = activeBlockID === block.id;
+    const isHover    = hoverBlockID === block.id;
     const willActive = nextProps.activeBlockID === nextProps.block.id;
     const willHover  = nextProps.hoverBlockID === nextProps.block.id;
+    const isEmpty    = nextBlock.text === '' && !nextBlock.video && !nextBlock.image;
 
-    if (isActive !== willActive || isHover !== willHover) {
+    if (!isEmpty && (isActive !== willActive || isHover !== willHover)) {
       if (willActive || willHover) {
         const height = this.inner.current.scrollHeight;
         this.inner.current.style.height = `${height}px`;

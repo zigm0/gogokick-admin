@@ -19,7 +19,7 @@ const mapStateToProps = state => ({
 export default class Canvas extends React.PureComponent {
   static propTypes = {
     editor:              PropTypes.object.isRequired,
-    campaignType:        PropTypes.string.isRequired,
+    campaignType:        PropTypes.number.isRequired,
     dragging:            PropTypes.bool,
     editorActivateBlock: PropTypes.func.isRequired
   };
