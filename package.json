@@ -48,7 +48,6 @@
     "clone-deep": "^4.0.1",
     "core-js": "2.5.x",
     "lodash.isequal": "^4.5.0",
-    "promise-polyfill": "^8.1.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-ace": "^7.0.2",

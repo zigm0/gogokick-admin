@@ -129,14 +129,21 @@ export default class CanvasBlock extends React.PureComponent {
   };
 
   /**
-   *
+   * @param {Event} e
    */
-  handleClick = () => {
+  handleClick = (e) => {
     const { block, activeBlockID, editorActivateBlock } = this.props;
 
-    if (block.id !== activeBlockID) {
+    if (!e.target.classList.contains('icon') && block.id !== activeBlockID) {
       editorActivateBlock(block.id);
     }
+  };
+
+  /**
+   * @param {Event} e
+   */
+  handleSettingsClick = (e) => {
+    e.preventDefault();
   };
 
   /**
@@ -171,12 +178,30 @@ export default class CanvasBlock extends React.PureComponent {
         <div ref={this.inner} className="block-container-inner">
           <div className={`block-menu block-menu-${constants.blockType(block.type)} block-container-menu`}>
             <Button
+              title="Edit"
               icon="pen-square"
               className="block-menu-item"
               onClick={this.handleEditClick}
               fas
             />
             <Button
+              title="Settings"
+              icon="cog"
+              className="block-menu-item"
+              onClick={this.handleSettingsClick}
+            />
+            <Button
+              title="Move up"
+              icon="caret-up"
+              className="block-menu-item"
+            />
+            <Button
+              title="Move down"
+              icon="caret-down"
+              className="block-menu-item"
+            />
+            <Button
+              title="Delete"
               icon="times"
               className="block-menu-item block-menu-item-remove"
               onClick={e => this.handleRemoveClick(e, block)}
