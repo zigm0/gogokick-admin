@@ -12,7 +12,7 @@
 
 .card-selected {
   .card-footer {
-    background-color: lighten($color-primary, 5%);
+    background-color: $color-primary-selected;
   }
 }
 

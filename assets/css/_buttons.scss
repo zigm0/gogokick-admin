@@ -1,5 +1,13 @@
 @import "vars";
 
+.btn-primary {
+  background-color: $color-primary;
+
+  &:hover {
+    background-color: $color-primary-selected;
+  }
+}
+
 .btn-block-text {
   background-color: $color-block-text;
 }
