@@ -9,6 +9,11 @@
   &:active {
     outline: 0;
   }
+
+  &.block-empty {
+    background-color: transparent;
+    box-shadow: none;
+  }
 }
 
 .block-container-inner {

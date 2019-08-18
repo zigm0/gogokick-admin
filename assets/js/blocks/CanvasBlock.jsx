@@ -75,7 +75,7 @@ export default class CanvasBlock extends React.PureComponent {
           .height(1)
           .height(this.$inner[0].scrollHeight);
       } else {
-        //this.$inner.css('height', 'auto');
+        this.$inner.css('height', 'auto');
       }
     }
   }
