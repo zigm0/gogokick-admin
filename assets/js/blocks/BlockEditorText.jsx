@@ -58,12 +58,11 @@ export default class BlockEditorText extends React.PureComponent {
    */
   componentWillUnmount() {
     const { block, editorChange } = this.props;
-    const { text, isHeadline } = this.state;
-
+    const { text } = this.state;
 
     editorChange({
       blockID: block.id,
-      text:    isHeadline ? `<h3>${text}</h3>` : text
+      text
     });
   }
 
@@ -116,7 +115,7 @@ export default class BlockEditorText extends React.PureComponent {
     const { text, isHeadline, cmds } = this.state;
 
     return (
-      <div className="block-editor block-editor-text">
+      <>
         <div className="block-menu block-menu-text">
           <Button
             active={isHeadline}
@@ -160,14 +159,16 @@ export default class BlockEditorText extends React.PureComponent {
             onClick={this.handleRemoveClick}
           />
         </div>
-        <ContentEditable
-          html={text}
-          innerRef={this.content}
-          className="block-editor-text-textarea block-text"
-          onChange={this.handleChange}
-          onClick={this.handleEditableClick}
-        />
-      </div>
+        <div className="block-editor block-editor-text block-expanded">
+          <ContentEditable
+            html={text}
+            innerRef={this.content}
+            className="block-editor-text-editable block-text"
+            onChange={this.handleChange}
+            onClick={this.handleEditableClick}
+          />
+        </div>
+      </>
     );
   }
 }

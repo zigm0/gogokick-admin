@@ -15,17 +15,23 @@ export default class BlockBody extends React.PureComponent {
       text: PropTypes.string,
       type: PropTypes.number.isRequired
     }).isRequired,
-    isActive: PropTypes.bool.isRequired,
-    isHover:  PropTypes.bool.isRequired
+    isActive:   PropTypes.bool.isRequired,
+    isHover:    PropTypes.bool.isRequired,
+    isDragging: PropTypes.bool.isRequired
   };
 
   static defaultProps = {};
+
+  constructor(props) {
+    super(props);
+    this.container = React.createRef();
+  }
 
   /**
    * @returns {*}
    */
   render() {
-    const { block, isActive, isHover } = this.props;
+    const { block, isActive, isHover, isDragging } = this.props;
     const isEmpty = block.text === '';
 
     if (isActive) {
@@ -43,9 +49,11 @@ export default class BlockBody extends React.PureComponent {
     }
 
     const classes  = classNames(`block block-${constants.blockType(block.type)}`, {
-      'block-empty':  isEmpty && !isActive,
-      'block-active': isActive,
-      'block-hover':  isHover
+      'block-empty':    isEmpty && !isActive,
+      'block-active':   isActive,
+      'block-expanded': (isActive || isHover) && !isEmpty,
+      'block-hover':    isHover,
+      'block-dragging': isDragging
     });
 
     if (isEmpty) {
@@ -59,7 +67,7 @@ export default class BlockBody extends React.PureComponent {
     }
 
     return (
-      <div className={classes}>
+      <div ref={this.container} className={classes}>
         {{
           1: <BlockText block={block} />,
           2: <BlockImage block={block} />,

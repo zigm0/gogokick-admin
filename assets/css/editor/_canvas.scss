@@ -8,6 +8,7 @@
 
 .editor-canvas-body {
   max-height: calc(100vh - #{$header-height});
+  padding-top: $block-menu-height - 0.8rem;
   overflow-x: hidden;
   overflow-y: scroll;
 

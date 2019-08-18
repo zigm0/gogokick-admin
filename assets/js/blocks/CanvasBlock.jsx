@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
 import { connect, constants, mapDispatchToProps } from 'utils';
-import { Icon, Button } from 'components';
+import { Button } from 'components';
 import * as editorActions from 'actions/editorActions';
 import BlockBody from './BlockBody';
 
@@ -32,6 +32,35 @@ export default class CanvasBlock extends React.PureComponent {
   static defaultProps = {
     showAssignment: true
   };
+
+  /**
+   * @param {*} props
+   */
+  constructor(props) {
+    super(props);
+
+    this.inner = React.createRef();
+  }
+
+  /**
+   * @param {*} nextProps
+   */
+  componentWillUpdate(nextProps) {
+    const { block, hoverBlockID, activeBlockID } = this.props;
+    const isActive = activeBlockID === block.id;
+    const isHover  = hoverBlockID === block.id;
+    const willActive = nextProps.activeBlockID === nextProps.block.id;
+    const willHover  = nextProps.hoverBlockID === nextProps.block.id;
+
+    if (isActive !== willActive || isHover !== willHover) {
+      if (willActive || willHover) {
+        const height = this.inner.current.scrollHeight;
+        this.inner.current.style.height = `${height}px`;
+      } else {
+        this.inner.current.style.height = 'auto';
+      }
+    }
+  }
 
   /**
    *
@@ -71,16 +100,19 @@ export default class CanvasBlock extends React.PureComponent {
 
   /**
    * @param {*} provided
+   * @param {*} source
    * @returns {*}
    */
-  renderBlock = (provided) => {
+  renderBlock = (provided, source) => {
     const { block, hoverBlockID, activeBlockID } = this.props;
 
     const isActive = activeBlockID === block.id;
     const isHover  = hoverBlockID === block.id;
+    const isEmpty  = block.text === '' && !block.video && !block.image;
     const classes  = classNames('block-container', {
       'block-hover':  isHover,
-      'block-active': isActive
+      'block-active': isActive,
+      'block-empty':  isEmpty && !isActive
     });
 
     return (
@@ -93,24 +125,27 @@ export default class CanvasBlock extends React.PureComponent {
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        <div className={`block-menu block-menu-${constants.blockType(block.type)} block-container-menu`}>
-          <Button
-            icon="pen-square"
-            className="block-menu-item"
-            onClick={this.handleEditClick}
-            fas
-          />
-          <Button
-            icon="times"
-            className="block-menu-item block-menu-item-remove"
-            onClick={this.handleRemoveClick}
+        <div ref={this.inner} className="block-container-inner">
+          <div className={`block-menu block-menu-${constants.blockType(block.type)} block-container-menu`}>
+            <Button
+              icon="pen-square"
+              className="block-menu-item"
+              onClick={this.handleEditClick}
+              fas
+            />
+            <Button
+              icon="times"
+              className="block-menu-item block-menu-item-remove"
+              onClick={this.handleRemoveClick}
+            />
+          </div>
+          <BlockBody
+            block={block}
+            isActive={isActive}
+            isHover={isHover}
+            isDragging={source.isDragging}
           />
         </div>
-        <BlockBody
-          block={block}
-          isActive={isActive}
-          isHover={isHover}
-        />
       </li>
     );
   };
@@ -123,8 +158,8 @@ export default class CanvasBlock extends React.PureComponent {
 
     return (
       <Draggable key={block.id} draggableId={block.id} index={index}>
-        {(provided) => (
-          this.renderBlock(provided)
+        {(provided, source) => (
+          this.renderBlock(provided, source)
         )}
       </Draggable>
     );
