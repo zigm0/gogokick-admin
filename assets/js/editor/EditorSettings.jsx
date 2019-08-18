@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect, system, history, mapDispatchToProps } from 'utils';
-import { Container, Row, Column, Button } from 'components/bootstrap';
+import { Row, Column, Button } from 'components/bootstrap';
 import { Form, Input } from 'components/forms';
 import * as editorActions from 'actions/editorActions';
 import * as formActions from 'actions/formActions';
@@ -21,23 +21,25 @@ const mapStateToProps = state => ({
 )
 export default class EditorSettings extends React.PureComponent {
   static propTypes = {
-    forms:           PropTypes.object.isRequired,
-    editor:          PropTypes.object.isRequired,
-    project:         PropTypes.object.isRequired,
-    editorModal:     PropTypes.func.isRequired,
-    formChanges:     PropTypes.func.isRequired,
-    projectOpen:     PropTypes.func.isRequired,
-    projectSettings: PropTypes.func.isRequired,
-    projectDelete:   PropTypes.func.isRequired,
-    mediaUpload:     PropTypes.func.isRequired
+    forms:               PropTypes.object.isRequired,
+    editor:              PropTypes.object.isRequired,
+    project:             PropTypes.object.isRequired,
+    editorModal:         PropTypes.func.isRequired,
+    formChanges:         PropTypes.func.isRequired,
+    projectOpen:         PropTypes.func.isRequired,
+    projectSettings:     PropTypes.func.isRequired,
+    projectDelete:       PropTypes.func.isRequired,
+    mediaUpload:         PropTypes.func.isRequired,
+    editorToggleSidebar: PropTypes.func.isRequired
   };
 
   /**
    *
    */
   componentDidMount() {
-    const { project, formChanges } = this.props;
+    const { project, formChanges, editorToggleSidebar } = this.props;
 
+    editorToggleSidebar(false);
     formChanges('projectSettings', {
       name: project.name
     });
@@ -54,6 +56,15 @@ export default class EditorSettings extends React.PureComponent {
         name: project.name
       });
     }
+  }
+
+  /**
+   *
+   */
+  componentWillUnmount() {
+    const { editorToggleSidebar } = this.props;
+
+    editorToggleSidebar(true);
   }
 
   /**
@@ -132,20 +143,20 @@ export default class EditorSettings extends React.PureComponent {
    */
   render() {
     return (
-      <Container className="gutter-top">
+      <div className="editor-settings gutter-top">
         <Row>
-          <Column xs={8} offsetXl={2} className="gutter-bottom">
+          <Column xl={8} offsetXl={3} className="gutter-bottom">
             <Button icon="caret-left" onClick={this.handleCloseClick}>
               Back to project
             </Button>
           </Column>
         </Row>
         <Row>
-          <Column xs={8} offsetXl={2}>
+          <Column xl={8} offsetXl={3}>
             {this.renderForm()}
           </Column>
         </Row>
-      </Container>
+      </div>
     );
   }
 }

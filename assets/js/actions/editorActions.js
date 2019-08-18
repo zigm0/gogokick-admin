@@ -17,6 +17,7 @@ export const EDITOR_MODAL          = 'EDITOR_MODAL';
 export const EDITOR_TEAM_MEMBER    = 'EDITOR_TEAM_MEMBER';
 export const EDITOR_HOVER_BLOCK    = 'EDITOR_HOVER_BLOCK';
 export const EDITOR_ACTIVATE_BLOCK = 'EDITOR_ACTIVATE_BLOCK';
+export const EDITOR_TOGGLE_SIDEBAR = 'EDITOR_TOGGLE_SIDEBAR';
 
 /**
  * @returns {{type: string}}
@@ -221,6 +222,17 @@ export const editorChange = (payload) => {
 export const editorBlockMedia = (payload) => {
   return {
     type: EDITOR_BLOCK_MEDIA,
+    payload
+  };
+};
+
+/**
+ * @param {boolean} payload
+ * @returns {{payload: *, type: string}}
+ */
+export const editorToggleSidebar = (payload) => {
+  return {
+    type: EDITOR_TOGGLE_SIDEBAR,
     payload
   };
 };

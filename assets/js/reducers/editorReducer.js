@@ -5,6 +5,7 @@ import { EDITOR_BLOCK_MEDIA } from "actions/editorActions";
 const initialState = objects.merge({
   isBusy:        false,
   isChanged:     false,
+  isSidebarOpen: true,
   projects:      [],
   templates:     [],
   teamMember:    null,
@@ -408,6 +409,20 @@ const onEditorBlockMedia = (state, action) => {
   };
 };
 
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onEditorToggleSidebar = (state, action) => {
+  const isSidebarOpen = action.payload;
+
+  return {
+    ...state,
+    isSidebarOpen
+  };
+};
+
 const handlers = {
   [types.EDITOR_RESET]:          onEditorReset,
   [types.EDITOR_BUSY]:           onEditorBusy,
@@ -418,6 +433,7 @@ const handlers = {
   [types.EDITOR_UNDO]:           onEditorUndo,
   [types.EDITOR_REDO]:           onEditorRedo,
   [types.EDITOR_MODAL]:          onEditorModal,
+  [types.EDITOR_TOGGLE_SIDEBAR]: onEditorToggleSidebar,
   [types.EDITOR_BLOCK_MEDIA]:    onEditorBlockMedia,
   [types.EDITOR_TEAM_MEMBER]:    onEditorTeamMember,
   [types.EDITOR_PROJECTS]:       onEditorProjects,

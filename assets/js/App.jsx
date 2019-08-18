@@ -13,13 +13,13 @@ import * as userActions from "./actions/userActions";
 import * as editorActions from 'actions/editorActions';
 import * as projectActions from 'actions/projectActions';
 import * as Modals from 'modals';
-import { Column, Row } from "./components/bootstrap";
 
 const mapStateToProps = state => ({
   campaignType:  state.project.campaignType,
   projectIsBusy: state.project.isBusy,
   editorIsBusy:  state.editor.isBusy,
-  userIsBusy:    state.user.isBusy
+  userIsBusy:    state.user.isBusy,
+  isSidebarOpen: state.editor.isSidebarOpen
 });
 
 @connect(
@@ -32,6 +32,7 @@ export default class App extends React.Component {
     userIsBusy:    PropTypes.bool.isRequired,
     projectIsBusy: PropTypes.bool.isRequired,
     editorIsBusy:  PropTypes.bool.isRequired,
+    isSidebarOpen: PropTypes.bool.isRequired,
     editorDrop:    PropTypes.func.isRequired
   };
 
@@ -97,29 +98,29 @@ export default class App extends React.Component {
    * @returns {*}
    */
   render() {
-    const { campaignType, userIsBusy, editorIsBusy, projectIsBusy } = this.props;
+    const { campaignType, userIsBusy, editorIsBusy, projectIsBusy, isSidebarOpen } = this.props;
 
     const classes = classNames('editor h-100', `editor-campaign-type-${constants.campaignType(campaignType)}`);
+    const classesContent = classNames('editor-content', {
+      'editor-content-sidebar-closed': !isSidebarOpen
+    });
 
     return (
       <div className={classes}>
         <DragDropContext onDragStart={this.handleDragStart} onDragEnd={this.handleDragEnd}>
           <Header />
-          <Row className="editor-body">
-            <Column className="editor-sidebar-col d-none d-lg-block d-xl-block" xl={2} lg={3} md={12}>
-              <Sidebar />
-            </Column>
-            <Column className="editor-canvas-col" xl={10} lg={9} md={12}>
+          <div className="editor-body">
+            <Sidebar />
+            <div className={classesContent}>
               <Router history={history}>
                 <Switch>
                   <Route path="/editor/:id?" component={EditorController} />
                   <Route exact path="/editor/:id/settings" component={EditorController} />
                 </Switch>
               </Router>
-            </Column>
-          </Row>
+            </div>
+          </div>
         </DragDropContext>
-
         {this.renderModals()}
         {(userIsBusy || editorIsBusy || projectIsBusy) && (
           <Loading middle />

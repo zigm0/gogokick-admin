@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { Droppable } from 'react-beautiful-dnd';
 import { connect, mapDispatchToProps } from 'utils';
 import { Icon, TeamMemberItem } from 'components';
@@ -9,7 +10,8 @@ import * as editorActions from 'actions/editorActions';
 
 const mapStateToProps = state => ({
   project:       state.project,
-  sidebarBlocks: state.editor.sidebarBlocks
+  sidebarBlocks: state.editor.sidebarBlocks,
+  isSidebarOpen: state.editor.isSidebarOpen
 });
 
 @connect(
@@ -20,6 +22,7 @@ export default class Sidebar extends React.PureComponent {
   static propTypes = {
     project:          PropTypes.object.isRequired,
     sidebarBlocks:    PropTypes.array.isRequired,
+    isSidebarOpen:    PropTypes.bool.isRequired,
     editorModal:      PropTypes.func.isRequired,
     editorTeamMember: PropTypes.func.isRequired
   };
@@ -130,8 +133,14 @@ export default class Sidebar extends React.PureComponent {
    * @returns {*}
    */
   render() {
+    const { isSidebarOpen } = this.props;
+
+    const classes = classNames('editor-sidebar h-100', {
+      'editor-sidebar-closed': !isSidebarOpen
+    });
+
     return (
-      <div className="editor-sidebar h-100">
+      <div className={classes}>
         <div className="editor-sidebar-body">
           {this.renderBlocks()}
           {this.renderTeam()}

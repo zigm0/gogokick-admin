@@ -25,4 +25,24 @@ a {
 
 .editor-body {
   height: calc(100vh - #{$height-header});
+  display: flex;
+  flex-direction: row;
+}
+
+.editor-sidebar {
+  flex: 1 0 300px;
+  transition: all .3s ease-out;
+
+  &.editor-sidebar-closed {
+    transform: translateX(-300px);
+  }
+}
+
+.editor-content {
+  width: 100%;
+  transition: all .3s ease-out;
+
+  &.editor-content-sidebar-closed {
+    transform: translateX(-300px);
+  }
 }
