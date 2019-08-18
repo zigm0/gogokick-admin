@@ -1,16 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ContentEditable from 'react-contenteditable';
-import { connect, objects, mapDispatchToProps } from 'utils';
+import { connect, browser, objects, mapDispatchToProps } from 'utils';
 import { Button } from 'components';
 import * as editorActions from 'actions/editorActions';
 
-const mapStateToProps = state => ({
-
-});
-
 @connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps(editorActions)
 )
 export default class BlockEditorText extends React.PureComponent {
@@ -38,10 +34,10 @@ export default class BlockEditorText extends React.PureComponent {
       text,
       isHeadline,
       cmds:       {
-        list:   false,
-        bold:   false,
-        italic: false,
-        link:   false
+        insertUnorderedList: false,
+        createLink:          false,
+        bold:                false,
+        italic:              false
       }
     }
   }
@@ -81,7 +77,7 @@ export default class BlockEditorText extends React.PureComponent {
   handleMenuItemClick = (e, cmd, value = '') => {
     if (cmd === 'headline') {
       const { isHeadline } = this.state;
-      let { text } = this.state;
+      let { text }         = this.state;
 
       if (!isHeadline) {
         text = `<h3>${text}</h3>`;
@@ -89,10 +85,16 @@ export default class BlockEditorText extends React.PureComponent {
         text = text.replace(/<\/?h3>/g, '');
       }
       this.setState({ text, isHeadline: !isHeadline });
+    } else if (cmd === 'createLink') {
+      const url = prompt('Enter link URL');
+      if (url) {
+        document.execCommand(cmd, false, url);
+      }
     } else {
       document.execCommand(cmd, false, value);
-      this.handleEditableClick();
     }
+
+    this.handleEditableClick();
   };
 
   /**
@@ -104,6 +106,11 @@ export default class BlockEditorText extends React.PureComponent {
     Object.keys(cmds).forEach((key) => {
       cmds[key] = document.queryCommandState(key);
     });
+
+    const node = browser.getSelectedNode();
+    if (browser.hasParentTag(node, 'A')) {
+      cmds.createLink = true;
+    }
 
     this.setState({ cmds });
   };
@@ -126,10 +133,10 @@ export default class BlockEditorText extends React.PureComponent {
           </Button>
           <Button
             icon="list"
-            active={cmds.list}
+            active={cmds.insertUnorderedList}
             disabled={isHeadline}
             className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, 'list')}
+            onClick={e => this.handleMenuItemClick(e, 'insertUnorderedList')}
           />
           <Button
             icon="bold"
@@ -147,10 +154,10 @@ export default class BlockEditorText extends React.PureComponent {
           />
           <Button
             icon="link"
-            active={cmds.link}
+            active={cmds.createLink}
             disabled={isHeadline}
             className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, 'link')}
+            onClick={e => this.handleMenuItemClick(e, cmds.createLink ? 'unlink' : 'createLink')}
           />
           <Button
             icon="times"

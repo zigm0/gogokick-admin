@@ -37,7 +37,7 @@
 
 .block-expanded {
   cursor: default;
-  z-index: 2;
+  z-index: 4;
   position: absolute;
   width: $width-block + ($gutter-size * 2) !important;
   left: -$gutter-size;
@@ -135,6 +135,11 @@
     padding: 0;
   }
 
+  a {
+    color: #009E74;
+    text-decoration: underline;
+  }
+
   i {
     font-style: italic;
   }
@@ -144,80 +149,8 @@
     font-weight: 400;
     font-size: 21px;
     line-height: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 24px;
   }
-}
-
-.block-menu {
-  height: $block-menu-height;
-  padding: 0 $gutter-size-sm;
-  position: absolute;
-  top: -$block-menu-height;
-  left: -$gutter-size;
-  width: $width-block + ($gutter-size * 2) !important;
-  right: 0;
-  z-index: 3;
-  display: flex;
-  align-items: center;
-
-  .block-empty & {
-    top: 0;
-    left: 0;
-    width: $width-block !important;
-    border-top-left-radius: $border-radius-blocks;
-    border-top-right-radius: $border-radius-blocks;
-  }
-}
-
-.block-container-menu {
-  opacity: 0;
-  transition: opacity 0.1s ease-in-out;
-
-  .block-hover & {
-    opacity: 1;
-  }
-
-  .block-active & {
-    opacity: 0;
-  }
-}
-
-.block-menu-text {
-  background-color: $color-block-text;
-}
-
-.block-menu-image {
-  background-color: $color-block-image;
-}
-
-.block-menu-video {
-  background-color: $color-block-video;
-}
-
-.block-menu-item {
-  cursor: pointer;
-  color: #EEE;
-  border: 0;
-  opacity: 0.8;
-  background-color: transparent;
-
-  &:hover:not(:disabled) {
-    opacity: 1;
-  }
-
-  &.btn-editor-active {
-    color: #FFF;
-    background-color: rgba(0, 0, 0, 0.15);
-  }
-
-  &:disabled {
-    cursor: default;
-    opacity: 0.5;
-  }
-}
-
-.block-menu-item-remove {
-  margin-left: auto;
 }
 
 .block-description {

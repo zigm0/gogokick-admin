@@ -41,10 +41,10 @@ export default class Button extends React.PureComponent {
   render() {
     const { sm, lg, far, fas, icon, type, active, disabled, className, children, onClick, ...props } = this.props;
 
-    const classes = classNames('btn-editor', className, {
-      'btn-editor-sm':     sm,
-      'btn-editor-lg':     lg,
-      'btn-editor-active': active
+    const classes = classNames('btn', className, {
+      'btn-sm':     sm,
+      'btn-lg':     lg,
+      'btn-active': active
     });
 
     if (icon) {
@@ -52,7 +52,7 @@ export default class Button extends React.PureComponent {
         <button type={type} className={classes} onClick={onClick} disabled={disabled} {...props}>
           <Icon name={icon} far={far} fas={fas} />
           {children && (
-            <span className="btn-editor-label">
+            <span className="btn-label">
               {children}
             </span>
           )}
