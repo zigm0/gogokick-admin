@@ -252,7 +252,7 @@ const onEditorMove = (state, action) => {
 
   const index = arrays.findIndexByID(canvasBlocks[blockIndex], block.id);
   if (direction === 'up' && index > 0) {
-    const block     = canvasBlocks[blockIndex][index];
+    const block     = objects.clone(canvasBlocks[blockIndex][index]);
     const destClone = Array.from(canvasBlocks[blockIndex]);
     destClone.splice(index, 1);
     destClone.splice(index - 1, 0, block);
