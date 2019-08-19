@@ -6,7 +6,6 @@ export const EDITOR_CHANGED        = 'EDITOR_CHANGED';
 export const EDITOR_NEW            = 'EDITOR_NEW';
 export const EDITOR_SAVING         = 'EDITOR_SAVING';
 export const EDITOR_PROJECTS       = 'EDITOR_PROJECTS';
-export const EDITOR_TEMPLATES      = 'EDITOR_TEMPLATES';
 export const EDITOR_UNDO           = 'EDITOR_UNDO';
 export const EDITOR_REDO           = 'EDITOR_REDO';
 export const EDITOR_DROP           = 'EDITOR_DROP';
@@ -113,21 +112,6 @@ export const editorFetchProjects = () => {
     api.get(router.generate('api_projects_get'))
       .then((payload) => {
         dispatch(editorProjects(payload));
-      });
-  };
-};
-
-/**
- * @returns {Function}
- */
-export const editorFetchTemplates = () => {
-  return (dispatch) => {
-    api.get(router.generate('api_projects_templates'))
-      .then((payload) => {
-        dispatch({
-          type: EDITOR_TEMPLATES,
-          payload
-        });
       });
   };
 };

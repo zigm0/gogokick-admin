@@ -1,25 +1,23 @@
 import React, {useCallback} from 'react'
 import { useDropzone } from 'react-dropzone';
 import classNames from 'classnames';
-import { Icon } from 'components';
+import { Icon, Loading } from 'components';
 
 /**
  *
  * @param {*} project
+ * @param {boolean} isUploading
  * @param {Function} mediaUpload
  * @returns {*}
  */
-const ProjectImage = ({ project, mediaUpload }) => {
+const ProjectImage = ({ media, isUploading, mediaUpload }) => {
   const styles = {};
-  if (project.image && project.image.url) {
-    styles.backgroundImage = `url(${project.image.url})`;
+  if (media && media.url) {
+    styles.backgroundImage = `url(${media.url})`;
   }
 
   const onDrop = useCallback(acceptedFiles => {
-    mediaUpload({
-      file:   acceptedFiles[0],
-      system: 'project_images'
-    });
+    mediaUpload(acceptedFiles[0]);
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -27,7 +25,7 @@ const ProjectImage = ({ project, mediaUpload }) => {
     accept: 'image/*'
   });
 
-  const classes = classNames('project-settings-banner', {
+  const classes = classNames('upload-container project-settings-banner', {
     'hover': isDragActive
   });
 
@@ -38,10 +36,13 @@ const ProjectImage = ({ project, mediaUpload }) => {
       {...getRootProps()}
     >
       <input {...getInputProps()} />
-      {(!project.image || !project.image.url) && (
-        <div className="d-flex flex-column justify-content-center text-center">
-          <div className="project-settings-banner-circle">
+      {(!media || !media.url) && (
+        <div className="upload-container-circle-container">
+          <div className="upload-container-circle">
             <Icon name="image" size={2} far />
+            {isUploading && (
+              <Loading />
+            )}
           </div>
           <div className="project-settings-banner-top">
             Drop an image here, or click to select a file.

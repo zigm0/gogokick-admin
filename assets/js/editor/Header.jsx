@@ -41,12 +41,13 @@ export default class Header extends React.PureComponent {
    *
    */
   handleNewClick = () => {
-    const { editorModal } = this.props;
+    history.push('/editor/new');
+/*    const { editorModal } = this.props;
 
     editorModal({
       modal: 'newProject',
       open:  true
-    });
+    });*/
   };
 
   /**

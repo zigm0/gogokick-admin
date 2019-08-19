@@ -88,7 +88,6 @@ export default class App extends React.Component {
         <Modals.RegisterModal />
         <Modals.AddMemberModal />
         <Modals.TeamMemberModal />
-        <Modals.NewProjectModal />
         <Modals.BlockSettingsModal />
       </ErrorBoundary>
     );
@@ -114,6 +113,7 @@ export default class App extends React.Component {
             <div className={classesContent}>
               <Router history={history}>
                 <Switch>
+                  <Route path="/editor/new" component={EditorController} />
                   <Route path="/editor/:id?" component={EditorController} />
                   <Route exact path="/editor/:id/settings" component={EditorController} />
                 </Switch>

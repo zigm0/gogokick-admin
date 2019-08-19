@@ -14,6 +14,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -38,16 +39,6 @@ class ProjectsController extends ApiController
         $projects = $projectRepository->findByUser($user);
 
         return $this->jsonEntityResponse($projects);
-    }
-
-    /**
-     * @Route("/templates", name="_templates", methods={"GET"})
-     *
-     * @return JsonResponse
-     */
-    public function templatesAction()
-    {
-        return new JsonResponse($this->getTemplates());
     }
 
     /**
@@ -211,11 +202,17 @@ class ProjectsController extends ApiController
      *
      * @param Request             $request
      * @param ProjectRepository   $projectRepository
+     * @param MediaRepository     $mediaRepository
      * @param ModelRequestHandler $handler
      *
      * @return JsonResponse
      */
-    public function saveNewAction(Request $request, ProjectRepository $projectRepository, ModelRequestHandler $handler)
+    public function saveNewAction(
+        Request $request,
+        ProjectRepository $projectRepository,
+        MediaRepository $mediaRepository,
+        ModelRequestHandler $handler
+    )
     {
         $user = $this->getUser();
         if (!$user) {
@@ -225,8 +222,17 @@ class ProjectsController extends ApiController
         $model = new ProjectModel();
         $handler->handleRequest($model, $request);
 
+        if (!$model->getPictureURL()) {
+            throw new BadRequestHttpException();
+        }
+        $media = $mediaRepository->findByUrl($model->getPictureURL());
+        if (!$media) {
+            throw new BadRequestHttpException();
+        }
+
         $project = (new Project())
             ->setUser($user)
+            ->setImage($media)
             ->setName($model->getName())
             ->setCampaignType($model->getCampaignType());
         $this->em->persist($project);
@@ -282,29 +288,5 @@ class ProjectsController extends ApiController
         $this->em->flush();
 
         return $this->jsonEntityResponse($project);
-    }
-
-    /**
-     * @return array
-     */
-    protected function getTemplates()
-    {
-        $repo = $this->getDoctrine()->getRepository(Project::class);
-
-        $templates = [
-            [
-                'id'           => 't-1',
-                'name'         => 'Blank',
-                'blocks'       => [],
-                'campaignType' => 1
-            ]
-        ];
-
-        $projects = $repo->findBy(['isTemplate' => true]);
-        foreach($projects as $project) {
-            $templates[] = json_decode($this->serializeGroup($project), true);
-        }
-
-        return $templates;
     }
 }

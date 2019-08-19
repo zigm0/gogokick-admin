@@ -111,10 +111,23 @@ export default class EditorSettings extends React.PureComponent {
   };
 
   /**
+   * @param {File} file
+   */
+  handleUpload = (file) => {
+    const { project, mediaUpload } = this.props;
+
+    mediaUpload({
+      file,
+      project,
+      system: 'project_images',
+    });
+  };
+
+  /**
    * @returns {*}
    */
   renderForm = () => {
-    const { project, mediaUpload } = this.props;
+    const { project } = this.props;
 
     return (
       <Form name="projectSettings">
@@ -127,7 +140,7 @@ export default class EditorSettings extends React.PureComponent {
         />
         <div className="form-group">
           <label>Project Image</label>
-          <ProjectImage project={project} mediaUpload={mediaUpload} />
+          <ProjectImage media={project.image} mediaUpload={this.handleUpload} />
         </div>
         <div className="text-right">
           <Button theme="success" onClick={this.handleUpdateClick}>
@@ -145,14 +158,14 @@ export default class EditorSettings extends React.PureComponent {
     return (
       <div className="editor-settings gutter-top">
         <Row>
-          <Column xl={8} offsetXl={3} className="gutter-bottom">
+          <Column xl={6} offsetXl={3} className="gutter-bottom">
             <Button icon="caret-left" onClick={this.handleCloseClick}>
               Back to project
             </Button>
           </Column>
         </Row>
         <Row>
-          <Column xl={8} offsetXl={3}>
+          <Column xl={6} offsetXl={3}>
             {this.renderForm()}
           </Column>
         </Row>

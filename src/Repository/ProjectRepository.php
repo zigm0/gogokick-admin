@@ -39,7 +39,6 @@ class ProjectRepository extends ServiceEntityRepository
     public function findByUser(User $user)
     {
         return $this->findBy([
-            'isTemplate' => false,
             'user'       => $user
         ]);
     }
@@ -52,7 +51,6 @@ class ProjectRepository extends ServiceEntityRepository
     public function findLastUpdatedByUser(User $user)
     {
         return $this->findOneBy([
-            'isTemplate' => false,
             'user'       => $user
         ], ['dateUpdated' => 'desc']);
     }

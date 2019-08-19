@@ -54,10 +54,17 @@ class Project
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=60, nullable=true)
      * @Groups({"web"})
      */
     protected $name;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"web"})
+     */
+    protected $subtitle = '';
 
     /**
      * @var Media
@@ -72,12 +79,6 @@ class Project
      * @Groups({"web"})
      */
     protected $blocks;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    protected $isTemplate = false;
 
     /**
      * @var string
@@ -195,6 +196,26 @@ class Project
     }
 
     /**
+     * @return string
+     */
+    public function getSubtitle(): ?string
+    {
+        return $this->subtitle;
+    }
+
+    /**
+     * @param string $subtitle
+     *
+     * @return Project
+     */
+    public function setSubtitle(string $subtitle): Project
+    {
+        $this->subtitle = $subtitle;
+
+        return $this;
+    }
+
+    /**
      * @return Collection
      */
     public function getBlocks(): Collection
@@ -210,26 +231,6 @@ class Project
     public function setBlocks(Collection $blocks): Project
     {
         $this->blocks = $blocks;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isTemplate(): bool
-    {
-        return $this->isTemplate;
-    }
-
-    /**
-     * @param bool $isTemplate
-     *
-     * @return Project
-     */
-    public function setIsTemplate(bool $isTemplate): Project
-    {
-        $this->isTemplate = $isTemplate;
 
         return $this;
     }

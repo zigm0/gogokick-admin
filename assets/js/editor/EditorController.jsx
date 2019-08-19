@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route, Router, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect, mapDispatchToProps } from 'utils';
 import * as projectActions from 'actions/projectActions';
 import EditorBody from 'editor/EditorBody';
+import EditorNew from 'editor/EditorNew';
 import EditorSettings from 'editor/EditorSettings';
 
 const mapStateToProps = state => ({
@@ -52,6 +53,7 @@ export default class EditorController extends React.PureComponent {
   render() {
     return (
       <Switch>
+        <Route exact path="/editor/new" component={EditorNew} />
         <Route exact path="/editor/:id?" component={EditorBody} />
         <Route exact path="/editor/:id/settings" component={EditorSettings} />
       </Switch>

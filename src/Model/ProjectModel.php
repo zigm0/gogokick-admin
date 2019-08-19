@@ -15,10 +15,22 @@ class ProjectModel
     protected $name;
 
     /**
+     * @var string
+     * @Assert\Type("string")
+     */
+    protected $subtitle;
+
+    /**
+     * @var string
+     * @Assert\Type("string")
+     */
+    protected $pictureURL;
+
+    /**
      * @var array
      * @Assert\Type("array")
      */
-    protected $blocks;
+    protected $blocks = [];
 
     /**
      * @var array
@@ -48,6 +60,46 @@ class ProjectModel
     public function setName(string $name): ProjectModel
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSubtitle(): string
+    {
+        return $this->subtitle;
+    }
+
+    /**
+     * @param string $subtitle
+     *
+     * @return ProjectModel
+     */
+    public function setSubtitle(string $subtitle): ProjectModel
+    {
+        $this->subtitle = $subtitle;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPictureURL(): string
+    {
+        return $this->pictureURL;
+    }
+
+    /**
+     * @param string $pictureURL
+     *
+     * @return ProjectModel
+     */
+    public function setPictureURL(string $pictureURL): ProjectModel
+    {
+        $this->pictureURL = $pictureURL;
 
         return $this;
     }

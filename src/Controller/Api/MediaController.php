@@ -24,27 +24,23 @@ class MediaController extends ApiController
     {
         $file    = $request->files->get('file');
         $system  = $request->request->get('system');
-        $project = $request->request->get('project');
         $block   = $request->request->get('block');
 
         if (!$file || $file->getError()) {
             throw new BadRequestHttpException();
         }
-        if (!$system || !$project) {
+        if (!$system) {
             throw new BadRequestHttpException();
         }
-
-        $project = $this->getProject($project);
-        $config  = $this->getParameter('cdn');
+        $config = $this->getParameter('cdn');
         if (!isset($config[$system])) {
             throw new BadRequestHttpException();
         }
 
         $ext  = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
         $data = file_get_contents($file->getPathName());
-        $path = sprintf('%d/%d.%s', $project->getId(), microtime(true), $ext);
-        $url  = $this->cdn->upload($system, $path, $data);
-
+        $path = sprintf('%d-%s.%s', microtime(true), uniqid(), $ext);
+        $url   = $this->cdn->upload($system, $path, $data);
         $media = (new Media())
             ->setUrl($url)
             ->setSystem($system)

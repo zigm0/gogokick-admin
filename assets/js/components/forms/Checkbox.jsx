@@ -17,6 +17,7 @@ class Checkbox extends React.PureComponent {
     help:         PropTypes.string,
     name:         PropTypes.string,
     label:        PropTypes.string,
+    value:        PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     theme:        PropTypes.oneOf(themes),
     errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     radio:        PropTypes.bool,
@@ -32,6 +33,7 @@ class Checkbox extends React.PureComponent {
     help:         '',
     name:         '',
     label:        '',
+    value:        '',
     errorMessage: '',
     theme:        themes[0],
     radio:        false,
@@ -66,13 +68,17 @@ class Checkbox extends React.PureComponent {
    * @param {*} context
    */
   handleChange = (e, context) => {
-    const { id, name, onChange } = this.props;
+    const { id, name, radio, value, onChange } = this.props;
 
     const checked = !this.state.checked; // eslint-disable-line
     this.setState({ checked });
 
     const cb = (onChange || context.onChange) || (() => {});
-    cb(e, checked, name || id);
+    if (radio) {
+      cb(e, value, name || id);
+    } else {
+      cb(e, checked, name || id);
+    }
   };
 
   /**
@@ -83,6 +89,7 @@ class Checkbox extends React.PureComponent {
       id,
       help,
       name,
+      value,
       label,
       theme,
       radio,
@@ -96,9 +103,14 @@ class Checkbox extends React.PureComponent {
     const { checked } = this.state;
     const { context } = this;
 
-    const inputName    = name || id;
-    const inputChecked = (context.values[inputName] !== undefined) ? context.values[inputName] : checked;
-    const classes      = classNames(`forms-custom-checkbox-${theme}`, {
+    const inputName  = name || id;
+    let inputChecked = false;
+    if (!radio) {
+      inputChecked = (context.values[inputName] !== undefined) ? context.values[inputName] : checked;
+    } else {
+      inputChecked = (context.values[inputName] !== undefined) ? context.values[inputName] === value : false;
+    }
+    const classes = classNames(`forms-custom-checkbox-${theme}`, {
       'forms-custom-checkbox-inline': inline,
       'forms-custom-checkbox-circle': circle
     });
@@ -114,6 +126,7 @@ class Checkbox extends React.PureComponent {
       >
         <input
           id={id}
+          value={value}
           name={inputName}
           checked={inputChecked}
           type={radio ? 'radio' : 'checkbox'}

@@ -7,7 +7,6 @@ const initialState = objects.merge({
   isChanged:     false,
   isSidebarOpen: true,
   projects:      [],
-  templates:     [],
   teamMember:    null,
   blockIndex:    0,
   activeBlockID: 0,
@@ -20,7 +19,6 @@ const initialState = objects.merge({
     confirm:       false,
     settings:      false,
     register:      false,
-    newProject:    false,
     teamMember:    false,
     addMember:     false,
     memberActions: false,
@@ -28,28 +26,31 @@ const initialState = objects.merge({
   },
   sidebarBlocks: [
     {
-      id:         1,
-      type:       'text',
-      text:       '',
-      caption:    '',
-      media:      null,
-      isHeadline: false
+      id:          1,
+      type:        'text',
+      text:        '',
+      caption:     '',
+      description: '',
+      media:       null,
+      isHeadline:  false
     },
     {
-      id:         2,
-      type:       'image',
-      text:       '',
-      caption:    '',
-      media:      null,
-      isHeadline: false
+      id:          2,
+      type:        'image',
+      text:        '',
+      caption:     '',
+      description: '',
+      media:       null,
+      isHeadline:  false
     },
     {
-      id:         3,
-      type:       'video',
-      text:       '',
-      caption:    '',
-      media:      null,
-      isHeadline: false
+      id:          3,
+      type:        'video',
+      text:        '',
+      caption:     '',
+      description: '',
+      media:       null,
+      isHeadline:  false
     }
   ]
 }, window.initialState.editor);
@@ -329,20 +330,6 @@ const onEditorProjects = (state, action) => {
  * @param {*} action
  * @returns {*}
  */
-const onEditorTemplates = (state, action) => {
-  const templates = Array.from(action.payload);
-
-  return {
-    ...state,
-    templates
-  };
-};
-
-/**
- * @param {*} state
- * @param {*} action
- * @returns {*}
- */
 const onEditorTeamMember = (state, action) => {
   const teamMember = objects.clone(action.payload);
 
@@ -437,7 +424,6 @@ const handlers = {
   [types.EDITOR_BLOCK_MEDIA]:    onEditorBlockMedia,
   [types.EDITOR_TEAM_MEMBER]:    onEditorTeamMember,
   [types.EDITOR_PROJECTS]:       onEditorProjects,
-  [types.EDITOR_TEMPLATES]:      onEditorTemplates,
   [types.EDITOR_CHANGED]:        onEditorChanged,
   [types.EDITOR_ACTIVATE_BLOCK]: onEditorActiveBlock,
   [types.EDITOR_HOVER_BLOCK]:    onEditorHoverBlock

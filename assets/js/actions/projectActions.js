@@ -22,21 +22,6 @@ export const projectBusy = (payload) => {
 };
 
 /**
- * @param {*} payload
- * @returns {{payload: *, type: string}}
- */
-export const projectNew = (payload) => {
-  return (dispatch) => {
-    history.push('/editor');
-    dispatch(editorNew(payload));
-    dispatch({
-      type: PROJECT_NEW,
-      payload
-    });
-  };
-};
-
-/**
  * @param {number} id
  * @returns {Function}
  */
@@ -55,6 +40,46 @@ export const projectOpen = (id) => {
       .finally(() => {
         dispatch(projectBusy(false));
       });
+  };
+};
+
+/**
+ * @param {*} payload
+ * @returns {{payload: *, type: string}}
+ */
+export const projectNew = (payload) => {
+  return (dispatch) => {
+    dispatch(projectBusy(true));
+    dispatch({
+      type:    PROJECT_SAVING,
+      payload: true
+    });
+
+    api.req('PUT', router.generate('api_projects_save_new'), payload)
+      .then((resp) => {
+        history.push(`/editor/${resp.project.id}`);
+        dispatch({
+          type:    PROJECT_SET,
+          payload: resp.project
+        });
+        dispatch(editorNew(resp.project));
+        dispatch(editorProjects(resp.projects));
+        dispatch(editorChanged(false));
+      })
+      .finally(() => {
+        dispatch({
+          type:    PROJECT_SAVING,
+          payload: false
+        });
+        dispatch(projectBusy(false));
+      });
+
+/*    history.push('/editor');
+    dispatch(editorNew(payload));
+    dispatch({
+      type: PROJECT_NEW,
+      payload
+    });*/
   };
 };
 

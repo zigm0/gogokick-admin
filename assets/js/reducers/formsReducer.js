@@ -1,5 +1,5 @@
 import * as types from 'actions/formActions';
-import { objects } from 'utils';
+import { objects, constants } from 'utils';
 
 /**
  *
@@ -50,6 +50,13 @@ const initialState = {
     roleEditor:   false,
     roleGraphics: false,
     roleLead:     false,
+    ...commonForms
+  },
+  newProject: {
+    campaignType: constants.campaignType('kickstarter'),
+    name:         '',
+    subtitle:     '',
+    pictureURL:   '',
     ...commonForms
   }
 };
