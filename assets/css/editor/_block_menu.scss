@@ -57,9 +57,15 @@
 }
 
 .block-menu-group {
+  width: 33.3%;
+
   .block-menu-item:last-child {
     margin-right: 0;
   }
+}
+
+.block-menu-middle-group {
+  width: 66.3%;
 }
 
 .block-menu-item {
@@ -86,4 +92,8 @@
     cursor: default;
     opacity: 0.5;
   }
+}
+
+.block-menu-title {
+  color: #FFF;
 }

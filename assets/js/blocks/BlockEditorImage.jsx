@@ -17,8 +17,9 @@ const mapStateToProps = state => ({
 export default class BlockEditorImage extends React.PureComponent {
   static propTypes = {
     block: PropTypes.shape({
-      text: PropTypes.string,
-      type: PropTypes.number.isRequired
+      text:         PropTypes.string,
+      type:         PropTypes.number.isRequired,
+      origFilename: PropTypes.string
     }).isRequired,
     isUploading:  PropTypes.bool.isRequired,
     mediaUpload:  PropTypes.func.isRequired,
@@ -88,9 +89,15 @@ export default class BlockEditorImage extends React.PureComponent {
     const { block, isUploading } = this.props;
     const { caption } = this.state;
 
+    const buttons = (
+      <div className="block-menu-title">
+        {block.media.origFilename || ''}
+      </div>
+    );
+
     return (
       <>
-        <Menu block={block} />
+        <Menu block={block} buttons={buttons} />
         <div className="block-editor block-editor-image">
           <ImageUpload
             media={block.media}

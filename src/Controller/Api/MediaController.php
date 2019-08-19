@@ -40,10 +40,12 @@ class MediaController extends ApiController
         $data = file_get_contents($file->getPathName());
         $path = sprintf('%d-%s.%s', microtime(true), uniqid(), $ext);
         $url   = $this->cdn->upload($system, $path, $data);
+
         $media = (new Media())
             ->setUrl($url)
             ->setSystem($system)
             ->setPath($path)
+            ->setOrigFilename($file->getClientOriginalName())
             ->setUser($this->getUser());
         $this->em->persist($media);
         $this->em->flush();

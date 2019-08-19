@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
-import { connect, mapDispatchToProps } from 'utils';
+import { connect, constants, mapDispatchToProps } from 'utils';
 import * as editorActions from 'actions/editorActions';
 import BlockBody from './BlockBody';
 import Menu from './Menu';
@@ -127,6 +127,15 @@ export default class CanvasBlock extends React.PureComponent {
       'block-dragging': source.isDragging
     });
 
+    let buttons = '';
+    if (block.type === constants.blockType('image')) {
+      buttons = (
+        <div className="block-menu-title">
+          {block.media.origFilename || ''}
+        </div>
+      );
+    }
+
     return (
       <li
         className={classes}
@@ -139,7 +148,11 @@ export default class CanvasBlock extends React.PureComponent {
         onClick={this.handleClick}
       >
         <div ref={this.inner} className="block-container-inner">
-          <Menu block={block} className="block-container-menu" />
+          <Menu
+            block={block}
+            buttons={buttons}
+            className="block-container-menu"
+          />
           <BlockBody
             block={block}
             isActive={isActive}

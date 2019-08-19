@@ -88,7 +88,7 @@ export default class Menu extends React.PureComponent {
 
     return (
       <div className={classes}>
-        <div className="block-menu-group flex-grow-1">
+        <div className="block-menu-group">
           <Button
             title="Settings"
             icon="cog"
@@ -108,14 +108,14 @@ export default class Menu extends React.PureComponent {
             onClick={this.handleDownClick}
           />
         </div>
-        <div className="block-menu-group flex-grow-1">
+        <div className="block-menu-group block-menu-middle-group text-center">
           {buttons}
         </div>
-        <div className="block-menu-group flex-grow-1 text-right">
+        <div className="block-menu-group text-right">
           <Button
             title="Delete"
             icon="times"
-            className="block-menu-item block-menu-item-remove"
+            className="block-menu-item"
             onClick={this.handleRemoveClick}
           />
         </div>

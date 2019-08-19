@@ -38,6 +38,13 @@ class Media
 
     /**
      * @var string
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"web"})
+     */
+    protected $origFilename;
+
+    /**
+     * @var string
      * @ORM\Column(type="string", length=60)
      * @Groups({"web"})
      */
@@ -111,6 +118,26 @@ class Media
     public function setUrl(string $url): Media
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrigFilename(): ?string
+    {
+        return $this->origFilename;
+    }
+
+    /**
+     * @param string $origFilename
+     *
+     * @return Media
+     */
+    public function setOrigFilename(string $origFilename): Media
+    {
+        $this->origFilename = $origFilename;
 
         return $this;
     }
