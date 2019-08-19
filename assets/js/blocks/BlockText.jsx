@@ -17,7 +17,7 @@ export default class BlockText extends React.PureComponent {
   render() {
     const { block } = this.props;
 
-    let __html = strings.stripTags(block.text, '<div><p><b><i><a><h3><ul><li>');
+    let __html = strings.stripTags(block.text, '<div><p><b><i><a><h3><br><ul><li>');
     if (block.isHeadline) {
       __html = `<h3>${__html}</h3>`;
     }

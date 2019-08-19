@@ -81,7 +81,7 @@ $(document).on('paste', '[contenteditable]', (e) => {
   }
 });
 
-// document.execCommand('defaultParagraphSeparator', false, 'p');
+document.execCommand('defaultParagraphSeparator', false, 'p');
 
 const reorder = (list, startIndex, endIndex) => {
   const result    = Array.from(list);
