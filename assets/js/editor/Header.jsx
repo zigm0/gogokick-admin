@@ -41,13 +41,16 @@ export default class Header extends React.PureComponent {
    *
    */
   handleNewClick = () => {
-    history.push('/editor/new');
-/*    const { editorModal } = this.props;
+    const { user, editorModal } = this.props;
 
-    editorModal({
-      modal: 'newProject',
-      open:  true
-    });*/
+    if (!user.isAuthenticated) {
+      editorModal({
+        modal: 'register',
+        open:  true
+      });
+    } else {
+      history.push('/editor/new');
+    }
   };
 
   /**
