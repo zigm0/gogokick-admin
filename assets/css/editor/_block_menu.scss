@@ -16,8 +16,6 @@
   box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.25);
 
   .block-empty & {
-/*    top: 0;
-    left: 0;*/
     left: 0;
     top: -$height-block-menu + 3px;
     width: $width-block !important;
@@ -56,6 +54,12 @@
 
 .block-menu-video {
   background-color: $color-block-video;
+}
+
+.block-menu-group {
+  .block-menu-item:last-child {
+    margin-right: 0;
+  }
 }
 
 .block-menu-item {

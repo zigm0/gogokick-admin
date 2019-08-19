@@ -12,6 +12,7 @@ use App\Repository\MediaRepository;
 use App\Repository\ProjectRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Exception;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -108,7 +109,7 @@ class ProjectsController extends ApiController
      * @param ModelRequestHandler $handler
      *
      * @return JsonResponse
-     * @throws \Exception
+     * @throws Exception
      */
     public function saveAction(
         $id,

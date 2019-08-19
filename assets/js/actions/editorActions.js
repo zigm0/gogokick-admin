@@ -4,6 +4,7 @@ export const EDITOR_RESET          = 'EDITOR_RESET';
 export const EDITOR_BUSY           = 'EDITOR_BUSY';
 export const EDITOR_CHANGED        = 'EDITOR_CHANGED';
 export const EDITOR_NEW            = 'EDITOR_NEW';
+export const EDITOR_BLOCKS         = 'EDITOR_BLOCKS';
 export const EDITOR_SAVING         = 'EDITOR_SAVING';
 export const EDITOR_PROJECTS       = 'EDITOR_PROJECTS';
 export const EDITOR_UNDO           = 'EDITOR_UNDO';
@@ -48,6 +49,17 @@ export const editorNew = (payload) => {
     type: EDITOR_NEW,
     payload
   }
+};
+
+/**
+ * @param {Array} payload
+ * @returns {{payload: *, type: string}}
+ */
+export const editorBlocks = (payload) => {
+  return {
+    type: EDITOR_BLOCKS,
+    payload
+  };
 };
 
 /**

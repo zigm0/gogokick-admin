@@ -1,5 +1,5 @@
 import { api, router, history } from 'utils';
-import { editorReset, editorNew, editorChanged, editorProjects } from "./editorActions";
+import { editorReset, editorNew, editorBlocks, editorChanged, editorProjects } from "./editorActions";
 
 export const PROJECT_RESET     = 'PROJECT_RESET';
 export const PROJECT_BUSY      = 'PROJECT_BUSY';
@@ -130,6 +130,7 @@ export const projectSave = () => {
           type:    PROJECT_SET,
           payload: payload.project
         });
+        dispatch(editorBlocks(payload.project.blocks));
         dispatch(editorProjects(payload.projects));
         dispatch(editorChanged(false));
       })

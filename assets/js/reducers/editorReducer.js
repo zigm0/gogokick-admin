@@ -209,6 +209,25 @@ const onEditorNew = (state, action) => {
  * @param {*} action
  * @returns {*}
  */
+const onEditorBlocks = (state, action) => {
+  const { canvasBlocks } = objects.clone(state);
+  let { blockIndex } = state;
+
+  canvasBlocks[blockIndex + 1] = Array.from(action.payload);
+  blockIndex += 1;
+
+  return {
+    ...state,
+    canvasBlocks,
+    blockIndex
+  };
+};
+
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
 const onEditorDrop = (state, action) => {
   const { sidebarBlocks, canvasBlocks } = objects.clone(state);
   let { blockIndex } = state;
@@ -464,6 +483,7 @@ const handlers = {
   [types.EDITOR_UNDO]:           onEditorUndo,
   [types.EDITOR_REDO]:           onEditorRedo,
   [types.EDITOR_MODAL]:          onEditorModal,
+  [types.EDITOR_BLOCKS]:         onEditorBlocks,
   [types.EDITOR_TOGGLE_SIDEBAR]: onEditorToggleSidebar,
   [types.EDITOR_BLOCK_MEDIA]:    onEditorBlockMedia,
   [types.EDITOR_TEAM_MEMBER]:    onEditorTeamMember,
