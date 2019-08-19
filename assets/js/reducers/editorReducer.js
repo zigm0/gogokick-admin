@@ -97,9 +97,9 @@ const move = (source, destination, droppableSource, droppableDestination) => {
   const sourceBlock = objects.clone(source[droppableSource.index]);
   sourceClone.splice(droppableSource.index, 1);
 
-  sourceBlock.id = `n-${idIndex}`;
+  sourceBlock.id   = `n-${idIndex}`;
   sourceBlock.type = constants.blockType(sourceBlock.type);
-  idIndex +=1 ;
+  idIndex += 1;
 
   destClone.splice(droppableDestination.index, 0, sourceBlock);
 
@@ -229,6 +229,43 @@ const onEditorDrop = (state, action) => {
       );
     }
 
+    blockIndex += 1;
+  }
+
+  return {
+    ...state,
+    canvasBlocks,
+    blockIndex,
+    isChanged: true
+  };
+};
+
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onEditorMove = (state, action) => {
+  const { canvasBlocks } = objects.clone(state);
+  let { blockIndex } = state;
+  const { block, direction } = action.payload;
+
+  const index = arrays.findIndexByID(canvasBlocks[blockIndex], block.id);
+  if (direction === 'up' && index > 0) {
+    const block     = canvasBlocks[blockIndex][index];
+    const destClone = Array.from(canvasBlocks[blockIndex]);
+    destClone.splice(index, 1);
+    destClone.splice(index - 1, 0, block);
+
+    canvasBlocks[blockIndex + 1] = destClone;
+    blockIndex += 1;
+  } else if (direction === 'down' && index < canvasBlocks[blockIndex].length) {
+    const block     = canvasBlocks[blockIndex][index];
+    const destClone = Array.from(canvasBlocks[blockIndex]);
+    destClone.splice(index, 1);
+    destClone.splice(index + 1, 0, block);
+
+    canvasBlocks[blockIndex + 1] = destClone;
     blockIndex += 1;
   }
 
@@ -419,6 +456,7 @@ const handlers = {
   [types.EDITOR_BUSY]:           onEditorBusy,
   [types.EDITOR_NEW]:            onEditorNew,
   [types.EDITOR_DROP]:           onEditorDrop,
+  [types.EDITOR_MOVE]:           onEditorMove,
   [types.EDITOR_REMOVE]:         onEditorRemove,
   [types.EDITOR_CHANGE]:         onEditorChange,
   [types.EDITOR_UNDO]:           onEditorUndo,

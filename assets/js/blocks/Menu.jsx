@@ -21,6 +21,7 @@ export default class Menu extends React.PureComponent {
     }).isRequired,
     buttons:      PropTypes.node,
     className:    PropTypes.string,
+    editorMove:   PropTypes.func.isRequired,
     editorRemove: PropTypes.func.isRequired,
     editorModal:  PropTypes.func.isRequired,
   };
@@ -54,6 +55,30 @@ export default class Menu extends React.PureComponent {
   };
 
   /**
+   *
+   */
+  handleUpClick = () => {
+    const { block, editorMove } = this.props;
+
+    editorMove({
+      block,
+      direction: 'up'
+    });
+  };
+
+  /**
+   *
+   */
+  handleDownClick = () => {
+    const { block, editorMove } = this.props;
+
+    editorMove({
+      block,
+      direction: 'down'
+    });
+  };
+
+  /**
    * @returns {*}
    */
   render() {
@@ -74,11 +99,13 @@ export default class Menu extends React.PureComponent {
             title="Move up"
             icon="caret-up"
             className="block-menu-item"
+            onClick={this.handleUpClick}
           />
           <Button
             title="Move down"
             icon="caret-down"
             className="block-menu-item"
+            onClick={this.handleDownClick}
           />
         </div>
         <div className="flex-grow-1">

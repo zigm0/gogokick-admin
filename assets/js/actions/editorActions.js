@@ -8,6 +8,7 @@ export const EDITOR_SAVING         = 'EDITOR_SAVING';
 export const EDITOR_PROJECTS       = 'EDITOR_PROJECTS';
 export const EDITOR_UNDO           = 'EDITOR_UNDO';
 export const EDITOR_REDO           = 'EDITOR_REDO';
+export const EDITOR_MOVE           = 'EDITOR_MOVE';
 export const EDITOR_DROP           = 'EDITOR_DROP';
 export const EDITOR_CHANGE         = 'EDITOR_CHANGE';
 export const EDITOR_REMOVE         = 'EDITOR_REMOVE';
@@ -125,6 +126,17 @@ export const editorDrop = (payload) => {
     type: EDITOR_DROP,
     payload
   }
+};
+
+/**
+ * @param {*} payload
+ * @returns {{payload: *, type: string}}
+ */
+export const editorMove = (payload) => {
+  return {
+    type: EDITOR_MOVE,
+    payload
+  };
 };
 
 /**
