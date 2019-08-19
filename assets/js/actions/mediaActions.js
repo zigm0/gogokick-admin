@@ -50,3 +50,27 @@ export const mediaUpload = (payload) => {
 
   };
 };
+
+export const mediaReplace = (payload) => {
+  return (dispatch) => {
+    const body = {
+      dataUrl: payload.dataUrl
+    };
+
+    dispatch({
+      type:    MEDIA_UPLOADING,
+      payload: true
+    });
+
+    api.post(router.generate('api_media_replace', { id: payload.media.id }), body)
+      .then((resp) => {
+        payload.onComplete(resp);
+      })
+      .finally(() => {
+        dispatch({
+          type:    MEDIA_UPLOADING,
+          payload: false
+        });
+      });
+  }
+};

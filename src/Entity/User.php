@@ -89,6 +89,12 @@ class User implements UserInterface
     protected $teamProjects;
 
     /**
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="Media", mappedBy="user")
+     */
+    protected $media;
+
+    /**
      * @var DateTime
      * @ORM\Column(type="datetime")
      */
@@ -109,6 +115,7 @@ class User implements UserInterface
             $this->roles         = [];
             $this->projects      = new ArrayCollection();
             $this->teamProjects  = new ArrayCollection();
+            $this->media         = new ArrayCollection();
             $this->dateCreated   = new DateTime();
             $this->dateLastLogin = new DateTime();
         } catch (Exception $e) {
@@ -199,6 +206,46 @@ class User implements UserInterface
     public function setProjects(Collection $projects): User
     {
         $this->projects = $projects;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getTeamProjects(): Collection
+    {
+        return $this->teamProjects;
+    }
+
+    /**
+     * @param Collection $teamProjects
+     *
+     * @return User
+     */
+    public function setTeamProjects(Collection $teamProjects): User
+    {
+        $this->teamProjects = $teamProjects;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getMedia(): Collection
+    {
+        return $this->media;
+    }
+
+    /**
+     * @param Collection $media
+     *
+     * @return User
+     */
+    public function setMedia(Collection $media): User
+    {
+        $this->media = $media;
 
         return $this;
     }

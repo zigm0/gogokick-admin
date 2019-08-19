@@ -22,6 +22,14 @@ class Media
     protected $id;
 
     /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="media")
+     * @ORM\JoinColumn(name="user_id", onDelete="CASCADE", referencedColumnName="id")
+     * @Groups({"web"})
+     */
+    protected $user;
+
+    /**
      * @var string
      * @ORM\Column(type="string", length=255)
      * @Groups({"web"})
@@ -65,6 +73,26 @@ class Media
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return Media
+     */
+    public function setUser(User $user): Media
+    {
+        $this->user = $user;
+
+        return $this;
     }
 
     /**

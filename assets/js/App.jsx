@@ -83,6 +83,7 @@ export default class App extends React.Component {
         <Modals.LoginModal />
         <Modals.PreviewModal />
         <Modals.ConfirmModal />
+        <Modals.CropperModal />
         <Modals.PromptModal />
         <Modals.MemberActionsModal />
         <Modals.RegisterModal />

@@ -12,7 +12,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class MediaController extends ApiController
 {
-
     /**
      * @Route("/upload", name="_upload", methods={"POST"})
      *
@@ -44,7 +43,8 @@ class MediaController extends ApiController
         $media = (new Media())
             ->setUrl($url)
             ->setSystem($system)
-            ->setPath($path);
+            ->setPath($path)
+            ->setUser($this->getUser());
         $this->em->persist($media);
         $this->em->flush();
 
@@ -52,5 +52,39 @@ class MediaController extends ApiController
         $media['block'] = $block;
 
         return new JsonResponse($media);
+    }
+
+    /**
+     * @Route("/{id}", name="_replace", methods={"POST"})
+     *
+     * @param int     $id
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function replaceAction($id, Request $request)
+    {
+        $media = $this->getMedia($id);
+        if ($media->getUser()->getId() !== $this->getUser()->getId()) {
+            throw $this->createAccessDeniedException();
+        }
+        $data = $request->json->get('dataUrl');
+        if (!$data) {
+            throw new BadRequestHttpException();
+        }
+
+        $this->cdn->remove($media->getSystem(), $media->getPath());
+
+        $data = explode(',', $data);
+        $data = base64_decode($data[1]);
+        $path = sprintf('%d-%s.png', microtime(true), uniqid());
+        $url  = $this->cdn->upload($media->getSystem(), $path, $data);
+
+        $media
+            ->setUrl($url)
+            ->setPath($path);
+        $this->em->flush();
+
+        return $this->jsonEntityResponse($media);
     }
 }

@@ -10,9 +10,10 @@ import * as mediaActions from 'actions/mediaActions';
 import ProjectImage from './settings/ProjectImage';
 
 const mapStateToProps = state => ({
-  forms:   state.forms,
-  project: state.project,
-  editor:  state.editor
+  forms:       state.forms,
+  project:     state.project,
+  editor:      state.editor,
+  isUploading: state.media.isUploading
 });
 
 @connect(
@@ -24,6 +25,7 @@ export default class EditorSettings extends React.PureComponent {
     forms:               PropTypes.object.isRequired,
     editor:              PropTypes.object.isRequired,
     project:             PropTypes.object.isRequired,
+    isUploading:         PropTypes.bool.isRequired,
     editorModal:         PropTypes.func.isRequired,
     formChanges:         PropTypes.func.isRequired,
     projectOpen:         PropTypes.func.isRequired,
@@ -114,12 +116,19 @@ export default class EditorSettings extends React.PureComponent {
    * @param {File} file
    */
   handleUpload = (file) => {
-    const { project, mediaUpload } = this.props;
+    const { project, mediaUpload, editorModal } = this.props;
 
     mediaUpload({
       file,
       project,
-      system: 'project_images',
+      system:     'project_images',
+      onComplete: (resp) => {
+        editorModal({
+          modal: 'cropper',
+          open:  true,
+          meta:  resp
+        });
+      }
     });
   };
 
@@ -127,7 +136,7 @@ export default class EditorSettings extends React.PureComponent {
    * @returns {*}
    */
   renderForm = () => {
-    const { project } = this.props;
+    const { project, isUploading } = this.props;
 
     return (
       <Form name="projectSettings">
@@ -140,7 +149,7 @@ export default class EditorSettings extends React.PureComponent {
         />
         <div className="form-group">
           <label>Project Image</label>
-          <ProjectImage media={project.image} mediaUpload={this.handleUpload} />
+          <ProjectImage media={project.image} mediaUpload={this.handleUpload} isUploading={isUploading} />
         </div>
         <div className="text-right">
           <Button theme="success" onClick={this.handleUpdateClick}>

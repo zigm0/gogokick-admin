@@ -53,6 +53,7 @@
     "react-ace": "^7.0.2",
     "react-beautiful-dnd": "^11.0.5",
     "react-contenteditable": "^3.3.1",
+    "react-cropper": "^1.2.0",
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.8.6",
     "react-draggable": "^3.3.0",

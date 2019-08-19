@@ -16,6 +16,7 @@ const initialState = objects.merge({
   modals:        {
     login:         false,
     preview:       false,
+    cropper:       false,
     confirm:       false,
     settings:      false,
     register:      false,
