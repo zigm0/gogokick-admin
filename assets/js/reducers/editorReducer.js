@@ -81,6 +81,7 @@ $(document).on('paste', '[contenteditable]', (e) => {
   }
 });
 
+// @see https://stackoverflow.com/a/35634418/401019
 document.execCommand('defaultParagraphSeparator', false, 'p');
 
 const reorder = (list, startIndex, endIndex) => {

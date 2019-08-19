@@ -3,7 +3,7 @@
 .block-menu {
   height: $height-block-menu;
   position: absolute;
-  top: -$height-block-menu + 1px;
+  top: -$height-block-menu + 3px;
   left: -$gutter-size;
   padding: 0 $gutter-size-sm;
   width: $width-block + ($gutter-size * 2) !important;
@@ -13,13 +13,13 @@
   z-index: 3;
   display: flex;
   align-items: center;
-  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.25);
 
   .block-empty & {
 /*    top: 0;
     left: 0;*/
     left: 0;
-    top: -$height-block-menu + 2px;
+    top: -$height-block-menu + 3px;
     width: $width-block !important;
     border-top-left-radius: $border-radius-blocks;
     border-top-right-radius: $border-radius-blocks;

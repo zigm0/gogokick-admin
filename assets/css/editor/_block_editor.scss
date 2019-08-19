@@ -3,6 +3,7 @@
 .block-editor {
   position: absolute;
   margin-bottom: $margin-bottom-block;
+  border-radius: $border-radius-blocks;
   width: 100%;
 
   &.block-editor-text {
@@ -36,6 +37,7 @@
 
   .block-editor-image-caption {
     padding: $gutter-size-sm;
+    background-color: $color-block-image;
 
     input {
       width: 100%;
@@ -45,8 +47,9 @@
       text-align: center;
       line-height: 20px;
       color: #9B9E9E;
-      border: 1px solid #cecece;
+      border: 1px solid $color-block-image;
       display: block;
+      box-shadow: inset 0 0 2px 0 rgba(0, 0, 0, 0.5);
     }
   }
 }
