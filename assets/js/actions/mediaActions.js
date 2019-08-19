@@ -27,14 +27,20 @@ export const mediaUpload = (payload) => {
 
     api.post(router.generate('api_media_upload'), body)
       .then((media) => {
-        if (onComplete) {
-          onComplete(media);
-        } else if (system === 'project_images') {
-          dispatch(projectSettings({
-            image: media
-          }));
-        } else if (system === 'block_images') {
-          dispatch(editorBlockMedia(media));
+        if (media.url) {
+          const img = new Image();
+          img.onload = () => {
+            if (onComplete) {
+              onComplete(media);
+            } else if (system === 'project_images') {
+              dispatch(projectSettings({
+                image: media
+              }));
+            } else if (system === 'block_images') {
+              dispatch(editorBlockMedia(media));
+            }
+          };
+          img.src = media.url;
         }
       })
       .catch((err) => {
