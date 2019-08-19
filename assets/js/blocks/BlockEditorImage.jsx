@@ -39,11 +39,14 @@ export default class BlockEditorImage extends React.PureComponent {
     };
   }
 
+  /**
+   * @param {*} prevProps
+   */
   componentDidUpdate(prevProps) {
     const { block, onChange } = this.props;
     const { block: lastBlock } = prevProps;
 
-    if (block.media.id !== lastBlock.media.id) {
+    if ((!lastBlock.media && !block.media) || (!lastBlock.media && block.media.id) || (block.media.id !== lastBlock.media.id)) {
       onChange(null, null);
     }
   }
