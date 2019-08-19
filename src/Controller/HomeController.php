@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Controller\Api\ApiController;
 use App\Entity\Block;
 use App\Entity\Project;
 use Symfony\Component\Routing\Annotation\Route;
@@ -8,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class HomeController
  */
-class HomeController extends Controller
+class HomeController extends ApiController
 {
     /**
      * @Route("/", name="home")
@@ -28,11 +29,22 @@ class HomeController extends Controller
             'campaignTypes' => array_flip(Project::CAMPAIGN_TYPES)
         ];
 
+        $user = [
+            'id'              => 0,
+            'name'            => 'Guest',
+            'isAuthenticated' => false
+        ];
+        if ($this->getUser()) {
+            $user = $this->arrayEntityGroup($this->getUser());
+            $user['isAuthenticated'] = true;
+        }
+
         return $this->render('editor/index.html.twig', [
             'constants'    => $constants,
             'initialState' => [
                 'editor'  => [],
-                'project' => []
+                'project' => [],
+                'user'    => $user
             ]
         ]);
     }

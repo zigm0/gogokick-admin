@@ -107,8 +107,13 @@ const move = (source, destination, droppableSource, droppableDestination) => {
 /**
  * @returns {*}
  */
-const onEditorReset = () => {
-  return objects.clone(initialState);
+const onEditorReset = (state) => {
+  const { isSidebarOpen } = state;
+
+  const newState = objects.clone(initialState);
+  newState.isSidebarOpen = isSidebarOpen;
+
+  return newState;
 };
 
 /**

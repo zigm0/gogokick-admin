@@ -6,7 +6,7 @@ const initialState = objects.merge({
   error:           '',
   isBusy:          false,
   isAuthenticated: false
-}, window.initialState);
+}, window.initialState.user);
 
 /**
  * @param {*} state
