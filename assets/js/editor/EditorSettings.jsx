@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { connect, system, history, mapDispatchToProps } from 'utils';
 import { Row, Column, Button } from 'components/bootstrap';
 import { Form, Input } from 'components/forms';
+import { ImageUpload } from 'components';
 import * as editorActions from 'actions/editorActions';
 import * as formActions from 'actions/formActions';
 import * as projectActions from 'actions/projectActions';
 import * as mediaActions from 'actions/mediaActions';
-import ProjectImage from './settings/ProjectImage';
 
 const mapStateToProps = state => ({
   forms:       state.forms,
@@ -64,26 +64,13 @@ export default class EditorSettings extends React.PureComponent {
    *
    */
   componentWillUnmount() {
-    const { editorToggleSidebar } = this.props;
-
-    editorToggleSidebar(true);
-  }
-
-  /**
-   * @param {Event} e
-   */
-  handleUpdateClick = (e) => {
-    e.preventDefault();
-    const { forms, editorModal, projectSettings } = this.props;
+    const { forms, projectSettings, editorToggleSidebar } = this.props;
 
     projectSettings({
       name: forms.projectSettings.name
     });
-    editorModal({
-      modal: 'settings',
-      open:  false
-    });
-  };
+    editorToggleSidebar(true);
+  }
 
   /**
    *
@@ -149,12 +136,12 @@ export default class EditorSettings extends React.PureComponent {
         />
         <div className="form-group">
           <label>Project Image</label>
-          <ProjectImage media={project.image} mediaUpload={this.handleUpload} isUploading={isUploading} />
-        </div>
-        <div className="text-right">
-          <Button theme="success" onClick={this.handleUpdateClick}>
-            Update
-          </Button>
+          <ImageUpload
+            media={project.image}
+            onDrop={this.handleUpload}
+            isUploading={isUploading}
+            className="project-settings-banner"
+          />
         </div>
       </Form>
     );

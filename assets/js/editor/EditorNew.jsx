@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect, constants, mapDispatchToProps } from 'utils';
 import { Container, Row, Column, Button } from 'components/bootstrap';
 import { Form, Input, Checkbox } from 'components/forms';
-import ProjectImage from './settings/ProjectImage';
+import { ImageUpload } from 'components';
 import * as editorActions from 'actions/editorActions';
 import * as mediaActions from 'actions/mediaActions';
 import * as formActions from 'actions/formActions';
@@ -150,10 +150,11 @@ export default class EditorNew extends React.PureComponent {
                   <h3>
                     Project Image
                   </h3>
-                  <ProjectImage
+                  <ImageUpload
                     media={media}
                     isUploading={isUploading}
-                    mediaUpload={this.handleUpload}
+                    onDrop={this.handleUpload}
+                    className="project-settings-banner"
                   />
                   <p>
                     Add an image that clearly represents your project.

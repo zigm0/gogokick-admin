@@ -1,5 +1,5 @@
 import { api, router, system as systemUtils } from 'utils';
-import { projectSettings } from './projectActions';
+import { projectSettings, projectBusy } from './projectActions';
 import { editorBlockMedia } from './editorActions';
 
 export const MEDIA_UPLOADING = 'MEDIA_UPLOADING';
@@ -57,6 +57,7 @@ export const mediaReplace = (payload) => {
       dataUrl: payload.dataUrl
     };
 
+    dispatch(projectBusy(true));
     dispatch({
       type:    MEDIA_UPLOADING,
       payload: true
@@ -67,6 +68,7 @@ export const mediaReplace = (payload) => {
         payload.onComplete(resp);
       })
       .finally(() => {
+        dispatch(projectBusy(false));
         dispatch({
           type:    MEDIA_UPLOADING,
           payload: false

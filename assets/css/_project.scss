@@ -1,46 +1,10 @@
 @import "vars";
 
 .project-settings-banner {
-  width: 100%;
-  height: calc(100% * 0.5625);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   border: 1px solid #ced4da;
   margin-bottom: $gutter-size-sm;
-  background-size: cover;
-  background-color: #FBFBFA;
-  cursor: pointer;
 
-  &:hover,
-  &.hover {
-    .project-settings-banner-circle {
-      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
-    }
+  figure {
+    margin-bottom: 0;
   }
-}
-
-.project-settings-banner-circle {
-  background-color: #FFF;
-  border-radius: 50%;
-  width: 75px;
-  height: 75px;
-  display: flex;
-  margin: 0 auto $gutter-size auto;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.25);
-
-  .icon {
-    font-size: 1.4rem;
-  }
-}
-
-.project-settings-banner-top {
-
-}
-
-.project-settings-banner-bottom {
-  color: $color-dim;
-  font-size: $font-size-sm;
 }

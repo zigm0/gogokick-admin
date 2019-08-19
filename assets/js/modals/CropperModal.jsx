@@ -87,6 +87,7 @@ export default class CropperModal extends React.PureComponent {
           style={{ height: 500, width: '100%' }}
           aspectRatio={1024 / 576}
           guides={false}
+          viewMode={1}
           minContainerWidth={765}
           minContainerHeight={500}
         />
