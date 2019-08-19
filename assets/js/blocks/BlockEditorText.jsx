@@ -5,6 +5,7 @@ import ContentEditable from 'react-contenteditable';
 import { connect, browser, objects, mapDispatchToProps } from 'utils';
 import { Button } from 'components';
 import * as editorActions from 'actions/editorActions';
+import Menu from './Menu';
 
 @connect(
   null,
@@ -17,7 +18,6 @@ export default class BlockEditorText extends React.PureComponent {
       type: PropTypes.number.isRequired
     }).isRequired,
     editorChange: PropTypes.func.isRequired,
-    onRemove:     PropTypes.func.isRequired,
     onChange:     PropTypes.func.isRequired
   };
 
@@ -121,7 +121,7 @@ export default class BlockEditorText extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { block, onRemove } = this.props;
+    const { block } = this.props;
     const { text, cmds } = this.state;
 
     const html = block.isHeadline ? `<h3>${text}</h3>` : text;
@@ -129,72 +129,49 @@ export default class BlockEditorText extends React.PureComponent {
       'block-editor-headline': block.isHeadline
     });
 
+    const buttons = (
+      <>
+        <Button
+          active={block.isHeadline}
+          className="block-menu-item"
+          onClick={e => this.handleMenuItemClick(e, 'headline')}
+        >
+          Headline
+        </Button>
+        <Button
+          icon="list"
+          active={cmds.insertUnorderedList}
+          disabled={block.isHeadline}
+          className="block-menu-item"
+          onClick={e => this.handleMenuItemClick(e, 'insertUnorderedList')}
+        />
+        <Button
+          icon="bold"
+          active={cmds.bold}
+          disabled={block.isHeadline}
+          className="block-menu-item"
+          onClick={e => this.handleMenuItemClick(e, 'bold')}
+        />
+        <Button
+          icon="italic"
+          active={cmds.italic}
+          disabled={block.isHeadline}
+          className="block-menu-item"
+          onClick={e => this.handleMenuItemClick(e, 'italic')}
+        />
+        <Button
+          icon="link"
+          active={cmds.createLink}
+          disabled={block.isHeadline}
+          className="block-menu-item"
+          onClick={e => this.handleMenuItemClick(e, cmds.createLink ? 'unlink' : 'createLink')}
+        />
+      </>
+    );
+
     return (
       <>
-        <div className="block-menu block-menu-text">
-          <div className="flex-grow-1">
-            <Button
-              title="Settings"
-              icon="cog"
-              className="block-menu-item"
-              onClick={this.handleSettingsClick}
-            />
-            <Button
-              title="Move up"
-              icon="caret-up"
-              className="block-menu-item"
-            />
-            <Button
-              title="Move down"
-              icon="caret-down"
-              className="block-menu-item"
-            />
-          </div>
-          <div className="flex-grow-1">
-            <Button
-              active={block.isHeadline}
-              className="block-menu-item"
-              onClick={e => this.handleMenuItemClick(e, 'headline')}
-            >
-              Headline
-            </Button>
-            <Button
-              icon="list"
-              active={cmds.insertUnorderedList}
-              disabled={block.isHeadline}
-              className="block-menu-item"
-              onClick={e => this.handleMenuItemClick(e, 'insertUnorderedList')}
-            />
-            <Button
-              icon="bold"
-              active={cmds.bold}
-              disabled={block.isHeadline}
-              className="block-menu-item"
-              onClick={e => this.handleMenuItemClick(e, 'bold')}
-            />
-            <Button
-              icon="italic"
-              active={cmds.italic}
-              disabled={block.isHeadline}
-              className="block-menu-item"
-              onClick={e => this.handleMenuItemClick(e, 'italic')}
-            />
-            <Button
-              icon="link"
-              active={cmds.createLink}
-              disabled={block.isHeadline}
-              className="block-menu-item"
-              onClick={e => this.handleMenuItemClick(e, cmds.createLink ? 'unlink' : 'createLink')}
-            />
-          </div>
-          <div className="flex-grow-1 text-right">
-            <Button
-              icon="times"
-              className="block-menu-item block-menu-item-remove"
-              onClick={e => onRemove(e, block)}
-            />
-          </div>
-        </div>
+        <Menu block={block} buttons={buttons} />
         <div className={classes}>
           <ContentEditable
             html={html}

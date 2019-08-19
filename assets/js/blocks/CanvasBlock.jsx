@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
-import { connect, constants, mapDispatchToProps } from 'utils';
-import { Button } from 'components';
+import { connect, mapDispatchToProps } from 'utils';
 import * as editorActions from 'actions/editorActions';
 import BlockBody from './BlockBody';
+import Menu from './Menu';
 
 const mapStateToProps = state => ({
   hoverBlockID:  state.editor.hoverBlockID,
@@ -26,7 +26,6 @@ export default class CanvasBlock extends React.PureComponent {
     hoverBlockID:        PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     activeBlockID:       PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     editorModal:         PropTypes.func.isRequired,
-    editorRemove:        PropTypes.func.isRequired,
     editorHoverBlock:    PropTypes.func.isRequired,
     editorActivateBlock: PropTypes.func.isRequired
   };
@@ -82,25 +81,6 @@ export default class CanvasBlock extends React.PureComponent {
   };
 
   /**
-   * @param {Event} e
-   * @param {*} block
-   */
-  handleRemoveClick = (e, block) => {
-    const { editorRemove } = this.props;
-
-    editorRemove(block);
-  };
-
-  /**
-   *
-   */
-  handleEditClick = () => {
-    const { block, activeBlockID, editorActivateBlock } = this.props;
-
-    editorActivateBlock(activeBlockID === block.id ? 0 : block.id);
-  };
-
-  /**
    *
    */
   handleMouseEnter = () => {
@@ -127,20 +107,6 @@ export default class CanvasBlock extends React.PureComponent {
     if (!e.target.classList.contains('icon') && block.id !== activeBlockID) {
       editorActivateBlock(block.id);
     }
-  };
-
-  /**
-   * @param {Event} e
-   */
-  handleSettingsClick = (e) => {
-    e.preventDefault();
-    const { block, editorModal } = this.props;
-
-    editorModal({
-      modal: 'blockSettings',
-      open:  true,
-      meta:  block
-    });
   };
 
   /**
@@ -173,40 +139,12 @@ export default class CanvasBlock extends React.PureComponent {
         onClick={this.handleClick}
       >
         <div ref={this.inner} className="block-container-inner">
-          <div className={`block-menu block-menu-${constants.blockType(block.type)} block-container-menu`}>
-            <div className="flex-grow-1">
-              <Button
-                title="Settings"
-                icon="cog"
-                className="block-menu-item"
-                onClick={this.handleSettingsClick}
-              />
-              <Button
-                title="Move up"
-                icon="caret-up"
-                className="block-menu-item"
-              />
-              <Button
-                title="Move down"
-                icon="caret-down"
-                className="block-menu-item"
-              />
-            </div>
-            <div className="flex-grow-1 text-right">
-              <Button
-                title="Delete"
-                icon="times"
-                className="block-menu-item block-menu-item-remove"
-                onClick={e => this.handleRemoveClick(e, block)}
-              />
-            </div>
-          </div>
+          <Menu block={block} className="block-container-menu" />
           <BlockBody
             block={block}
             isActive={isActive}
             isHover={isHover}
             isDragging={source.isDragging}
-            onRemove={this.handleRemoveClick}
             onChange={this.handleChange}
           />
         </div>

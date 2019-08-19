@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect, objects, mapDispatchToProps } from 'utils';
 import { Button, ImageUpload } from 'components';
+import Menu from './Menu';
 import * as mediaActions from 'actions/mediaActions';
 import * as editorActions from 'actions/editorActions';
 
@@ -22,7 +23,6 @@ export default class BlockEditorImage extends React.PureComponent {
     isUploading:  PropTypes.bool.isRequired,
     mediaUpload:  PropTypes.func.isRequired,
     editorChange: PropTypes.func.isRequired,
-    onRemove:     PropTypes.func.isRequired,
     onChange:     PropTypes.func.isRequired
   };
 
@@ -85,38 +85,12 @@ export default class BlockEditorImage extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { block, isUploading, onRemove } = this.props;
+    const { block, isUploading } = this.props;
     const { caption } = this.state;
 
     return (
       <>
-        <div className="block-menu block-menu-image">
-          <div className="flex-grow-1">
-            <Button
-              title="Settings"
-              icon="cog"
-              className="block-menu-item"
-              onClick={this.handleSettingsClick}
-            />
-            <Button
-              title="Move up"
-              icon="caret-up"
-              className="block-menu-item"
-            />
-            <Button
-              title="Move down"
-              icon="caret-down"
-              className="block-menu-item"
-            />
-          </div>
-          <div className="flex-grow-1 text-right">
-            <Button
-              icon="times"
-              className="block-menu-item block-menu-item-remove"
-              onClick={e => onRemove(e, block)}
-            />
-          </div>
-        </div>
+        <Menu block={block} />
         <div className="block-editor block-editor-image">
           <ImageUpload
             media={block.media}
