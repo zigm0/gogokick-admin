@@ -31,6 +31,7 @@ export default class EditorSettings extends React.PureComponent {
     projectOpen:         PropTypes.func.isRequired,
     projectSettings:     PropTypes.func.isRequired,
     projectDelete:       PropTypes.func.isRequired,
+    mediaCrop:           PropTypes.func.isRequired,
     mediaUpload:         PropTypes.func.isRequired,
     editorToggleSidebar: PropTypes.func.isRequired
   };
@@ -103,17 +104,20 @@ export default class EditorSettings extends React.PureComponent {
    * @param {File} file
    */
   handleUpload = (file) => {
-    const { project, mediaUpload, editorModal } = this.props;
+    const { project, mediaUpload, mediaCrop, projectSettings } = this.props;
 
     mediaUpload({
       file,
       project,
       system:     'project_images',
-      onComplete: (resp) => {
-        editorModal({
-          modal: 'cropper',
-          open:  true,
-          meta:  resp
+      onComplete: (media) => {
+        mediaCrop({
+          media,
+          onComplete: (image) => {
+            projectSettings({
+              image
+            });
+          }
         });
       }
     });

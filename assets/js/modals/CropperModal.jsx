@@ -1,27 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Cropper from 'react-cropper';
-import { connect, system, mapDispatchToProps } from 'utils';
+import { connect, mapDispatchToProps } from 'utils';
 import { Button } from 'components/bootstrap';
 import { Modal } from 'components';
-import * as editorActions from 'actions/editorActions';
 import * as mediaActions from 'actions/mediaActions';
-import * as projectActions from 'actions/projectActions';
 
 const mapStateToProps = state => ({
-  media: state.editor.modalMeta
+  media:      state.editor.modalMeta,
+  onComplete: state.editor.modalCallback
 });
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(editorActions, mediaActions, projectActions)
+  mapDispatchToProps(mediaActions)
 )
 export default class CropperModal extends React.PureComponent {
   static propTypes = {
-    media:           PropTypes.object,
-    mediaReplace:    PropTypes.func.isRequired,
-    editorModal:     PropTypes.func.isRequired,
-    projectSettings: PropTypes.func.isRequired
+    media:        PropTypes.object,
+    onComplete:   PropTypes.func.isRequired,
+    mediaReplace: PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -39,21 +37,13 @@ export default class CropperModal extends React.PureComponent {
    *
    */
   handleCropClick = () => {
-    const { media, mediaReplace, editorModal, projectSettings } = this.props;
+    const { media, mediaReplace, onComplete } = this.props;
 
     const dataUrl = this.cropper.current.getCroppedCanvas().toDataURL();
     mediaReplace({
       media,
       dataUrl,
-      onComplete: (image) => {
-        projectSettings({
-          image
-        });
-        editorModal({
-          modal: 'cropper',
-          open:  false
-        });
-      }
+      onComplete
     });
   };
 

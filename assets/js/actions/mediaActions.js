@@ -1,9 +1,9 @@
 import { api, router, system as systemUtils } from 'utils';
 import { projectSettings, projectBusy } from './projectActions';
-import { editorBlockMedia } from './editorActions';
+import { editorBlockMedia, editorModal } from './editorActions';
 
 export const MEDIA_UPLOADING = 'MEDIA_UPLOADING';
-
+export const MEDIA_CROP      = 'MEDIA_CROP';
 
 /**
  * @param {*} payload
@@ -51,6 +51,10 @@ export const mediaUpload = (payload) => {
   };
 };
 
+/**
+ * @param {*} payload
+ * @returns {Function}
+ */
 export const mediaReplace = (payload) => {
   return (dispatch) => {
     const body = {
@@ -75,4 +79,21 @@ export const mediaReplace = (payload) => {
         });
       });
   }
+};
+
+export const mediaCrop = (payload) => {
+  return (dispatch) => {
+    dispatch(editorModal({
+      modal:      'cropper',
+      open:       true,
+      meta:       payload.media,
+      onComplete: (image) => {
+        dispatch(editorModal({
+          modal: 'cropper',
+          open:  false
+        }));
+        payload.onComplete(image);
+      }
+    }));
+  };
 };

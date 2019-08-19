@@ -13,6 +13,7 @@ const initialState = objects.merge({
   hoverBlockID:  0,
   canvasBlocks:  [[]],
   modalMeta:     null,
+  modalCallback: () => {},
   modals:        {
     login:         false,
     preview:       false,
@@ -301,14 +302,15 @@ const onEditorChange = (state, action) => {
  */
 const onEditorModal = (state, action) => {
   const modals = objects.clone(state.modals);
-  const { modal, open, meta } = action.payload;
+  const { modal, open, meta, onComplete } = action.payload;
 
   modals[modal] = open;
 
   return {
     ...state,
     modals,
-    modalMeta: meta
+    modalMeta:     meta,
+    modalCallback: onComplete || (() => {})
   };
 };
 
