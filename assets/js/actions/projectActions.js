@@ -1,6 +1,7 @@
 import { api, router, history } from 'utils';
 import { editorReset, editorNew, editorChanged, editorProjects } from "./editorActions";
 
+export const PROJECT_RESET     = 'PROJECT_RESET';
 export const PROJECT_BUSY      = 'PROJECT_BUSY';
 export const PROJECT_SAVING    = 'PROJECT_SAVING';
 export const PROJECT_SET       = 'PROJECT_SET';
@@ -9,6 +10,18 @@ export const PROJECT_OPEN      = 'PROJECT_OPEN_PROJECT';
 export const PROJECT_SETTINGS  = 'PROJECT_SETTINGS';
 export const PROJECT_DELETE    = 'PROJECT_DELETE_PROJECT';
 export const PROJECT_MARK_READ = 'PROJECT_MARK_READ';
+
+/**
+ * @returns {{type: string}}
+ */
+export const projectReset = () => {
+  return (dispatch) => {
+    dispatch({
+      type: PROJECT_RESET
+    });
+    dispatch(editorReset());
+  };
+};
 
 /**
  * @param {*} payload
@@ -27,6 +40,11 @@ export const projectBusy = (payload) => {
  */
 export const projectOpen = (id) => {
   return (dispatch) => {
+    if (!id) {
+      dispatch(projectReset());
+      return;
+    }
+
     dispatch(projectBusy(true));
     api.get(router.generate('api_projects_open', { id }))
       .then((payload) => {
@@ -73,13 +91,6 @@ export const projectNew = (payload) => {
         });
         dispatch(projectBusy(false));
       });
-
-/*    history.push('/editor');
-    dispatch(editorNew(payload));
-    dispatch({
-      type: PROJECT_NEW,
-      payload
-    });*/
   };
 };
 
@@ -166,10 +177,12 @@ export const projectSettings = (payload) => {
     });
 
     const { project } = getState();
-    api.post(router.generate('api_projects_settings', { id: project.id }), project)
-      .then((resp) => {
-        console.log(resp);
-      });
+    if (project.id) {
+      api.post(router.generate('api_projects_settings', { id: project.id }), project)
+        .then((resp) => {
+          console.log(resp);
+        });
+    }
   };
 };
 

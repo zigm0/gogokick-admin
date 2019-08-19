@@ -1,5 +1,6 @@
-import { api, router } from 'utils';
+import { api, router, history } from 'utils';
 import { editorFetchProjects } from './editorActions';
+import { projectOpen } from './projectActions';
 
 export const USER_ME    = 'USER_ME';
 export const USER_ERROR = 'USER_ERROR';
@@ -28,16 +29,21 @@ export const userBusy = (payload) => {
 };
 
 /**
+ * @param {number} projectId
  * @returns {Function}
  */
-export const userMe = () => {
-  return (dispatch) => {
+export const userMe = (projectId) => {
+  return (dispatch, getState) => {
     api.get(router.generate('api_user_me'))
       .then((payload) => {
         dispatch({
           type: USER_ME,
           payload
         });
+
+        if (getState().user.isAuthenticated) {
+          dispatch(projectOpen(projectId || 0));
+        }
       });
   };
 };
@@ -114,6 +120,7 @@ export const userLogout = () => {
               name: 'Guest'
             }
           });
+          history.push('/editor');
         }
       })
       .finally(() => {

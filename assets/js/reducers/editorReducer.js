@@ -105,16 +105,10 @@ const move = (source, destination, droppableSource, droppableDestination) => {
 };
 
 /**
- * @param {*} state
  * @returns {*}
  */
-const onEditorReset = (state) => {
-  return {
-    ...state,
-    canvasBlocks: [[]],
-    blockIndex:   0,
-    isChanged:    false
-  }
+const onEditorReset = () => {
+  return objects.clone(initialState);
 };
 
 /**

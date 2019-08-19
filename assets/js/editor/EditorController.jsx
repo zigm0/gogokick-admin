@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect, mapDispatchToProps } from 'utils';
 import * as projectActions from 'actions/projectActions';
+import * as userActions from 'actions/userActions';
 import EditorBody from 'editor/EditorBody';
 import EditorNew from 'editor/EditorNew';
 import EditorSettings from 'editor/EditorSettings';
@@ -14,13 +15,15 @@ const mapStateToProps = state => ({
 @withRouter
 @connect(
   mapStateToProps,
-  mapDispatchToProps(projectActions)
+  mapDispatchToProps(projectActions, userActions)
 )
 export default class EditorController extends React.PureComponent {
   static propTypes = {
-    match:       PropTypes.object.isRequired,
-    project:     PropTypes.object.isRequired,
-    projectOpen: PropTypes.func.isRequired
+    match:        PropTypes.object.isRequired,
+    project:      PropTypes.object.isRequired,
+    projectReset: PropTypes.func.isRequired,
+    projectOpen:  PropTypes.func.isRequired,
+    userMe:       PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -29,21 +32,22 @@ export default class EditorController extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { project, match, projectOpen } = this.props;
+    const { userMe, match } = this.props;
 
-    if (!project.id) {
-      projectOpen(match.params.id || 0);
-    }
+    userMe(match.params.id);
   }
 
   /**
    * @param {*} prevProps
    */
   componentDidUpdate(prevProps) {
-    const { match, project, projectOpen } = this.props;
+    const { match, project, projectOpen, projectReset } = this.props;
+    const { match: prevMatch } = prevProps;
 
-    if (!project.isSaving && match.params.id && match.params.id !== prevProps.match.params.id) {
-      projectOpen(match.params.id || 0);
+    if (!match.params.id && prevMatch.params.id) {
+      projectReset();
+    } else if (!project.isSaving && match.params.id && match.params.id !== prevMatch.params.id) {
+      projectOpen(match.params.id);
     }
   }
 

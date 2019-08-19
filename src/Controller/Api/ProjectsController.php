@@ -33,7 +33,7 @@ class ProjectsController extends ApiController
     {
         $user = $this->getUser();
         if (!$user) {
-            throw $this->createAccessDeniedException();
+            return new JsonResponse([]);
         }
 
         $projects = $projectRepository->findByUser($user);
@@ -53,15 +53,13 @@ class ProjectsController extends ApiController
     {
         $user = $this->getUser();
         if (!$user) {
-            $templates = $this->getTemplates();
-            return new JsonResponse($templates[1]);
+            throw $this->createAccessDeniedException();
         }
 
         if ($id == '0') {
             $project = $projectRepository->findLastUpdatedByUser($user);
             if (!$project) {
-                $templates = $this->getTemplates();
-                return new JsonResponse($templates[1]);
+                throw $this->createAccessDeniedException();
             }
         } else {
             $project = $projectRepository->findByID($id);

@@ -9,7 +9,6 @@ import EditorController from 'editor/EditorController';
 
 import Header from 'editor/Header';
 import Sidebar from 'editor/Sidebar';
-import * as userActions from "./actions/userActions";
 import * as editorActions from 'actions/editorActions';
 import * as projectActions from 'actions/projectActions';
 import * as Modals from 'modals';
@@ -24,7 +23,7 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(userActions, editorActions, projectActions)
+  mapDispatchToProps(editorActions, projectActions)
 )
 export default class App extends React.Component {
   static propTypes = {
@@ -45,15 +44,6 @@ export default class App extends React.Component {
     this.state = {
       dragging: false
     };
-  }
-
-  /**
-   *
-   */
-  componentDidMount() {
-    const { userMe } = this.props;
-
-    userMe();
   }
 
   /**

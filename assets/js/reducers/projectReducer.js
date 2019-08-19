@@ -59,6 +59,13 @@ const initialState = objects.merge({
 }, window.initialState.project);
 
 /**
+ * @returns {*}
+ */
+const onProjectReset = () => {
+  return objects.clone(initialState);
+};
+
+/**
  * @param {*} state
  * @param {*} action
  * @returns {*}
@@ -176,6 +183,7 @@ const onProjectSet = (state, action) => {
 };
 
 const handlers = {
+  [types.PROJECT_RESET]:     onProjectReset,
   [types.PROJECT_BUSY]:      onProjectBusy,
   [types.PROJECT_SAVING]:    onProjectSaving,
   [types.PROJECT_MARK_READ]: onProjectMarkRead,
