@@ -128,7 +128,7 @@ export default class CanvasBlock extends React.PureComponent {
     });
 
     let buttons = '';
-    if (block.type === constants.blockType('image')) {
+    if (block.type === constants.blockType('image') && block.media) {
       buttons = (
         <div className="block-menu-title">
           {block.media.origFilename || ''}

@@ -89,11 +89,14 @@ export default class BlockEditorImage extends React.PureComponent {
     const { block, isUploading } = this.props;
     const { caption } = this.state;
 
-    const buttons = (
-      <div className="block-menu-title">
-        {block.media.origFilename || ''}
-      </div>
-    );
+    let buttons = '';
+    if (block.media) {
+      buttons = (
+        <div className="block-menu-title">
+          {block.media.origFilename || ''}
+        </div>
+      );
+    }
 
     return (
       <>

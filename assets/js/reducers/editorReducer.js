@@ -436,14 +436,15 @@ const onEditorHoverBlock = (state, action) => {
  */
 const onEditorBlockMedia = (state, action) => {
   let { canvasBlocks, blockIndex, isChanged } = objects.clone(state);
-  const { block, id, url } = action.payload;
+  const { block, id, url, origFilename } = action.payload;
 
   const blocks = Array.from(canvasBlocks[blockIndex]);
   const index = arrays.findIndexByID(blocks, block.indexOf('n-') === 0 ? block : parseInt(block, 10));
 
   blocks[index].media = {
     id,
-    url
+    url,
+    origFilename
   };
 
   canvasBlocks[blockIndex + 1] = blocks;

@@ -6,7 +6,7 @@ import { video } from 'utils';
 export default class BlockVideo extends React.PureComponent {
   static propTypes = {
     block: PropTypes.shape({
-      videoUrl: PropTypes.string.isRequired
+      videoUrl: PropTypes.string
     }).isRequired
   };
 
