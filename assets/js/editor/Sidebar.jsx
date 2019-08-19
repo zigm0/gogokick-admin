@@ -9,6 +9,7 @@ import { SidebarBlock } from 'blocks';
 import * as editorActions from 'actions/editorActions';
 
 const mapStateToProps = state => ({
+  user:          state.user,
   project:       state.project,
   sidebarBlocks: state.editor.sidebarBlocks,
   isSidebarOpen: state.editor.isSidebarOpen
@@ -20,6 +21,7 @@ const mapStateToProps = state => ({
 )
 export default class Sidebar extends React.PureComponent {
   static propTypes = {
+    user:             PropTypes.object.isRequired,
     project:          PropTypes.object.isRequired,
     sidebarBlocks:    PropTypes.array.isRequired,
     isSidebarOpen:    PropTypes.bool.isRequired,
@@ -45,12 +47,19 @@ export default class Sidebar extends React.PureComponent {
    *
    */
   handleAddMemberClick = () => {
-    const { editorModal } = this.props;
+    const { user, editorModal } = this.props;
 
-    editorModal({
-      modal: 'addMember',
-      open:  true
-    });
+    if (!user.isAuthenticated) {
+      editorModal({
+        modal: 'register',
+        open:  true
+      })
+    } else {
+      editorModal({
+        modal: 'addMember',
+        open:  true
+      });
+    }
   };
 
   /**
@@ -103,24 +112,26 @@ export default class Sidebar extends React.PureComponent {
         <h2 className="editor-sidebar-title">
           Team
         </h2>
-        <ul className="editor-team">
-          <TeamMemberItem
-            projectUser={{
-              user: project.owner,
-              role: 0
-            }}
-            onClick={this.handleMemberClick}
-            onBadgeClick={this.handleMemberBadgeClick}
-          />
-          {project.team.map(projectUser => (
+        {!!project.id && (
+          <ul className="editor-team">
             <TeamMemberItem
-              key={projectUser.id}
-              projectUser={projectUser}
+              projectUser={{
+                user: project.owner,
+                role: 0
+              }}
               onClick={this.handleMemberClick}
               onBadgeClick={this.handleMemberBadgeClick}
             />
-          ))}
-        </ul>
+            {project.team.map(projectUser => (
+              <TeamMemberItem
+                key={projectUser.id}
+                projectUser={projectUser}
+                onClick={this.handleMemberClick}
+                onBadgeClick={this.handleMemberBadgeClick}
+              />
+            ))}
+          </ul>
+        )}
         <Button theme="none" className="editor-team-btn" onClick={this.handleAddMemberClick}>
           <Icon name="plus-circle" />
           Add Member
