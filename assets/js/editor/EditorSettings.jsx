@@ -10,6 +10,7 @@ import * as projectActions from 'actions/projectActions';
 import * as mediaActions from 'actions/mediaActions';
 
 const mapStateToProps = state => ({
+  user:        state.user,
   forms:       state.forms,
   project:     state.project,
   editor:      state.editor,
@@ -22,6 +23,7 @@ const mapStateToProps = state => ({
 )
 export default class EditorSettings extends React.PureComponent {
   static propTypes = {
+    user:                PropTypes.object.isRequired,
     forms:               PropTypes.object.isRequired,
     editor:              PropTypes.object.isRequired,
     project:             PropTypes.object.isRequired,
@@ -40,12 +42,16 @@ export default class EditorSettings extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { project, formChanges, editorToggleSidebar } = this.props;
+    const { user, project, formChanges, editorToggleSidebar } = this.props;
 
-    editorToggleSidebar(false);
-    formChanges('projectSettings', {
-      name: project.name
-    });
+    if (!user.isAuthenticated || !project.id) {
+      history.push('/editor');
+    } else {
+      editorToggleSidebar(false);
+      formChanges('projectSettings', {
+        name: project.name
+      });
+    }
   }
 
   /**
@@ -65,11 +71,13 @@ export default class EditorSettings extends React.PureComponent {
    *
    */
   componentWillUnmount() {
-    const { forms, projectSettings, editorToggleSidebar } = this.props;
+    const { project, forms, projectSettings, editorToggleSidebar } = this.props;
 
-    projectSettings({
-      name: forms.projectSettings.name
-    });
+    if (project.id) {
+      projectSettings({
+        name: forms.projectSettings.name
+      });
+    }
     editorToggleSidebar(true);
   }
 

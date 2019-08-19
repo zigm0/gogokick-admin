@@ -41,14 +41,14 @@ export default class EditorController extends React.PureComponent {
    * @param {*} prevProps
    */
   componentDidUpdate(prevProps) {
-    const { match, project, projectOpen, projectReset } = this.props;
+/*    const { match, project, projectOpen, projectReset } = this.props;
     const { match: prevMatch } = prevProps;
 
     if (!match.params.id && prevMatch.params.id) {
       projectReset();
-    } else if (!project.isSaving && match.params.id && match.params.id !== prevMatch.params.id) {
+    } else if (!project.isSaving && match.params.id && match.params.id !== '0' && match.params.id !== prevMatch.params.id) {
       projectOpen(match.params.id);
-    }
+    }*/
   }
 
   /**
