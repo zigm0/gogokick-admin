@@ -78,6 +78,13 @@ class Block
      * @ORM\Column(type="string", length=255)
      * @Groups({"web"})
      */
+    protected $videoUrl = '';
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"web"})
+     */
     protected $caption = '';
 
     /**
@@ -229,6 +236,26 @@ class Block
     public function setText(string $text): Block
     {
         $this->text = $text;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVideoUrl(): ?string
+    {
+        return $this->videoUrl;
+    }
+
+    /**
+     * @param string $videoUrl
+     *
+     * @return Block
+     */
+    public function setVideoUrl(string $videoUrl): Block
+    {
+        $this->videoUrl = $videoUrl;
 
         return $this;
     }

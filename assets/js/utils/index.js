@@ -13,6 +13,7 @@ export { default as router } from './router';
 export { default as system } from './system';
 export { default as team } from './team';
 export { default as constants } from './constants';
+export { default as video } from './video';
 
 export {
   connect,

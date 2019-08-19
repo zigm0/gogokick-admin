@@ -1,17 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, mapDispatchToProps } from 'utils';
+import YouTube from 'react-youtube';
+import { video } from 'utils';
 
-const mapStateToProps = state => ({
-
-});
-
-@connect(
-  mapStateToProps,
-  mapDispatchToProps()
-)
 export default class BlockVideo extends React.PureComponent {
-  static propTypes = {};
+  static propTypes = {
+    block: PropTypes.shape({
+      videoUrl: PropTypes.string.isRequired
+    }).isRequired
+  };
 
   static defaultProps = {};
 
@@ -19,9 +16,22 @@ export default class BlockVideo extends React.PureComponent {
    * @returns {*}
    */
   render() {
+    const { block } = this.props;
+
+    const videoId = video.extractYoutubeId(block.videoUrl);
+    const opts = {
+      width:      '100%',
+      playerVars: { // https://developers.google.com/youtube/player_parameters
+        autoplay: 0
+      }
+    };
+
     return (
       <div>
-        Component
+        <YouTube
+          videoId={videoId}
+          opts={opts}
+        />
       </div>
     );
   }

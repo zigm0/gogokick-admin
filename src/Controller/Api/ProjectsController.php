@@ -145,6 +145,9 @@ class ProjectsController extends ApiController
                             $block->setMedia($media);
                         }
                         break;
+                    case Block::TYPE_VIDEO:
+                        $block->setVideoUrl($blockData['videoUrl']);
+                        break;
                 }
 
                 $this->em->persist($block);
@@ -166,6 +169,9 @@ class ProjectsController extends ApiController
                                 $media = $this->getMedia($blockData['media']['id']);
                                 $block->setMedia($media);
                             }
+                            break;
+                        case Block::TYPE_VIDEO:
+                            $block->setVideoUrl($blockData['videoUrl']);
                             break;
                     }
 

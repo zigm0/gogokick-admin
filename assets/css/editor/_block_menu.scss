@@ -25,7 +25,8 @@
     border-top-right-radius: $border-radius-blocks;
   }
 
-  &.block-menu-image {
+  &.block-menu-image,
+  &.block-menu-video {
     left: 0;
     width: $width-block !important;
   }
@@ -81,9 +82,4 @@
     cursor: default;
     opacity: 0.5;
   }
-}
-
-.block-menu-item-remove {
-  margin-left: auto;
-  margin-right: 0;
 }

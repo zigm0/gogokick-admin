@@ -61,6 +61,7 @@
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
     "react-scrollbars-custom": "^4.0.16",
+    "react-youtube": "^7.9.0",
     "recursive-diff": "^0.1.4",
     "redux": "^4.0.2",
     "redux-arc": "^0.7.5",

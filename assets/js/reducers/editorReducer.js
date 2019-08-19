@@ -311,7 +311,7 @@ const onEditorRemove = (state, action) => {
  */
 const onEditorChange = (state, action) => {
   let { canvasBlocks, blockIndex, isChanged } = objects.clone(state);
-  const { id, text, caption, description, isHeadline } = action.payload;
+  const { id, text, caption, description, videoUrl, isHeadline } = action.payload;
 
   const blocks = Array.from(canvasBlocks[blockIndex]);
   const index  = arrays.findIndexByID(blocks, id);
@@ -321,6 +321,7 @@ const onEditorChange = (state, action) => {
     blocks[index].caption        = caption;
     blocks[index].isHeadline     = isHeadline;
     blocks[index].description    = description;
+    blocks[index].videoUrl       = videoUrl;
     isChanged                    = true;
     canvasBlocks[blockIndex + 1] = blocks;
     blockIndex += 1;

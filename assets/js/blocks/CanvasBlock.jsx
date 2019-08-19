@@ -119,7 +119,7 @@ export default class CanvasBlock extends React.PureComponent {
 
     const isActive = activeBlockID === block.id;
     const isHover  = hoverBlockID === block.id && !activeBlockID;
-    const isEmpty  = block.text === '' && !block.media;
+    const isEmpty  = block.text === '' && !block.media && !block.videoUrl;
     const classes  = classNames('block-container', {
       'block-hover':    isHover,
       'block-active':   isActive,

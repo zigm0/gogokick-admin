@@ -57,7 +57,7 @@
   }
 }
 
-.block-expanded:not(.block-image) {
+.block-expanded:not(.block-image):not(.block-video) {
   cursor: default;
   z-index: 4;
   // position: absolute;
@@ -224,6 +224,10 @@
   &.block-dragging {
     background-color: #FFF;
   }
+}
+
+.block-video {
+  margin-bottom: 12px;
 }
 
 .block-description {
