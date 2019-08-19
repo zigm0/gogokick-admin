@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import ContentEditable from 'react-contenteditable';
 import { connect, browser, objects, mapDispatchToProps } from 'utils';
 import { Button } from 'components';
@@ -124,6 +125,9 @@ export default class BlockEditorText extends React.PureComponent {
     const { text, cmds } = this.state;
 
     const html = block.isHeadline ? `<h3>${text}</h3>` : text;
+    const classes = classNames('block-editor block-editor-text block-expanded', {
+      'block-editor-headline': block.isHeadline
+    });
 
     return (
       <>
@@ -191,7 +195,7 @@ export default class BlockEditorText extends React.PureComponent {
             />
           </div>
         </div>
-        <div className="block-editor block-editor-text block-expanded">
+        <div className={classes}>
           <ContentEditable
             html={html}
             innerRef={this.content}

@@ -26,6 +26,10 @@
   border-radius: $border-radius-blocks;
   margin-bottom: $margin-bottom-block;
 
+  .block-active & {
+    position: absolute;
+  }
+
   &.block-text-headline {
     margin-bottom: 20px;
   }
@@ -52,7 +56,7 @@
 .block-expanded:not(.block-image) {
   cursor: default;
   z-index: 4;
-  position: absolute;
+  // position: absolute;
   width: $width-block + ($gutter-size * 2) !important;
   left: -$gutter-size;
   right: -$gutter-size;
@@ -179,6 +183,7 @@
     font-weight: 400;
     font-size: 21px;
     line-height: 30px;
+    margin-bottom: 0;
 
     &.block-text-headline-about {
       margin-bottom: 30px;

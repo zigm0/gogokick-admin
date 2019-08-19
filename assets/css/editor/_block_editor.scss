@@ -1,16 +1,24 @@
 @import "../vars";
 
 .block-editor {
+  position: absolute;
   margin-bottom: $margin-bottom-block;
   width: 100%;
 
   &.block-editor-text {
     padding: 0 $gutter-size !important;
   }
+
+  &.block-editor-headline {
+    margin-bottom: $margin-bottom-block - 10px;
+  }
 }
 
 .block-editor-text {
   // min-height: $height-block-text;
+  h3 {
+    margin-bottom: 0;
+  }
 }
 
 .block-editor-image {
@@ -31,6 +39,7 @@
 
     input {
       width: 100%;
+      padding-top: 2px;
       font-size: 14px;
       font-style: italic;
       text-align: center;

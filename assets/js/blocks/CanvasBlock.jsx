@@ -56,28 +56,19 @@ export default class CanvasBlock extends React.PureComponent {
    * @param {*} nextProps
    */
   componentWillUpdate(nextProps) {
-    const { block, hoverBlockID, activeBlockID } = this.props;
+    const { hoverBlockID } = this.props;
+    const { hoverBlockID: nextHoverBlockID } = nextProps;
 
-    if (block.type !== 1) {
-      // return;
+    if (hoverBlockID !== nextHoverBlockID) {
+      return;
     }
 
-    const nextBlock  = nextProps.block;
-    const isActive   = activeBlockID === block.id;
-    const isHover    = hoverBlockID === block.id;
-    const willActive = nextProps.activeBlockID === nextProps.block.id;
-    const willHover  = nextProps.hoverBlockID === nextProps.block.id;
-    // const isEmpty    = nextBlock.text === '' && !nextBlock.media;
-    const isEmpty = false;
-
-    if (!isEmpty && (isActive !== willActive || isHover !== willHover)) {
-      if (willActive || willHover) {
-        this.$inner
-          .height(1)
-          .height(this.$inner[0].scrollHeight);
-      } else {
-        this.$inner.css('height', 'auto');
-      }
+    if (nextProps.activeBlockID === nextProps.block.id) {
+      this.$inner
+        .height(1)
+        .height(this.$inner[0].scrollHeight);
+    } else {
+      this.$inner.css('height', 'auto');
     }
   }
 
@@ -85,11 +76,9 @@ export default class CanvasBlock extends React.PureComponent {
    *
    */
   handleChange = () => {
-    // if (this.inner.current.style.height !== 'auto') {
-      this.$inner
-        .height(1)
-        .height(this.$inner[0].scrollHeight);
-    // }
+    this.$inner
+      .height(1)
+      .height(this.$inner[0].scrollHeight);
   };
 
   /**
