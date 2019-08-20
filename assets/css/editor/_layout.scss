@@ -30,7 +30,7 @@ a {
 }
 
 .editor-sidebar {
-  flex: 1 0 300px;
+  flex: 1 0 $width-sidebar;
   transition: transform .3s ease-in-out;
 }
 

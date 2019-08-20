@@ -9,14 +9,6 @@
   background-color: $color-header;
   border-bottom: darken($color-header, 10%);
 
-  .brand {
-    margin: 0;
-
-    img {
-      height: 50px;
-    }
-  }
-
   .btn {
     .icon {
       @include media-xl {
@@ -33,22 +25,24 @@
 }
 
 .editor-header-left {
-  flex-grow: 1;
-  width: 16%;
+  flex: 0 0 $width-sidebar;
   padding-left: $gutter-size;
-  display: flex;
+  text-align: center;
+
+  img {
+    height: 50px;
+  }
 }
 
 .editor-header-middle {
   flex-grow: 2;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .editor-header-right {
-  flex-grow: 1;
-  width: 16%;
+  flex: 0 0 $width-sidebar;
   display: flex;
   justify-content: flex-end;
 }
