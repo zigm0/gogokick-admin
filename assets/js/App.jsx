@@ -105,8 +105,9 @@ export default class App extends React.Component {
             <div className="editor-content">
               <Router history={history}>
                 <Switch>
+                  <Route exact path="/editor" component={EditorController} />
                   <Route exact path="/editor/new" component={EditorController} />
-                  <Route exact path="/editor/:id?" component={EditorController} />
+                  <Route exact path="/editor/:id" component={EditorController} />
                   <Route exact path="/editor/:id/settings" component={EditorController} />
                 </Switch>
               </Router>

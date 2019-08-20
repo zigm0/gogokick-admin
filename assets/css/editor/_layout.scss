@@ -31,10 +31,12 @@ a {
 
 .editor-sidebar {
   flex: 1 0 300px;
-  transition: all .3s ease-out;
+  transition: transform .3s ease-in-out;
+  will-change: transform;
 }
 
 .editor-content {
   width: 100%;
-  transition: all .3s ease-out;
+  transition: transform .3s ease-in-out;
+  will-change: transform;
 }

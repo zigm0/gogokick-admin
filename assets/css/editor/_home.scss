@@ -1,0 +1,21 @@
+@import "../vars";
+
+.editor-home {
+  padding-top: $gutter-size;
+
+  .column {
+    margin-bottom: $gutter-size;
+  }
+
+  .card-project {
+    .card-body {
+      height: 175px;
+    }
+
+    &:hover {
+      .card-footer {
+        background-color: $color-primary-selected;
+      }
+    }
+  }
+}

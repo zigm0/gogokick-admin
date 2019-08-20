@@ -5,6 +5,7 @@ import { connect, mapDispatchToProps } from 'utils';
 import * as projectActions from 'actions/projectActions';
 import * as userActions from 'actions/userActions';
 import * as uiActions from 'actions/uiActions';
+import EditorHome from 'editor/EditorHome';
 import EditorBody from 'editor/EditorBody';
 import EditorNew from 'editor/EditorNew';
 import EditorSettings from 'editor/EditorSettings';
@@ -34,9 +35,12 @@ export default class EditorController extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { userMe, match } = this.props;
+    const { userMe, match, uiWorkspace } = this.props;
 
-    userMe(match.params.id);
+    userMe();
+    if (match.path === '/editor') {
+      uiWorkspace('home');
+    }
   }
 
   /**
@@ -48,7 +52,10 @@ export default class EditorController extends React.PureComponent {
 
     if (match.path !== prevMatch.path) {
       switch (match.path) {
-        case '/editor/:id?':
+        case '/editor':
+          uiWorkspace('home');
+          break;
+        case '/editor/:id':
           uiWorkspace('editor');
           break;
         case '/editor/new':
@@ -67,6 +74,7 @@ export default class EditorController extends React.PureComponent {
   render() {
     return (
       <Switch>
+        <Route exact path="/editor" component={EditorHome} />
         <Route exact path="/editor/new" component={EditorNew} />
         <Route exact path="/editor/:id?" component={EditorBody} />
         <Route exact path="/editor/:id/settings" component={EditorSettings} />

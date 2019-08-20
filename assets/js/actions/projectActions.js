@@ -48,14 +48,18 @@ export const projectOpen = (id) => {
     dispatch(projectBusy(true));
     api.get(router.generate('api_projects_open', { id }))
       .then((payload) => {
-        history.push(`/editor/${payload.id}`);
         dispatch(editorNew(payload));
         dispatch({
           type: PROJECT_OPEN,
           payload,
         });
+        setTimeout(() => {
+          dispatch(projectBusy(false));
+          history.push(`/editor/${payload.id}`);
+        }, 500);
+
       })
-      .finally(() => {
+      .catch(() => {
         dispatch(projectBusy(false));
       });
   };
@@ -177,10 +181,7 @@ export const projectSettings = (payload) => {
 
     const { project } = getState();
     if (project.id) {
-      api.post(router.generate('api_projects_settings', { id: project.id }), project)
-        .then((resp) => {
-          console.log(resp);
-        });
+      api.post(router.generate('api_projects_settings', { id: project.id }), project);
     }
   };
 };

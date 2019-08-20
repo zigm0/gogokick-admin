@@ -29,21 +29,16 @@ export const userBusy = (payload) => {
 };
 
 /**
- * @param {number} projectId
  * @returns {Function}
  */
-export const userMe = (projectId) => {
-  return (dispatch, getState) => {
+export const userMe = () => {
+  return (dispatch) => {
     api.get(router.generate('api_user_me'))
       .then((payload) => {
         dispatch({
           type: USER_ME,
           payload
         });
-
-        if (getState().user.isAuthenticated) {
-          dispatch(projectOpen(projectId || 0));
-        }
       });
   };
 };

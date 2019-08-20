@@ -15,10 +15,9 @@ const mapStateToProps = state => ({
 )
 export default class EditorBody extends React.PureComponent {
   static propTypes = {
-    match:        PropTypes.object.isRequired,
-    project:      PropTypes.object.isRequired,
-    projectReset: PropTypes.func.isRequired,
-    projectOpen:  PropTypes.func.isRequired,
+    match:       PropTypes.object.isRequired,
+    project:     PropTypes.object.isRequired,
+    projectOpen: PropTypes.func.isRequired,
   };
 
   /**
@@ -30,22 +29,6 @@ export default class EditorBody extends React.PureComponent {
     const matchId = parseInt(match.params.id, 10);
     if (!isNaN(matchId) && project.id !== matchId) {
       projectOpen(matchId);
-    }
-  }
-
-  /**
-   * @param {*} prevProps
-   */
-  componentDidUpdate(prevProps) {
-    const { match, projectOpen, projectReset } = this.props;
-    const { match: prevMatch } = prevProps;
-
-    if (match.params.id !== prevMatch.params.id) {
-      if (!match.params.id) {
-        projectReset();
-      } else {
-        projectOpen(match.params.id);
-      }
     }
   }
 
