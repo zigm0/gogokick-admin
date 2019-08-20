@@ -32,11 +32,9 @@ a {
 .editor-sidebar {
   flex: 1 0 300px;
   transition: transform .3s ease-in-out;
-  will-change: transform;
 }
 
 .editor-content {
   width: 100%;
   transition: transform .3s ease-in-out;
-  will-change: transform;
 }
