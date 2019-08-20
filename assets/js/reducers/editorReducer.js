@@ -53,6 +53,15 @@ const initialState = objects.merge({
       description: '',
       media:       null,
       isHeadline:  false
+    },
+    {
+      id:          4,
+      type:        'audio',
+      text:        '',
+      caption:     '',
+      description: '',
+      media:       null,
+      isHeadline:  false
     }
   ]
 }, window.initialState.editor);

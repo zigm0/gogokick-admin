@@ -23,6 +23,7 @@ $color-canvas-block-active-bg: #FFF;
 $color-block-text: #77bdc6;
 $color-block-image: #d977ee;
 $color-block-video: #ffc561;
+$color-block-audio: #d25151;
 
 :export {
   colorPrimary: $color-primary;
@@ -47,7 +48,7 @@ $gutter-size-sm: $gutter-size / 2;
 $height-header: 56px;
 $height-footer: 100px;
 $width-block: 680px;
-$border-radius-blocks: 0.3rem;
+$border-radius-blocks: 0;
 $height-block-menu: 40px;
 $height-block-text: 100px;
 $height-block-image: 300px;

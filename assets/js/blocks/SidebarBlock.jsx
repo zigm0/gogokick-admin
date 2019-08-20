@@ -6,7 +6,7 @@ import { Icon } from 'components';
 
 export default class SidebarBlock extends React.PureComponent {
   static propTypes = {
-    type:  PropTypes.oneOf(['text', 'image', 'video']).isRequired,
+    type:  PropTypes.oneOf(['text', 'image', 'video', 'audio']).isRequired,
     index: PropTypes.number.isRequired
   };
 
@@ -16,9 +16,10 @@ export default class SidebarBlock extends React.PureComponent {
    */
   getLabel = (type) => {
     return {
-      text:  'Add Text',
-      image: 'Add Image',
-      video: 'Add Video'
+      text:  'Text',
+      image: 'Image',
+      video: 'Video',
+      audio: 'Audio'
     }[type];
   };
 
@@ -30,7 +31,8 @@ export default class SidebarBlock extends React.PureComponent {
     return  {
       text:  'align-center',
       image: 'image',
-      video: 'video'
+      video: 'video',
+      audio: 'music'
     }[type];
   };
 

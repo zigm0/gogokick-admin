@@ -57,6 +57,11 @@
   border-left-color: $color-block-video;
 }
 
+.editor-sidebar-block-audio {
+  border-left-color: $color-block-audio;
+}
+
+
 .editor-sidebar-block-over {
   width: $width-block !important;
   height: 100px !important;
