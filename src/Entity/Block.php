@@ -15,10 +15,12 @@ class Block
     const TYPE_TEXT  = 1;
     const TYPE_IMAGE = 2;
     const TYPE_VIDEO = 3;
+    const TYPE_AUDIO = 4;
     const TYPES      = [
         'text'  => self::TYPE_TEXT,
         'image' => self::TYPE_IMAGE,
-        'video' => self::TYPE_VIDEO
+        'video' => self::TYPE_VIDEO,
+        'audio' => self::TYPE_AUDIO
     ];
 
     /**
@@ -79,6 +81,13 @@ class Block
      * @Groups({"web"})
      */
     protected $videoUrl = '';
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"web"})
+     */
+    protected $audioUrl = '';
 
     /**
      * @var string
@@ -256,6 +265,26 @@ class Block
     public function setVideoUrl(string $videoUrl): Block
     {
         $this->videoUrl = $videoUrl;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAudioUrl(): ?string
+    {
+        return $this->audioUrl;
+    }
+
+    /**
+     * @param string $audioUrl
+     *
+     * @return Block
+     */
+    public function setAudioUrl(string $audioUrl): Block
+    {
+        $this->audioUrl = $audioUrl;
 
         return $this;
     }

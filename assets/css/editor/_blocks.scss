@@ -57,7 +57,7 @@
   }
 }
 
-.block-expanded:not(.block-image):not(.block-video) {
+.block-expanded:not(.block-image):not(.block-video):not(.block-audio) {
   cursor: default;
   z-index: 4;
   // position: absolute;
@@ -136,6 +136,26 @@
 
     &::after {
       content: '382x100';
+    }
+
+    &.block-active {
+      background-color: $color-canvas-block-active-bg;
+      background-image: none;
+
+      &::after {
+        content: '';
+      }
+    }
+  }
+
+  &.block-audio {
+    height: $height-block-audio;
+    border-left-style: solid;
+    border-left-color: $color-block-audio;
+    background: $color-canvas-block-bg center center url(/images/block-placeholder-audio.png) no-repeat;
+
+    &::after {
+      content: '300x100';
     }
 
     &.block-active {

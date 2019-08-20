@@ -34,6 +34,8 @@ const initialState = objects.merge({
       caption:     '',
       description: '',
       media:       null,
+      videoUrl:    '',
+      audioUrl:    '',
       isHeadline:  false
     },
     {
@@ -43,6 +45,8 @@ const initialState = objects.merge({
       caption:     '',
       description: '',
       media:       null,
+      videoUrl:    '',
+      audioUrl:    '',
       isHeadline:  false
     },
     {
@@ -52,6 +56,8 @@ const initialState = objects.merge({
       caption:     '',
       description: '',
       media:       null,
+      videoUrl:    '',
+      audioUrl:    '',
       isHeadline:  false
     },
     {
@@ -61,6 +67,8 @@ const initialState = objects.merge({
       caption:     '',
       description: '',
       media:       null,
+      videoUrl:    '',
+      audioUrl:    '',
       isHeadline:  false
     }
   ]
@@ -339,7 +347,7 @@ const onEditorRemove = (state, action) => {
  */
 const onEditorChange = (state, action) => {
   let { canvasBlocks, blockIndex, isChanged } = objects.clone(state);
-  const { id, text, caption, description, videoUrl, isHeadline } = action.payload;
+  const { id, text, caption, description, videoUrl, audioUrl, isHeadline } = action.payload;
 
   const blocks = Array.from(canvasBlocks[blockIndex]);
   const index  = arrays.findIndexByID(blocks, id);
@@ -350,6 +358,7 @@ const onEditorChange = (state, action) => {
     blocks[index].isHeadline     = isHeadline;
     blocks[index].description    = description;
     blocks[index].videoUrl       = videoUrl;
+    blocks[index].audioUrl       = audioUrl;
     isChanged                    = true;
     canvasBlocks[blockIndex + 1] = blocks;
     blockIndex += 1;

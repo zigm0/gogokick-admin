@@ -149,6 +149,9 @@ class ProjectsController extends ApiController
                     case Block::TYPE_VIDEO:
                         $block->setVideoUrl($blockData['videoUrl']);
                         break;
+                    case Block::TYPE_AUDIO:
+                        $block->setAudioUrl($blockData['audioUrl']);
+                        break;
                 }
 
                 $this->em->persist($block);
@@ -173,6 +176,9 @@ class ProjectsController extends ApiController
                             break;
                         case Block::TYPE_VIDEO:
                             $block->setVideoUrl($blockData['videoUrl']);
+                            break;
+                        case Block::TYPE_AUDIO:
+                            $block->setAudioUrl($blockData['audioUrl']);
                             break;
                     }
 
@@ -244,11 +250,30 @@ class ProjectsController extends ApiController
 
         $sortOrder = 0;
         $newBlocks = new ArrayCollection();
-        foreach($model->getBlocks() as $block) {
+        foreach($model->getBlocks() as $b) {
             $block = (new Block())
-                ->setType(Block::TYPES[$block['type']])
+                ->setType(Block::TYPES[$b['type']])
                 ->setProject($project)
                 ->setSortOrder($sortOrder++);
+            switch($block->getType()) {
+                case Block::TYPE_TEXT:
+                    $block->setText($b['text']);
+                    $block->setIsHeadline($b['isHeadline']);
+                    break;
+                case Block::TYPE_IMAGE:
+                    $block->setCaption($b['caption']);
+                    if (!empty($b['media']) && !empty($b['media']['id'])) {
+                        $media = $this->getMedia($b['media']['id']);
+                        $block->setMedia($media);
+                    }
+                    break;
+                case Block::TYPE_VIDEO:
+                    $block->setVideoUrl($b['videoUrl']);
+                    break;
+                case Block::TYPE_AUDIO:
+                    $block->setAudioUrl($b['audioUrl']);
+                    break;
+            }
             $this->em->persist($block);
             $newBlocks->add($block);
         }

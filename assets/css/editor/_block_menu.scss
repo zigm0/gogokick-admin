@@ -24,7 +24,8 @@
   }
 
   &.block-menu-image,
-  &.block-menu-video {
+  &.block-menu-video,
+  &.block-menu-audio {
     left: 0;
     width: $width-block !important;
   }
@@ -54,6 +55,10 @@
 
 .block-menu-video {
   background-color: $color-block-video;
+}
+
+.block-menu-audio {
+  background-color: $color-block-audio;
 }
 
 .block-menu-group {

@@ -5,9 +5,11 @@ import { constants } from 'utils';
 import BlockEditorText from './BlockEditorText';
 import BlockEditorImage from './BlockEditorImage';
 import BlockEditorVideo from './BlockEditorVideo';
+import BlockEditorAudio from './BlockEditorAudio';
 import BlockText from './BlockText';
 import BlockImage from './BlockImage';
 import BlockVideo from './BlockVideo';
+import BlockAudio from './BlockAudio';
 
 export default class BlockBody extends React.PureComponent {
   static propTypes = {
@@ -37,7 +39,7 @@ export default class BlockBody extends React.PureComponent {
    */
   render() {
     const { block, isActive, isHover, isDragging, onChange } = this.props;
-    const isEmpty = block.text === '' && !block.media && !block.videoUrl;
+    const isEmpty = block.text === '' && !block.media && !block.videoUrl && !block.audioUrl;
 
     if (isActive) {
       switch (block.type) {
@@ -47,6 +49,8 @@ export default class BlockBody extends React.PureComponent {
           return <BlockEditorImage block={block} onChange={onChange} />;
         case 3:
           return <BlockEditorVideo block={block} onChange={onChange} />;
+        case 4:
+          return <BlockEditorAudio block={block} onChange={onChange} />;
         default:
           console.error(`Invalid block type ${block.type}`);
           return null;
@@ -77,7 +81,8 @@ export default class BlockBody extends React.PureComponent {
         {{
           1: <BlockText block={block} />,
           2: <BlockImage block={block} />,
-          3: <BlockVideo block={block} />
+          3: <BlockVideo block={block} />,
+          4: <BlockAudio block={block} />
         }[block.type]}
       </div>
     );
