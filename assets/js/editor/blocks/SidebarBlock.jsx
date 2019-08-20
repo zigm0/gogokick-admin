@@ -1,13 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { Draggable } from 'react-beautiful-dnd';
+import { DragDropContext, Draggable } from 'react-beautiful-dnd';
+import { connect, mapDispatchToProps } from 'utils';
 import { Icon } from 'components';
 
+const mapStateToProps = state => ({
+  isDragDisabled: state.editor.isDragDisabled
+});
+
+@connect(
+  mapStateToProps,
+  mapDispatchToProps()
+)
 export default class SidebarBlock extends React.PureComponent {
   static propTypes = {
-    type:  PropTypes.oneOf(['text', 'image', 'video', 'audio']).isRequired,
-    index: PropTypes.number.isRequired
+    type:           PropTypes.oneOf(['text', 'image', 'video', 'audio']).isRequired,
+    index:          PropTypes.number.isRequired,
+    isDragDisabled: PropTypes.bool.isRequired
   };
 
   /**
@@ -54,10 +64,10 @@ export default class SidebarBlock extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { type, index } = this.props;
+    const { type, index, isDragDisabled } = this.props;
 
     return (
-      <Draggable key={type} draggableId={type} index={index}>
+      <Draggable key={type} draggableId={type} index={index} isDragDisabled={isDragDisabled}>
         {(provided, snapshot) => {
           const classes = classNames(`editor-sidebar-block editor-sidebar-block-${type}`, {
             'editor-sidebar-block-over':     snapshot.draggingOver === 'canvasBlocks',

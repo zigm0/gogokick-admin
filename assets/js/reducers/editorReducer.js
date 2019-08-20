@@ -2,15 +2,16 @@ import { objects, constants, arrays } from 'utils';
 import * as types from 'actions/editorActions';
 
 const initialState = objects.merge({
-  isBusy:        false,
-  isChanged:     false,
-  projects:      [],
-  teamMember:    null,
-  blockIndex:    0,
-  activeBlockID: 0,
-  hoverBlockID:  0,
-  canvasBlocks:  [[]],
-  sidebarBlocks: [
+  isBusy:         false,
+  isChanged:      false,
+  isDragDisabled: false,
+  projects:       [],
+  teamMember:     null,
+  blockIndex:     0,
+  activeBlockID:  0,
+  hoverBlockID:   0,
+  canvasBlocks:   [[]],
+  sidebarBlocks:  [
     {
       id:          1,
       type:        'text',
@@ -437,6 +438,20 @@ const onEditorBlockMedia = (state, action) => {
   };
 };
 
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onEditorDragDisabled = (state, action) => {
+  const isDragDisabled = action.payload;
+
+  return {
+    ...state,
+    isDragDisabled
+  };
+};
+
 const handlers = {
   [types.EDITOR_RESET]:          onEditorReset,
   [types.EDITOR_BUSY]:           onEditorBusy,
@@ -452,6 +467,7 @@ const handlers = {
   [types.EDITOR_TEAM_MEMBER]:    onEditorTeamMember,
   [types.EDITOR_PROJECTS]:       onEditorProjects,
   [types.EDITOR_CHANGED]:        onEditorChanged,
+  [types.EDITOR_DRAG_DISABLED]:  onEditorDragDisabled,
   [types.EDITOR_ACTIVATE_BLOCK]: onEditorActiveBlock,
   [types.EDITOR_HOVER_BLOCK]:    onEditorHoverBlock
 };
