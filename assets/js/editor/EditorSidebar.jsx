@@ -19,7 +19,7 @@ const mapStateToProps = state => ({
   mapStateToProps,
   mapDispatchToProps(editorActions, uiActions)
 )
-export default class Sidebar extends React.PureComponent {
+export default class EditorSidebar extends React.PureComponent {
   static propTypes = {
     workspace:        PropTypes.string.isRequired,
     user:             PropTypes.object.isRequired,

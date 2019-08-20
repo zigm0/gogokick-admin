@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect, history, mapDispatchToProps, router } from 'utils';
 import { Icon, Link } from 'components';
-import { Row, Column, Button, Container } from 'components/bootstrap';
+import { Row, Column, Button } from 'components/bootstrap';
 import UserMenu from './UserMenu';
 import * as editorActions from 'actions/editorActions';
 import * as projectActions from 'actions/projectActions';
