@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect, objects, mapDispatchToProps } from 'utils';
 import { Button, ImageUpload } from 'components';
-import Menu from './Menu';
+import BlockMenu from './BlockMenu';
 import { editorActions, mediaActions } from 'actions';
 
 const mapStateToProps = state => ({
@@ -99,7 +99,7 @@ export default class BlockEditorImage extends React.PureComponent {
 
     return (
       <>
-        <Menu block={block} buttons={buttons} />
+        <BlockMenu block={block} buttons={buttons} />
         <div className="block-editor block-editor-image">
           <ImageUpload
             media={block.media}

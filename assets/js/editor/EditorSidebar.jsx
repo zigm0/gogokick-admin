@@ -4,7 +4,7 @@ import { Droppable } from 'react-beautiful-dnd';
 import { connect, mapDispatchToProps } from 'utils';
 import { Icon, TeamMemberItem } from 'components';
 import { Button } from 'components/bootstrap';
-import { SidebarBlock } from 'blocks';
+import { SidebarBlock } from 'editor/blocks';
 import { editorActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({

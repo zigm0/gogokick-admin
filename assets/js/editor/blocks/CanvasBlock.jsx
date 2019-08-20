@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
 import { connect, constants, video, mapDispatchToProps } from 'utils';
 import { editorActions } from 'actions';
-import BlockBody from './BlockBody';
-import Menu from './Menu';
+import CanvasBlockBody from './CanvasBlockBody';
+import BlockMenu from './BlockMenu';
 
 const mapStateToProps = state => ({
   hoverBlockID:  state.editor.hoverBlockID,
@@ -153,12 +153,12 @@ export default class CanvasBlock extends React.PureComponent {
         onClick={this.handleClick}
       >
         <div ref={this.inner} className="block-container-inner">
-          <Menu
+          <BlockMenu
             block={block}
             buttons={buttons}
             className="block-container-menu"
           />
-          <BlockBody
+          <CanvasBlockBody
             block={block}
             isActive={isActive}
             isHover={isHover}

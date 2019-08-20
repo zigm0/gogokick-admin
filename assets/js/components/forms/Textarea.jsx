@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { objects } from 'utils';
 import { FormGroup } from 'components/forms';
-import FormContext from 'context/formContext';
+import FormContext from 'components/forms/formContext';
 
 /**
  *

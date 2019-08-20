@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect, video, mapDispatchToProps, objects } from 'utils';
 import { Icon } from 'components';
-import Menu from './Menu';
+import BlockMenu from './BlockMenu';
 import { editorActions } from 'actions';
 
 const mapStateToProps = state => ({
@@ -91,7 +91,7 @@ export default class BlockEditorAudio extends React.PureComponent {
 
     return (
       <>
-        <Menu block={block} buttons={buttons} />
+        <BlockMenu block={block} buttons={buttons} />
         <div className="block-editor block-editor-audio" style={styles}>
           <div className="block-editor-audio-mask" />
           <div className="block-editor-audio-contents">

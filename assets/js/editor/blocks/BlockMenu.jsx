@@ -13,7 +13,7 @@ const mapStateToProps = state => ({
   mapStateToProps,
   mapDispatchToProps(editorActions, uiActions)
 )
-export default class Menu extends React.PureComponent {
+export default class BlockMenu extends React.PureComponent {
   static propTypes = {
     block: PropTypes.shape({
       id:   PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import FormContext from 'context/formContext';
+import FormContext from 'components/forms/formContext';
 import { objects, react, connect } from 'utils';
 import { formChange, formReset, formComplete } from 'actions/formActions';
 import { Row, Column, Alert } from 'components/bootstrap';

@@ -5,7 +5,7 @@ import ContentEditable from 'react-contenteditable';
 import { connect, browser, objects, mapDispatchToProps } from 'utils';
 import { Button } from 'components';
 import { editorActions } from 'actions';
-import Menu from './Menu';
+import BlockMenu from './BlockMenu';
 
 @connect(
   null,
@@ -171,7 +171,7 @@ export default class BlockEditorText extends React.PureComponent {
 
     return (
       <>
-        <Menu block={block} buttons={buttons} />
+        <BlockMenu block={block} buttons={buttons} />
         <div className={classes}>
           <ContentEditable
             html={html}

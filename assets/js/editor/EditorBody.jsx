@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { Droppable } from 'react-beautiful-dnd';
 import { connect, browser, mapDispatchToProps, constants } from 'utils';
 import { Container, Row, Column } from 'components/bootstrap';
-import { CanvasBlock } from 'blocks';
+import { CanvasBlock } from './blocks';
 import { editorActions, projectActions, userActions } from 'actions';
 
 const mapStateToProps = state => ({

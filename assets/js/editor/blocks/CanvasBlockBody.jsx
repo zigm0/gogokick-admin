@@ -12,11 +12,15 @@ import BlockImage from './BlockImage';
 import BlockVideo from './BlockVideo';
 import BlockAudio from './BlockAudio';
 
-export default class BlockBody extends React.PureComponent {
+export default class CanvasBlockBody extends React.PureComponent {
   static propTypes = {
     block: PropTypes.shape({
-      text: PropTypes.string,
-      type: PropTypes.number.isRequired
+      text:       PropTypes.string,
+      type:       PropTypes.number.isRequired,
+      media:      PropTypes.object,
+      videoUrl:   PropTypes.string,
+      audioUrl:   PropTypes.string,
+      isHeadline: PropTypes.bool
     }).isRequired,
     isActive:   PropTypes.bool.isRequired,
     isHover:    PropTypes.bool.isRequired,
