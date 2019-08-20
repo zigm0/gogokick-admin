@@ -29,7 +29,9 @@ export default class Avatar extends React.PureComponent {
     });
 
     return (
-      <img src={src} alt="Avatar" className={classes} {...props} />
+      <span className={classes} {...props}>
+        <img src={src} alt="Avatar" />
+      </span>
     );
   }
 }
