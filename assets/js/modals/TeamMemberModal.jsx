@@ -4,8 +4,7 @@ import { connect, mapDispatchToProps } from 'utils';
 import { Form, Input, Checkbox } from 'components/forms';
 import { Row, Column, Button } from 'components/bootstrap';
 import { Modal } from 'components';
-import * as userActions from 'actions/userActions';
-import * as formActions from 'actions/formActions';
+import { formActions, userActions } from 'actions';
 
 const mapStateToProps = state => ({
   teamMember: state.editor.teamMember

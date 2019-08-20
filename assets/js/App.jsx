@@ -8,8 +8,7 @@ import { LoadingCubes, ErrorBoundary } from 'components';
 import EditorController from 'editor/EditorController';
 import Header from 'layout/Header';
 import EditorSidebar from 'editor/EditorSidebar';
-import * as editorActions from 'actions/editorActions';
-import * as projectActions from 'actions/projectActions';
+import { editorActions, projectActions } from 'actions';
 import * as Modals from 'modals';
 
 const mapStateToProps = state => ({

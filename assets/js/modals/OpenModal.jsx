@@ -4,10 +4,7 @@ import { connect, system, history, mapDispatchToProps } from 'utils';
 import { ProjectCard } from 'cards';
 import { Row, Column, Button } from 'components/bootstrap';
 import {  Modal } from 'components';
-import * as editorActions from 'actions/editorActions';
-import * as formActions from 'actions/formActions';
-import * as projectActions from 'actions/projectActions';
-import * as uiActions from 'actions/uiActions';
+import { formActions, projectActions, editorActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({
   editor:   state.editor,

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect, video, mapDispatchToProps, objects } from 'utils';
 import { Icon } from 'components';
 import Menu from './Menu';
-import * as editorActions from 'actions/editorActions';
+import { editorActions } from 'actions';
 
 const mapStateToProps = state => ({
 

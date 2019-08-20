@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
 import { connect, constants, video, mapDispatchToProps } from 'utils';
-import * as editorActions from 'actions/editorActions';
+import { editorActions } from 'actions';
 import BlockBody from './BlockBody';
 import Menu from './Menu';
 

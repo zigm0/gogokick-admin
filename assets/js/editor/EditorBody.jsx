@@ -5,9 +5,7 @@ import { Droppable } from 'react-beautiful-dnd';
 import { connect, browser, mapDispatchToProps, constants } from 'utils';
 import { Container, Row, Column } from 'components/bootstrap';
 import { CanvasBlock } from 'blocks';
-import * as projectActions from 'actions/projectActions';
-import * as userActions from 'actions/userActions';
-import * as editorActions from 'actions/editorActions';
+import { editorActions, projectActions, userActions } from 'actions';
 
 const mapStateToProps = state => ({
   project:      state.project,

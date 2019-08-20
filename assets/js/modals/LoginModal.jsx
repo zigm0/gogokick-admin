@@ -4,9 +4,7 @@ import { connect, mapDispatchToProps } from 'utils';
 import { Button } from 'components/bootstrap';
 import { Form, Input } from 'components/forms';
 import { Modal } from 'components';
-import * as userActions from 'actions/userActions';
-import * as uiActions from 'actions/uiActions';
-import * as formActions from 'actions/formActions';
+import { formActions, userActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({
   user: state.user

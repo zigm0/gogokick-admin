@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { connect, objects, mapDispatchToProps } from 'utils';
 import { Button, ImageUpload } from 'components';
 import Menu from './Menu';
-import * as mediaActions from 'actions/mediaActions';
-import * as editorActions from 'actions/editorActions';
+import { editorActions, mediaActions } from 'actions';
 
 const mapStateToProps = state => ({
   isUploading: state.media.isUploading

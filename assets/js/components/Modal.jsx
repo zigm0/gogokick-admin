@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect, mapDispatchToProps } from 'utils';
 import { Modal as BootstrapModal, ModalHeader, ModalBody, ModalFooter, Button } from 'components/bootstrap';
-import { Icon, Avatar, ErrorBoundary } from 'components';
-import * as editorActions from 'actions/editorActions';
-import * as uiActions from 'actions/uiActions';
+import { Icon, Avatar } from 'components';
+import { editorActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({
   modals: state.ui.modals

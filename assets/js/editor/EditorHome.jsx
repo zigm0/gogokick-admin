@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect, browser, mapDispatchToProps } from 'utils';
 import { ProjectCard } from 'cards';
 import { Container, Row, Column } from 'components/bootstrap';
-import * as projectActions from 'actions/projectActions';
+import { projectActions } from 'actions';
 
 const mapStateToProps = state => ({
   projects: state.editor.projects

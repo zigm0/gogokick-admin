@@ -4,9 +4,7 @@ import { connect, history, mapDispatchToProps, router } from 'utils';
 import { Icon, Link } from 'components';
 import { Row, Column, Button } from 'components/bootstrap';
 import UserMenu from './UserMenu';
-import * as editorActions from 'actions/editorActions';
-import * as projectActions from 'actions/projectActions';
-import * as uiActions from 'actions/uiActions';
+import { editorActions, projectActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({
   editor:  state.editor,

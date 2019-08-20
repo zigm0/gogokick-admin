@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { connect, constants, mapDispatchToProps } from 'utils';
 import { Button } from 'components';
-import * as editorActions from 'actions/editorActions';
-import * as uiActions from 'actions/uiActions';
+import { editorActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({
 

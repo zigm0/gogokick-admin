@@ -4,9 +4,7 @@ import { connect, constants, browser, history, mapDispatchToProps } from 'utils'
 import { Container, Row, Column, Button } from 'components/bootstrap';
 import { Form, Input, Checkbox } from 'components/forms';
 import { ImageUpload } from 'components';
-import * as mediaActions from 'actions/mediaActions';
-import * as formActions from 'actions/formActions';
-import * as projectActions from 'actions/projectActions';
+import { mediaActions, formActions, projectActions } from 'actions';
 
 const mapStateToProps = state => ({
   user:        state.user,

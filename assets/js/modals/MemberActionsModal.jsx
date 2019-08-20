@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import { connect, mapDispatchToProps } from 'utils';
 import { Button } from 'components/bootstrap';
 import { Modal } from 'components';
-import * as userActions from 'actions/userActions';
-import * as uiActions from 'actions/uiActions';
-import * as formActions from 'actions/formActions';
-import * as projectActions from 'actions/projectActions';
+import { formActions, projectActions, userActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({
   teamMember: state.editor.teamMember

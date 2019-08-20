@@ -5,8 +5,7 @@ import { connect, mapDispatchToProps } from 'utils';
 import { Icon, TeamMemberItem } from 'components';
 import { Button } from 'components/bootstrap';
 import { SidebarBlock } from 'blocks';
-import * as editorActions from 'actions/editorActions';
-import * as uiActions from 'actions/uiActions';
+import { editorActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({
   user:          state.user,

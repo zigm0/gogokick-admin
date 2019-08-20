@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, router, mapDispatchToProps } from 'utils';
+import { connect, mapDispatchToProps } from 'utils';
 import { Avatar, Icon, Link } from 'components';
-import * as userActions from 'actions/userActions';
-import * as uiActions from 'actions/uiActions';
+import { userActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({
   user: state.user
@@ -15,9 +14,9 @@ const mapStateToProps = state => ({
 )
 export default class UserMenu extends React.PureComponent {
   static propTypes = {
-    user:        PropTypes.object.isRequired,
-    uiModal:     PropTypes.func.isRequired,
-    userLogout:  PropTypes.func.isRequired
+    user:       PropTypes.object.isRequired,
+    uiModal:    PropTypes.func.isRequired,
+    userLogout: PropTypes.func.isRequired
   };
 
   static defaultProps = {};

@@ -4,7 +4,7 @@ import Cropper from 'react-cropper';
 import { connect, mapDispatchToProps } from 'utils';
 import { Button } from 'components/bootstrap';
 import { Modal } from 'components';
-import * as mediaActions from 'actions/mediaActions';
+import { mediaActions } from 'actions';
 
 const mapStateToProps = state => ({
   media:      state.ui.modalMeta,

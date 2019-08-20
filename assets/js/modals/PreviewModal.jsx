@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect, system, mapDispatchToProps } from 'utils';
 import { Button } from 'components/bootstrap';
 import { Modal } from 'components';
-import * as formActions from 'actions/formActions';
+import { formActions } from 'actions';
 
 const mapStateToProps = state => ({
   forms:  state.forms,

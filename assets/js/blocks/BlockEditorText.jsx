@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import ContentEditable from 'react-contenteditable';
 import { connect, browser, objects, mapDispatchToProps } from 'utils';
 import { Button } from 'components';
-import * as editorActions from 'actions/editorActions';
+import { editorActions } from 'actions';
 import Menu from './Menu';
 
 @connect(

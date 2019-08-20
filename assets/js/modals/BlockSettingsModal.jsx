@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { connect, objects, mapDispatchToProps } from 'utils';
 import { Modal } from 'components';
 import { Form, Textarea } from 'components/forms';
-import * as editorActions from 'actions/editorActions';
-import * as formActions from 'actions/formActions';
+import { formActions, editorActions } from 'actions';
 
 const mapStateToProps = state => ({
   blockSettings: state.forms.blockSettings,
