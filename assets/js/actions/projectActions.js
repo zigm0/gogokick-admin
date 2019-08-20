@@ -56,7 +56,7 @@ export const projectOpen = (id) => {
         setTimeout(() => {
           dispatch(projectBusy(false));
           history.push(`/editor/${payload.id}`);
-        }, 500);
+        }, 1000);
 
       })
       .catch(() => {

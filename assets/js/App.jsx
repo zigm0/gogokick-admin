@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { Route, Router, Switch } from 'react-router-dom';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { connect, history, constants, mapDispatchToProps } from 'utils';
-import { Loading, ErrorBoundary } from 'components';
+import { LoadingCubes, ErrorBoundary } from 'components';
 import EditorController from 'editor/EditorController';
 
 import Header from 'editor/Header';
@@ -116,7 +116,7 @@ export default class App extends React.Component {
         </DragDropContext>
         {this.renderModals()}
         {(userIsBusy || editorIsBusy || projectIsBusy) && (
-          <Loading middle />
+          <LoadingCubes />
         )}
       </div>
     );
