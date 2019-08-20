@@ -98,7 +98,7 @@ export default class Header extends React.PureComponent {
         </div>
         <div className="editor-header-middle">
           <Row style={{ width: '100%' }}>
-            <Column className="editor-header-buttons d-none d-lg-block d-xl-block" offsetXl={4}>
+            <Column className="editor-header-buttons d-none d-lg-block d-xl-block" offsetXl={3}>
               <Button icon="file-alt" onClick={this.handleNewClick} sm>
                 New
               </Button>

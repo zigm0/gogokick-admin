@@ -80,15 +80,14 @@
   cursor: pointer;
   color: #FFF;
   border: 0;
-  opacity: 0.8;
   padding: 0 0.5rem;
   margin-right: 0.5rem;
   font-size: 1rem;
   background-color: transparent;
 
   &:hover:not(:disabled) {
-    opacity: 1;
     color: #FFF;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
   }
 
   &.btn-active {
