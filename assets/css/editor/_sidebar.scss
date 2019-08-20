@@ -23,30 +23,38 @@
 .editor-sidebar-block {
   cursor: pointer;
   color: #FFF;
+  background-color: #5C5C5C;
   user-select: none;
   border-radius: $border-radius-blocks;
-  padding: $gutter-size-lg;
+  padding: $gutter-size;
   text-align: center;
   margin-bottom: $gutter-size-sm;
-  background-size: contain;
+  border-left-width: 4px;
+  border-left-style: solid;
   box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.25);
   transition: width 0.2s;
+  display: flex;
+  align-items: center;
 
   &:hover {
     box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.5);
   }
+
+  .icon {
+    margin-right: 1rem;
+  }
 }
 
 .editor-sidebar-block-text {
-  background-color: $color-block-text;
+  border-left-color: $color-block-text;
 }
 
 .editor-sidebar-block-image {
-  background-color: $color-block-image;
+  border-left-color: $color-block-image;
 }
 
 .editor-sidebar-block-video {
-  background-color: $color-block-video;
+  border-left-color: $color-block-video;
 }
 
 .editor-sidebar-block-over {

@@ -2,9 +2,9 @@
 
 .editor-header {
   height: $height-header;
+  color: #FFF;
   display: flex;
   justify-content: space-between;
-  color: #FFF;
   align-items: center;
   background-color: $color-header;
   border-bottom: darken($color-header, 10%);

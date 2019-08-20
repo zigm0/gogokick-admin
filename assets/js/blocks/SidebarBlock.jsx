@@ -71,9 +71,8 @@ export default class SidebarBlock extends React.PureComponent {
                 className={classes}
                 style={provided.draggableProps.style}
               >
-                <div>{this.getLabel(type)}</div>
                 <Icon name={this.getIcon(type)} size={2} />
-                {provided.placeholder}
+                <div>{this.getLabel(type)}</div>
               </li>
               {snapshot.isDragging && this.renderClone()}
             </>
