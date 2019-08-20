@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, constants, history, mapDispatchToProps } from 'utils';
+import { connect, constants, browser, history, mapDispatchToProps } from 'utils';
 import { Container, Row, Column, Button } from 'components/bootstrap';
 import { Form, Input, Checkbox } from 'components/forms';
 import { ImageUpload } from 'components';
@@ -49,6 +49,7 @@ export default class EditorNew extends React.PureComponent {
     if (!user.isAuthenticated) {
       history.push('/editor');
     }
+    browser.title('New Project');
   }
 
   /**

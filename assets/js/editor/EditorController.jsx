@@ -35,18 +35,23 @@ export default class EditorController extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { userMe, match, uiWorkspace } = this.props;
+    const { userMe } = this.props;
 
     userMe();
-    if (match.path === '/editor') {
-      uiWorkspace('home');
-    }
+    this.handleChange({ match: { path: '' }});
   }
 
   /**
    * @param {*} prevProps
    */
   componentDidUpdate(prevProps) {
+    this.handleChange(prevProps);
+  }
+
+  /**
+   * @param {*} prevProps
+   */
+  handleChange = (prevProps) => {
     const { uiWorkspace, match } = this.props;
     const { match: prevMatch } = prevProps;
 
@@ -66,7 +71,7 @@ export default class EditorController extends React.PureComponent {
           break;
       }
     }
-  }
+  };
 
   /**
    * @returns {*}

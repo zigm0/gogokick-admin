@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, history, mapDispatchToProps } from 'utils';
+import { connect, browser, mapDispatchToProps } from 'utils';
 import { ProjectCard } from 'cards';
 import { Container, Row, Column } from 'components/bootstrap';
 import * as projectActions from 'actions/projectActions';
@@ -20,6 +20,13 @@ export default class EditorHome extends React.PureComponent {
   };
 
   static defaultProps = {};
+
+  /**
+   *
+   */
+  componentDidMount() {
+    browser.title('Editor');
+  }
 
   /**
    * @param {Event} e

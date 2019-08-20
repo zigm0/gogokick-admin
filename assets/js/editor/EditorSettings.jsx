@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, system, history, mapDispatchToProps } from 'utils';
+import { connect, system, browser, history, mapDispatchToProps } from 'utils';
 import { Row, Column, Button } from 'components/bootstrap';
 import { Form, Input } from 'components/forms';
 import { ImageUpload } from 'components';
@@ -58,6 +58,7 @@ export default class EditorSettings extends React.PureComponent {
   componentDidUpdate(prevProps) {
     const { project, formChanges } = this.props;
 
+    browser.title(`${project.name} - Settings`);
     if (prevProps.project.name !== project.name) {
       formChanges('projectSettings', {
         name: project.name

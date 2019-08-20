@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, mapDispatchToProps } from 'utils';
+import { connect, browser, mapDispatchToProps } from 'utils';
 import Canvas from 'editor/Canvas';
 import * as projectActions from 'actions/projectActions';
 import * as userActions from 'actions/userActions';
@@ -30,6 +30,15 @@ export default class EditorBody extends React.PureComponent {
     if (!isNaN(matchId) && project.id !== matchId) {
       projectOpen(matchId);
     }
+  }
+
+  /**
+   *
+   */
+  componentDidUpdate() {
+    const { project } = this.props;
+
+    browser.title(project.name);
   }
 
   /**
