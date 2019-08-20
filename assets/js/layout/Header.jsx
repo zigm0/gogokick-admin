@@ -97,28 +97,28 @@ export default class Header extends React.PureComponent {
         <div className="editor-header-middle">
           <Row style={{ width: '100%' }}>
             <Column className="editor-header-buttons d-none d-lg-block d-xl-block" offsetXl={3}>
-              <Button icon="file-alt" onClick={this.handleNewClick} sm>
+              <Button onClick={this.handleNewClick}>
                 New
               </Button>
-              <Button icon="folder-open" onClick={this.handleOpenClick} sm>
+              <Button onClick={this.handleOpenClick}>
                 Open
               </Button>
-              <Button icon="eye" onClick={this.handlePreviewClick} sm>
+              <Button onClick={this.handlePreviewClick}>
                 Preview
               </Button>
-              <Button icon="download" sm>
+              <Button>
                 Export
               </Button>
-              <Button icon="cog" onClick={this.handleSettingsClick} sm>
+              <Button onClick={this.handleSettingsClick}>
                 Settings
               </Button>
-              <Button icon="undo" disabled={blockIndex === 0} onClick={editorUndo} sm>
+              <Button disabled={blockIndex === 0} onClick={editorUndo}>
                 Undo
               </Button>
-              <Button icon="redo" disabled={blockIndex === canvasBlocks.length - 1} onClick={editorRedo} sm>
+              <Button disabled={blockIndex === canvasBlocks.length - 1} onClick={editorRedo}>
                 Redo
               </Button>
-              <Button icon="question-circle" onClick={this.handleHelpClick} sm>
+              <Button onClick={this.handleHelpClick}>
                 Help
               </Button>
             </Column>
