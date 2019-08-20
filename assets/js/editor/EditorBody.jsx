@@ -83,7 +83,7 @@ export default class EditorBody extends React.PureComponent {
         <div className={bodyClasses}>
           <Container className="h-100">
             <Row>
-              <Column className="editor-canvas-body-col" xl={8} offsetXl={1}>
+              <Column className="editor-canvas-body-col" xl={8}>
                 <div className="block-text">
                   <h3 className="block-text-headline-about">About</h3>
                 </div>
