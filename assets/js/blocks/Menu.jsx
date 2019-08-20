@@ -111,7 +111,7 @@ export default class Menu extends React.PureComponent {
         <div className="block-menu-group block-menu-middle-group text-center">
           {buttons}
         </div>
-        <div className="block-menu-group text-right">
+        <div className="block-menu-group justify-content-end">
           <Button
             title="Delete"
             icon="times"

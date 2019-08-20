@@ -3,7 +3,7 @@
 .block-menu {
   height: $height-block-menu;
   position: absolute;
-  top: -$height-block-menu + 3px;
+  top: -$height-block-menu;
   left: -$gutter-size;
   padding: 0 $gutter-size-sm;
   width: $width-block + ($gutter-size * 2) !important;
@@ -17,7 +17,7 @@
 
   .block-empty & {
     left: 0;
-    top: -$height-block-menu + 3px;
+    top: -$height-block-menu;
     width: $width-block !important;
     border-top-left-radius: $border-radius-blocks;
     border-top-right-radius: $border-radius-blocks;
@@ -58,6 +58,8 @@
 
 .block-menu-group {
   width: 33.3%;
+  display: flex;
+  align-items: center;
 
   .block-menu-item:last-child {
     margin-right: 0;
@@ -66,6 +68,7 @@
 
 .block-menu-middle-group {
   width: 66.3%;
+  justify-content: center;
 }
 
 .block-menu-item {
@@ -73,9 +76,9 @@
   color: #FFF;
   border: 0;
   opacity: 0.8;
-  padding: 0;
-  margin-right: 1rem;
-  font-size: 1.4rem;
+  padding: 0 0.5rem;
+  margin-right: 0.5rem;
+  font-size: 1rem;
   background-color: transparent;
 
   &:hover:not(:disabled) {
