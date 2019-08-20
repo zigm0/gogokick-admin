@@ -9,6 +9,20 @@ export function videoExtractYoutubeId(url) {
   return (match&&match[7].length === 11) ? match[7] : false;
 }
 
+/**
+ * @param {string} url
+ * @returns {string|boolean}
+ */
+export function videoYoutubeShortUrl(url) {
+  const youtubeId = videoExtractYoutubeId(url);
+  if (!youtubeId) {
+    return false;
+  }
+
+  return `https://youtu.be/${youtubeId}`;
+}
+
 export default {
-  extractYoutubeId: videoExtractYoutubeId
+  extractYoutubeId: videoExtractYoutubeId,
+  youtubeShortUrl:  videoYoutubeShortUrl
 }

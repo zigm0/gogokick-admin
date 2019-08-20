@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect, video, mapDispatchToProps, objects } from 'utils';
+import { Icon } from 'components';
 import Menu from './Menu';
 import * as editorActions from 'actions/editorActions';
 
@@ -35,7 +36,7 @@ export default class BlockEditorVideo extends React.PureComponent {
     if (props.block.videoUrl) {
       const youtubeId = video.extractYoutubeId(props.block.videoUrl);
       if (youtubeId) {
-        backgroundImage = `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`;
+        backgroundImage = `https://img.youtube.com/vi/${youtubeId}/0.jpg`;
       }
     }
 
@@ -86,23 +87,39 @@ export default class BlockEditorVideo extends React.PureComponent {
     const { block } = this.props;
     const { videoUrl, backgroundImage } = this.state;
 
+    let buttons = '';
+    if (videoUrl) {
+      buttons = (
+        <div className="block-menu-title">
+          {video.youtubeShortUrl(videoUrl)}
+        </div>
+      );
+    }
+
     const styles = {
       backgroundImage: `url(${backgroundImage})`
     };
 
     return (
       <>
-        <Menu block={block} />
+        <Menu block={block} buttons={buttons} />
         <div className="block-editor block-editor-video" style={styles}>
-          <input
-            ref={this.input}
-            name="videoUrl"
-            id="input-block-editor-video-url"
-            value={videoUrl}
-            className="form-control"
-            placeholder="https://www.youtube.com/..."
-            onChange={this.handleChange}
-          />
+          <div className="block-editor-video-mask" />
+          <div className="block-editor-video-contents">
+            <div>
+              <Icon name="youtube" fab />
+              <Icon name="vimeo" fab />
+            </div>
+            <input
+              ref={this.input}
+              name="videoUrl"
+              id="input-block-editor-video-url"
+              value={videoUrl}
+              className="form-control"
+              placeholder="https://www.youtube.com/..."
+              onChange={this.handleChange}
+            />
+          </div>
         </div>
       </>
     );

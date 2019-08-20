@@ -57,14 +57,38 @@
 .block-editor-video {
   position: absolute;
   min-height: $height-block-video;
-  padding: $gutter-size;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+
+  .icon {
+    color: #FFF;
+    font-size: 3rem;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  }
+
+  .block-editor-video-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .block-editor-video-contents {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: $gutter-size * 2;
+  }
 }
 
 .block-editor-text-editable {

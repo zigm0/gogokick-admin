@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
-import { connect, constants, mapDispatchToProps } from 'utils';
+import { connect, constants, video, mapDispatchToProps } from 'utils';
 import * as editorActions from 'actions/editorActions';
 import BlockBody from './BlockBody';
 import Menu from './Menu';
@@ -132,6 +132,12 @@ export default class CanvasBlock extends React.PureComponent {
       buttons = (
         <div className="block-menu-title">
           {block.media.origFilename || ''}
+        </div>
+      );
+    } else if (block.type === constants.blockType('video') && block.videoUrl) {
+      buttons = (
+        <div className="block-menu-title">
+          {video.youtubeShortUrl(block.videoUrl)}
         </div>
       );
     }
