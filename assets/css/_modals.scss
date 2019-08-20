@@ -8,7 +8,14 @@
 .modal-header {
   padding: 20.5px 7.5px 2px 15.5px;
 
-  background: linear-gradient(to left, $color-block-audio 0, $color-block-audio 50%, $color-block-video 50%, $color-block-video 80%, $color-block-text 80%, $color-block-text) no-repeat;
+  background: linear-gradient(to left,
+      $color-block-audio 0,
+      $color-block-audio 50%,
+      $color-block-video 50%,
+      $color-block-video 80%,
+      $color-block-text 80%,
+      $color-block-text
+  ) no-repeat;
   background-size:100% 5px ;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
