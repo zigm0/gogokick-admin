@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { constants } from 'utils';
+import { Icon } from 'components';
 import BlockEditorText from './BlockEditorText';
 import BlockEditorImage from './BlockEditorImage';
 import BlockEditorVideo from './BlockEditorVideo';
@@ -33,6 +34,19 @@ export default class BlockBody extends React.PureComponent {
     super(props);
     this.container = React.createRef();
   }
+
+  /**
+   * @param {string} type
+   * @returns {string}
+   */
+  getIcon = (type) => {
+    return  {
+      text:  'align-center',
+      image: 'image',
+      video: 'video',
+      audio: 'music'
+    }[type];
+  };
 
   /**
    * @returns {*}
@@ -70,6 +84,7 @@ export default class BlockBody extends React.PureComponent {
       return (
         <div className={classes}>
           <h2 className="block-description">
+            <Icon name={this.getIcon(constants.blockType(block.type))} />
             {block.description || 'Description'}
           </h2>
         </div>

@@ -23,7 +23,7 @@
 .editor-sidebar-block {
   cursor: pointer;
   color: #FFF;
-  background-color: #5C5C5C;
+  background-color: $color-canvas-block-bg;
   user-select: none;
   border-radius: $border-radius-blocks;
   padding: $gutter-size;
@@ -64,5 +64,4 @@
 .editor-sidebar-block-over {
   width: $width-block !important;
   height: 100px !important;
-  border: 0;
 }
