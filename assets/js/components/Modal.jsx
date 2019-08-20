@@ -4,14 +4,15 @@ import { connect, mapDispatchToProps } from 'utils';
 import { Modal as BootstrapModal, ModalHeader, ModalBody, ModalFooter, Button } from 'components/bootstrap';
 import { Icon, Avatar, ErrorBoundary } from 'components';
 import * as editorActions from 'actions/editorActions';
+import * as uiActions from 'actions/uiActions';
 
 const mapStateToProps = state => ({
-  modals: state.editor.modals
+  modals: state.ui.modals
 });
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(editorActions)
+  mapDispatchToProps(editorActions, uiActions)
 )
 export default class Modal extends React.PureComponent {
   static propTypes = {
@@ -27,7 +28,7 @@ export default class Modal extends React.PureComponent {
     footer:      PropTypes.bool,
     fixedHeight: PropTypes.bool,
     modals:      PropTypes.object.isRequired,
-    editorModal: PropTypes.func.isRequired,
+    uiModal:     PropTypes.func.isRequired,
     onBodyClick: PropTypes.func,
     onClosed:    PropTypes.func,
     children:    PropTypes.node
@@ -52,10 +53,10 @@ export default class Modal extends React.PureComponent {
    *
    */
   close = () => {
-    const { name, editorModal, onClosed } = this.props;
+    const { name, uiModal, onClosed } = this.props;
 
     onClosed();
-    editorModal({
+    uiModal({
       modal: name,
       open:  false
     });

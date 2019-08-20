@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect, objects, mapDispatchToProps } from 'utils';
-import { Button } from 'components/bootstrap';
 import { Modal } from 'components';
 import { Form, Textarea } from 'components/forms';
 import * as editorActions from 'actions/editorActions';
@@ -9,7 +8,7 @@ import * as formActions from 'actions/formActions';
 
 const mapStateToProps = state => ({
   blockSettings: state.forms.blockSettings,
-  block:         state.editor.modalMeta
+  block:         state.ui.modalMeta
 });
 
 @connect(
@@ -20,7 +19,6 @@ export default class BlockSettingsModal extends React.PureComponent {
   static propTypes = {
     blockSettings: PropTypes.object.isRequired,
     block:         PropTypes.object,
-    editorModal:   PropTypes.func.isRequired,
     editorChange:  PropTypes.func.isRequired,
     formChanges:   PropTypes.func.isRequired
   };

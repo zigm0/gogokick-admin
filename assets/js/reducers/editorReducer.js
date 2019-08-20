@@ -1,31 +1,15 @@
 import { objects, constants, arrays } from 'utils';
 import * as types from 'actions/editorActions';
-import { EDITOR_BLOCK_MEDIA } from "actions/editorActions";
 
 const initialState = objects.merge({
   isBusy:        false,
   isChanged:     false,
-  isSidebarOpen: true,
   projects:      [],
   teamMember:    null,
   blockIndex:    0,
   activeBlockID: 0,
   hoverBlockID:  0,
   canvasBlocks:  [[]],
-  modalMeta:     null,
-  modalCallback: () => {},
-  modals:        {
-    login:         false,
-    preview:       false,
-    cropper:       false,
-    confirm:       false,
-    settings:      false,
-    register:      false,
-    teamMember:    false,
-    addMember:     false,
-    memberActions: false,
-    blockSettings: false
-  },
   sidebarBlocks: [
     {
       id:          1,
@@ -127,13 +111,8 @@ const move = (source, destination, droppableSource, droppableDestination) => {
 /**
  * @returns {*}
  */
-const onEditorReset = (state) => {
-  const { isSidebarOpen } = state;
-
-  const newState = objects.clone(initialState);
-  newState.isSidebarOpen = isSidebarOpen;
-
-  return newState;
+const onEditorReset = () => {
+  return objects.clone(initialState);
 };
 
 /**
@@ -377,25 +356,6 @@ const onEditorChange = (state, action) => {
  * @param {*} action
  * @returns {*}
  */
-const onEditorModal = (state, action) => {
-  const modals = objects.clone(state.modals);
-  const { modal, open, meta, onComplete } = action.payload;
-
-  modals[modal] = open;
-
-  return {
-    ...state,
-    modals,
-    modalMeta:     meta,
-    modalCallback: onComplete || (() => {})
-  };
-};
-
-/**
- * @param {*} state
- * @param {*} action
- * @returns {*}
- */
 const onEditorProjects = (state, action) => {
   const projects = Array.from(action.payload);
 
@@ -477,20 +437,6 @@ const onEditorBlockMedia = (state, action) => {
   };
 };
 
-/**
- * @param {*} state
- * @param {*} action
- * @returns {*}
- */
-const onEditorToggleSidebar = (state, action) => {
-  const isSidebarOpen = action.payload;
-
-  return {
-    ...state,
-    isSidebarOpen
-  };
-};
-
 const handlers = {
   [types.EDITOR_RESET]:          onEditorReset,
   [types.EDITOR_BUSY]:           onEditorBusy,
@@ -501,9 +447,7 @@ const handlers = {
   [types.EDITOR_CHANGE]:         onEditorChange,
   [types.EDITOR_UNDO]:           onEditorUndo,
   [types.EDITOR_REDO]:           onEditorRedo,
-  [types.EDITOR_MODAL]:          onEditorModal,
   [types.EDITOR_BLOCKS]:         onEditorBlocks,
-  [types.EDITOR_TOGGLE_SIDEBAR]: onEditorToggleSidebar,
   [types.EDITOR_BLOCK_MEDIA]:    onEditorBlockMedia,
   [types.EDITOR_TEAM_MEMBER]:    onEditorTeamMember,
   [types.EDITOR_PROJECTS]:       onEditorProjects,

@@ -14,11 +14,9 @@ export const EDITOR_DROP           = 'EDITOR_DROP';
 export const EDITOR_CHANGE         = 'EDITOR_CHANGE';
 export const EDITOR_REMOVE         = 'EDITOR_REMOVE';
 export const EDITOR_BLOCK_MEDIA    = 'EDITOR_BLOCK_MEDIA';
-export const EDITOR_MODAL          = 'EDITOR_MODAL';
 export const EDITOR_TEAM_MEMBER    = 'EDITOR_TEAM_MEMBER';
 export const EDITOR_HOVER_BLOCK    = 'EDITOR_HOVER_BLOCK';
 export const EDITOR_ACTIVATE_BLOCK = 'EDITOR_ACTIVATE_BLOCK';
-export const EDITOR_TOGGLE_SIDEBAR = 'EDITOR_TOGGLE_SIDEBAR';
 
 /**
  * @returns {{type: string}}
@@ -221,17 +219,6 @@ export const editorBlockMedia = (payload) => {
 };
 
 /**
- * @param {*} payload
- * @returns {{payload: *, type: *}}
- */
-export const editorModal = (payload) => {
-  return {
-    type: EDITOR_MODAL,
-    payload
-  };
-};
-
-/**
  * @param {number} payload
  * @returns {{payload: *, type: string}}
  */
@@ -249,17 +236,6 @@ export const editorActivateBlock = (payload) => {
 export const editorHoverBlock = (payload) => {
   return {
     type: EDITOR_HOVER_BLOCK,
-    payload
-  };
-};
-
-/**
- * @param {boolean} payload
- * @returns {{payload: *, type: string}}
- */
-export const editorToggleSidebar = (payload) => {
-  return {
-    type: EDITOR_TOGGLE_SIDEBAR,
     payload
   };
 };

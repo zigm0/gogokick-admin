@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect, system, mapDispatchToProps } from 'utils';
 import { Button } from 'components/bootstrap';
 import { Modal } from 'components';
-import * as editorActions from 'actions/editorActions';
 import * as formActions from 'actions/formActions';
 
 const mapStateToProps = state => ({
@@ -13,14 +12,13 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(editorActions, formActions)
+  mapDispatchToProps(formActions)
 )
 export default class PreviewModal extends React.PureComponent {
   static propTypes = {
-    forms:               PropTypes.object.isRequired,
-    editor:              PropTypes.object.isRequired,
-    editorModal:         PropTypes.func.isRequired,
-    formChanges:         PropTypes.func.isRequired
+    forms:       PropTypes.object.isRequired,
+    editor:      PropTypes.object.isRequired,
+    formChanges: PropTypes.func.isRequired
   };
 
   static defaultProps = {};

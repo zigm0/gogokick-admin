@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { connect, constants, mapDispatchToProps } from 'utils';
 import { Button } from 'components';
 import * as editorActions from 'actions/editorActions';
+import * as uiActions from 'actions/uiActions';
 
 const mapStateToProps = state => ({
 
@@ -11,7 +12,7 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(editorActions)
+  mapDispatchToProps(editorActions, uiActions)
 )
 export default class Menu extends React.PureComponent {
   static propTypes = {
@@ -23,7 +24,7 @@ export default class Menu extends React.PureComponent {
     className:    PropTypes.string,
     editorMove:   PropTypes.func.isRequired,
     editorRemove: PropTypes.func.isRequired,
-    editorModal:  PropTypes.func.isRequired,
+    uiModal:      PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -36,9 +37,9 @@ export default class Menu extends React.PureComponent {
    */
   handleSettingsClick = (e) => {
     e.preventDefault();
-    const { block, editorModal } = this.props;
+    const { block, uiModal } = this.props;
 
-    editorModal({
+    uiModal({
       modal: 'blockSettings',
       open:  true,
       meta:  block

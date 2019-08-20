@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect, router, mapDispatchToProps } from 'utils';
 import { Avatar, Icon } from 'components';
 import * as userActions from 'actions/userActions';
-import * as editorActions from 'actions/editorActions';
+import * as uiActions from 'actions/uiActions';
 
 const mapStateToProps = state => ({
   user: state.user
@@ -11,12 +11,12 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(userActions, editorActions)
+  mapDispatchToProps(userActions, uiActions)
 )
 export default class UserMenu extends React.PureComponent {
   static propTypes = {
     user:        PropTypes.object.isRequired,
-    editorModal: PropTypes.func.isRequired,
+    uiModal:     PropTypes.func.isRequired,
     userLogout:  PropTypes.func.isRequired
   };
 
@@ -42,11 +42,11 @@ export default class UserMenu extends React.PureComponent {
    * @param {Event} e
    */
   handleLoginClick = (e) => {
-    const { editorModal } = this.props;
+    const { uiModal } = this.props;
 
     e.preventDefault();
 
-    editorModal({
+    uiModal({
       modal: 'login',
       open:  true
     });
@@ -66,11 +66,11 @@ export default class UserMenu extends React.PureComponent {
    * @param {Event} e
    */
   handleRegisterClick = (e) => {
-    const { editorModal } = this.props;
+    const { uiModal } = this.props;
 
     e.preventDefault();
 
-    editorModal({
+    uiModal({
       modal: 'register',
       open:  true
     });

@@ -5,7 +5,6 @@ import { Form, Input, Checkbox } from 'components/forms';
 import { Row, Column, Button } from 'components/bootstrap';
 import { Modal } from 'components';
 import * as userActions from 'actions/userActions';
-import * as editorActions from 'actions/editorActions';
 import * as formActions from 'actions/formActions';
 
 const mapStateToProps = state => ({
@@ -14,12 +13,11 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(userActions, editorActions, formActions)
+  mapDispatchToProps(userActions, formActions)
 )
 export default class TeamMemberModal extends React.PureComponent {
   static propTypes = {
-    teamMember:  PropTypes.object,
-    editorModal: PropTypes.func.isRequired
+    teamMember: PropTypes.object
   };
 
   static defaultProps = {};

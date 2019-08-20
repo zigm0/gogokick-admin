@@ -4,7 +4,7 @@ import { connect, system, mapDispatchToProps } from 'utils';
 import { Button } from 'components/bootstrap';
 import { Form, Input } from 'components/forms';
 import { Modal } from 'components';
-import * as editorActions from 'actions/editorActions';
+import * as uiActions from 'actions/uiActions';
 import * as formActions from 'actions/formActions';
 import * as projectActions from 'actions/projectActions';
 import * as mediaActions from 'actions/mediaActions';
@@ -17,14 +17,14 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(editorActions, formActions, projectActions, mediaActions)
+  mapDispatchToProps(uiActions, formActions, projectActions, mediaActions)
 )
 export default class ProjectSettingsModal extends React.PureComponent {
   static propTypes = {
     forms:           PropTypes.object.isRequired,
     editor:          PropTypes.object.isRequired,
     project:         PropTypes.object.isRequired,
-    editorModal:     PropTypes.func.isRequired,
+    uiModal:         PropTypes.func.isRequired,
     formChanges:     PropTypes.func.isRequired,
     projectSettings: PropTypes.func.isRequired,
     projectDelete:   PropTypes.func.isRequired,
@@ -70,12 +70,12 @@ export default class ProjectSettingsModal extends React.PureComponent {
    *
    */
   handleSaveClick = () => {
-    const { forms, editorModal, projectSettings } = this.props;
+    const { forms, uiModal, projectSettings } = this.props;
 
     projectSettings({
       name: forms.projectSettings.name
     });
-    editorModal({
+    uiModal({
       modal: 'settings',
       open:  false
     });
@@ -85,13 +85,13 @@ export default class ProjectSettingsModal extends React.PureComponent {
    *
    */
   handleDeleteClick = () => {
-    const { projectDelete, editorModal } = this.props;
+    const { projectDelete, uiModal } = this.props;
 
     system.confirm('Are you SURE you want to delete this project? This action cannot be undone.')
       .then((resp) => {
         if (resp) {
           projectDelete();
-          editorModal({
+          uiModal({
             modal: 'settings',
             open:  false
           });

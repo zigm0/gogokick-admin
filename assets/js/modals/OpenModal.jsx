@@ -7,6 +7,7 @@ import {  Modal } from 'components';
 import * as editorActions from 'actions/editorActions';
 import * as formActions from 'actions/formActions';
 import * as projectActions from 'actions/projectActions';
+import * as uiActions from 'actions/uiActions';
 
 const mapStateToProps = state => ({
   editor:   state.editor,
@@ -15,14 +16,14 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(editorActions, formActions, projectActions)
+  mapDispatchToProps(editorActions, formActions, projectActions, uiActions)
 )
 export default class OpenModal extends React.PureComponent {
   static propTypes = {
     editor:              PropTypes.object.isRequired,
     projects:            PropTypes.array.isRequired,
     projectDelete:       PropTypes.func.isRequired,
-    editorModal:         PropTypes.func.isRequired,
+    uiModal:             PropTypes.func.isRequired,
     editorFetchProjects: PropTypes.func.isRequired
   };
 
@@ -45,13 +46,13 @@ export default class OpenModal extends React.PureComponent {
    *
    */
   handleSelectClick = () => {
-    const { editor, editorModal } = this.props;
+    const { editor, uiModal } = this.props;
     const { selected } = this.state;
 
     const create = () => {
       history.push(`/editor/${selected}`);
       this.setState({ selected: 0 });
-      editorModal({
+      uiModal({
         modal: 'open',
         open:  false
       });
@@ -73,14 +74,14 @@ export default class OpenModal extends React.PureComponent {
    *
    */
   handleDeleteClick = () => {
-    const { projectDelete, editorModal } = this.props;
+    const { projectDelete, uiModal } = this.props;
     const { selected } = this.state;
 
     system.confirm('Are you SURE you want to delete this project? This action cannot be undone.')
       .then((resp) => {
         if (resp) {
           projectDelete(selected);
-          editorModal({
+          uiModal({
             modal: 'open',
             open:  false
           });

@@ -18,7 +18,7 @@ const mapStateToProps = state => ({
   projectIsBusy: state.project.isBusy,
   editorIsBusy:  state.editor.isBusy,
   userIsBusy:    state.user.isBusy,
-  isSidebarOpen: state.editor.isSidebarOpen
+  isSidebarOpen: state.ui.isSidebarOpen
 });
 
 @connect(

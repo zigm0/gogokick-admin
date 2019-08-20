@@ -6,6 +6,7 @@ import { Button } from 'components/bootstrap';
 import UserMenu from './UserMenu';
 import * as editorActions from 'actions/editorActions';
 import * as projectActions from 'actions/projectActions';
+import * as uiActions from 'actions/uiActions';
 
 const mapStateToProps = state => ({
   editor:  state.editor,
@@ -15,7 +16,7 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(editorActions, projectActions)
+  mapDispatchToProps(editorActions, projectActions, uiActions)
 )
 export default class Header extends React.PureComponent {
   static propTypes = {
@@ -24,7 +25,7 @@ export default class Header extends React.PureComponent {
     project:     PropTypes.object.isRequired,
     editorUndo:  PropTypes.func.isRequired,
     editorRedo:  PropTypes.func.isRequired,
-    editorModal: PropTypes.func.isRequired,
+    uiModal:     PropTypes.func.isRequired,
     projectSave: PropTypes.func.isRequired
   };
 
@@ -41,10 +42,10 @@ export default class Header extends React.PureComponent {
    *
    */
   handleNewClick = () => {
-    const { user, editorModal } = this.props;
+    const { user, uiModal } = this.props;
 
     if (!user.isAuthenticated) {
-      editorModal({
+      uiModal({
         modal: 'register',
         open:  true
       });
@@ -57,15 +58,15 @@ export default class Header extends React.PureComponent {
    *
    */
   handleOpenClick = () => {
-    const { user, editorModal } = this.props;
+    const { user, uiModal } = this.props;
 
     if (!user.isAuthenticated) {
-      editorModal({
+      uiModal({
         modal: 'register',
         open:  true
       });
     } else {
-      editorModal({
+      uiModal({
         modal: 'open',
         open:  true
       });
@@ -85,9 +86,9 @@ export default class Header extends React.PureComponent {
    *
    */
   handlePreviewClick = () => {
-    const { editorModal } = this.props;
+    const { uiModal } = this.props;
 
-    editorModal({
+    uiModal({
       modal: 'preview',
       open:  true
     });

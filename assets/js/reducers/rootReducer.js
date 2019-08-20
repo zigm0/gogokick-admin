@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import ui from 'reducers/uiReducer';
 import forms from 'reducers/formsReducer';
 import user from 'reducers/userReducer';
 import team from 'reducers/teamReducer';
@@ -11,6 +12,7 @@ import project from 'reducers/projectReducer';
  */
 export default function createRootReducer() {
   return combineReducers({
+    ui,
     user,
     forms,
     media,

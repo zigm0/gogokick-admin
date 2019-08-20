@@ -4,7 +4,7 @@ import { connect, mapDispatchToProps } from 'utils';
 import { Button } from 'components/bootstrap';
 import { Modal } from 'components';
 import * as userActions from 'actions/userActions';
-import * as editorActions from 'actions/editorActions';
+import * as uiActions from 'actions/uiActions';
 import * as formActions from 'actions/formActions';
 import * as projectActions from 'actions/projectActions';
 
@@ -14,12 +14,12 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(userActions, editorActions, formActions, projectActions)
+  mapDispatchToProps(userActions, uiActions, formActions, projectActions)
 )
 export default class MemberActionsModal extends React.PureComponent {
   static propTypes = {
     teamMember:      PropTypes.object,
-    editorModal:     PropTypes.func.isRequired,
+    uiModal:         PropTypes.func.isRequired,
     projectMarkRead: PropTypes.func.isRequired
   };
 
@@ -30,14 +30,14 @@ export default class MemberActionsModal extends React.PureComponent {
    * @param {int} block
    */
   handleGotoClick = (e, block) => {
-    const { editorModal } = this.props;
+    const { uiModal } = this.props;
 
     const selector = `canvas-block-${block}`;
     // const canvasBlock = document.getElementById(selector);
     const canvasBlock = document.querySelector('.block:last-child');
 
     if (canvasBlock) {
-      editorModal({
+      uiModal({
         modal: 'memberActions',
         open:  false
       });
@@ -53,10 +53,10 @@ export default class MemberActionsModal extends React.PureComponent {
    *
    */
   handleMarkReadClick = () => {
-    const { teamMember, projectMarkRead, editorModal } = this.props;
+    const { teamMember, projectMarkRead, uiModal } = this.props;
 
     projectMarkRead(teamMember);
-    editorModal({
+    uiModal({
       modal: 'memberActions',
       open:  false
     });

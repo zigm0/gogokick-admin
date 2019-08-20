@@ -4,10 +4,10 @@ import { connect, system, history, mapDispatchToProps } from 'utils';
 import { Row, Column, Button } from 'components/bootstrap';
 import { Form, Input } from 'components/forms';
 import { ImageUpload } from 'components';
-import * as editorActions from 'actions/editorActions';
 import * as formActions from 'actions/formActions';
 import * as projectActions from 'actions/projectActions';
 import * as mediaActions from 'actions/mediaActions';
+import * as uiActions from 'actions/uiActions';
 
 const mapStateToProps = state => ({
   user:        state.user,
@@ -19,35 +19,35 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(editorActions, formActions, projectActions, mediaActions)
+  mapDispatchToProps(formActions, projectActions, mediaActions, uiActions)
 )
 export default class EditorSettings extends React.PureComponent {
   static propTypes = {
-    user:                PropTypes.object.isRequired,
-    forms:               PropTypes.object.isRequired,
-    editor:              PropTypes.object.isRequired,
-    project:             PropTypes.object.isRequired,
-    isUploading:         PropTypes.bool.isRequired,
-    editorModal:         PropTypes.func.isRequired,
-    formChanges:         PropTypes.func.isRequired,
-    projectOpen:         PropTypes.func.isRequired,
-    projectSettings:     PropTypes.func.isRequired,
-    projectDelete:       PropTypes.func.isRequired,
-    mediaCrop:           PropTypes.func.isRequired,
-    mediaUpload:         PropTypes.func.isRequired,
-    editorToggleSidebar: PropTypes.func.isRequired
+    user:            PropTypes.object.isRequired,
+    forms:           PropTypes.object.isRequired,
+    editor:          PropTypes.object.isRequired,
+    project:         PropTypes.object.isRequired,
+    isUploading:     PropTypes.bool.isRequired,
+    uiModal:         PropTypes.func.isRequired,
+    formChanges:     PropTypes.func.isRequired,
+    projectOpen:     PropTypes.func.isRequired,
+    projectSettings: PropTypes.func.isRequired,
+    projectDelete:   PropTypes.func.isRequired,
+    mediaCrop:       PropTypes.func.isRequired,
+    mediaUpload:     PropTypes.func.isRequired,
+    uiToggleSidebar: PropTypes.func.isRequired
   };
 
   /**
    *
    */
   componentDidMount() {
-    const { user, project, formChanges, editorToggleSidebar } = this.props;
+    const { user, project, formChanges, uiToggleSidebar } = this.props;
 
     if (!user.isAuthenticated || !project.id) {
       history.push('/editor');
     } else {
-      editorToggleSidebar(false);
+      uiToggleSidebar(false);
       formChanges('projectSettings', {
         name: project.name
       });
@@ -71,27 +71,27 @@ export default class EditorSettings extends React.PureComponent {
    *
    */
   componentWillUnmount() {
-    const { project, forms, projectSettings, editorToggleSidebar } = this.props;
+    const { project, forms, projectSettings, uiToggleSidebar } = this.props;
 
     if (project.id) {
       projectSettings({
         name: forms.projectSettings.name
       });
     }
-    editorToggleSidebar(true);
+    uiToggleSidebar(true);
   }
 
   /**
    *
    */
   handleDeleteClick = () => {
-    const { projectDelete, editorModal } = this.props;
+    const { projectDelete, uiModal } = this.props;
 
     system.confirm('Are you SURE you want to delete this project? This action cannot be undone.')
       .then((resp) => {
         if (resp) {
           projectDelete();
-          editorModal({
+          uiModal({
             modal: 'settings',
             open:  false
           });

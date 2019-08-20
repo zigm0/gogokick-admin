@@ -7,8 +7,8 @@ import { Modal } from 'components';
 import * as mediaActions from 'actions/mediaActions';
 
 const mapStateToProps = state => ({
-  media:      state.editor.modalMeta,
-  onComplete: state.editor.modalCallback
+  media:      state.ui.modalMeta,
+  onComplete: state.ui.modalCallback
 });
 
 @connect(

@@ -7,17 +7,18 @@ import { Icon, TeamMemberItem } from 'components';
 import { Button } from 'components/bootstrap';
 import { SidebarBlock } from 'blocks';
 import * as editorActions from 'actions/editorActions';
+import * as uiActions from 'actions/uiActions';
 
 const mapStateToProps = state => ({
   user:          state.user,
   project:       state.project,
   sidebarBlocks: state.editor.sidebarBlocks,
-  isSidebarOpen: state.editor.isSidebarOpen
+  isSidebarOpen: state.ui.isSidebarOpen
 });
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(editorActions)
+  mapDispatchToProps(editorActions, uiActions)
 )
 export default class Sidebar extends React.PureComponent {
   static propTypes = {
@@ -25,7 +26,7 @@ export default class Sidebar extends React.PureComponent {
     project:          PropTypes.object.isRequired,
     sidebarBlocks:    PropTypes.array.isRequired,
     isSidebarOpen:    PropTypes.bool.isRequired,
-    editorModal:      PropTypes.func.isRequired,
+    uiModal:          PropTypes.func.isRequired,
     editorTeamMember: PropTypes.func.isRequired
   };
 
@@ -34,10 +35,10 @@ export default class Sidebar extends React.PureComponent {
    * @param {*} user
    */
   handleMemberClick = (e, user) => {
-    const { editorModal, editorTeamMember } = this.props;
+    const { uiModal, editorTeamMember } = this.props;
 
     editorTeamMember(user);
-    editorModal({
+    uiModal({
       modal: 'teamMember',
       open:  true
     });
@@ -47,15 +48,15 @@ export default class Sidebar extends React.PureComponent {
    *
    */
   handleAddMemberClick = () => {
-    const { user, editorModal } = this.props;
+    const { user, uiModal } = this.props;
 
     if (!user.isAuthenticated) {
-      editorModal({
+      uiModal({
         modal: 'register',
         open:  true
       })
     } else {
-      editorModal({
+      uiModal({
         modal: 'addMember',
         open:  true
       });
@@ -69,10 +70,10 @@ export default class Sidebar extends React.PureComponent {
   handleMemberBadgeClick = (e, user) => {
     e.stopPropagation();
 
-    const { editorModal, editorTeamMember } = this.props;
+    const { uiModal, editorTeamMember } = this.props;
 
     editorTeamMember(user);
-    editorModal({
+    uiModal({
       modal: 'memberActions',
       open:  true
     });

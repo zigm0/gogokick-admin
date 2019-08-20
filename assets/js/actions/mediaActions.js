@@ -1,6 +1,7 @@
 import { api, router, system as systemUtils } from 'utils';
 import { projectSettings, projectBusy } from './projectActions';
-import { editorBlockMedia, editorModal } from './editorActions';
+import { editorBlockMedia } from './editorActions';
+import { uiModal } from './uiActions';
 
 export const MEDIA_UPLOADING = 'MEDIA_UPLOADING';
 export const MEDIA_CROP      = 'MEDIA_CROP';
@@ -89,12 +90,12 @@ export const mediaReplace = (payload) => {
 
 export const mediaCrop = (payload) => {
   return (dispatch) => {
-    dispatch(editorModal({
+    dispatch(uiModal({
       modal:      'cropper',
       open:       true,
       meta:       payload.media,
       onComplete: (image) => {
-        dispatch(editorModal({
+        dispatch(uiModal({
           modal: 'cropper',
           open:  false
         }));

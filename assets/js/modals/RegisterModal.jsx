@@ -5,7 +5,7 @@ import { Button } from 'components/bootstrap';
 import { Form, Input } from 'components/forms';
 import { Modal } from 'components';
 import * as userActions from 'actions/userActions';
-import * as editorActions from 'actions/editorActions';
+import * as uiActions from 'actions/uiActions';
 import * as formActions from 'actions/formActions';
 
 const mapStateToProps = state => ({
@@ -14,14 +14,14 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(userActions, editorActions, formActions)
+  mapDispatchToProps(userActions, uiActions, formActions)
 )
 export default class RegisterModal extends React.PureComponent {
   static propTypes = {
     user:         PropTypes.object.isRequired,
     userLogin:    PropTypes.func.isRequired,
     userRegister: PropTypes.func.isRequired,
-    editorModal:  PropTypes.func.isRequired
+    uiModal:      PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -30,10 +30,10 @@ export default class RegisterModal extends React.PureComponent {
    * @param {*} prevProps
    */
   componentDidUpdate(prevProps) {
-    const { user, editorModal } = this.props;
+    const { user, uiModal } = this.props;
 
     if (!prevProps.user.isAuthenticated && user.isAuthenticated) {
-      editorModal({
+      uiModal({
         modal: 'register',
         open:  false
       });

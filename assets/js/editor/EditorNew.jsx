@@ -4,7 +4,7 @@ import { connect, constants, history, mapDispatchToProps } from 'utils';
 import { Container, Row, Column, Button } from 'components/bootstrap';
 import { Form, Input, Checkbox } from 'components/forms';
 import { ImageUpload } from 'components';
-import * as editorActions from 'actions/editorActions';
+import * as uiActions from 'actions/uiActions';
 import * as mediaActions from 'actions/mediaActions';
 import * as formActions from 'actions/formActions';
 import * as projectActions from 'actions/projectActions';
@@ -17,17 +17,17 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(editorActions, mediaActions, formActions, projectActions)
+  mapDispatchToProps(uiActions, mediaActions, formActions, projectActions)
 )
 export default class EditorNew extends React.PureComponent {
   static propTypes = {
-    user:                PropTypes.object.isRequired,
-    newProject:          PropTypes.object.isRequired,
-    isUploading:         PropTypes.bool.isRequired,
-    mediaUpload:         PropTypes.func.isRequired,
-    formChange:          PropTypes.func.isRequired,
-    editorToggleSidebar: PropTypes.func.isRequired,
-    projectNew:          PropTypes.func.isRequired
+    user:            PropTypes.object.isRequired,
+    newProject:      PropTypes.object.isRequired,
+    isUploading:     PropTypes.bool.isRequired,
+    mediaUpload:     PropTypes.func.isRequired,
+    formChange:      PropTypes.func.isRequired,
+    uiToggleSidebar: PropTypes.func.isRequired,
+    projectNew:      PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -46,12 +46,12 @@ export default class EditorNew extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { user, editorToggleSidebar } = this.props;
+    const { user, uiToggleSidebar } = this.props;
 
     if (!user.isAuthenticated) {
       history.push('/editor');
     } else {
-      editorToggleSidebar(false);
+      uiToggleSidebar(false);
     }
   }
 
@@ -59,9 +59,9 @@ export default class EditorNew extends React.PureComponent {
    *
    */
   componentWillUnmount() {
-    const { editorToggleSidebar } = this.props;
+    const { uiToggleSidebar } = this.props;
 
-    editorToggleSidebar(true);
+    uiToggleSidebar(true);
   }
 
   /**
