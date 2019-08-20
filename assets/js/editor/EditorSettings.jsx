@@ -34,20 +34,18 @@ export default class EditorSettings extends React.PureComponent {
     projectSettings: PropTypes.func.isRequired,
     projectDelete:   PropTypes.func.isRequired,
     mediaCrop:       PropTypes.func.isRequired,
-    mediaUpload:     PropTypes.func.isRequired,
-    uiToggleSidebar: PropTypes.func.isRequired
+    mediaUpload:     PropTypes.func.isRequired
   };
 
   /**
    *
    */
   componentDidMount() {
-    const { user, project, formChanges, uiToggleSidebar } = this.props;
+    const { user, project, formChanges } = this.props;
 
     if (!user.isAuthenticated || !project.id) {
       history.push('/editor');
     } else {
-      uiToggleSidebar(false);
       formChanges('projectSettings', {
         name: project.name
       });
@@ -71,14 +69,13 @@ export default class EditorSettings extends React.PureComponent {
    *
    */
   componentWillUnmount() {
-    const { project, forms, projectSettings, uiToggleSidebar } = this.props;
+    const { project, forms, projectSettings } = this.props;
 
     if (project.id) {
       projectSettings({
         name: forms.projectSettings.name
       });
     }
-    uiToggleSidebar(true);
   }
 
   /**

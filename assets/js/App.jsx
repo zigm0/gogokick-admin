@@ -14,11 +14,11 @@ import * as projectActions from 'actions/projectActions';
 import * as Modals from 'modals';
 
 const mapStateToProps = state => ({
+  workspace:     state.ui.workspace,
   campaignType:  state.project.campaignType,
   projectIsBusy: state.project.isBusy,
   editorIsBusy:  state.editor.isBusy,
-  userIsBusy:    state.user.isBusy,
-  isSidebarOpen: state.ui.isSidebarOpen
+  userIsBusy:    state.user.isBusy
 });
 
 @connect(
@@ -27,11 +27,11 @@ const mapStateToProps = state => ({
 )
 export default class App extends React.Component {
   static propTypes = {
+    workspace:     PropTypes.string.isRequired,
     campaignType:  PropTypes.number.isRequired,
     userIsBusy:    PropTypes.bool.isRequired,
     projectIsBusy: PropTypes.bool.isRequired,
     editorIsBusy:  PropTypes.bool.isRequired,
-    isSidebarOpen: PropTypes.bool.isRequired,
     editorDrop:    PropTypes.func.isRequired
   };
 
@@ -88,12 +88,13 @@ export default class App extends React.Component {
    * @returns {*}
    */
   render() {
-    const { campaignType, userIsBusy, editorIsBusy, projectIsBusy, isSidebarOpen } = this.props;
+    const { workspace, campaignType, userIsBusy, editorIsBusy, projectIsBusy } = this.props;
 
-    const classes = classNames('editor h-100', `editor-campaign-type-${constants.campaignType(campaignType)}`);
-    const classesContent = classNames('editor-content', {
-      'editor-content-sidebar-closed': !isSidebarOpen
-    });
+    const classes = classNames(
+      'editor h-100',
+      `workspace-${workspace}`,
+      `editor-campaign-type-${constants.campaignType(campaignType)}`
+    );
 
     return (
       <div className={classes}>
@@ -101,11 +102,11 @@ export default class App extends React.Component {
           <Header />
           <div className="editor-body">
             <Sidebar />
-            <div className={classesContent}>
+            <div className="editor-content">
               <Router history={history}>
                 <Switch>
-                  <Route path="/editor/new" component={EditorController} />
-                  <Route path="/editor/:id?" component={EditorController} />
+                  <Route exact path="/editor/new" component={EditorController} />
+                  <Route exact path="/editor/:id?" component={EditorController} />
                   <Route exact path="/editor/:id/settings" component={EditorController} />
                 </Switch>
               </Router>

@@ -4,6 +4,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect, mapDispatchToProps } from 'utils';
 import * as projectActions from 'actions/projectActions';
 import * as userActions from 'actions/userActions';
+import * as uiActions from 'actions/uiActions';
 import EditorBody from 'editor/EditorBody';
 import EditorNew from 'editor/EditorNew';
 import EditorSettings from 'editor/EditorSettings';
@@ -15,7 +16,7 @@ const mapStateToProps = state => ({
 @withRouter
 @connect(
   mapStateToProps,
-  mapDispatchToProps(projectActions, userActions)
+  mapDispatchToProps(projectActions, userActions, uiActions)
 )
 export default class EditorController extends React.PureComponent {
   static propTypes = {
@@ -23,7 +24,8 @@ export default class EditorController extends React.PureComponent {
     project:      PropTypes.object.isRequired,
     projectReset: PropTypes.func.isRequired,
     projectOpen:  PropTypes.func.isRequired,
-    userMe:       PropTypes.func.isRequired
+    userMe:       PropTypes.func.isRequired,
+    uiWorkspace:  PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -41,14 +43,22 @@ export default class EditorController extends React.PureComponent {
    * @param {*} prevProps
    */
   componentDidUpdate(prevProps) {
-/*    const { match, project, projectOpen, projectReset } = this.props;
+    const { uiWorkspace, match } = this.props;
     const { match: prevMatch } = prevProps;
 
-    if (!match.params.id && prevMatch.params.id) {
-      projectReset();
-    } else if (!project.isSaving && match.params.id && match.params.id !== '0' && match.params.id !== prevMatch.params.id) {
-      projectOpen(match.params.id);
-    }*/
+    if (match.path !== prevMatch.path) {
+      switch (match.path) {
+        case '/editor/:id?':
+          uiWorkspace('editor');
+          break;
+        case '/editor/new':
+          uiWorkspace('new-project');
+          break;
+        case '/editor/:id/settings':
+          uiWorkspace('project-settings');
+          break;
+      }
+    }
   }
 
   /**

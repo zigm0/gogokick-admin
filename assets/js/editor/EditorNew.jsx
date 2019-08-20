@@ -4,7 +4,6 @@ import { connect, constants, history, mapDispatchToProps } from 'utils';
 import { Container, Row, Column, Button } from 'components/bootstrap';
 import { Form, Input, Checkbox } from 'components/forms';
 import { ImageUpload } from 'components';
-import * as uiActions from 'actions/uiActions';
 import * as mediaActions from 'actions/mediaActions';
 import * as formActions from 'actions/formActions';
 import * as projectActions from 'actions/projectActions';
@@ -17,17 +16,16 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(uiActions, mediaActions, formActions, projectActions)
+  mapDispatchToProps(mediaActions, formActions, projectActions)
 )
 export default class EditorNew extends React.PureComponent {
   static propTypes = {
-    user:            PropTypes.object.isRequired,
-    newProject:      PropTypes.object.isRequired,
-    isUploading:     PropTypes.bool.isRequired,
-    mediaUpload:     PropTypes.func.isRequired,
-    formChange:      PropTypes.func.isRequired,
-    uiToggleSidebar: PropTypes.func.isRequired,
-    projectNew:      PropTypes.func.isRequired
+    user:        PropTypes.object.isRequired,
+    newProject:  PropTypes.object.isRequired,
+    isUploading: PropTypes.bool.isRequired,
+    mediaUpload: PropTypes.func.isRequired,
+    formChange:  PropTypes.func.isRequired,
+    projectNew:  PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -46,22 +44,11 @@ export default class EditorNew extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { user, uiToggleSidebar } = this.props;
+    const { user } = this.props;
 
     if (!user.isAuthenticated) {
       history.push('/editor');
-    } else {
-      uiToggleSidebar(false);
     }
-  }
-
-  /**
-   *
-   */
-  componentWillUnmount() {
-    const { uiToggleSidebar } = this.props;
-
-    uiToggleSidebar(true);
   }
 
   /**
@@ -146,7 +133,7 @@ export default class EditorNew extends React.PureComponent {
               <Row>
                 <Column>
                   <p>
-                    Our building tools are slightly different depending ont he platform. If you're
+                    Our building tools are slightly different depending ont he platform. If you&apos;re
                     not sure what platform is best for your project <a href="#">read this</a>.
                   </p>
                 </Column>
@@ -201,7 +188,7 @@ export default class EditorNew extends React.PureComponent {
                     id="input-editor-new-sub-title"
                   />
                   <p>
-                    This will appear below the title ad it's a chance to tell a little more
+                    This will appear below the title ad it&apos;s a chance to tell a little more
                     about your project.
                   </p>
                 </Column>

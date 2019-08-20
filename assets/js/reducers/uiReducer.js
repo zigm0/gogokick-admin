@@ -2,7 +2,7 @@ import { objects } from 'utils';
 import * as types from 'actions/uiActions';
 
 const initialState = {
-  isSidebarOpen: true,
+  workspace:     'editor',
   modalMeta:     null,
   modalCallback: () => {},
   modals:        {
@@ -24,6 +24,20 @@ const initialState = {
  * @param {*} action
  * @returns {*}
  */
+const onWorkspace = (state, action) => {
+  const workspace = action.payload;
+
+  return {
+    ...state,
+    workspace
+  };
+};
+
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
 const onModal = (state, action) => {
   const modals = objects.clone(state.modals);
   const { modal, open, meta, onComplete } = action.payload;
@@ -38,23 +52,9 @@ const onModal = (state, action) => {
   };
 };
 
-/**
- * @param {*} state
- * @param {*} action
- * @returns {*}
- */
-const onToggleSidebar = (state, action) => {
-  const isSidebarOpen = action.payload;
-
-  return {
-    ...state,
-    isSidebarOpen
-  };
-};
-
 const handlers = {
-  [types.UI_TOGGLE_SIDEBAR]: onToggleSidebar,
-  [types.UI_MODAL]:          onModal
+  [types.UI_WORKSPACE]: onWorkspace,
+  [types.UI_MODAL]:     onModal
 };
 
 /**

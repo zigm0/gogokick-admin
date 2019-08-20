@@ -1,0 +1,13 @@
+@import "../vars";
+
+.workspace-new-project,
+.workspace-project-settings {
+
+  .editor-sidebar {
+    transform: translateX(-300px);
+  }
+
+  .editor-content {
+    transform: translateX(-150px);
+  }
+}
