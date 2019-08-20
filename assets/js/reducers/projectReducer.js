@@ -89,7 +89,6 @@ const onProjectSaving = (state, action) => {
 
   return {
     ...state,
-    isBusy: isSaving,
     isSaving
   };
 };

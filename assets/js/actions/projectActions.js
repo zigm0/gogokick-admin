@@ -101,7 +101,6 @@ export const projectSave = () => {
   return (dispatch, getState) => {
     const { editor, project } = getState();
 
-    dispatch(projectBusy(true));
     dispatch({
       type:    PROJECT_SAVING,
       payload: true
@@ -139,7 +138,6 @@ export const projectSave = () => {
           type:    PROJECT_SAVING,
           payload: false
         });
-        dispatch(projectBusy(false));
       });
   };
 };

@@ -84,22 +84,6 @@ export default class Header extends React.PureComponent {
   /**
    *
    */
-  handleSaveClick = () => {
-    const { user, editorModal, projectSave } = this.props;
-
-    if (!user.isAuthenticated) {
-      editorModal({
-        modal: 'register',
-        open:  true
-      });
-    } else {
-      projectSave();
-    }
-  };
-
-  /**
-   *
-   */
   handlePreviewClick = () => {
     const { editorModal } = this.props;
 
@@ -124,7 +108,7 @@ export default class Header extends React.PureComponent {
           </h1>
         </div>
         <div className="editor-header-project-name d-none d-xl-block">
-          <div>{project.name} {editor.isChanged && '*'}</div>
+          <div>{project.name}</div>
         </div>
         <div className="editor-header-middle">
           <div className="editor-header-buttons d-none d-lg-block d-xl-block">
@@ -133,9 +117,6 @@ export default class Header extends React.PureComponent {
             </Button>
             <Button icon="folder-open" onClick={this.handleOpenClick} sm>
               Open
-            </Button>
-            <Button icon="file" disabled={project.isSaving} onClick={this.handleSaveClick} sm>
-              Save
             </Button>
             <Button icon="eye" onClick={this.handlePreviewClick} sm>
               Preview

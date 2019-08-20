@@ -1,11 +1,11 @@
 import { api, router } from 'utils';
+import { projectSave } from './projectActions';
 
 export const EDITOR_RESET          = 'EDITOR_RESET';
 export const EDITOR_BUSY           = 'EDITOR_BUSY';
 export const EDITOR_CHANGED        = 'EDITOR_CHANGED';
 export const EDITOR_NEW            = 'EDITOR_NEW';
 export const EDITOR_BLOCKS         = 'EDITOR_BLOCKS';
-export const EDITOR_SAVING         = 'EDITOR_SAVING';
 export const EDITOR_PROJECTS       = 'EDITOR_PROJECTS';
 export const EDITOR_UNDO           = 'EDITOR_UNDO';
 export const EDITOR_REDO           = 'EDITOR_REDO';
@@ -75,24 +75,30 @@ export const editorChanged = (payload) => {
 
 /**
  * @param {*} payload
- * @returns {{payload: *, type: string}}
+ * @returns {Function}
  */
 export const editorUndo = (payload) => {
-  return {
-    type: EDITOR_UNDO,
-    payload
-  }
+  return (dispatch) => {
+    dispatch({
+      type: EDITOR_UNDO,
+      payload
+    });
+    dispatch(projectSave());
+  };
 };
 
 /**
  * @param {*} payload
- * @returns {{payload: *, type: string}}
+ * @returns {Function}
  */
 export const editorRedo = (payload) => {
-  return {
-    type: EDITOR_REDO,
-    payload
-  }
+  return (dispatch) => {
+    dispatch({
+      type: EDITOR_REDO,
+      payload
+    });
+    dispatch(projectSave());
+  };
 };
 
 /**
@@ -134,20 +140,26 @@ export const editorFetchProjects = () => {
  * @returns {{payload: *, type: string}}
  */
 export const editorDrop = (payload) => {
-  return {
-    type: EDITOR_DROP,
-    payload
-  }
+  return (dispatch) => {
+    dispatch({
+      type: EDITOR_DROP,
+      payload
+    });
+    dispatch(projectSave());
+  };
 };
 
 /**
  * @param {*} payload
- * @returns {{payload: *, type: string}}
+ * @returns {Function}
  */
 export const editorMove = (payload) => {
-  return {
-    type: EDITOR_MOVE,
-    payload
+  return (dispatch) => {
+    dispatch({
+      type: EDITOR_MOVE,
+      payload
+    });
+    dispatch(projectSave());
   };
 };
 
@@ -175,7 +187,36 @@ export const editorRemove = (payload) => {
         type: EDITOR_REMOVE,
         payload
       });
+      dispatch(projectSave());
     }
+  };
+};
+
+/**
+ * @param {*} payload
+ * @returns {Function}
+ */
+export const editorChange = (payload) => {
+  return (dispatch) => {
+    dispatch({
+      type: EDITOR_CHANGE,
+      payload
+    });
+    dispatch(projectSave());
+  };
+};
+
+/**
+ * @param {*} payload
+ * @returns {Function}
+ */
+export const editorBlockMedia = (payload) => {
+  return (dispatch) => {
+    dispatch({
+      type: EDITOR_BLOCK_MEDIA,
+      payload
+    });
+    dispatch(projectSave());
   };
 };
 
@@ -208,28 +249,6 @@ export const editorActivateBlock = (payload) => {
 export const editorHoverBlock = (payload) => {
   return {
     type: EDITOR_HOVER_BLOCK,
-    payload
-  };
-};
-
-/**
- * @param {*} payload
- * @returns {{payload: *, type: *}}
- */
-export const editorChange = (payload) => {
-  return {
-    type: EDITOR_CHANGE,
-    payload
-  };
-};
-
-/**
- * @param {*} payload
- * @returns {{payload: *, type: *}}
- */
-export const editorBlockMedia = (payload) => {
-  return {
-    type: EDITOR_BLOCK_MEDIA,
     payload
   };
 };
