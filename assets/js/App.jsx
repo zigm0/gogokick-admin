@@ -106,6 +106,7 @@ export default class App extends React.Component {
               <Router history={history}>
                 <Switch>
                   <Route exact path="/editor" component={EditorController} />
+                  <Route exact path="/editor/profile" component={EditorController} />
                   <Route exact path="/editor/new" component={EditorController} />
                   <Route exact path="/editor/:id" component={EditorController} />
                   <Route exact path="/editor/:id/settings" component={EditorController} />

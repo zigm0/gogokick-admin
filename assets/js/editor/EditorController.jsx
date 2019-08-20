@@ -9,6 +9,7 @@ import EditorHome from 'editor/EditorHome';
 import EditorBody from 'editor/EditorBody';
 import EditorNew from 'editor/EditorNew';
 import EditorSettings from 'editor/EditorSettings';
+import EditorProfile from 'editor/EditorProfile';
 
 const mapStateToProps = state => ({
   project: state.project
@@ -60,6 +61,9 @@ export default class EditorController extends React.PureComponent {
         case '/editor':
           uiWorkspace('home');
           break;
+        case '/editor/profile':
+          uiWorkspace('profile');
+          break;
         case '/editor/:id':
           uiWorkspace('editor');
           break;
@@ -80,6 +84,7 @@ export default class EditorController extends React.PureComponent {
     return (
       <Switch>
         <Route exact path="/editor" component={EditorHome} />
+        <Route exact path="/editor/profile" component={EditorProfile} />
         <Route exact path="/editor/new" component={EditorNew} />
         <Route exact path="/editor/:id?" component={EditorBody} />
         <Route exact path="/editor/:id/settings" component={EditorSettings} />

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect, router, mapDispatchToProps } from 'utils';
-import { Avatar, Icon } from 'components';
+import { Avatar, Icon, Link } from 'components';
 import * as userActions from 'actions/userActions';
 import * as uiActions from 'actions/uiActions';
 
@@ -104,10 +104,10 @@ export default class UserMenu extends React.PureComponent {
           </button>
           {user.isAuthenticated ? (
             <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-              <a className="dropdown-item" href={router.generate('profile_index')} target="_blank">
+              <Link to="/editor/profile" className="dropdown-item">
                 <Icon name="user" />
                 Profile
-              </a>
+              </Link>
               <div className="dropdown-divider" />
               <a className="dropdown-item" href="#" onClick={this.handleLogoutClick}>
                 <Icon name="sign-out-alt" />

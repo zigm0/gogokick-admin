@@ -25,6 +25,7 @@ export default class Link extends React.PureComponent {
 
     onClick(e);
     if (!e.defaultPrevented) {
+      e.preventDefault();
       history.push(to);
     }
   };
@@ -38,9 +39,9 @@ export default class Link extends React.PureComponent {
     const classes = classNames('pointer', className);
 
     return (
-      <span className={classes} {...objects.keyFilter(props, 'to')} onClick={this.handleClick}>
+      <a className={classes} {...objects.keyFilter(props, 'to')} onClick={this.handleClick}>
         {children}
-      </span>
+      </a>
     );
   }
 }
