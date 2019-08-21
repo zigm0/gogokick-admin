@@ -22,7 +22,8 @@ export default class BlockVideo extends React.PureComponent {
     const opts = {
       width:      '100%',
       playerVars: { // https://developers.google.com/youtube/player_parameters
-        autoplay: 0
+        autoplay: 0,
+        rel:      0
       }
     };
 
