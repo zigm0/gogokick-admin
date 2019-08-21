@@ -1,16 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect, objects, mapDispatchToProps } from 'utils';
-import { Button, ImageUpload } from 'components';
+import { Upload } from 'components';
 import BlockMenu from './BlockMenu';
 import { editorActions, mediaActions } from 'actions';
 
-const mapStateToProps = state => ({
-  isUploading: state.media.isUploading
-});
-
 @connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps(mediaActions, editorActions)
 )
 export default class BlockEditorImage extends React.PureComponent {
@@ -20,7 +16,6 @@ export default class BlockEditorImage extends React.PureComponent {
       type:         PropTypes.number.isRequired,
       origFilename: PropTypes.string
     }).isRequired,
-    isUploading:  PropTypes.bool.isRequired,
     mediaUpload:  PropTypes.func.isRequired,
     editorChange: PropTypes.func.isRequired,
     onChange:     PropTypes.func.isRequired
@@ -62,10 +57,13 @@ export default class BlockEditorImage extends React.PureComponent {
   }
 
   /**
+   * @param {Event} e
    * @param {File} file
    */
-  handleDrop = (file) => {
+  handleDrop = (e, file) => {
     const { block, mediaUpload } = this.props;
+
+    e.preventDefault();
 
     mediaUpload({
       file,
@@ -85,7 +83,7 @@ export default class BlockEditorImage extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { block, isUploading } = this.props;
+    const { block } = this.props;
     const { caption } = this.state;
 
     let buttons = '';
@@ -101,11 +99,11 @@ export default class BlockEditorImage extends React.PureComponent {
       <>
         <BlockMenu block={block} buttons={buttons} />
         <div className="block-editor block-editor-image">
-          <ImageUpload
-            media={block.media}
-            onDrop={this.handleDrop}
-            isUploading={isUploading}
-          />
+          <Upload maxSizeMB={2} accept="image/*" system="block_images" onDrop={this.handleDrop}>
+            <figure>
+              <img className="upload-container-img" src={block.media.url} alt="" />
+            </figure>
+          </Upload>
           <div className="block-editor-image-caption">
             <input
               className="text-center"

@@ -8,6 +8,5 @@ export { default as ToggleButton } from './ToggleButton';
 export { default as ToggleSwitch } from './ToggleSwitch';
 export { default as Modal } from './Modal';
 export { default as TeamMemberItem } from './TeamMemberItem';
-export { default as ImageUpload } from './ImageUpload';
 export { default as Link } from './Link';
 export { default as Upload } from './Upload';

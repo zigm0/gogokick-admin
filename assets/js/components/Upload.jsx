@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 import classNames from 'classnames';
 import { connect, mapDispatchToProps } from 'utils';
-import { Icon } from 'components';
+import { Icon, Loading } from 'components';
 import { mediaActions } from 'actions';
 
 const mapStateToProps = state => ({
-
+  isUploading: state.media.isUploading
 });
 
 @connect(
@@ -23,6 +23,7 @@ export default class Upload extends React.PureComponent {
     cropOptions: PropTypes.object,
     className:   PropTypes.string,
     children:    PropTypes.node,
+    isUploading: PropTypes.bool.isRequired,
     onDrop:      PropTypes.func,
     onUploaded:  PropTypes.func,
     mediaCrop:   PropTypes.func.isRequired,
@@ -73,9 +74,7 @@ export default class Upload extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { accept, maxSizeMB, className, children } = this.props;
-
-
+    const { accept, maxSizeMB, className, isUploading, children } = this.props;
 
     return (
       <Dropzone
@@ -93,6 +92,9 @@ export default class Upload extends React.PureComponent {
               <input {...getInputProps()} />
               <div className="upload-container-circle upload-container-circle-image">
                 <Icon name="image" size={2} far/>
+                {isUploading && (
+                  <Loading white />
+                )}
               </div>
               {children}
             </div>

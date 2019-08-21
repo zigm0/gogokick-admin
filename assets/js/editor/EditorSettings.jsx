@@ -3,15 +3,14 @@ import PropTypes from 'prop-types';
 import { connect, system, browser, history, mapDispatchToProps } from 'utils';
 import { Row, Column, Button } from 'components/bootstrap';
 import { Form, Input } from 'components/forms';
-import { ImageUpload } from 'components';
+import { Upload } from 'components';
 import { formActions, projectActions, mediaActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({
-  user:        state.user,
-  forms:       state.forms,
-  project:     state.project,
-  editor:      state.editor,
-  isUploading: state.media.isUploading
+  user:    state.user,
+  forms:   state.forms,
+  project: state.project,
+  editor:  state.editor
 });
 
 @connect(
@@ -24,7 +23,6 @@ export default class EditorSettings extends React.PureComponent {
     forms:           PropTypes.object.isRequired,
     editor:          PropTypes.object.isRequired,
     project:         PropTypes.object.isRequired,
-    isUploading:     PropTypes.bool.isRequired,
     uiModal:         PropTypes.func.isRequired,
     formChanges:     PropTypes.func.isRequired,
     projectOpen:     PropTypes.func.isRequired,
@@ -104,25 +102,13 @@ export default class EditorSettings extends React.PureComponent {
   };
 
   /**
-   * @param {File} file
+   * @param {*} image
    */
-  handleUpload = (file) => {
-    const { project, mediaUpload, mediaCrop, projectSettings } = this.props;
+  handleUploaded = (image) => {
+    const { projectSettings } = this.props;
 
-    mediaUpload({
-      file,
-      project,
-      system:     'project_images',
-      onComplete: (media) => {
-        mediaCrop({
-          media,
-          onComplete: (image) => {
-            projectSettings({
-              image
-            });
-          }
-        });
-      }
+    projectSettings({
+      image
     });
   };
 
@@ -130,7 +116,7 @@ export default class EditorSettings extends React.PureComponent {
    * @returns {*}
    */
   renderForm = () => {
-    const { project, isUploading } = this.props;
+    const { project } = this.props;
 
     return (
       <Form name="projectSettings">
@@ -143,12 +129,28 @@ export default class EditorSettings extends React.PureComponent {
         />
         <div className="form-group">
           <label>Project Image</label>
-          <ImageUpload
-            media={project.image}
-            onDrop={this.handleUpload}
-            isUploading={isUploading}
-            className="project-settings-banner"
-          />
+          <Upload
+            accept="image/*"
+            maxSizeMB={2}
+            system="project_images"
+            onUploaded={this.handleUploaded}
+            cropping
+          >
+            <div className="project-settings-banner">
+              {(project.image && project.image.url) ? (
+                <img src={project.image.url} alt="banner" />
+              ) : (
+                <div className="project-settings-banner-instructions">
+                  <div className="upload-container-top">
+                    Drop an image here, or click to select a file.
+                  </div>
+                  <div className="upload-container-bottom">
+                    It must be a JPG, PNG, GIF, TIFF or BMP. No larger than 2MB.
+                  </div>
+                </div>
+              )}
+            </div>
+          </Upload>
         </div>
       </Form>
     );

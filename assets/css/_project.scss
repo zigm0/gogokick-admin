@@ -1,10 +1,17 @@
 @import "vars";
 
 .project-settings-banner {
-  border: 1px solid #ced4da;
   margin-bottom: $gutter-size-sm;
 
   figure {
     margin-bottom: 0;
   }
+}
+
+.project-settings-banner-instructions {
+  text-align: center;
+  position: absolute;
+  bottom: 30px;
+  right: 0;
+  left: 0;
 }
