@@ -16,8 +16,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
-    const ROLE_USER = 'ROLE_USER';
-    const ROLE_ADMIN = 'ROLE_ADMIN';
+    const ROLE_USER        = 'ROLE_USER';
+    const ROLE_ADMIN       = 'ROLE_ADMIN';
     const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 
     const ROLES
@@ -66,9 +66,29 @@ class User implements UserInterface
     /**
      * @var array
      * @ORM\Column(type="array")
-     * @Groups({"web"})
      */
     protected $roles;
+
+    /**
+     * @var string
+     * @ORM\Column(type="text")
+     * @Groups({"web"})
+     */
+    protected $bio = '';
+
+    /**
+     * @var array
+     * @ORM\Column(type="array")
+     * @Groups({"web"})
+     */
+    protected $skills = [];
+
+    /**
+     * @var array
+     * @ORM\Column(type="array")
+     * @Groups({"web"})
+     */
+    protected $social;
 
     /**
      * @var bool
@@ -186,6 +206,74 @@ class User implements UserInterface
     public function setAvatar(string $avatar): User
     {
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBio(): ?string
+    {
+        return $this->bio;
+    }
+
+    /**
+     * @param string $bio
+     *
+     * @return User
+     */
+    public function setBio(string $bio): User
+    {
+        $this->bio = $bio;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSkills(): array
+    {
+        if (!$this->skills) {
+            return [];
+        }
+
+        return $this->skills;
+    }
+
+    /**
+     * @param array $skills
+     *
+     * @return User
+     */
+    public function setSkills(array $skills): User
+    {
+        $this->skills = $skills;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSocial(): array
+    {
+        if (!$this->social) {
+            return [];
+        }
+
+        return $this->social;
+    }
+
+    /**
+     * @param array $social
+     *
+     * @return User
+     */
+    public function setSocial(array $social): User
+    {
+        $this->social = $social;
 
         return $this;
     }

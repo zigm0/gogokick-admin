@@ -27,6 +27,12 @@ const initialState = {
     password: '',
     ...commonForms
   },
+  profile: {
+    name:   '',
+    bio:    '',
+    avatar: '',
+    ...commonForms
+  },
   projectSettings: {
     name: '',
     ...commonForms

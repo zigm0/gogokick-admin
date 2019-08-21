@@ -96,7 +96,7 @@ export default class UserMenu extends React.PureComponent {
             <div className="avatar-user-menu">
               <div className="avatar-menu" data-toggle="dropdown">
                 <Icon name="angle-down" />
-                <Avatar src="/images/avatar-1.jpeg" sm />
+                <Avatar src={user.avatar} sm />
               </div>
               <div>{user.name}</div>
             </div>

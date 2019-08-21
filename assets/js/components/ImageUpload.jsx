@@ -4,8 +4,7 @@ import classNames from 'classnames';
 import { Icon, Loading } from 'components';
 
 /**
- *
- * @param {*} project
+ * @param {*} media
  * @param {boolean} isUploading
  * @param {Function} handleDrop
  * @param {string} className

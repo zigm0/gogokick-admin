@@ -1,0 +1,33 @@
+@import "vars";
+
+.profile {
+  position: relative;
+  border: 1px solid grey;
+  padding: $gutter-size;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profile-avatar-container {
+  display: flex;
+  height: 200px;
+  width: 200px;
+  align-items: center;
+  justify-content: center;
+
+  .avatar {
+    position: absolute;
+  }
+
+  .upload-container-circle {
+    opacity: 0.8;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}

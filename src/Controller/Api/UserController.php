@@ -2,7 +2,9 @@
 namespace App\Controller\Api;
 
 use App\Entity\User;
+use App\Http\ModelRequestHandler;
 use App\Http\Request;
+use App\Model\ProfileModel;
 use App\Repository\UserRepository;
 use App\Security\LoginFormAuthenticator;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -26,6 +28,30 @@ class UserController extends ApiController
     public function meAction()
     {
         $user = $this->getUser();
+
+        return $this->jsonEntityResponse($user);
+    }
+
+    /**
+     * @Route(name="_save", methods={"POST"})
+     *
+     * @param Request             $request
+     * @param ModelRequestHandler $handler
+     *
+     * @return JsonResponse
+     */
+    public function saveAction(Request $request, ModelRequestHandler $handler)
+    {
+        $profile = new ProfileModel();
+        $handler->handleRequest($profile, $request);
+
+        /** @var User $user */
+        $user = $this->getUser();
+        $user
+            ->setName($profile->getName())
+            ->setBio($profile->getBio())
+            ->setAvatar($profile->getAvatar());
+        $this->em->flush();
 
         return $this->jsonEntityResponse($user);
     }

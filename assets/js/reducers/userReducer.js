@@ -3,6 +3,7 @@ import * as types from 'actions/userActions';
 
 const initialState = objects.merge({
   name:            'Guest',
+  skills:          [],
   error:           '',
   isBusy:          false,
   isAuthenticated: false
@@ -24,6 +25,20 @@ const onUserMe = (state, action) => {
     isBusy: false,
     isAuthenticated
   }
+};
+
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onUserSave = (state, action) => {
+  const user = objects.clone(action.payload);
+
+  return {
+    ...state,
+    ...user
+  };
 };
 
 /**
@@ -56,6 +71,7 @@ const onUserBusy = (state, action) => {
 
 const handlers = {
   [types.USER_ME]:    onUserMe,
+  [types.USER_SAVE]:  onUserSave,
   [types.USER_BUSY]:  onUserBusy,
   [types.USER_ERROR]: onUserError
 };

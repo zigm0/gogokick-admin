@@ -1,8 +1,8 @@
 import { api, router, history } from 'utils';
 import { editorFetchProjects } from './editorActions';
-import { projectOpen } from './projectActions';
 
 export const USER_ME    = 'USER_ME';
+export const USER_SAVE  = 'USER_SAVE';
 export const USER_ERROR = 'USER_ERROR';
 export const USER_BUSY  = 'USER_BUSY';
 
@@ -120,6 +120,22 @@ export const userLogout = () => {
       })
       .finally(() => {
         dispatch(userBusy(false));
+      });
+  };
+};
+
+/**
+ * @param {*} payload
+ * @returns {Function}
+ */
+export const userSave = (payload) => {
+  return (dispatch) => {
+    api.post(router.generate('api_user_save'), payload)
+      .then((resp) => {
+        dispatch({
+          type:    USER_SAVE,
+          payload: resp
+        });
       });
   };
 };

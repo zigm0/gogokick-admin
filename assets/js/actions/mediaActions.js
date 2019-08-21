@@ -88,12 +88,16 @@ export const mediaReplace = (payload) => {
   }
 };
 
+/**
+ * @param {*} payload
+ * @returns {Function}
+ */
 export const mediaCrop = (payload) => {
   return (dispatch) => {
     dispatch(uiModal({
       modal:      'cropper',
       open:       true,
-      meta:       payload.media,
+      meta:       payload,
       onComplete: (image) => {
         dispatch(uiModal({
           modal: 'cropper',

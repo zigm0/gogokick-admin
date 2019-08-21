@@ -7,7 +7,7 @@ import { Modal } from 'components';
 import { mediaActions } from 'actions';
 
 const mapStateToProps = state => ({
-  media:      state.ui.modalMeta,
+  settings:   state.ui.modalMeta,
   onComplete: state.ui.modalCallback
 });
 
@@ -17,7 +17,7 @@ const mapStateToProps = state => ({
 )
 export default class CropperModal extends React.PureComponent {
   static propTypes = {
-    media:        PropTypes.object,
+    settings:     PropTypes.object,
     onComplete:   PropTypes.func.isRequired,
     mediaReplace: PropTypes.func.isRequired
   };
@@ -37,7 +37,8 @@ export default class CropperModal extends React.PureComponent {
    *
    */
   handleCropClick = () => {
-    const { media, mediaReplace, onComplete } = this.props;
+    const { settings, mediaReplace, onComplete } = this.props;
+    const { media } = settings;
 
     const dataUrl = this.cropper.current.getCroppedCanvas().toDataURL();
     mediaReplace({
@@ -51,11 +52,13 @@ export default class CropperModal extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { media } = this.props;
+    const { settings } = this.props;
 
-    if (!media) {
+    if (!settings || !settings.media) {
       return null;
     }
+
+    const { media, width, height } = settings;
 
     const buttons = (
       <Button theme="success" onClick={this.handleCropClick} sm>
@@ -75,7 +78,7 @@ export default class CropperModal extends React.PureComponent {
           src={media.url}
           ref={this.cropper}
           style={{ height: 500, width: '100%' }}
-          aspectRatio={1024 / 576}
+          aspectRatio={(width || 1024) / (height || 576)}
           guides={false}
           viewMode={1}
           minContainerWidth={765}
