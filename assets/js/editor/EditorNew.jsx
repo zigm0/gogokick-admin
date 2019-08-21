@@ -3,27 +3,24 @@ import PropTypes from 'prop-types';
 import { connect, constants, browser, history, mapDispatchToProps } from 'utils';
 import { Container, Row, Column, Button } from 'components/bootstrap';
 import { Form, Input, Checkbox } from 'components/forms';
-import { ImageUpload } from 'components';
-import { mediaActions, formActions, projectActions } from 'actions';
+import { Upload } from 'components';
+import { formActions, projectActions } from 'actions';
 
 const mapStateToProps = state => ({
-  user:        state.user,
-  newProject:  state.forms.newProject,
-  isUploading: state.media.isUploading
+  user:       state.user,
+  newProject: state.forms.newProject
 });
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(mediaActions, formActions, projectActions)
+  mapDispatchToProps(formActions, projectActions)
 )
 export default class EditorNew extends React.PureComponent {
   static propTypes = {
-    user:        PropTypes.object.isRequired,
-    newProject:  PropTypes.object.isRequired,
-    isUploading: PropTypes.bool.isRequired,
-    mediaUpload: PropTypes.func.isRequired,
-    formChange:  PropTypes.func.isRequired,
-    projectNew:  PropTypes.func.isRequired
+    user:       PropTypes.object.isRequired,
+    newProject: PropTypes.object.isRequired,
+    formChange: PropTypes.func.isRequired,
+    projectNew: PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -34,7 +31,7 @@ export default class EditorNew extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      media: {}
+      media: { url: '' }
     };
   }
 
@@ -61,30 +58,20 @@ export default class EditorNew extends React.PureComponent {
   };
 
   /**
-   * @param {File} file
+   * @param {*} media
    */
-  handleUpload = (file) => {
-    const { mediaUpload, formChange } = this.props;
+  handleUploaded = (media) => {
+    const { formChange } = this.props;
 
-    mediaUpload({
-      file,
-      system:     'project_images',
-      onComplete: (resp) => {
-        formChange('newProject', 'pictureURL', resp.url);
-        this.setState({
-          media: {
-            url: resp.url
-          }
-        });
-      }
-    });
+    formChange('newProject', 'pictureURL', media.url);
+    this.setState({ media });
   };
 
   /**
    * @returns {*}
    */
   render() {
-    const { newProject, isUploading } = this.props;
+    const { newProject } = this.props;
     const { media } = this.state;
 
     return (
@@ -142,12 +129,16 @@ export default class EditorNew extends React.PureComponent {
                   <h3>
                     Project Image
                   </h3>
-                  <ImageUpload
-                    media={media}
-                    isUploading={isUploading}
-                    onDrop={this.handleUpload}
-                    className="project-settings-banner"
-                  />
+                  <Upload
+                    maxSizeMB={2}
+                    accept="image/*"
+                    system="project_images"
+                    onUploaded={this.handleUploaded}
+                    className="border-grey margin-bottom"
+                    cropping
+                  >
+                    <img src={media.url} alt="Banner" />
+                  </Upload>
                   <p>
                     Add an image that clearly represents your project.
                   </p>

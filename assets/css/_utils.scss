@@ -16,6 +16,10 @@
   padding-bottom: $gutter-size;
 }
 
+.margin-bottom {
+  margin-bottom: $gutter-size;
+}
+
 .gutter-top {
   padding-top: $gutter-size;
 }
@@ -35,4 +39,8 @@
 
 .pointer {
   cursor: pointer;
+}
+
+.border-grey {
+  border: 1px solid #dadada;
 }

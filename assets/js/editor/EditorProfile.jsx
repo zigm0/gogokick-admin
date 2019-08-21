@@ -210,9 +210,9 @@ export default class EditorProfile extends React.PureComponent {
               <h2>Profile</h2>
               <div>
                 {isEditing && (
-                  <Button icon="save" onClick={this.handleSaveClick} />
+                  <Button icon="save" className="btn-circle btn-profile-edit" onClick={this.handleSaveClick} />
                 )}
-                <Button icon="edit" onClick={this.handleEditClick} />
+                <Button icon="pencil-alt" className="btn-circle btn-profile-edit" onClick={this.handleEditClick} />
               </div>
             </div>
             <div className="profile">
