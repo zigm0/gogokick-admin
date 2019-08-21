@@ -25,22 +25,8 @@ $color-block-image: #d977ee;
 $color-block-video: #ffc561;
 $color-block-audio: #d25151;
 
-:export {
-  colorPrimary: $color-primary;
-  colorInfo:    $color-info;
-  colorSuccess: $color-success;
-  colorWarning: $color-warning;
-  colorDanger:  $color-danger;
-  breakXs: $break-xs;
-  breakSm: $break-sm;
-  breakMd: $break-md;
-  breakLg: $break-lg;
-  breakXl: $break-xl;
-}
-
 $color-names-list: primary success info danger warning;
 $colors-list: $color-primary $color-success $color-info $color-danger $color-warning;
-
 
 $gutter-size: 15px;
 $gutter-size-lg: $gutter-size * 2;
@@ -87,4 +73,17 @@ $font-size-sm: 0.9rem;
   @media (min-width: #{$break-xl}) {
     @content;
   }
+}
+
+:export {
+  colorPrimary: $color-primary;
+  colorInfo:    $color-info;
+  colorSuccess: $color-success;
+  colorWarning: $color-warning;
+  colorDanger:  $color-danger;
+  breakXs: $break-xs;
+  breakSm: $break-sm;
+  breakMd: $break-md;
+  breakLg: $break-lg;
+  breakXl: $break-xl;
 }
