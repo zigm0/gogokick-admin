@@ -28,9 +28,13 @@ const initialState = {
     ...commonForms
   },
   profile: {
-    name:   '',
-    bio:    '',
-    avatar: '',
+    name:            '',
+    bio:             '',
+    avatar:          '',
+    socialTwitter:   '',
+    socialYoutube:   '',
+    socialFacebook:  '',
+    socialInstagram: '',
     ...commonForms
   },
   projectSettings: {

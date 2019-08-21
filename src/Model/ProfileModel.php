@@ -27,6 +27,18 @@ class ProfileModel
     protected $avatar;
 
     /**
+     * @var array
+     * @Assert\Type("array")
+     */
+    protected $social;
+
+    /**
+     * @var array
+     * @Assert\Type("array")
+     */
+    protected $skills;
+
+    /**
      * @return string
      */
     public function getName(): string
@@ -82,6 +94,46 @@ class ProfileModel
     public function setAvatar(string $avatar): ProfileModel
     {
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSocial(): array
+    {
+        return $this->social;
+    }
+
+    /**
+     * @param array $social
+     *
+     * @return ProfileModel
+     */
+    public function setSocial(array $social): ProfileModel
+    {
+        $this->social = $social;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSkills(): array
+    {
+        return $this->skills;
+    }
+
+    /**
+     * @param array $skills
+     *
+     * @return ProfileModel
+     */
+    public function setSkills(array $skills): ProfileModel
+    {
+        $this->skills = $skills;
 
         return $this;
     }

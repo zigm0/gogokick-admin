@@ -50,6 +50,8 @@ class UserController extends ApiController
         $user
             ->setName($profile->getName())
             ->setBio($profile->getBio())
+            ->setSkills($profile->getSkills())
+            ->setSocial($profile->getSocial())
             ->setAvatar($profile->getAvatar());
         $this->em->flush();
 

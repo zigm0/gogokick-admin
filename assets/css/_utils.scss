@@ -5,11 +5,11 @@
 }
 
 .gutter-sm {
-  padding: $gutter-size / 2;
+  padding: $gutter-size-sm;
 }
 
 .gutter-lg {
-  padding: $gutter-size-sm * 2;
+  padding: $gutter-size-lg;
 }
 
 .gutter-bottom {
@@ -25,11 +25,15 @@
 }
 
 .gutter-bottom-sm {
-  padding-bottom: $gutter-size / 2;
+  padding-bottom: $gutter-size-sm;
 }
 
 .gutter-top-sm {
-  padding-top: $gutter-size / 2;
+  padding-top: $gutter-size-sm;
+}
+
+.margin-right-sm {
+  margin-right: $gutter-size-sm;
 }
 
 .circle {

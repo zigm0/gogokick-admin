@@ -31,6 +31,7 @@ export function stringSpaceCommas(pieces) {
  */
 export function stringUcWords(str) {
   return str
+    .toLowerCase()
     .replace(/^(.)|\s+(.)/g, ($1) => {
       return $1.toUpperCase();
     });
