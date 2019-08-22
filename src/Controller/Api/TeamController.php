@@ -10,6 +10,7 @@ use App\Repository\ProjectUserRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Swift_Mailer;
+use Swift_Message;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -63,7 +64,7 @@ class TeamController extends ApiController
             UrlGeneratorInterface::ABSOLUTE_URL
         );
 
-        $message = (new \Swift_Message('Hello Email'))
+        $message = (new Swift_Message('Hello Email'))
             ->setFrom('invites@gogokick.com')
             ->setTo($email)
             ->setBody(

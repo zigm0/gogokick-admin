@@ -33,3 +33,13 @@
     font-family: "Font Awesome 5 Free";
   }
 }
+
+.toast-default {
+  &::before {
+    content: "\f00c";
+    font-weight: 900;
+    margin-right: 0.5rem;
+    color: $color-block-text;
+    font-family: "Font Awesome 5 Free";
+  }
+}
