@@ -56,7 +56,6 @@ export default class PreviewModal extends React.PureComponent {
       <Modal
         name="preview"
         title="Preview"
-        icon="eye"
       >
         <p>
           Share this link...
