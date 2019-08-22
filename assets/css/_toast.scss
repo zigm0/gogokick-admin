@@ -9,7 +9,7 @@
   color: #FFF;
   background-color: #242424;
   padding: $gutter-size-sm;
-  margin-top: 5px;
+  margin-top: $width-striped-border;
   margin-bottom: 0;
 }
 
@@ -22,6 +22,10 @@
 
 .Toastify__toast-container {
   width: 500px;
+}
+
+.Toastify__toast-container--bottom-center {
+  margin-left: -252px;
 }
 
 .toast-error {
