@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, mapDispatchToProps } from 'utils';
+import { connect, router, mapDispatchToProps } from 'utils';
 import { Avatar, Icon, Link } from 'components';
 import { userActions, uiActions } from 'actions';
 
@@ -108,7 +108,7 @@ export default class UserMenu extends React.PureComponent {
                 Profile
               </Link>
               <div className="dropdown-divider" />
-              <a className="dropdown-item" href="#" onClick={this.handleLogoutClick}>
+              <a className="dropdown-item" href={router.generate('logout')}>
                 <Icon name="sign-out-alt" />
                 Logout
               </a>

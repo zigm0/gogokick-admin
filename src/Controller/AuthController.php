@@ -84,7 +84,7 @@ class AuthController extends Controller
     }
 
     /**
-     * @Route("/logout", name="logout")
+     * @Route("/logout", name="logout", options={"expose"=true})
      */
     public function logout() {}
 
