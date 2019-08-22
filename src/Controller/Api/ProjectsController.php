@@ -37,7 +37,7 @@ class ProjectsController extends ApiController
             return new JsonResponse([]);
         }
 
-        $projects = $projectRepository->findByUser($user);
+        $projects = $projectRepository->findByTeamMember($user);
 
         return $this->jsonEntityResponse($projects);
     }
@@ -96,7 +96,7 @@ class ProjectsController extends ApiController
         $this->em->remove($project);
         $this->em->flush();
 
-        return $this->jsonEntityResponse($projectRepository->findByUser($user));
+        return $this->jsonEntityResponse($projectRepository->findByTeamMember($user));
     }
 
     /**
@@ -202,7 +202,7 @@ class ProjectsController extends ApiController
 
         $resp = [
             'project'  => $this->arrayEntityGroup($project),
-            'projects' => $this->arrayEntityGroup($projectRepository->findByUser($this->getUser()))
+            'projects' => $this->arrayEntityGroup($projectRepository->findByTeamMember($this->getUser()))
         ];
 
         return new JsonResponse($resp);
@@ -283,7 +283,7 @@ class ProjectsController extends ApiController
 
         $resp = [
             'project'  => $this->arrayEntityGroup($project),
-            'projects' => $this->arrayEntityGroup($projectRepository->findByUser($user))
+            'projects' => $this->arrayEntityGroup($projectRepository->findByTeamMember($user))
         ];
 
         return new JsonResponse($resp);

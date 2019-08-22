@@ -2,8 +2,10 @@
 namespace App\Repository;
 
 use App\Entity\Project;
+use App\Entity\ProjectUser;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -41,6 +43,22 @@ class ProjectRepository extends ServiceEntityRepository
         return $this->findBy([
             'user'       => $user
         ]);
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return Project[]|array
+     */
+    public function findByTeamMember(User $user)
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin(ProjectUser::class, 'pu', Join::WITH, 'pu.project = p')
+            ->where('p.user = :user')
+            ->orWhere('pu.user = :user')
+            ->setParameter(':user', $user)
+            ->getQuery()
+            ->execute();
     }
 
     /**
