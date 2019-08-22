@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Controller\Api\ApiController;
 use App\Entity\Block;
 use App\Entity\Project;
+use App\Entity\ProjectUser;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -26,7 +27,8 @@ class HomeController extends ApiController
     {
         $constants = [
             'blockTypes'    => array_flip(Block::TYPES),
-            'campaignTypes' => array_flip(Project::CAMPAIGN_TYPES)
+            'campaignTypes' => array_flip(Project::CAMPAIGN_TYPES),
+            'projectRoles'  => array_flip(ProjectUser::ROLES)
         ];
 
         $user = [

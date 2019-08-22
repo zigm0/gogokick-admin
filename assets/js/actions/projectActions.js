@@ -1,15 +1,16 @@
 import { api, router, history } from 'utils';
 import { editorReset, editorNew, editorBlocks, editorChanged, editorProjects } from "./editorActions";
 
-export const PROJECT_RESET     = 'PROJECT_RESET';
-export const PROJECT_BUSY      = 'PROJECT_BUSY';
-export const PROJECT_SAVING    = 'PROJECT_SAVING';
-export const PROJECT_SET       = 'PROJECT_SET';
-export const PROJECT_NEW       = 'PROJECT_NEW_PROJECT';
-export const PROJECT_OPEN      = 'PROJECT_OPEN_PROJECT';
-export const PROJECT_SETTINGS  = 'PROJECT_SETTINGS';
-export const PROJECT_DELETE    = 'PROJECT_DELETE_PROJECT';
-export const PROJECT_MARK_READ = 'PROJECT_MARK_READ';
+export const PROJECT_RESET              = 'PROJECT_RESET';
+export const PROJECT_BUSY               = 'PROJECT_BUSY';
+export const PROJECT_SAVING             = 'PROJECT_SAVING';
+export const PROJECT_SET                = 'PROJECT_SET';
+export const PROJECT_NEW                = 'PROJECT_NEW_PROJECT';
+export const PROJECT_OPEN               = 'PROJECT_OPEN_PROJECT';
+export const PROJECT_UPDATE_TEAM_MEMBER = 'PROJECT_UPDATE_TEAM_MEMBER';
+export const PROJECT_SETTINGS           = 'PROJECT_SETTINGS';
+export const PROJECT_DELETE             = 'PROJECT_DELETE_PROJECT';
+export const PROJECT_MARK_READ          = 'PROJECT_MARK_READ';
 
 /**
  * @returns {{type: string}}
@@ -193,6 +194,17 @@ export const projectSettings = (payload) => {
 export const projectMarkRead = (payload) => {
   return {
     type: PROJECT_MARK_READ,
+    payload
+  };
+};
+
+/**
+ * @param {*} payload
+ * @returns {{payload: *, type: string}}
+ */
+export const projectUpdateTeamMember = (payload) => {
+  return {
+    type: PROJECT_UPDATE_TEAM_MEMBER,
     payload
   };
 };

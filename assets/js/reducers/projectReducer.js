@@ -181,17 +181,38 @@ const onProjectSet = (state, action) => {
   return onProjectOpen(state, action);
 };
 
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onProjectUpdateTeamMember = (state, action) => {
+  const team      = objects.clone(state.team);
+  const teamMember = objects.clone(action.payload);
+
+  const index = arrays.findIndexByID(team, teamMember.id);
+  if (index !== -1) {
+    team[index] = teamMember;
+  }
+
+  return {
+    ...state,
+    team
+  };
+};
+
 const handlers = {
-  [types.PROJECT_RESET]:     onProjectReset,
-  [types.PROJECT_BUSY]:      onProjectBusy,
-  [types.PROJECT_SAVING]:    onProjectSaving,
-  [types.PROJECT_MARK_READ]: onProjectMarkRead,
-  [types.PROJECT_DELETE]:    onProjectDelete,
-  [types.PROJECT_SETTINGS]:  onProjectSettings,
-  [types.PROJECT_SAVING]:    onProjectSaving,
-  [types.PROJECT_SET]:       onProjectSet,
-  [types.PROJECT_NEW]:       onProjectNew,
-  [types.PROJECT_OPEN]:      onProjectOpen
+  [types.PROJECT_RESET]:              onProjectReset,
+  [types.PROJECT_BUSY]:               onProjectBusy,
+  [types.PROJECT_SAVING]:             onProjectSaving,
+  [types.PROJECT_MARK_READ]:          onProjectMarkRead,
+  [types.PROJECT_DELETE]:             onProjectDelete,
+  [types.PROJECT_SETTINGS]:           onProjectSettings,
+  [types.PROJECT_SAVING]:             onProjectSaving,
+  [types.PROJECT_SET]:                onProjectSet,
+  [types.PROJECT_NEW]:                onProjectNew,
+  [types.PROJECT_OPEN]:               onProjectOpen,
+  [types.PROJECT_UPDATE_TEAM_MEMBER]: onProjectUpdateTeamMember
 };
 
 /**

@@ -1,22 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, mapDispatchToProps } from 'utils';
-import { Form, Input, Checkbox } from 'components/forms';
+import { connect, constants, objects, mapDispatchToProps } from 'utils';
+import { Form, Checkbox } from 'components/forms';
 import { Row, Column, Button } from 'components/bootstrap';
 import { Modal } from 'components';
-import { formActions, userActions } from 'actions';
+import { formActions, teamActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({
-  teamMember: state.editor.teamMember
+  teamMember: state.editor.teamMember,
+  form:       state.forms.teamMember
 });
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(userActions, formActions)
+  mapDispatchToProps(formActions, teamActions, uiActions)
 )
 export default class TeamMemberModal extends React.PureComponent {
   static propTypes = {
-    teamMember: PropTypes.object
+    form:             PropTypes.object.isRequired,
+    teamMember:       PropTypes.object,
+    formChanges:      PropTypes.func.isRequired,
+    teamMemberUpdate: PropTypes.func.isRequired,
+    uiModal:          PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -45,21 +50,53 @@ export default class TeamMemberModal extends React.PureComponent {
    *
    */
   handleUpdate = () => {
-    const { teamMember, formChange, formChanges } = this.props;
+    const { teamMember, formChanges } = this.props;
 
     if (!teamMember) {
       return;
     }
 
-    formChanges('teamMember', {
-      roleEditor:   false,
-      roleLead:     false,
-      roleGraphics: false
-    });
+    const { roles } = teamMember;
 
-    teamMember.projectRoles.forEach((role) => {
-      formChange('teamMember', `role${role}`, true);
+    formChanges('teamMember', {
+      roleWriter:   roles.includes(constants.projectRole('writer')),
+      roleLead:     roles.includes(constants.projectRole('lead')),
+      roleGraphics: roles.includes(constants.projectRole('graphics')),
+      roleVideo:    roles.includes(constants.projectRole('video')),
+      roleAudio:    roles.includes(constants.projectRole('audio')),
     });
+  };
+
+  /**
+   *
+   */
+  handleSaveClick = () => {
+    const { teamMember, form, teamMemberUpdate, uiModal } = this.props;
+
+    const roles = [];
+    if (form.roleWriter) {
+      roles.push(constants.projectRole('writer'));
+    }
+    if (form.roleLead) {
+      roles.push(constants.projectRole('lead'));
+    }
+    if (form.roleGraphics) {
+      roles.push(constants.projectRole('graphics'));
+    }
+    if (form.roleVideo) {
+      roles.push(constants.projectRole('video'));
+    }
+    if (form.roleAudio) {
+      roles.push(constants.projectRole('audio'));
+    }
+
+    teamMemberUpdate(objects.merge(teamMember, {
+      roles
+    }));
+    uiModal({
+      modal: 'teamMember',
+      open:  false
+    })
   };
 
   /**
@@ -71,9 +108,16 @@ export default class TeamMemberModal extends React.PureComponent {
         <Row>
           <Column xl={4}>
             <Checkbox
-              name="roleEditor"
-              label="Editor"
-              id="input-team-member-role-editor"
+              name="roleLead"
+              label="Lead"
+              id="input-team-member-role-lead"
+            />
+          </Column>
+          <Column xl={4}>
+            <Checkbox
+              name="roleWriter"
+              label="Writer"
+              id="input-team-member-role-writer"
             />
           </Column>
           <Column xl={4}>
@@ -83,11 +127,20 @@ export default class TeamMemberModal extends React.PureComponent {
               id="input-team-member-role-graphics"
             />
           </Column>
+        </Row>
+        <Row>
           <Column xl={4}>
             <Checkbox
-              name="roleLead"
-              label="Lead"
-              id="input-team-member-role-lead"
+              name="roleVideo"
+              label="Video"
+              id="input-team-member-role-video"
+            />
+          </Column>
+          <Column xl={4}>
+            <Checkbox
+              name="roleAudio"
+              label="Audio"
+              id="input-team-member-role-audio"
             />
           </Column>
         </Row>
@@ -110,7 +163,9 @@ export default class TeamMemberModal extends React.PureComponent {
         <Button className="modal-delete-btn" theme="danger" sm>
           Remove Team Member
         </Button>
-        <Button sm>Save</Button>
+        <Button onClick={this.handleSaveClick} sm>
+          Save
+        </Button>
       </>
     );
 
@@ -118,8 +173,8 @@ export default class TeamMemberModal extends React.PureComponent {
       <Modal
         name="teamMember"
         buttons={buttons}
-        title={teamMember.name}
-        avatar={teamMember.avatar}
+        title={teamMember.user.name}
+        avatar={teamMember.user.avatar}
       >
         {this.renderForm()}
       </Modal>

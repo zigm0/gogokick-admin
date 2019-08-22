@@ -4,6 +4,7 @@ import * as types from 'actions/userActions';
 const initialState = objects.merge({
   name:            'Guest',
   skills:          [],
+  roles:           [],
   error:           '',
   isBusy:          false,
   isAuthenticated: false

@@ -50,9 +50,11 @@ const initialState = {
     ...commonForms
   },
   teamMember: {
-    roleEditor:   false,
+    roleWriter:   false,
     roleGraphics: false,
     roleLead:     false,
+    roleVideo:    false,
+    roleAudio:    false,
     ...commonForms
   },
   addMember: {

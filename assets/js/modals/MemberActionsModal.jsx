@@ -65,6 +65,10 @@ export default class MemberActionsModal extends React.PureComponent {
   renderActions = () => {
     const { teamMember } = this.props;
 
+    if (!teamMember.actions) {
+      teamMember.actions = [];
+    }
+
     return (
       <ul className="list-group list-group-flush editor-team-actions">
         {teamMember.actions.map(action => (
@@ -115,8 +119,8 @@ export default class MemberActionsModal extends React.PureComponent {
       <Modal
         name="memberActions"
         buttons={buttons}
-        title={teamMember.name}
-        avatar={teamMember.avatar}
+        title={teamMember.user.name}
+        avatar={teamMember.user.avatar}
       >
         {this.renderActions()}
       </Modal>

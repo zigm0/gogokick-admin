@@ -115,8 +115,8 @@ export default class EditorSidebar extends React.PureComponent {
           <ul className="editor-team">
             <TeamMemberItem
               projectUser={{
-                user: project.owner,
-                role: 0
+                user:  project.owner,
+                roles: [1]
               }}
               onClick={this.handleMemberClick}
               onBadgeClick={this.handleMemberBadgeClick}

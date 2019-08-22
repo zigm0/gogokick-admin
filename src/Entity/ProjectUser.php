@@ -17,13 +17,19 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class ProjectUser
 {
-    const ROLE_OWNER = 0;
-    const ROLE_LEAD  = 1;
-    const ROLE_GUEST = 2;
+    const ROLE_OWNER    = 1;
+    const ROLE_LEAD     = 2;
+    const ROLE_WRITER   = 3;
+    const ROLE_GRAPHICS = 4;
+    const ROLE_VIDEO    = 5;
+    const ROLE_AUDIO    = 6;
     const ROLES = [
-        'owner' => self::ROLE_OWNER,
-        'lead'  => self::ROLE_LEAD,
-        'guest' => self::ROLE_GUEST
+        'owner'    => self::ROLE_OWNER,
+        'lead'     => self::ROLE_LEAD,
+        'writer'   => self::ROLE_WRITER,
+        'graphics' => self::ROLE_GRAPHICS,
+        'video'    => self::ROLE_VIDEO,
+        'audio'    => self::ROLE_AUDIO
     ];
 
     /**
@@ -51,11 +57,11 @@ class ProjectUser
     protected $project;
 
     /**
-     * @var int
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @var array
+     * @ORM\Column(type="array")
      * @Groups({"web"})
      */
-    protected $role;
+    protected $roles = [];
 
     /**
      * @var DateTime
@@ -123,21 +129,25 @@ class ProjectUser
     }
 
     /**
-     * @return int
+     * @return array
      */
-    public function getRole(): ?int
+    public function getRoles(): ?array
     {
-        return $this->role;
+        if (!$this->roles) {
+            return [];
+        }
+
+        return $this->roles;
     }
 
     /**
-     * @param int $role
+     * @param array $roles
      *
      * @return ProjectUser
      */
-    public function setRole(int $role): ProjectUser
+    public function setRoles(array $roles): ProjectUser
     {
-        $this->role = $role;
+        $this->roles = $roles;
 
         return $this;
     }
