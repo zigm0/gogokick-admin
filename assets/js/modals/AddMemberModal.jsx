@@ -111,7 +111,6 @@ export default class AddMemberModal extends React.PureComponent {
         name="addMember"
         buttons={buttons}
         title="Invite Team Member"
-        icon="user"
       >
         {this.renderForm()}
       </Modal>
