@@ -38,15 +38,7 @@ class InviteController extends Controller
             return $this->redirectToRoute('login');
         }
 
-        $found = false;
-        foreach($invite->getProject()->getTeam() as $projectUser) {
-            if ($projectUser->getId() === $user->getId()) {
-                $found = true;
-                break;
-            }
-        }
-
-        if (!$found) {
+        if (!$invite->getProject()->hasTeamMember($user)) {
             $projectUser = (new ProjectUser())
                 ->setProject($invite->getProject())
                 ->setRoles($invite->getRoles())
