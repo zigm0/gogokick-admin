@@ -5,6 +5,7 @@ easy_admin:
     design:
         menu:
             - { entity: User, label: 'Users', icon: 'user' }
+            - { entity: Project, label: 'Projects', icon: 'user' }
     entities:
         User:
             class: App\Entity\User
@@ -24,3 +25,16 @@ easy_admin:
                     - { property: 'bio', type_options: { required: false, empty_data: '' } }
                     - skills
                     - isEnabled
+
+        Project:
+            class: App\Entity\Project
+            list:
+                fields:
+                    - id
+                    - name
+                    - dateCreated
+            form:
+                fields:
+                    - name
+                    - { property: 'subtitle', type_options: { required: false, empty_data: '' } }
+
