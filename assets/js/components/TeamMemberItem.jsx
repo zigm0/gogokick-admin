@@ -28,7 +28,7 @@ export default class TeamMemberItem extends React.PureComponent {
 
     return (
       <li className="editor-team-member" onClick={e => onClick(e, projectUser)}>
-        <Avatar src={projectUser.user.avatar || ''} roles={projectUser.roles} lg />
+        <Avatar src={projectUser.user.avatar || ''} roles={projectUser.roles} />
         <div className="editor-team-member-info">
           <span>
             {projectUser.user.name}
