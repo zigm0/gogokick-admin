@@ -276,7 +276,7 @@ class Project
     }
 
     /**
-     * @return Collection
+     * @return Collection|ProjectUser[]
      */
     public function getTeam(): Collection
     {

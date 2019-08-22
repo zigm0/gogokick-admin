@@ -29,6 +29,7 @@ export default class Modal extends React.PureComponent {
     modals:      PropTypes.object.isRequired,
     uiModal:     PropTypes.func.isRequired,
     onBodyClick: PropTypes.func,
+    onOpened:    PropTypes.func,
     onClosed:    PropTypes.func,
     children:    PropTypes.node
   };
@@ -44,6 +45,7 @@ export default class Modal extends React.PureComponent {
     closeText:   'Close',
     buttons:     '',
     children:    '',
+    onOpened:    () => {},
     onClosed:    () => {},
     onBodyClick: () => {}
   };
@@ -65,10 +67,26 @@ export default class Modal extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { name, title, icon, avatar, role, buttons, fixedHeight, closeText, footer, id, lg, modals, children, onBodyClick } = this.props;
+    const {
+      name,
+      title,
+      icon,
+      avatar,
+      role,
+      buttons,
+      fixedHeight,
+      closeText,
+      footer,
+      id,
+      lg,
+      modals,
+      onOpened,
+      children,
+      onBodyClick
+    } = this.props;
 
     return (
-      <BootstrapModal open={modals[name]} onClosed={this.close} role={role} lg={lg} id={id}>
+      <BootstrapModal open={modals[name]} onOpened={onOpened} onClosed={this.close} role={role} lg={lg} id={id}>
         <ModalHeader>
           {icon && (
             <Icon name={icon} />

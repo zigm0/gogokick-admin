@@ -1,6 +1,7 @@
-import { api, router } from 'utils';
-import { uiModal } from './uiActions';
+import { api, router, constants } from 'utils';
+import { uiModal, uiToast } from './uiActions';
 import { projectUpdateTeamMember } from './projectActions';
+import { formReset } from './formActions';
 
 export const TEAM_INVITE = 'TEAM_INVITE';
 
@@ -12,20 +13,42 @@ export const teamInvite = (payload) => {
   return (dispatch, getState) => {
     const { project } = getState();
 
+    const roles = [];
+    if (payload.roleWriter) {
+      roles.push(constants.projectRole('writer'));
+    }
+    if (payload.roleLead) {
+      roles.push(constants.projectRole('lead'));
+    }
+    if (payload.roleGraphics) {
+      roles.push(constants.projectRole('graphics'));
+    }
+    if (payload.roleVideo) {
+      roles.push(constants.projectRole('video'));
+    }
+    if (payload.roleAudio) {
+      roles.push(constants.projectRole('audio'));
+    }
+
     const body = {
-      project:      project.id,
-      email:        payload.email,
-      roleLead:     payload.roleLead,
-      roleEditor:   payload.roleWriter,
-      roleGraphics: payload.roleGraphics
+      project: project.id,
+      email:   payload.email,
+      roles
     };
 
     api.post(router.generate('api_team_invite'), body)
-      .then(() => {
+      .then((resp) => {
+        if (resp._error) {
+          dispatch(uiToast(resp._error, { type: 'error' }));
+          return;
+        }
+
         dispatch(uiModal({
           modal: 'addMember',
-          open:  true
+          open:  false
         }));
+        dispatch(formReset('addMember'));
+        dispatch(uiToast('Your invite has been sent!'));
       });
   };
 };

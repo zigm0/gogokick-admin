@@ -17,6 +17,7 @@ const mapStateToProps = state => ({
 export default class AddMemberModal extends React.PureComponent {
   static propTypes = {
     form:       PropTypes.object.isRequired,
+    formReset:  PropTypes.func.isRequired,
     formChange: PropTypes.func.isRequired,
     teamInvite: PropTypes.func.isRequired
   };
@@ -24,34 +25,87 @@ export default class AddMemberModal extends React.PureComponent {
   static defaultProps = {};
 
   /**
+   * @param {*} props
+   */
+  constructor(props) {
+    super(props);
+    this.input = React.createRef();
+
+    this.state = {
+      error: ''
+    };
+  }
+
+  /**
    *
    */
   handleAddClick = () => {
     const { form, teamInvite } = this.props;
-    const { email, roleEditor, roleGraphics, roleLead } = form;
+    const { email, roleWriter, roleGraphics, roleLead, roleVideo, roleAudio } = form;
 
-    if (form.email) {
-      teamInvite({
-        email,
-        roleEditor,
-        roleGraphics,
-        roleLead
-      });
+    if (!roleWriter && !roleGraphics && !roleLead && !roleVideo && !roleAudio) {
+      this.setState({ error: 'You must select at least one role.' });
+      return;
     }
+    if (!form.email) {
+      this.setState({ error: 'You must enter an email address.' });
+      return;
+    }
+
+    if (!/\S+@\S+\.\S+/.test(form.email)) {
+      this.setState({ error: 'Invalid email address.' });
+      return;
+    }
+
+    teamInvite({
+      email,
+      roleWriter,
+      roleGraphics,
+      roleLead,
+      roleVideo,
+      roleAudio
+    });
+
+    this.setState({ error: '' });
+  };
+
+  /**
+   *
+   */
+  handleOpened = () => {
+    this.input.current.focus();
+  };
+
+  /**
+   *
+   */
+  handleClosed = () => {
+    const { formReset } = this.props;
+
+    this.setState({ error: '' });
+    formReset('addMember');
   };
 
   /**
    * @returns {*}
    */
   renderForm = () => {
+    const { error } = this.state;
+
     return (
       <Form name="addMember">
+        {error && (
+          <div className="alert alert-danger">
+            {error}
+          </div>
+        )}
         <Row className="gutter-bottom-sm">
           <Column>
             <Input
               name="email"
               label="Email address"
               id="input-add-member-email"
+              ref={this.input}
             />
           </Column>
         </Row>
@@ -111,6 +165,8 @@ export default class AddMemberModal extends React.PureComponent {
         name="addMember"
         buttons={buttons}
         title="Invite Team Member"
+        onOpened={this.handleOpened}
+        onClosed={this.handleClosed}
       >
         {this.renderForm()}
       </Modal>

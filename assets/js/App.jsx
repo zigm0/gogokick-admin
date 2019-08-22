@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from "classnames";
 import { Route, Router, Switch } from 'react-router-dom';
 import { DragDropContext } from 'react-beautiful-dnd';
+import { ToastContainer } from 'react-toastify';
 import { connect, history, constants, mapDispatchToProps } from 'utils';
 import { LoadingCubes, ErrorBoundary } from 'components';
 import EditorController from 'editor/EditorController';
@@ -122,6 +123,7 @@ export default class App extends React.Component {
         {(userIsBusy || editorIsBusy || projectIsBusy) && (
           <LoadingCubes />
         )}
+        <ToastContainer />
       </div>
     );
   }

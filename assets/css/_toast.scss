@@ -1,0 +1,35 @@
+@import "vars";
+
+.Toastify__toast--default {
+  padding: 0;
+  @extend .striped-border;
+}
+
+.Toastify__toast-body {
+  color: #FFF;
+  background-color: #242424;
+  padding: $gutter-size-sm;
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
+.Toastify__close-button--default {
+  position: absolute;
+  top: $gutter-size-sm;
+  right: $gutter-size-sm;
+  color: #FFF;
+}
+
+.Toastify__toast-container {
+  width: 500px;
+}
+
+.toast-error {
+  &::before {
+    content: "\f071";
+    font-weight: 900;
+    margin-right: 0.5rem;
+    color: $color-warning;
+    font-family: "Font Awesome 5 Free";
+  }
+}

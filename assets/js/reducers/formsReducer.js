@@ -59,9 +59,11 @@ const initialState = {
   },
   addMember: {
     email:        '',
-    roleEditor:   false,
+    roleWriter:   false,
     roleGraphics: false,
     roleLead:     false,
+    roleVideo:    false,
+    roleAudio:    false,
     ...commonForms
   },
   newProject: {
