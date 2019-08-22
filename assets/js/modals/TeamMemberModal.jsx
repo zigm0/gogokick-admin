@@ -103,6 +103,10 @@ export default class TeamMemberModal extends React.PureComponent {
    * @returns {*}
    */
   renderForm = () => {
+    const { teamMember } = this.props;
+
+    const isOwner = teamMember.roles.includes(constants.projectRole('owner'));
+
     return (
       <Form name="teamMember">
         <Row>
@@ -111,6 +115,7 @@ export default class TeamMemberModal extends React.PureComponent {
               name="roleLead"
               label="Lead"
               id="input-team-member-role-lead"
+              disabled={isOwner}
             />
           </Column>
           <Column xl={4}>
@@ -118,6 +123,7 @@ export default class TeamMemberModal extends React.PureComponent {
               name="roleWriter"
               label="Writer"
               id="input-team-member-role-writer"
+              disabled={isOwner}
             />
           </Column>
           <Column xl={4}>
@@ -125,6 +131,7 @@ export default class TeamMemberModal extends React.PureComponent {
               name="roleGraphics"
               label="Graphics"
               id="input-team-member-role-graphics"
+              disabled={isOwner}
             />
           </Column>
         </Row>
@@ -134,6 +141,7 @@ export default class TeamMemberModal extends React.PureComponent {
               name="roleVideo"
               label="Video"
               id="input-team-member-role-video"
+              disabled={isOwner}
             />
           </Column>
           <Column xl={4}>
@@ -141,6 +149,7 @@ export default class TeamMemberModal extends React.PureComponent {
               name="roleAudio"
               label="Audio"
               id="input-team-member-role-audio"
+              disabled={isOwner}
             />
           </Column>
         </Row>
@@ -158,15 +167,18 @@ export default class TeamMemberModal extends React.PureComponent {
       return null;
     }
 
-    const buttons = (
-      <>
-        <Button className="modal-delete-btn" theme="danger" sm>
+    const buttons = [];
+    if (!teamMember.roles.includes(constants.projectRole('owner'))) {
+      buttons.push(
+        <Button key="remove" className="modal-delete-btn" theme="danger" sm>
           Remove Team Member
         </Button>
-        <Button onClick={this.handleSaveClick} sm>
-          Save
-        </Button>
-      </>
+      )
+    }
+    buttons.push(
+      <Button key="save" onClick={this.handleSaveClick} sm>
+        Save
+      </Button>
     );
 
     return (
