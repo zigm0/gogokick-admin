@@ -58,5 +58,8 @@ export function projectRole(type) {
 export default {
   blockType,
   campaignType,
-  projectRole
+  projectRole,
+  blockTypes,
+  campaignTypes,
+  projectRoles
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Droppable } from 'react-beautiful-dnd';
-import { connect, mapDispatchToProps } from 'utils';
+import { connect, constants, mapDispatchToProps } from 'utils';
 import { Icon, TeamMemberItem } from 'components';
 import { Button } from 'components/bootstrap';
 import { SidebarBlock } from 'editor/blocks';
@@ -116,7 +116,7 @@ export default class EditorSidebar extends React.PureComponent {
             <TeamMemberItem
               projectUser={{
                 user:  project.owner,
-                roles: [1]
+                roles: [constants.projectRole('owner')]
               }}
               onClick={this.handleMemberClick}
               onBadgeClick={this.handleMemberBadgeClick}

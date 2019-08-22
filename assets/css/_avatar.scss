@@ -7,6 +7,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  border-radius: 50%;
 
   img {
     height: 100%;
@@ -22,8 +23,18 @@
 }
 
 .avatar-lg {
-  height: 90px;
-  width: 90px;
+  height: 100px;
+  width: 100px;
+
+  &.avatar-roles-4 {
+    width: 118px;
+  }
+
+  &.avatar-roles-3:before,
+  &.avatar-roles-3:after {
+    width: 100px;
+    height: 100px;
+  }
 }
 
 .avatar-xl {
@@ -96,22 +107,94 @@
   }
 }
 
-.avatar-role-lead {
-  border: 7px solid $color-role-lead;
+.avatar-roles {
+  border-width: $width-role-border;
+  border-style: solid;
 }
 
-.avatar-role-writer {
-  border: 7px solid $color-role-writer;
+.avatar-roles-2 {
+  transform: rotate(135deg);
+
+  img {
+    transform: rotate(-135deg);
+  }
 }
 
-.avatar-role-graphics {
-  border: 7px solid $color-role-graphics;
+.avatar-roles-3 {
+  transform: rotate(15deg);
+
+  img {
+    transform: rotate(-15deg);
+  }
 }
 
-.avatar-role-video {
-  border: 7px solid $color-role-video;
+.avatar-roles-4 {
+  transform: rotate(45deg);
+
+  img {
+    transform: rotate(-45deg);
+  }
 }
 
-.avatar-role-audio {
-  border: 7px solid $color-role-audio;
+@each $name in $color-roles-names-list {
+  $i: index($color-roles-names-list, $name);
+  $color: nth($color-roles-list, $i);
+
+  .avatar-role-#{$name} {
+    border-color: $color;
+  }
+
+  @each $name2 in $color-roles-names-list {
+    $i2: index($color-roles-names-list, $name2);
+    $color2: nth($color-roles-list, $i2);
+
+    .avatar-role-#{$name}-#{$name2} {
+      border-top-color: $color;
+      border-right-color: $color2;
+      border-bottom-color: $color2;
+      border-left-color: $color;
+    }
+
+    @each $name3 in $color-roles-names-list {
+      $i3: index($color-roles-names-list, $name3);
+      $color3: nth($color-roles-list, $i3);
+
+      .avatar-role-#{$name}-#{$name2}-#{$name3} {
+        border-top-color: $color;
+        border-right-color: $color2;
+        border-bottom-color: $color2;
+        border-left-color: $color;
+
+        &:before,
+        &:after {
+          content: "";
+          position: absolute;
+          left: -$width-role-border;
+          top: -$width-role-border;
+          border-radius: 50%;
+          border-top: $width-role-border solid $color3;
+          border-right: $width-role-border solid transparent;
+          border-bottom: $width-role-border solid transparent;
+          border-left: $width-role-border solid transparent;
+          transform: rotate(60deg);
+        }
+
+        &:after {
+          transform: rotate(30deg);
+        }
+      }
+
+      @each $name4 in $color-roles-names-list {
+        $i4: index($color-roles-names-list, $name4);
+        $color4: nth($color-roles-list, $i4);
+
+        .avatar-role-#{$name}-#{$name2}-#{$name3}-#{$name4} {
+          border-top-color: $color;
+          border-right-color: $color2;
+          border-bottom-color: $color3;
+          border-left-color: $color4;
+        }
+      }
+    }
+  }
 }

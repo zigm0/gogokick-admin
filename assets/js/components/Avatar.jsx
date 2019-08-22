@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { constants } from 'utils';
+import { constants, objects } from 'utils';
 
 /**
  *
@@ -28,13 +28,18 @@ export default class Avatar extends React.PureComponent {
   getRolesString = () => {
     const { roles } = this.props;
 
-    if (!roles) {
+    if (roles.length === 0) {
       return '';
     }
 
     const parts = [];
+    objects.forEach(constants.projectRoles, (role) => {
+      if (roles.includes(constants.projectRole(role))) {
+        parts.push(role);
+      }
+    });
 
-    return `avatar-role-`;
+    return `avatar-roles avatar-roles-${roles.length} avatar-role-${parts.join('-')}`;
   };
 
   /**
