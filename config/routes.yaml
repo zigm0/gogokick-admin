@@ -4,6 +4,11 @@
 editor_blank:
     path: "/editor"
     defaults: { _controller: 'App\Controller\HomeController::editorAction' }
+editor_project:
+    path: "/editor/{id}"
+    defaults: { _controller: 'App\Controller\HomeController::editorAction' }
+    requirements:
+        id: '\d+'
 editor:
     path: "/editor/{catchAll}"
     defaults: { _controller: 'App\Controller\HomeController::editorAction' }

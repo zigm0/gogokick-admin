@@ -56,6 +56,7 @@ class AuthController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setIsEnabled(true);
             $user->addRole(User::ROLE_USER);
+            $user->setAvatar(sprintf('https://api.adorable.io/avatars/200/%s.png', $user->getEmail()));
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
@@ -75,7 +76,15 @@ class AuthController extends Controller
 
             $this->addFlash('success', 'Account created!');
 
-            return $this->redirectToRoute('home');
+            $back = $request->query->get('back');
+            if (!$back) {
+                $back = $request->getSession()->get('back');
+                if (!$back) {
+                    $back = '/';
+                }
+            }
+
+            return new RedirectResponse($back);
         }
 
         return $this->render('auth/register.html.twig', [

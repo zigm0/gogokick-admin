@@ -149,7 +149,10 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
         $back = $request->query->get('back');
         if (!$back) {
-            $back = $this->router->generate('home');
+            $back = $request->getSession()->get('back');
+            if (!$back) {
+                $back = $this->router->generate('home');
+            }
         }
 
         return new RedirectResponse($back);

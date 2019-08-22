@@ -64,7 +64,8 @@ class ProjectsController extends ApiController
             }
         } else {
             $project = $projectRepository->findByID($id);
-            if (!$project || $project->getUser()->getId() !== $user->getId()) {
+            if (!$project || !$project->hasTeamMember($user)) {
+                dump($project->hasTeamMember($user));die();
                 throw $this->createNotFoundException();
             }
         }

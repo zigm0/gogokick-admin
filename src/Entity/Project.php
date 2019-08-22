@@ -296,6 +296,22 @@ class Project
     }
 
     /**
+     * @param User $user
+     *
+     * @return bool
+     */
+    public function hasTeamMember(User $user): bool
+    {
+        foreach($this->getTeam() as $projectUser) {
+            if ($projectUser->getUser()->getId() === $user->getId()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @param ProjectUser $user
      *
      * @return Project

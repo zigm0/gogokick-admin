@@ -44,15 +44,14 @@ class TeamController extends ApiController
         $email = $model->getEmail();
 
         $project = $this->getProject($model->getProject());
-        if ($repository->findByProjectAndEmail($project, $email)) {
-            return new JsonResponse([
-                '_error' => 'User has already been invited to this project.'
-            ]);
+        if ($invite = $repository->findByProjectAndEmail($project, $email)) {
+            $this->em->remove($invite);
         }
+
         foreach($project->getTeam() as $projectUser) {
             if ($projectUser->getUser()->getEmail() === $email) {
                 return new JsonResponse([
-                    '_error' => 'User has already been invited to this project.'
+                    '_error' => 'User is already a member of this project.'
                 ]);
             }
         }
