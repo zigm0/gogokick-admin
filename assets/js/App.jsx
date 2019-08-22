@@ -6,8 +6,9 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import { connect, history, constants, mapDispatchToProps } from 'utils';
 import { LoadingCubes, ErrorBoundary } from 'components';
 import EditorController from 'editor/EditorController';
-import Header from 'layout/Header';
+import EditorHeader from 'editor/EditorHeader';
 import EditorSidebar from 'editor/EditorSidebar';
+import DashboardHeader from 'dashboard/DashboardHeader';
 import { editorActions, projectActions } from 'actions';
 import * as Modals from 'modals';
 
@@ -97,7 +98,11 @@ export default class App extends React.Component {
     return (
       <div className={classes}>
         <DragDropContext onDragStart={this.handleDragStart} onDragEnd={this.handleDragEnd}>
-          <Header />
+          {workspace === 'editor' ? (
+            <EditorHeader />
+          ) : (
+            <DashboardHeader />
+          )}
           <div className="editor-body">
             <EditorSidebar />
             <div className="editor-content">

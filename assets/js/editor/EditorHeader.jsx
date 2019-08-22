@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect, history, mapDispatchToProps, router } from 'utils';
 import { Icon, Link } from 'components';
 import { Row, Column, Button } from 'components/bootstrap';
-import UserMenu from './UserMenu';
+import UserMenu from 'layout/UserMenu';
 import { editorActions, projectActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({
@@ -16,7 +16,7 @@ const mapStateToProps = state => ({
   mapStateToProps,
   mapDispatchToProps(editorActions, projectActions, uiActions)
 )
-export default class Header extends React.PureComponent {
+export default class EditorHeader extends React.PureComponent {
   static propTypes = {
     user:        PropTypes.object.isRequired,
     editor:      PropTypes.object.isRequired,
