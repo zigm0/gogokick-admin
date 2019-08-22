@@ -156,13 +156,14 @@ class Modal extends React.PureComponent {
   };
 
   /**
-   *
+   * @param {Event} e
    */
-  handleDialogClick = () => {
+  handleDialogClick = (e) => {
     const { role } = this.props;
+    const { target } = e;
 
-    if (role === 'dialog') {
-      // this.close();
+    if (role === 'dialog' && !browser.hasParentClass(target, 'modal-content')) {
+      this.close();
     }
   };
 
