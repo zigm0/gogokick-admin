@@ -310,6 +310,9 @@ class Project
      */
     public function hasTeamMember(User $user): bool
     {
+        if ($this->getUser()->getId() === $user->getId()) {
+            return true;
+        }
         foreach($this->getTeam() as $projectUser) {
             if ($projectUser->getUser()->getId() === $user->getId()) {
                 return true;
