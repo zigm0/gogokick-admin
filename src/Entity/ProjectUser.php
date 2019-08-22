@@ -81,6 +81,18 @@ class ProjectUser
     }
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        if (!$this->user) {
+            return '';
+        }
+
+        return (string)$this->user->getName();
+    }
+
+    /**
      * @return int
      */
     public function getId(): ?int
