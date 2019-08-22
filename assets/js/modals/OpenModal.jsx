@@ -139,10 +139,10 @@ export default class OpenModal extends React.PureComponent {
 
     const buttons = (
       <>
-        <Button onClick={this.handleDeleteClick} disabled={selected === 0} theme="danger" sm>
+        <Button onClick={this.handleDeleteClick} disabled={selected === 0} theme="danger">
           Delete
         </Button>
-        <Button onClick={this.handleSelectClick} disabled={selected === 0} sm>
+        <Button onClick={this.handleSelectClick} disabled={selected === 0}>
           Select
         </Button>
       </>

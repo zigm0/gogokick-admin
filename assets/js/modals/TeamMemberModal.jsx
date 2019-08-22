@@ -170,13 +170,13 @@ export default class TeamMemberModal extends React.PureComponent {
     const buttons = [];
     if (!teamMember.roles.includes(constants.projectRole('owner'))) {
       buttons.push(
-        <Button key="remove" className="modal-delete-btn" theme="danger" sm>
+        <Button key="remove" className="modal-delete-btn" theme="danger">
           Remove Team Member
         </Button>
       )
     }
     buttons.push(
-      <Button key="save" onClick={this.handleSaveClick} sm>
+      <Button key="save" onClick={this.handleSaveClick}>
         Save
       </Button>
     );

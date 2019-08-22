@@ -58,9 +58,16 @@ export default class AddMemberModal extends React.PureComponent {
         <Row>
           <Column xl={4}>
             <Checkbox
-              name="roleEditor"
-              label="Editor"
-              id="input-add-member-role-editor"
+              name="roleLead"
+              label="Lead"
+              id="input-add-member-role-lead"
+            />
+          </Column>
+          <Column xl={4}>
+            <Checkbox
+              name="roleWriter"
+              label="Writer"
+              id="input-add-member-role-writer"
             />
           </Column>
           <Column xl={4}>
@@ -70,11 +77,20 @@ export default class AddMemberModal extends React.PureComponent {
               id="input-add-member-role-graphics"
             />
           </Column>
+        </Row>
+        <Row>
           <Column xl={4}>
             <Checkbox
-              name="roleLead"
-              label="Lead"
-              id="input-add-member-role-lead"
+              name="roleVideo"
+              label="Video"
+              id="input-add-member-role-video"
+            />
+          </Column>
+          <Column xl={4}>
+            <Checkbox
+              name="roleAudio"
+              label="Audio"
+              id="input-add-member-role-audio"
             />
           </Column>
         </Row>
@@ -87,14 +103,14 @@ export default class AddMemberModal extends React.PureComponent {
    */
   render() {
     const buttons = (
-      <Button onClick={this.handleAddClick} sm>Add</Button>
+      <Button onClick={this.handleAddClick}>Add</Button>
     );
 
     return (
       <Modal
         name="addMember"
         buttons={buttons}
-        title="Add Team Member"
+        title="Invite Team Member"
         icon="user"
       >
         {this.renderForm()}

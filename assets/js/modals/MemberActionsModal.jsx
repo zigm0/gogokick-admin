@@ -110,7 +110,7 @@ export default class MemberActionsModal extends React.PureComponent {
     }
 
     const buttons = (
-      <Button onClick={this.handleMarkReadClick} sm>
+      <Button onClick={this.handleMarkReadClick}>
         Mark Read
       </Button>
     );

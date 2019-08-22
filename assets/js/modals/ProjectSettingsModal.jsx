@@ -164,10 +164,10 @@ export default class ProjectSettingsModal extends React.PureComponent {
   render() {
     const buttons = (
       <>
-        <Button className="modal-delete-btn" theme="danger" onClick={this.handleDeleteClick} sm>
+        <Button className="modal-delete-btn" theme="danger" onClick={this.handleDeleteClick}>
           Delete Project
         </Button>
-        <Button onClick={this.handleSaveClick} sm>
+        <Button onClick={this.handleSaveClick}>
           Save
         </Button>
       </>

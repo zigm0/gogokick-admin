@@ -133,7 +133,10 @@ export default class EditorSidebar extends React.PureComponent {
         )}
         <Button theme="none" className="editor-team-btn" onClick={this.handleAddMemberClick}>
           <Icon name="plus-circle" />
-          Add Member
+          <div className="editor-team-member-info text-left">
+            <span>Invite</span>
+            <small>New Team Member</small>
+          </div>
         </Button>
       </>
     );

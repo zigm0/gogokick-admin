@@ -61,7 +61,7 @@ export default class CropperModal extends React.PureComponent {
     const { media, width, height } = settings;
 
     const buttons = (
-      <Button theme="success" onClick={this.handleCropClick} sm>
+      <Button theme="success" onClick={this.handleCropClick}>
         Crop
       </Button>
     );

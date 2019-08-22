@@ -77,7 +77,7 @@ export default class LoginModal extends React.PureComponent {
     const { user } = this.props;
 
     const buttons = (
-      <Button onClick={this.handleLoginClick} sm>
+      <Button onClick={this.handleLoginClick}>
         Login
       </Button>
     );
