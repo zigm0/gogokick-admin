@@ -27,7 +27,7 @@ export function reactTraverseChildren(children, cb) {
  * @returns {boolean}
  */
 export function reactIsFormType(component, unityFormType = '') {
-  if (component.type === undefined || component.type.unityFormType === undefined) {
+  if (!component || component.type === undefined || component.type.unityFormType === undefined) {
     return false;
   }
   if (unityFormType) {
