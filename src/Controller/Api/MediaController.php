@@ -102,20 +102,15 @@ class MediaController extends ApiController
     public function resizeImage($data, $system)
     {
         try {
-            $tmp = tempnam(sys_get_temp_dir(), 'resize');
+            $config = $this->getParameter('cdn');
+            $tmp    = tempnam(sys_get_temp_dir(), 'resize');
             file_put_contents($tmp, $data);
 
-            switch($system) {
-                case 'project_images':
-                    $resize = new ImageResize($tmp);
-                    $resize->resize(1024, 576, true);
-                    $resize->save($tmp);
-                    break;
-                case 'avatars':
-                    $resize = new ImageResize($tmp);
-                    $resize->resize(200, 200, true);
-                    $resize->save($tmp);
-                    break;
+            if (isset($config[$system])) {
+                $size   = $config[$system]['size'];
+                $resize = new ImageResize($tmp);
+                $resize->resize($size['width'], $size['height'], true);
+                $resize->save($tmp);
             }
 
             $resized = file_get_contents($tmp);

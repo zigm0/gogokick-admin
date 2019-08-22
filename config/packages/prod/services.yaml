@@ -31,6 +31,9 @@ parameters:
             cloudfront:
                 id:  'E34SMF4C1NLPCH'
                 url: 'dawo3jgs9j8n8.cloudfront.net'
+            size:
+                width: 1024
+                height: 576
 
         block_images:
             s3:
@@ -49,3 +52,6 @@ parameters:
             cloudfront:
                 id:  'E34SMF4C1NLPCH'
                 url: 'dawo3jgs9j8n8.cloudfront.net'
+            size:
+                width: 200
+                height: 200
