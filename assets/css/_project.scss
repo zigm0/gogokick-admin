@@ -1,10 +1,12 @@
 @import "vars";
 
 .project-settings-banner {
-  margin-bottom: $gutter-size-sm;
-
   figure {
     margin-bottom: 0;
+  }
+
+  img {
+    width: 100%;
   }
 }
 
