@@ -24,6 +24,7 @@ export default class EditorSettings extends React.PureComponent {
     editor:          PropTypes.object.isRequired,
     project:         PropTypes.object.isRequired,
     uiModal:         PropTypes.func.isRequired,
+    uiWorkspace:     PropTypes.func.isRequired,
     formChanges:     PropTypes.func.isRequired,
     projectOpen:     PropTypes.func.isRequired,
     projectSettings: PropTypes.func.isRequired,
@@ -36,11 +37,12 @@ export default class EditorSettings extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { user, project, formChanges } = this.props;
+    const { user, project, formChanges, uiWorkspace } = this.props;
 
     if (!user.isAuthenticated || !project.id) {
       history.push('/dashboard');
     } else {
+      uiWorkspace('project-settings');
       formChanges('projectSettings', {
         name: project.name
       });

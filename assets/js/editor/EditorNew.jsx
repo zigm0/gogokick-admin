@@ -4,7 +4,7 @@ import { connect, constants, browser, history, mapDispatchToProps } from 'utils'
 import { Container, Row, Column, Button } from 'components/bootstrap';
 import { Form, Input, Checkbox } from 'components/forms';
 import { Upload } from 'components';
-import { formActions, projectActions } from 'actions';
+import { formActions, projectActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({
   user:       state.user,
@@ -13,14 +13,15 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(formActions, projectActions)
+  mapDispatchToProps(formActions, projectActions, uiActions)
 )
 export default class EditorNew extends React.PureComponent {
   static propTypes = {
-    user:       PropTypes.object.isRequired,
-    newProject: PropTypes.object.isRequired,
-    formChange: PropTypes.func.isRequired,
-    projectNew: PropTypes.func.isRequired
+    user:        PropTypes.object.isRequired,
+    newProject:  PropTypes.object.isRequired,
+    formChange:  PropTypes.func.isRequired,
+    projectNew:  PropTypes.func.isRequired,
+    uiWorkspace: PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -39,11 +40,13 @@ export default class EditorNew extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { user } = this.props;
+    const { user, uiWorkspace } = this.props;
 
     if (!user.isAuthenticated) {
       history.push('/dashboard');
     }
+
+    uiWorkspace('new-project');
     browser.title('New Project');
   }
 

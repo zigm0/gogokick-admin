@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect, browser, mapDispatchToProps } from 'utils';
 import { ProjectCard } from 'cards';
 import { Container, Row, Column } from 'components/bootstrap';
-import { projectActions } from 'actions';
+import { projectActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({
   projects: state.editor.projects
@@ -11,12 +11,13 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(projectActions)
+  mapDispatchToProps(projectActions, uiActions)
 )
-export default class EditorHome extends React.PureComponent {
+export default class Dashboard extends React.PureComponent {
   static propTypes = {
     projects:    PropTypes.array.isRequired,
-    projectOpen: PropTypes.func.isRequired
+    projectOpen: PropTypes.func.isRequired,
+    uiWorkspace: PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -25,7 +26,10 @@ export default class EditorHome extends React.PureComponent {
    *
    */
   componentDidMount() {
-    browser.title('Editor');
+    const { uiWorkspace } = this.props;
+
+    browser.title('Dashboard');
+    uiWorkspace('dashboard');
   }
 
   /**

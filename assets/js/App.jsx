@@ -5,12 +5,14 @@ import { Route, Router, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { connect, history, constants, mapDispatchToProps } from 'utils';
 import { LoadingCubes, ErrorBoundary, ProtectedRoute } from 'components';
-import { projectActions } from 'actions';
+import { projectActions, userActions } from 'actions';
 import * as Modals from 'modals';
 
 const Home            = React.lazy(() => import('./dashboard/Home'));
 const Login           = React.lazy(() => import('./dashboard/Login'));
 const Register        = React.lazy(() => import('./dashboard/Register'));
+const Profile         = React.lazy(() => import('./dashboard/Profile'));
+const Dashboard       = React.lazy(() => import('./dashboard/Dashboard'));
 const Editor          = React.lazy(() => import('./editor/Editor'));
 const EditorHeader    = React.lazy(() => import('./editor/EditorHeader'));
 const DashboardHeader = React.lazy(() => import('./dashboard/DashboardHeader'));
@@ -27,7 +29,7 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(projectActions)
+  mapDispatchToProps(projectActions, userActions)
 )
 export default class App extends React.Component {
   static propTypes = {
@@ -36,8 +38,18 @@ export default class App extends React.Component {
     campaignType:  PropTypes.number.isRequired,
     userIsBusy:    PropTypes.bool.isRequired,
     projectIsBusy: PropTypes.bool.isRequired,
-    editorIsBusy:  PropTypes.bool.isRequired
+    editorIsBusy:  PropTypes.bool.isRequired,
+    userMe:        PropTypes.func.isRequired
   };
+
+  /**
+   *
+   */
+  componentDidMount() {
+    const { userMe } = this.props;
+
+    userMe();
+  }
 
   /**
    * @returns {*}
@@ -87,8 +99,9 @@ export default class App extends React.Component {
               <Route exact path="/" component={Home} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
+              <Route exact path="/profile/:id" component={Profile} />
               <ProtectedRoute path="/editor" component={Editor} />
-              <ProtectedRoute path="/dashboard" component={Editor} />
+              <ProtectedRoute path="/dashboard" component={Dashboard} />
               <Route path="/profile" component={Editor} />
             </Switch>
           </Router>

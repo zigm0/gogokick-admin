@@ -5,7 +5,7 @@ import { connect, browser, objects, strings, mapDispatchToProps } from 'utils';
 import { Container, Row, Column } from 'components/bootstrap';
 import { Form, Input, Textarea } from 'components/forms';
 import { Avatar, Icon, Button, Upload } from 'components';
-import { formActions, userActions } from 'actions';
+import { formActions, userActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({
   user:    state.user,
@@ -16,9 +16,9 @@ const mapStateToProps = state => ({
 @withRouter
 @connect(
   mapStateToProps,
-  mapDispatchToProps(formActions, userActions)
+  mapDispatchToProps(formActions, userActions, uiActions)
 )
-export default class EditorProfile extends React.PureComponent {
+export default class Profile extends React.PureComponent {
   static propTypes = {
     user:        PropTypes.object,
     profile:     PropTypes.object,
@@ -27,7 +27,8 @@ export default class EditorProfile extends React.PureComponent {
     userSave:    PropTypes.func.isRequired,
     userProfile: PropTypes.func.isRequired,
     formChange:  PropTypes.func.isRequired,
-    formChanges: PropTypes.func.isRequired
+    formChanges: PropTypes.func.isRequired,
+    uiWorkspace: PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -47,8 +48,9 @@ export default class EditorProfile extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { match, userProfile } = this.props;
+    const { match, userProfile, uiWorkspace } = this.props;
 
+    uiWorkspace('profile');
     userProfile(match.params.id);
   }
 

@@ -5,7 +5,9 @@ import { Route, Router, Switch } from 'react-router-dom';
 import { connect, history, mapDispatchToProps } from 'utils';
 import { editorActions } from 'actions';
 
-const EditorController = React.lazy(() => import('./EditorController'));
+const EditorCanvas     = React.lazy(() => import('./EditorCanvas'));
+const EditorNew        = React.lazy(() => import('./EditorNew'));
+const EditorSettings   = React.lazy(() => import('./EditorSettings'));
 const EditorSidebar    = React.lazy(() => import('./EditorSidebar'));
 
 const mapStateToProps = state => ({
@@ -36,11 +38,9 @@ export default class Editor extends React.PureComponent {
           <div className="editor-content">
             <Router history={history}>
               <Switch>
-                <Route exact path="/dashboard" component={EditorController} />
-                <Route exact path="/profile/:id" component={EditorController} />
-                <Route exact path="/editor/new" component={EditorController} />
-                <Route exact path="/editor/:id" component={EditorController} />
-                <Route exact path="/editor/:id/settings" component={EditorController} />
+                <Route exact path="/editor/new" component={EditorNew} />
+                <Route exact path="/editor/:id" component={EditorCanvas} />
+                <Route exact path="/editor/:id/settings" component={EditorSettings} />
               </Switch>
             </Router>
           </div>

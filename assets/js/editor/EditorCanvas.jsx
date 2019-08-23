@@ -5,7 +5,7 @@ import { Droppable } from 'react-beautiful-dnd';
 import { connect, browser, mapDispatchToProps, constants } from 'utils';
 import { Container, Row, Column } from 'components/bootstrap';
 import { CanvasBlock } from './blocks';
-import { editorActions, projectActions, userActions } from 'actions';
+import { editorActions, projectActions, userActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({
   project:      state.project,
@@ -15,9 +15,9 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(projectActions, userActions, editorActions)
+  mapDispatchToProps(projectActions, userActions, editorActions, uiActions)
 )
-export default class EditorBody extends React.PureComponent {
+export default class EditorCanvas extends React.PureComponent {
   static propTypes = {
     editor:              PropTypes.object.isRequired,
     campaignType:        PropTypes.number.isRequired,
@@ -25,7 +25,8 @@ export default class EditorBody extends React.PureComponent {
     match:               PropTypes.object.isRequired,
     project:             PropTypes.object.isRequired,
     projectOpen:         PropTypes.func.isRequired,
-    editorActivateBlock: PropTypes.func.isRequired
+    editorActivateBlock: PropTypes.func.isRequired,
+    uiWorkspace:         PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -36,8 +37,9 @@ export default class EditorBody extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { match, project, projectOpen } = this.props;
+    const { match, project, projectOpen, uiWorkspace } = this.props;
 
+    uiWorkspace('editor');
     const matchId = parseInt(match.params.id, 10);
     if (!isNaN(matchId) && project.id !== matchId) {
       projectOpen(matchId);
