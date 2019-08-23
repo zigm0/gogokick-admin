@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import PropTypes from 'prop-types';
-import { Route, Switch, withRouter } from 'react-router-dom';
-import { connect, mapDispatchToProps } from 'utils';
+import { Route, Switch, Router, withRouter } from 'react-router-dom';
+import { connect, history, mapDispatchToProps } from 'utils';
 import { uiActions, userActions, projectActions } from 'actions';
-import EditorHome from 'editor/EditorHome';
-import EditorBody from 'editor/EditorBody';
-import EditorNew from 'editor/EditorNew';
-import EditorSettings from 'editor/EditorSettings';
-import EditorProfile from 'editor/EditorProfile';
+
+const EditorHome     = React.lazy(() => import('./EditorHome'));
+const EditorBody     = React.lazy(() => import('./EditorBody'));
+const EditorNew      = React.lazy(() => import('./EditorNew'));
+const EditorSettings = React.lazy(() => import('./EditorSettings'));
+const EditorProfile  = React.lazy(() => import('./EditorProfile'));
 
 const mapStateToProps = state => ({
   project: state.project
@@ -80,13 +81,17 @@ export default class EditorController extends React.PureComponent {
    */
   render() {
     return (
-      <Switch>
-        <Route exact path="/editor" component={EditorHome} />
-        <Route exact path="/editor/profile" component={EditorProfile} />
-        <Route exact path="/editor/new" component={EditorNew} />
-        <Route exact path="/editor/:id?" component={EditorBody} />
-        <Route exact path="/editor/:id/settings" component={EditorSettings} />
-      </Switch>
+      <Suspense fallback={<div />}>
+        <Router history={history}>
+          <Switch>
+            <Route exact path="/editor" component={EditorHome} />
+            <Route exact path="/editor/profile" component={EditorProfile} />
+            <Route exact path="/editor/new" component={EditorNew} />
+            <Route exact path="/editor/:id?" component={EditorBody} />
+            <Route exact path="/editor/:id/settings" component={EditorSettings} />
+          </Switch>
+        </Router>
+      </Suspense>
     )
   }
 }

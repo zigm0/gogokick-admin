@@ -67,6 +67,7 @@
     "redux": "^4.0.2",
     "redux-arc": "^0.7.5",
     "redux-thunk": "^2.3.0",
-    "stickybits": "^3.6.6"
+    "stickybits": "^3.6.6",
+    "webpack-bundle-analyzer": "^3.4.1"
   }
 }
