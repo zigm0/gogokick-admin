@@ -20,6 +20,11 @@ dashboard_blank:
 dashboard:
     path: "/dashboard/{catchAll}"
     defaults: { _controller: 'App\Controller\HomeController::editorAction' }
+profile:
+    path: "/profile/{catchAll}"
+    defaults: { _controller: 'App\Controller\HomeController::editorAction' }
+    requirements:
+        catchAll: ".*"
 easy_admin_bundle:
     resource: '@EasyAdminBundle/Controller/EasyAdminController.php'
     prefix: /admin

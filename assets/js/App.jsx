@@ -85,6 +85,7 @@ export default class App extends React.Component {
             <Switch>
               <Route path="/editor" component={Editor} />
               <Route path="/dashboard" component={Editor} />
+              <Route path="/profile" component={Editor} />
             </Switch>
           </Router>
           {this.renderModals()}

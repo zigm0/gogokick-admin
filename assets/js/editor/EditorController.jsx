@@ -60,7 +60,7 @@ export default class EditorController extends React.PureComponent {
         case '/dashboard':
           uiWorkspace('home');
           break;
-        case '/editor/profile':
+        case '/profile/:id':
           uiWorkspace('profile');
           break;
         case '/editor/:id':
@@ -84,7 +84,7 @@ export default class EditorController extends React.PureComponent {
       <Router history={history}>
         <Switch>
           <Route exact path="/dashboard" component={EditorHome} />
-          <Route exact path="/editor/profile" component={EditorProfile} />
+          <Route exact path="/profile/:id" component={EditorProfile} />
           <Route exact path="/editor/new" component={EditorNew} />
           <Route exact path="/editor/:id?" component={EditorBody} />
           <Route exact path="/editor/:id/settings" component={EditorSettings} />

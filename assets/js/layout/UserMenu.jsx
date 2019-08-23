@@ -103,7 +103,7 @@ export default class UserMenu extends React.PureComponent {
           </button>
           {user.isAuthenticated ? (
             <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-              <Link to="/editor/profile" className="dropdown-item">
+              <Link to={`/profile/${user.id}`} className="dropdown-item">
                 <Icon name="user" />
                 Profile
               </Link>
