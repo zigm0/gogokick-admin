@@ -97,11 +97,11 @@ export default class EditorHeader extends React.PureComponent {
         <div className="editor-header-middle">
           <Row style={{ width: '100%' }}>
             <Column className="editor-header-buttons d-none d-lg-block d-xl-block" offsetXl={3}>
+              <Button onClick={this.handleOpenClick}>
+                Dashboard
+              </Button>
               <Button onClick={this.handleNewClick}>
                 New
-              </Button>
-              <Button onClick={this.handleOpenClick}>
-                Open
               </Button>
               <Button onClick={this.handlePreviewClick}>
                 Preview
