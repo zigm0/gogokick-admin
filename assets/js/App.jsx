@@ -10,6 +10,7 @@ import * as Modals from 'modals';
 
 const Home            = React.lazy(() => import('./dashboard/Home'));
 const Login           = React.lazy(() => import('./dashboard/Login'));
+const Register        = React.lazy(() => import('./dashboard/Register'));
 const Editor          = React.lazy(() => import('./editor/Editor'));
 const EditorHeader    = React.lazy(() => import('./editor/EditorHeader'));
 const DashboardHeader = React.lazy(() => import('./dashboard/DashboardHeader'));
@@ -54,7 +55,6 @@ export default class App extends React.Component {
         )}
         <Modals.PromptModal />
         <Modals.MemberActionsModal />
-        <Modals.RegisterModal />
         <Modals.AddMemberModal />
         <Modals.TeamMemberModal />
         <Modals.BlockSettingsModal />
@@ -86,6 +86,7 @@ export default class App extends React.Component {
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/register" component={Register} />
               <ProtectedRoute path="/editor" component={Editor} />
               <ProtectedRoute path="/dashboard" component={Editor} />
               <Route path="/profile" component={Editor} />

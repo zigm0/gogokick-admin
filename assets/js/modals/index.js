@@ -1,4 +1,3 @@
-export { default as RegisterModal } from './RegisterModal';
 export { default as OpenModal } from './OpenModal';
 export { default as PromptModal } from './PromptModal';
 export { default as ConfirmModal } from './ConfirmModal';

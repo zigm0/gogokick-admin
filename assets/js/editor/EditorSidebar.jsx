@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Droppable } from 'react-beautiful-dnd';
-import { connect, constants, mapDispatchToProps } from 'utils';
+import { connect, history, constants, mapDispatchToProps } from 'utils';
 import { Icon, TeamMemberItem } from 'components';
 import { Button } from 'components/bootstrap';
 import { SidebarBlock } from 'editor/blocks';
@@ -49,10 +49,7 @@ export default class EditorSidebar extends React.PureComponent {
     const { user, uiModal } = this.props;
 
     if (!user.isAuthenticated) {
-      uiModal({
-        modal: 'register',
-        open:  true
-      })
+      history.push('/login');
     } else {
       uiModal({
         modal: 'addMember',

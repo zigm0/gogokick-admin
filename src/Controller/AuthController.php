@@ -40,7 +40,7 @@ class AuthController extends Controller
     }
 
     /**
-     * @Route("/register", name="register")
+     *
      *
      * @param Request                      $request
      * @param UserPasswordEncoderInterface $passwordEncoder

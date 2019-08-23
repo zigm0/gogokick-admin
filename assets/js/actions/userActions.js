@@ -1,5 +1,6 @@
 import { api, router, history } from 'utils';
 import { editorFetchProjects } from './editorActions';
+import { formError } from './formActions';
 
 export const USER_RESET = 'USER_RESET';
 export const USER_ME    = 'USER_ME';
@@ -57,6 +58,7 @@ export const userLogin = () => {
       .then((payload) => {
         if (payload._error) {
           dispatch(userError(payload._error));
+          dispatch(formError('login', payload._error));
         } else {
           dispatch({
             type: USER_ME,
@@ -85,11 +87,13 @@ export const userRegister = () => {
       .then((payload) => {
         if (payload._error) {
           dispatch(userError(payload._error));
+          dispatch(formError('register', payload._error));
         } else {
           dispatch({
             type: USER_ME,
             payload
           });
+          history.push('/dashboard');
         }
       })
       .finally(() => {

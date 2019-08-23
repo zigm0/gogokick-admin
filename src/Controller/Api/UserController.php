@@ -140,7 +140,8 @@ class UserController extends ApiController
             ->setEmail($email)
             ->setName($name)
             ->setIsEnabled(true)
-            ->addRole(User::ROLE_USER);
+            ->addRole(User::ROLE_USER)
+            ->setAvatar(sprintf('https://api.adorable.io/avatars/200/%s.png', $email));
         $user->setPassword(
             $passwordEncoder->encodePassword($user, $pass)
         );

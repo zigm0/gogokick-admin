@@ -40,13 +40,10 @@ export default class EditorHeader extends React.PureComponent {
    *
    */
   handleNewClick = () => {
-    const { user, uiModal } = this.props;
+    const { user } = this.props;
 
     if (!user.isAuthenticated) {
-      uiModal({
-        modal: 'register',
-        open:  true
-      });
+      history.push('/login');
     } else {
       history.push('/editor/new');
     }

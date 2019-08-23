@@ -1,20 +1,22 @@
 import { objects } from 'utils';
 import * as types from 'actions/userActions';
 
-const initialState = objects.merge({
+const defaultState = {
   name:            'Guest',
   skills:          [],
   roles:           [],
   error:           '',
   isBusy:          false,
   isAuthenticated: false
-}, window.initialState.user);
+};
+
+const initialState = objects.merge(defaultState, window.initialState.user);
 
 /**
  * @returns {*}
  */
 const onUserReset = () => {
-  return objects.clone(initialState);
+  return objects.clone(defaultState);
 };
 
 /**
