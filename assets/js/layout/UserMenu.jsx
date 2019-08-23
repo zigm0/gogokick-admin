@@ -40,20 +40,6 @@ export default class UserMenu extends React.PureComponent {
   /**
    * @param {Event} e
    */
-  handleLoginClick = (e) => {
-    const { uiModal } = this.props;
-
-    e.preventDefault();
-
-    uiModal({
-      modal: 'login',
-      open:  true
-    });
-  };
-
-  /**
-   * @param {Event} e
-   */
   handleLogoutClick = (e) => {
     const { userLogout } = this.props;
 
@@ -108,17 +94,17 @@ export default class UserMenu extends React.PureComponent {
                 Profile
               </Link>
               <div className="dropdown-divider" />
-              <a className="dropdown-item" href={router.generate('logout')}>
+              <a className="dropdown-item" href="#" onClick={this.handleLogoutClick}>
                 <Icon name="sign-out-alt" />
                 Logout
               </a>
             </div>
           ) : (
             <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-              <a className="dropdown-item" href="#" onClick={this.handleLoginClick}>
+              <Link to="/login" className="dropdown-item">
                 <Icon name="sign-in-alt" />
                 Login
-              </a>
+              </Link>
               <a className="dropdown-item" href="#" onClick={this.handleRegisterClick}>
                 <Icon name="user" />
                 Register

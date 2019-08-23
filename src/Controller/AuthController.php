@@ -20,7 +20,7 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 class AuthController extends Controller
 {
     /**
-     * @Route("/login", name="login")
+     *
      *
      * @param AuthenticationUtils $authenticationUtils
      *

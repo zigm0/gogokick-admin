@@ -11,6 +11,13 @@ const initialState = objects.merge({
 }, window.initialState.user);
 
 /**
+ * @returns {*}
+ */
+const onUserReset = () => {
+  return objects.clone(initialState);
+};
+
+/**
  * @param {*} state
  * @param {*} action
  * @returns {*}
@@ -71,6 +78,7 @@ const onUserBusy = (state, action) => {
 };
 
 const handlers = {
+  [types.USER_RESET]: onUserReset,
   [types.USER_ME]:    onUserMe,
   [types.USER_SAVE]:  onUserSave,
   [types.USER_BUSY]:  onUserBusy,

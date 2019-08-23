@@ -13,7 +13,7 @@ const mapStateToProps = state => ({
 export default class ProtectedRoute extends React.PureComponent {
   static propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
-    component:       PropTypes.node.isRequired
+    component:       PropTypes.object.isRequired
   };
 
   /**

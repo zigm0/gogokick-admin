@@ -8,7 +8,8 @@ import { LoadingCubes, ErrorBoundary, ProtectedRoute } from 'components';
 import { projectActions } from 'actions';
 import * as Modals from 'modals';
 
-const Home            = React.lazy(() => import('./layout/Home'));
+const Home            = React.lazy(() => import('./dashboard/Home'));
+const Login           = React.lazy(() => import('./dashboard/Login'));
 const Editor          = React.lazy(() => import('./editor/Editor'));
 const EditorHeader    = React.lazy(() => import('./editor/EditorHeader'));
 const DashboardHeader = React.lazy(() => import('./dashboard/DashboardHeader'));
@@ -46,7 +47,6 @@ export default class App extends React.Component {
     return (
       <ErrorBoundary>
         <Modals.OpenModal />
-        <Modals.LoginModal />
         <Modals.PreviewModal />
         <Modals.ConfirmModal />
         {modals.cropper && (
@@ -85,6 +85,7 @@ export default class App extends React.Component {
           <Router history={history}>
             <Switch>
               <Route exact path="/" component={Home} />
+              <Route exact path="/login" component={Login} />
               <ProtectedRoute path="/editor" component={Editor} />
               <ProtectedRoute path="/dashboard" component={Editor} />
               <Route path="/profile" component={Editor} />

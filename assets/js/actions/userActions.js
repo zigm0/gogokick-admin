@@ -1,6 +1,7 @@
 import { api, router, history } from 'utils';
 import { editorFetchProjects } from './editorActions';
 
+export const USER_RESET = 'USER_RESET';
 export const USER_ME    = 'USER_ME';
 export const USER_SAVE  = 'USER_SAVE';
 export const USER_ERROR = 'USER_ERROR';
@@ -62,6 +63,7 @@ export const userLogin = () => {
             payload
           });
           dispatch(editorFetchProjects());
+          history.push('/dashboard');
         }
       })
       .finally(() => {
@@ -110,10 +112,7 @@ export const userLogout = () => {
           dispatch(userError(payload._error));
         } else {
           dispatch({
-            type:    USER_ME,
-            payload: {
-              name: 'Guest'
-            }
+            type: USER_RESET
           });
           history.push('/');
         }
