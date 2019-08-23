@@ -1,6 +1,10 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+easy_admin_bundle:
+    resource: '@EasyAdminBundle/Controller/EasyAdminController.php'
+    prefix: /admin
+    type: annotation
 editor_blank:
     path: "/editor"
     defaults: { _controller: 'App\Controller\HomeController::editorAction' }
@@ -9,23 +13,11 @@ editor_project:
     defaults: { _controller: 'App\Controller\HomeController::editorAction' }
     requirements:
         id: '\d+'
-editor:
-    path: "/editor/{catchAll}"
-    defaults: { _controller: 'App\Controller\HomeController::editorAction' }
-    requirements:
-        catchAll: ".*"
 dashboard_blank:
     path: "/dashboard"
     defaults: { _controller: 'App\Controller\HomeController::editorAction' }
-dashboard:
-    path: "/dashboard/{catchAll}"
-    defaults: { _controller: 'App\Controller\HomeController::editorAction' }
-profile:
-    path: "/profile/{catchAll}"
+home:
+    path: "/{catchAll}"
     defaults: { _controller: 'App\Controller\HomeController::editorAction' }
     requirements:
         catchAll: ".*"
-easy_admin_bundle:
-    resource: '@EasyAdminBundle/Controller/EasyAdminController.php'
-    prefix: /admin
-    type: annotation

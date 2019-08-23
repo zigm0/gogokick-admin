@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Icon } from 'components';
+import { history } from 'utils';
 
 /**
  *
  */
 export default class Button extends React.PureComponent {
   static propTypes = {
+    to:        PropTypes.string,
     sm:        PropTypes.bool,
     lg:        PropTypes.bool,
     far:       PropTypes.bool,
@@ -22,6 +24,7 @@ export default class Button extends React.PureComponent {
   };
 
   static defaultProps = {
+    to:        '',
     sm:        false,
     lg:        false,
     far:       false,
@@ -33,6 +36,18 @@ export default class Button extends React.PureComponent {
     className: '',
     children:  '',
     onClick:   () => {}
+  };
+
+  /**
+   * @param {Event} e
+   */
+  handleClick = (e) => {
+    const { to, onClick } = this.props;
+
+    onClick(e);
+    if (to !== '' && !e.defaultPrevented) {
+      history.push(to);
+    }
   };
 
   /**
@@ -49,7 +64,7 @@ export default class Button extends React.PureComponent {
 
     if (icon) {
       return (
-        <button type={type} className={classes} onClick={onClick} disabled={disabled} {...props}>
+        <button type={type} className={classes} onClick={this.handleClick} disabled={disabled} {...props}>
           <Icon name={icon} far={far} fas={fas} />
           {children && (
             <span className="btn-label">
@@ -61,7 +76,7 @@ export default class Button extends React.PureComponent {
     }
 
     return (
-      <button type={type} className={classes} onClick={onClick} disabled={disabled} {...props}>
+      <button type={type} className={classes} onClick={this.handleClick} disabled={disabled} {...props}>
         {children}
       </button>
     );

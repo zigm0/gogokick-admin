@@ -90,7 +90,7 @@ export default class EditorHeader extends React.PureComponent {
     return (
       <header className="editor-header">
         <div className="editor-header-left">
-          <Link to="/dashboard">
+          <Link to="/">
             <img src="/images/logo.png" alt="Logo" />
           </Link>
         </div>

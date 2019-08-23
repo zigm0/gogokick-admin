@@ -8,6 +8,7 @@ import { LoadingCubes, ErrorBoundary } from 'components';
 import { projectActions } from 'actions';
 import * as Modals from 'modals';
 
+const Home            = React.lazy(() => import('./layout/Home'));
 const Editor          = React.lazy(() => import('./editor/Editor'));
 const EditorHeader    = React.lazy(() => import('./editor/EditorHeader'));
 const DashboardHeader = React.lazy(() => import('./dashboard/DashboardHeader'));
@@ -83,6 +84,7 @@ export default class App extends React.Component {
           )}
           <Router history={history}>
             <Switch>
+              <Route exact path="/" component={Home} />
               <Route path="/editor" component={Editor} />
               <Route path="/dashboard" component={Editor} />
               <Route path="/profile" component={Editor} />

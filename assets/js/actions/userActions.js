@@ -115,7 +115,7 @@ export const userLogout = () => {
               name: 'Guest'
             }
           });
-          history.push('/dashboard');
+          history.push('/');
         }
       })
       .finally(() => {
