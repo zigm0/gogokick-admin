@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { Route, Router, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { connect, history, constants, mapDispatchToProps } from 'utils';
-import { LoadingCubes, ErrorBoundary } from 'components';
+import { LoadingCubes, ErrorBoundary, ProtectedRoute } from 'components';
 import { projectActions } from 'actions';
 import * as Modals from 'modals';
 
@@ -85,8 +85,8 @@ export default class App extends React.Component {
           <Router history={history}>
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route path="/editor" component={Editor} />
-              <Route path="/dashboard" component={Editor} />
+              <ProtectedRoute path="/editor" component={Editor} />
+              <ProtectedRoute path="/dashboard" component={Editor} />
               <Route path="/profile" component={Editor} />
             </Switch>
           </Router>
