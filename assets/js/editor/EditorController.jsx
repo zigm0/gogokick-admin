@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch, Router, withRouter } from 'react-router-dom';
 import { connect, history, mapDispatchToProps } from 'utils';
@@ -81,17 +81,15 @@ export default class EditorController extends React.PureComponent {
    */
   render() {
     return (
-      <Suspense fallback={<div />}>
-        <Router history={history}>
-          <Switch>
-            <Route exact path="/editor" component={EditorHome} />
-            <Route exact path="/editor/profile" component={EditorProfile} />
-            <Route exact path="/editor/new" component={EditorNew} />
-            <Route exact path="/editor/:id?" component={EditorBody} />
-            <Route exact path="/editor/:id/settings" component={EditorSettings} />
-          </Switch>
-        </Router>
-      </Suspense>
+      <Router history={history}>
+        <Switch>
+          <Route exact path="/editor" component={EditorHome} />
+          <Route exact path="/editor/profile" component={EditorProfile} />
+          <Route exact path="/editor/new" component={EditorNew} />
+          <Route exact path="/editor/:id?" component={EditorBody} />
+          <Route exact path="/editor/:id/settings" component={EditorSettings} />
+        </Switch>
+      </Router>
     )
   }
 }

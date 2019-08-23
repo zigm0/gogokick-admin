@@ -5,15 +5,13 @@ import { Route, Router, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { connect, history, constants, mapDispatchToProps } from 'utils';
 import { LoadingCubes, ErrorBoundary } from 'components';
-import { editorActions, projectActions } from 'actions';
+import { projectActions } from 'actions';
 import * as Modals from 'modals';
 
-const DragDropContext  = React.lazy(() => import('./dnd/DragDropContext'));
-const EditorController = React.lazy(() => import('./editor/EditorController'));
-const EditorHeader     = React.lazy(() => import('./editor/EditorHeader'));
-const EditorSidebar    = React.lazy(() => import('./editor/EditorSidebar'));
-const DashboardHeader  = React.lazy(() => import('./dashboard/DashboardHeader'));
-const CropperModal     = React.lazy(() => import('./modals/CropperModal'));
+const Editor          = React.lazy(() => import('./editor/Editor'));
+const EditorHeader    = React.lazy(() => import('./editor/EditorHeader'));
+const DashboardHeader = React.lazy(() => import('./dashboard/DashboardHeader'));
+const CropperModal    = React.lazy(() => import('./modals/CropperModal'));
 
 const mapStateToProps = state => ({
   modals:        state.ui.modals,
@@ -26,7 +24,7 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(editorActions, projectActions)
+  mapDispatchToProps(projectActions)
 )
 export default class App extends React.Component {
   static propTypes = {
@@ -35,36 +33,7 @@ export default class App extends React.Component {
     campaignType:  PropTypes.number.isRequired,
     userIsBusy:    PropTypes.bool.isRequired,
     projectIsBusy: PropTypes.bool.isRequired,
-    editorIsBusy:  PropTypes.bool.isRequired,
-    editorDrop:    PropTypes.func.isRequired
-  };
-
-  /**
-   * @param {*} props
-   */
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      dragging: false
-    };
-  }
-
-  /**
-   * @param {Event} e
-   */
-  handleDragEnd = (e) => {
-    const { editorDrop } = this.props;
-
-    editorDrop(e);
-    this.setState({ dragging: false });
-  };
-
-  /**
-   *
-   */
-  handleDragStart = () => {
-    this.setState({ dragging: true });
+    editorIsBusy:  PropTypes.bool.isRequired
   };
 
   /**
@@ -107,27 +76,16 @@ export default class App extends React.Component {
     return (
       <Suspense fallback={<LoadingCubes />}>
         <div className={classes}>
-          <DragDropContext onDragStart={this.handleDragStart} onDragEnd={this.handleDragEnd}>
-            {workspace === 'editor' ? (
-              <EditorHeader />
-            ) : (
-              <DashboardHeader />
-            )}
-            <div className="editor-body">
-              <EditorSidebar />
-              <div className="editor-content">
-                <Router history={history}>
-                  <Switch>
-                    <Route exact path="/editor" component={EditorController} />
-                    <Route exact path="/editor/profile" component={EditorController} />
-                    <Route exact path="/editor/new" component={EditorController} />
-                    <Route exact path="/editor/:id" component={EditorController} />
-                    <Route exact path="/editor/:id/settings" component={EditorController} />
-                  </Switch>
-                </Router>
-              </div>
-            </div>
-          </DragDropContext>
+          {workspace === 'editor' ? (
+            <EditorHeader />
+          ) : (
+            <DashboardHeader />
+          )}
+          <Router history={history}>
+            <Switch>
+              <Route path="/editor" component={Editor} />
+            </Switch>
+          </Router>
           {this.renderModals()}
           {(userIsBusy || editorIsBusy || projectIsBusy) && (
             <LoadingCubes />
