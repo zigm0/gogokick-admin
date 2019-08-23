@@ -36,7 +36,7 @@ export default class Editor extends React.PureComponent {
           <div className="editor-content">
             <Router history={history}>
               <Switch>
-                <Route exact path="/editor" component={EditorController} />
+                <Route exact path="/dashboard" component={EditorController} />
                 <Route exact path="/editor/profile" component={EditorController} />
                 <Route exact path="/editor/new" component={EditorController} />
                 <Route exact path="/editor/:id" component={EditorController} />

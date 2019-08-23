@@ -56,7 +56,7 @@ export default class DashboardHeader extends React.PureComponent {
    *
    */
   handleOpenClick = () => {
-    history.push('/editor');
+    history.push('/dashboard');
   };
 
   /**
@@ -90,7 +90,7 @@ export default class DashboardHeader extends React.PureComponent {
     return (
       <header className="editor-header">
         <div className="editor-header-left">
-          <Link to="/editor">
+          <Link to="/dashboard">
             <img src="/images/logo.png" alt="Logo" />
           </Link>
         </div>

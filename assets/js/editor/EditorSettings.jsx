@@ -39,7 +39,7 @@ export default class EditorSettings extends React.PureComponent {
     const { user, project, formChanges } = this.props;
 
     if (!user.isAuthenticated || !project.id) {
-      history.push('/editor');
+      history.push('/dashboard');
     } else {
       formChanges('projectSettings', {
         name: project.name

@@ -42,7 +42,7 @@ export default class EditorNew extends React.PureComponent {
     const { user } = this.props;
 
     if (!user.isAuthenticated) {
-      history.push('/editor');
+      history.push('/dashboard');
     }
     browser.title('New Project');
   }

@@ -84,6 +84,7 @@ export default class App extends React.Component {
           <Router history={history}>
             <Switch>
               <Route path="/editor" component={Editor} />
+              <Route path="/dashboard" component={Editor} />
             </Switch>
           </Router>
           {this.renderModals()}
