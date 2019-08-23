@@ -32,6 +32,13 @@
 .modal-title {
   display: flex;
   align-items: center;
+  line-height: 1.25rem;
+
+  small {
+    display: block;
+    font-size: 0.8rem;
+    line-height: 0.8rem;
+  }
 }
 
 .modal-body {

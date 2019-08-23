@@ -16,7 +16,7 @@ const mapStateToProps = state => ({
 export default class Modal extends React.PureComponent {
   static propTypes = {
     name:        PropTypes.string.isRequired,
-    title:       PropTypes.string.isRequired,
+    title:       PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
     icon:        PropTypes.string,
     avatar:      PropTypes.string,
     buttons:     PropTypes.node,

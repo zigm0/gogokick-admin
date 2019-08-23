@@ -201,11 +201,18 @@ export default class TeamMemberModal extends React.PureComponent {
       </Button>
     );
 
+    const title = (
+      <div>
+        {teamMember.user.name}
+        <small>{teamMember.user.email}</small>
+      </div>
+    );
+
     return (
       <Modal
         name="teamMember"
         buttons={buttons}
-        title={teamMember.user.name}
+        title={title}
         avatar={teamMember.user.avatar}
       >
         {this.renderForm()}
