@@ -2,11 +2,12 @@ import { api, router, history } from 'utils';
 import { editorFetchProjects } from './editorActions';
 import { formError } from './formActions';
 
-export const USER_RESET = 'USER_RESET';
-export const USER_ME    = 'USER_ME';
-export const USER_SAVE  = 'USER_SAVE';
-export const USER_ERROR = 'USER_ERROR';
-export const USER_BUSY  = 'USER_BUSY';
+export const USER_RESET   = 'USER_RESET';
+export const USER_ME      = 'USER_ME';
+export const USER_SAVE    = 'USER_SAVE';
+export const USER_ERROR   = 'USER_ERROR';
+export const USER_BUSY    = 'USER_BUSY';
+export const USER_PROFILE = 'USER_PROFILE';
 
 /**
  * @param {string} payload
@@ -137,6 +138,22 @@ export const userSave = (payload) => {
       .then((resp) => {
         dispatch({
           type:    USER_SAVE,
+          payload: resp
+        });
+      });
+  };
+};
+
+/**
+ * @param {number} payload
+ * @returns {Function}
+ */
+export const userProfile = (payload) => {
+  return (dispatch) => {
+    api.get(router.generate('api_user_profile', { id: payload }))
+      .then((resp) => {
+        dispatch({
+          type:    USER_PROFILE,
           payload: resp
         });
       });

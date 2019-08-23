@@ -157,4 +157,22 @@ class UserController extends ApiController
 
         return $this->jsonEntityResponse($user);
     }
+
+    /**
+     * @Route("/profile/{id}", name="_profile", methods={"GET"})
+     *
+     * @param int $id
+     * @param UserRepository $repository
+     *
+     * @return JsonResponse
+     */
+    public function profileAction($id, UserRepository $repository)
+    {
+        $user = $repository->findByID($id);
+        if (!$user) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->jsonEntityResponse($user);
+    }
 }

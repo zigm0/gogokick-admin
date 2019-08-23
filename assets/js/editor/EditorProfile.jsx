@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { connect, browser, objects, strings, mapDispatchToProps } from 'utils';
 import { Container, Row, Column } from 'components/bootstrap';
 import { Form, Input, Textarea } from 'components/forms';
@@ -8,9 +9,11 @@ import { formActions, userActions } from 'actions';
 
 const mapStateToProps = state => ({
   user:    state.user,
-  profile: state.forms.profile
+  profile: state.user.profile,
+  form:    state.forms.profile
 });
 
+@withRouter
 @connect(
   mapStateToProps,
   mapDispatchToProps(formActions, userActions)
@@ -18,8 +21,11 @@ const mapStateToProps = state => ({
 export default class EditorProfile extends React.PureComponent {
   static propTypes = {
     user:        PropTypes.object,
-    profile:     PropTypes.object.isRequired,
+    profile:     PropTypes.object,
+    match:       PropTypes.object.isRequired,
+    form:        PropTypes.object.isRequired,
     userSave:    PropTypes.func.isRequired,
+    userProfile: PropTypes.func.isRequired,
     formChange:  PropTypes.func.isRequired,
     formChanges: PropTypes.func.isRequired
   };
@@ -41,16 +47,33 @@ export default class EditorProfile extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { user, formChanges } = this.props;
+    const { match, userProfile } = this.props;
 
-    browser.title('Profile');
-    formChanges('profile', objects.merge(user, {
-      socialTwitter:   user.social.twitter || '',
-      socialYoutube:   user.social.youtube || '',
-      socialFacebook:  user.social.facebook || '',
-      socialInstagram: user.social.instagram || '',
-      skills:          user.skills.join(', ')
-    }));
+    userProfile(match.params.id);
+  }
+
+  /**
+   * @param {*} prevProps
+   */
+  componentDidUpdate(prevProps) {
+    const { user, profile, match, formChanges, userProfile } = this.props;
+    const { profile: prevProfile, match: prevMatch } = prevProps;
+
+    if (match.params.id !== prevMatch.params.id) {
+      userProfile(match.params.id);
+    } else if (profile.id && !prevProfile.id || profile.id !== prevProfile.id) {
+      browser.title(profile.name);
+
+      if (user.id === profile.id) {
+        formChanges('profile', objects.merge(user, {
+          socialTwitter:   user.social.twitter || '',
+          socialYoutube:   user.social.youtube || '',
+          socialFacebook:  user.social.facebook || '',
+          socialInstagram: user.social.instagram || '',
+          skills:          user.skills.join(', ')
+        }));
+      }
+    }
   }
 
   /**
@@ -66,18 +89,18 @@ export default class EditorProfile extends React.PureComponent {
    *
    */
   handleSaveClick = () => {
-    const { profile, userSave } = this.props;
+    const { form, userSave } = this.props;
 
     userSave({
-      name:   profile.name,
-      bio:    profile.bio,
-      avatar: profile.avatar,
-      skills: profile.skills.split(',').map(s => $.trim(s)),
+      name:   form.name,
+      bio:    form.bio,
+      avatar: form.avatar,
+      skills: form.skills.split(',').map(s => $.trim(s)),
       social: {
-        twitter:   profile.socialTwitter || '',
-        youtube:   profile.socialYoutube || '',
-        facebook:  profile.socialFacebook || '',
-        instagram: profile.socialInstagram || ''
+        twitter:   form.socialTwitter || '',
+        youtube:   form.socialYoutube || '',
+        facebook:  form.socialFacebook || '',
+        instagram: form.socialInstagram || ''
       }
     });
 
@@ -97,7 +120,7 @@ export default class EditorProfile extends React.PureComponent {
    * @returns {*}
    */
   renderName = () => {
-    const { user } = this.props;
+    const { profile } = this.props;
     const { isEditing } = this.state;
 
     if (isEditing) {
@@ -114,7 +137,7 @@ export default class EditorProfile extends React.PureComponent {
 
     return (
       <section className="profile-section profile-section-name">
-        <h2>{user.name}</h2>
+        <h2>{profile.name}</h2>
       </section>
     );
   };
@@ -123,7 +146,7 @@ export default class EditorProfile extends React.PureComponent {
    * @returns {*}
    */
   renderSocial = () => {
-    const { user } = this.props;
+    const { profile } = this.props;
     const { isEditing } = this.state;
 
     if (isEditing) {
@@ -155,22 +178,22 @@ export default class EditorProfile extends React.PureComponent {
 
     return (
       <section className="profile-section profile-section-social">
-        {user.social.twitter && (
+        {profile.social.twitter && (
           <a href="#" rel="noopener" target="_blank">
             <Icon name="twitter-square" className="profile-social-icon profile-social-icon-twitter" fab />
           </a>
         )}
-        {user.social.youtube && (
+        {profile.social.youtube && (
           <a href="#" rel="noopener" target="_blank">
             <Icon name="youtube-square" className="profile-social-icon profile-social-icon-youtube" fab />
           </a>
         )}
-        {user.social.facebook && (
+        {profile.social.facebook && (
           <a href="#" rel="noopener" target="_blank">
             <Icon name="facebook-square" className="profile-social-icon profile-social-icon-facebook" fab />
           </a>
         )}
-        {user.social.instagram && (
+        {profile.social.instagram && (
           <a href="#" rel="noopener" target="_blank">
             <Icon name="instagram" className="profile-social-icon profile-social-icon-instagram" fab />
           </a>
@@ -183,7 +206,7 @@ export default class EditorProfile extends React.PureComponent {
    * @returns {*}
    */
   renderSkills = () => {
-    const { user } = this.props;
+    const { profile } = this.props;
     const { isEditing } = this.state;
 
     if (isEditing) {
@@ -199,7 +222,7 @@ export default class EditorProfile extends React.PureComponent {
 
     return (
       <section className="profile-section profile-section-skills">
-        {user.skills.map((skill, i) => (
+        {profile.skills.map((skill, i) => (
           <div key={i} className="badge badge-success badge-skill margin-right-sm">
             {strings.ucWords(skill)}
           </div>
@@ -212,7 +235,7 @@ export default class EditorProfile extends React.PureComponent {
    * @returns {*}
    */
   renderBio = () => {
-    const { user } = this.props;
+    const { profile } = this.props;
     const { isEditing } = this.state;
 
     if (isEditing) {
@@ -231,7 +254,7 @@ export default class EditorProfile extends React.PureComponent {
     return (
       <section className="profile-section profile-section-bio">
         <h4>Bio</h4>
-        {user.bio}
+        {profile.bio}
       </section>
     );
   };
@@ -240,7 +263,7 @@ export default class EditorProfile extends React.PureComponent {
    * @returns {*}
    */
   renderAvatar = () => {
-    const { profile } = this.props;
+    const { form, profile } = this.props;
     const { isEditing } = this.state;
 
     if (isEditing) {
@@ -259,7 +282,7 @@ export default class EditorProfile extends React.PureComponent {
             onUploaded={this.handleAvatarUploaded}
             cropping
           >
-            <Avatar src={profile.avatar} xl />
+            <Avatar src={form.avatar} xl />
           </Upload>
         </div>
       );
@@ -271,10 +294,60 @@ export default class EditorProfile extends React.PureComponent {
   };
 
   /**
+   * @returns {null|Array}
+   */
+  renderButtons = () => {
+    const { user, profile } = this.props;
+    const { isEditing } = this.state;
+
+    if (user.id !== profile.id) {
+      return null;
+    }
+
+    const buttons = [];
+    if (isEditing) {
+      buttons.push(
+        <Button
+          key="save"
+          icon="save"
+          title="Save changes"
+          className="btn-circle btn-profile-edit border-grey margin-right-sm"
+          onClick={this.handleSaveClick}
+        />
+      );
+      buttons.push(
+        <Button
+          key="cancel"
+          icon="times"
+          title="Cancel"
+          className="btn-circle btn-profile-edit border-grey"
+          onClick={this.handleEditClick}
+        />
+      );
+    } else {
+      buttons.push(
+        <Button
+          key="edit"
+          icon="pencil-alt"
+          title="Edit profile"
+          className="btn-circle btn-profile-edit border-grey"
+          onClick={this.handleEditClick}
+        />
+      );
+    }
+
+    return buttons;
+  };
+
+  /**
    * @returns {*}
    */
   render() {
-    const { isEditing } = this.state;
+    const { profile } = this.props;
+
+    if (!profile.id) {
+      return null;
+    }
 
     return (
       <Container className="gutter-top">
@@ -283,29 +356,7 @@ export default class EditorProfile extends React.PureComponent {
             <div className="profile-header">
               <h2>Profile</h2>
               <div>
-                {isEditing ? (
-                  <>
-                    <Button
-                      icon="save"
-                      title="Save changes"
-                      className="btn-circle btn-profile-edit border-grey margin-right-sm"
-                      onClick={this.handleSaveClick}
-                    />
-                    <Button
-                      icon="times"
-                      title="Cancel"
-                      className="btn-circle btn-profile-edit border-grey"
-                      onClick={this.handleEditClick}
-                    />
-                  </>
-                ) : (
-                  <Button
-                    icon="pencil-alt"
-                    title="Edit profile"
-                    className="btn-circle btn-profile-edit border-grey"
-                    onClick={this.handleEditClick}
-                  />
-                )}
+                {this.renderButtons()}
               </div>
             </div>
             <div className="profile border-grey">

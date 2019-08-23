@@ -7,7 +7,8 @@ const defaultState = {
   roles:           [],
   error:           '',
   isBusy:          false,
-  isAuthenticated: false
+  isAuthenticated: false,
+  profile:         {}
 };
 
 const initialState = objects.merge(defaultState, window.initialState.user);
@@ -79,12 +80,27 @@ const onUserBusy = (state, action) => {
   };
 };
 
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onUserProfile = (state, action) => {
+  const profile = objects.clone(action.payload);
+
+  return {
+    ...state,
+    profile
+  };
+};
+
 const handlers = {
-  [types.USER_RESET]: onUserReset,
-  [types.USER_ME]:    onUserMe,
-  [types.USER_SAVE]:  onUserSave,
-  [types.USER_BUSY]:  onUserBusy,
-  [types.USER_ERROR]: onUserError
+  [types.USER_RESET]:   onUserReset,
+  [types.USER_ME]:      onUserMe,
+  [types.USER_SAVE]:    onUserSave,
+  [types.USER_BUSY]:    onUserBusy,
+  [types.USER_ERROR]:   onUserError,
+  [types.USER_PROFILE]: onUserProfile
 };
 
 /**

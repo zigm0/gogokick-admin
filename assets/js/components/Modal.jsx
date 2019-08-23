@@ -101,7 +101,7 @@ export default class Modal extends React.PureComponent {
         </ModalBody>
         {footer && (
           <ModalFooter>
-            {buttons && buttons}
+            {buttons}
             <Button onClick={this.close}>
               {closeText}
             </Button>

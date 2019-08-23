@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, constants, objects, mapDispatchToProps } from 'utils';
+import { connect, history, constants, objects, mapDispatchToProps } from 'utils';
 import { Form, Checkbox } from 'components/forms';
 import { Row, Column, Button } from 'components/bootstrap';
 import { Modal } from 'components';
@@ -100,6 +100,20 @@ export default class TeamMemberModal extends React.PureComponent {
   };
 
   /**
+   *
+   */
+  handleProfileClick = () => {
+    const { teamMember, uiModal } = this.props;
+
+    uiModal({
+      modal: 'teamMember',
+      open:  false
+    });
+
+    history.push(`/profile/${teamMember.user.id}`);
+  };
+
+  /**
    * @returns {*}
    */
   renderForm = () => {
@@ -175,6 +189,12 @@ export default class TeamMemberModal extends React.PureComponent {
         </Button>
       )
     }
+
+    buttons.push(
+      <Button key="profile" onClick={this.handleProfileClick}>
+        Profile
+      </Button>
+    );
     buttons.push(
       <Button key="save" onClick={this.handleSaveClick}>
         Save
