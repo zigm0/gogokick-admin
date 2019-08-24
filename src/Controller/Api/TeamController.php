@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller\Api;
 
+use App\Entity\Invite;
 use App\Entity\ProjectUser;
 use App\Http\ModelRequestHandler;
 use App\Http\Request;
@@ -138,5 +139,35 @@ class TeamController extends ApiController
         $this->em->flush();
 
         return new JsonResponse('ok');
+    }
+
+    /**
+     * @Route("/invite/{id}/{hash}", name="_accept_invite", methods={"POST"})
+     *
+     * @param int              $id
+     * @param string           $hash
+     * @param InviteRepository $repository
+     *
+     * @return JsonResponse
+     */
+    public function acceptInviteAction($id, $hash, InviteRepository $repository)
+    {
+        $invite = $repository->findByID($id);
+        if (!$invite || $invite->getHash() !== $hash || $invite->getStatus() !== Invite::STATUS_WAITING) {
+            throw $this->createNotFoundException();
+        }
+
+        $user = $this->getUser();
+        if (!$invite->getProject()->hasTeamMember($user)) {
+            $projectUser = (new ProjectUser())
+                ->setProject($invite->getProject())
+                ->setRoles($invite->getRoles())
+                ->setUser($user);
+            $this->em->persist($projectUser);
+        }
+        $invite->setStatus(Invite::STATUS_ACCEPTED);
+        $this->em->flush();
+
+        return new JsonResponse(sprintf('/editor/%d', $invite->getProject()->getId()));
     }
 }

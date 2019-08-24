@@ -1,3 +1,4 @@
+import queryString from 'query-string';
 import { api, router, history } from 'utils';
 import { editorFetchProjects } from './editorActions';
 import { formError } from './formActions';
@@ -66,7 +67,13 @@ export const userLogin = () => {
             payload
           });
           dispatch(editorFetchProjects());
-          history.push('/dashboard');
+
+          const parsed = queryString.parse(document.location.search);
+          if (parsed.back) {
+            history.push(parsed.back);
+          } else {
+            history.push('/dashboard');
+          }
         }
       })
       .finally(() => {
@@ -94,7 +101,13 @@ export const userRegister = () => {
             type: USER_ME,
             payload
           });
-          history.push('/dashboard');
+
+          const parsed = queryString.parse(document.location.search);
+          if (parsed.back) {
+            history.push(parsed.back);
+          } else {
+            history.push('/dashboard');
+          }
         }
       })
       .finally(() => {

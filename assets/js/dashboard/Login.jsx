@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
 import { connect, history, mapDispatchToProps } from 'utils';
 import { Form, Input } from 'components/forms';
+import { Link } from 'components';
 import { Container, Row, Column, Card, CardHeader, CardBody, Button } from 'components/bootstrap';
 import { userActions } from 'actions';
 
@@ -46,6 +48,12 @@ export default class Login extends React.PureComponent {
    * @returns {*}
    */
   render() {
+    let registerUrl = '/register';
+    const parsed = queryString.parse(document.location.search);
+    if (parsed.back) {
+      registerUrl = `${registerUrl}?back=${parsed.back}`;
+    }
+
     return (
       <Container className="gutter-top-lg">
         <Row>
@@ -72,9 +80,12 @@ export default class Login extends React.PureComponent {
                     sm
                   />
                   <div>
-                    <Button>
+                    <Button className="margin-right-sm">
                       Login
                     </Button>
+                    <Link to={registerUrl} className="btn btn-primary">
+                      Register
+                    </Link>
                   </div>
                 </Form>
               </CardBody>

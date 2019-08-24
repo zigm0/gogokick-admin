@@ -13,6 +13,7 @@ const Login           = React.lazy(() => import('./dashboard/Login'));
 const Register        = React.lazy(() => import('./dashboard/Register'));
 const Profile         = React.lazy(() => import('./dashboard/Profile'));
 const Dashboard       = React.lazy(() => import('./dashboard/Dashboard'));
+const Invite          = React.lazy(() => import('./dashboard/Invite'));
 const Editor          = React.lazy(() => import('./editor/Editor'));
 const EditorHeader    = React.lazy(() => import('./editor/EditorHeader'));
 const DashboardHeader = React.lazy(() => import('./dashboard/DashboardHeader'));
@@ -100,6 +101,7 @@ export default class App extends React.Component {
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/profile/:id" component={Profile} />
+              <Route exact path="/invite/:id/:hash" component={Invite} />
               <ProtectedRoute path="/editor" component={Editor} />
               <ProtectedRoute path="/dashboard" component={Dashboard} />
               <Route path="/profile" component={Editor} />

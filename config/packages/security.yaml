@@ -17,12 +17,6 @@ security:
             guard:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
-            form_login:
-                login_path: login
-                check_path: login_check
-                default_target_path: home
-                username_parameter: email
-                password_parameter: password
             logout:
                 path:   /logout
                 target: /

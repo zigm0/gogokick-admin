@@ -10,6 +10,11 @@ editor_project:
     defaults: { _controller: 'App\Controller\HomeController::editorAction' }
     requirements:
         id: '\d+'
+invite_accept:
+    path: "/invite/{id}/{hash}"
+    defaults: { _controller: 'App\Controller\HomeController::editorAction' }
+    requirements:
+        id: '\d+'
 dashboard_blank:
     path: "/dashboard"
     defaults: { _controller: 'App\Controller\HomeController::editorAction' }

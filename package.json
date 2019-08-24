@@ -50,6 +50,7 @@
     "core-js": "2.5.x",
     "lodash.isequal": "^4.5.0",
     "prop-types": "^15.7.2",
+    "query-string": "^6.8.2",
     "react": "^16.8.6",
     "react-ace": "^7.0.2",
     "react-beautiful-dnd": "^11.0.5",

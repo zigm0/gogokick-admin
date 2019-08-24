@@ -117,7 +117,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Email could not be found.');
+            return null;
         }
 
         return $user;
@@ -143,19 +143,11 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+/*        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
-        }
+        }*/
 
-        $back = $request->query->get('back');
-        if (!$back) {
-            $back = $request->getSession()->get('back');
-            if (!$back) {
-                $back = $this->router->generate('home');
-            }
-        }
-
-        return new RedirectResponse($back);
+        return null;
     }
 
     /**
@@ -163,6 +155,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
      */
     protected function getLoginUrl()
     {
-        return $this->router->generate('login');
+        return '/login';
     }
 }
