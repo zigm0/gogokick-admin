@@ -7,7 +7,7 @@ import { Modal } from 'components';
 import { formActions, teamActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({
-  teamMember:   state.ui.modalMeta,
+  teamMember:   state.ui.modalMeta.teamMember,
   meTeamMember: state.editor.meTeamMember,
   form:         state.forms.teamMember
 });

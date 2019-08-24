@@ -2,10 +2,8 @@ import { objects } from 'utils';
 import * as types from 'actions/uiActions';
 
 const initialState = {
-  workspace:     'editor',
-  modalMeta:     null,
-  modalCallback: () => {},
-  modals:        {
+  workspace: 'editor',
+  modals:    {
     login:         false,
     preview:       false,
     cropper:       false,
@@ -16,6 +14,14 @@ const initialState = {
     addMember:     false,
     memberActions: false,
     blockSettings: false
+  },
+  modalMeta: {
+    cropper:       null,
+    teamMember:    null,
+    blockSettings: null
+  },
+  modalCallbacks: {
+    cropper: null
   }
 };
 
@@ -39,16 +45,20 @@ const onWorkspace = (state, action) => {
  * @returns {*}
  */
 const onModal = (state, action) => {
-  const modals = objects.clone(state.modals);
+  const modals         = objects.clone(state.modals);
+  const modalMeta      = Array.from(state.modalMeta);
+  const modalCallbacks = Array.from(state.modalCallbacks);
   const { modal, open, meta, onComplete } = action.payload;
 
-  modals[modal] = open;
+  modals[modal]         = open;
+  modalMeta[modal]      = meta;
+  modalCallbacks[modal] = onComplete || (() => {});
 
   return {
     ...state,
     modals,
-    modalMeta:     meta,
-    modalCallback: onComplete || (() => {})
+    modalMeta,
+    modalCallbacks
   };
 };
 

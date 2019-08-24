@@ -7,8 +7,8 @@ import { Modal } from 'components';
 import { mediaActions } from 'actions';
 
 const mapStateToProps = state => ({
-  settings:   state.ui.modalMeta,
-  onComplete: state.ui.modalCallback
+  settings:   state.ui.modalMeta.cropper,
+  onComplete: state.ui.modalCallbacks.cropper
 });
 
 @connect(

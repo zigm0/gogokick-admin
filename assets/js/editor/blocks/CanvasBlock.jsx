@@ -22,6 +22,7 @@ export default class CanvasBlock extends React.PureComponent {
     block: PropTypes.shape({
       id:       PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
       type:     PropTypes.number.isRequired,
+      isLocked: PropTypes.bool,
       text:     PropTypes.string,
       media:    PropTypes.object,
       videoUrl: PropTypes.string,
@@ -112,7 +113,7 @@ export default class CanvasBlock extends React.PureComponent {
   handleClick = (e) => {
     const { block, activeBlockID, editorActivateBlock } = this.props;
 
-    if (!e.target.classList.contains('icon') && block.id !== activeBlockID) {
+    if (!e.target.classList.contains('icon') && block.id !== activeBlockID && !block.isLocked) {
       editorActivateBlock(block.id);
     }
   };

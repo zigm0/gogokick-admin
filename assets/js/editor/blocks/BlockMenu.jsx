@@ -25,6 +25,7 @@ export default class BlockMenu extends React.PureComponent {
     meTeamMember:        PropTypes.object.isRequired,
     editorMove:          PropTypes.func.isRequired,
     editorRemove:        PropTypes.func.isRequired,
+    editorActivateBlock: PropTypes.func.isRequired,
     editorBlockSettings: PropTypes.func.isRequired,
     uiModal:             PropTypes.func.isRequired,
   };
@@ -85,11 +86,12 @@ export default class BlockMenu extends React.PureComponent {
    *
    */
   handleLockClick = () => {
-    const { block, editorBlockSettings } = this.props;
+    const { block, editorBlockSettings, editorActivateBlock } = this.props;
 
     const newBlock = objects.clone(block);
     newBlock.isLocked = !block.isLocked;
     editorBlockSettings(newBlock);
+    editorActivateBlock(0);
   };
 
   /**

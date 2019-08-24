@@ -43,6 +43,8 @@ const initialState = {
   },
   blockSettings: {
     description: '',
+    width:       '0',
+    height:      '0',
     ...commonForms
   },
   prompt: {
