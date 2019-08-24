@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { constants } from 'utils';
+import { connect, constants, mapDispatchToProps, styles } from 'utils';
 import { Icon } from 'components';
 import BlockEditorText from './BlockEditorText';
 import BlockEditorImage from './BlockEditorImage';
@@ -12,11 +12,21 @@ import BlockImage from './BlockImage';
 import BlockVideo from './BlockVideo';
 import BlockAudio from './BlockAudio';
 
+const mapStateToProps = state => ({
+  campaignType: state.project.campaignType,
+});
+
+@connect(
+  mapStateToProps,
+  mapDispatchToProps()
+)
 export default class CanvasBlockBody extends React.PureComponent {
   static propTypes = {
     block: PropTypes.shape({
       text:        PropTypes.string,
       type:        PropTypes.number.isRequired,
+      width:       PropTypes.number,
+      height:      PropTypes.number,
       media:       PropTypes.object,
       videoUrl:    PropTypes.string,
       audioUrl:    PropTypes.string,
@@ -24,10 +34,11 @@ export default class CanvasBlockBody extends React.PureComponent {
       isHeadline:  PropTypes.bool,
       description: PropTypes.string
     }).isRequired,
-    isActive:   PropTypes.bool.isRequired,
-    isHover:    PropTypes.bool.isRequired,
-    isDragging: PropTypes.bool.isRequired,
-    onChange:   PropTypes.func.isRequired
+    campaignType: PropTypes.number.isRequired,
+    isActive:     PropTypes.bool.isRequired,
+    isHover:      PropTypes.bool.isRequired,
+    isDragging:   PropTypes.bool.isRequired,
+    onChange:     PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -58,7 +69,7 @@ export default class CanvasBlockBody extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { block, isActive, isHover, isDragging, onChange } = this.props;
+    const { block, campaignType, isActive, isHover, isDragging, onChange } = this.props;
     const isEmpty = block.text === '' && !block.media && !block.videoUrl && !block.audioUrl;
 
     if (isActive && !block.isLocked) {
@@ -87,8 +98,13 @@ export default class CanvasBlockBody extends React.PureComponent {
     });
 
     if (isEmpty) {
+      const blockStyles = {
+        width:  block.width  || styles.widths.blocks[campaignType],
+        height: block.height || styles.heights.blocks[campaignType][block.type]
+      };
+
       return (
-        <div className={classes}>
+        <div className={classes} style={blockStyles}>
           <h2 className="block-description">
             <Icon name={this.getIcon(constants.blockType(block.type))} />
             {block.description || 'Description'}

@@ -26,7 +26,7 @@
 
 .block {
   position: relative;
-  width: $width-block !important;
+  width: $width-block;
   border-radius: $border-radius-blocks;
   margin-bottom: $margin-bottom-block;
 
@@ -124,8 +124,6 @@
         content: '';
       }
     }
-
-
   }
 
   &.block-video {

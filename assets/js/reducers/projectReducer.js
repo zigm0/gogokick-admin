@@ -8,7 +8,7 @@ const initialState = objects.merge({
   owner:        {},
   isBusy:       false,
   isSaving:     false,
-  campaignType: 0,
+  campaignType: 1,
   team:         [],
   /*  teamMembers:      [
       {

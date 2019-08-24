@@ -396,6 +396,8 @@ const onEditorBlockSettings = (state, action) => {
   // console.log(index, block.id, blocks);
 
   blocks[index].isLocked = block.isLocked;
+  blocks[index].height   = block.height;
+  blocks[index].width    = block.width;
   canvasBlocks[blockIndex] = blocks;
 
   return {

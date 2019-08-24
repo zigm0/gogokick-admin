@@ -1,4 +1,5 @@
 import styles from '../../css/_vars.scss';
+import constants from 'utils/constants';
 
 export const breakpoints = {
   xs: parseInt(styles.breakXs, 10),
@@ -18,12 +19,24 @@ export const deviceHeights = {
 
 export const widths = {
   blocks: {
-    kickstarter: parseInt(styles.widthBlockKickstarter, 10)
+    [constants.campaignType('kickstarter')]: parseInt(styles.widthBlockKickstarter, 10)
+  }
+};
+
+export const heights = {
+  blocks: {
+    [constants.campaignType('kickstarter')]: {
+      [constants.blockType('text')]:  parseInt(styles.heightBlockTextKickstarter, 10),
+      [constants.blockType('image')]: parseInt(styles.heightBlockImageKickstarter, 10),
+      [constants.blockType('video')]: parseInt(styles.heightBlockVideoKickstarter, 10),
+      [constants.blockType('audio')]: parseInt(styles.heightBlockAudioKickstarter, 10)
+    }
   }
 };
 
 export default {
   breakpoints,
   deviceHeights,
-  widths
+  widths,
+  heights
 }

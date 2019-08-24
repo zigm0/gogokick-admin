@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, objects, constants, mapDispatchToProps } from 'utils';
+import { connect, objects, constants, styles, mapDispatchToProps } from 'utils';
 import { Modal } from 'components';
 import { Form, Textarea, Input } from 'components/forms';
 import { Row, Column } from 'components/bootstrap';
 import { formActions, editorActions } from 'actions';
-import styles from 'store/styles';
 
 const mapStateToProps = state => ({
   block:         state.ui.modalMeta.blockSettings,
@@ -38,8 +37,8 @@ export default class BlockSettingsModal extends React.PureComponent {
     if ((block && !prevBlock) || (block && block.id !== prevBlock.id)) {
       formChanges('blockSettings', {
         description: block.description || 'Description',
-        width:       block.width || styles.widths.blocks[constants.campaignType(campaignType)],
-        height:      block.height || ''
+        width:       block.width || styles.widths.blocks[campaignType],
+        height:      block.height || styles.heights.blocks[campaignType][block.type]
       });
     }
   }
@@ -61,6 +60,8 @@ export default class BlockSettingsModal extends React.PureComponent {
    * @returns {*}
    */
   renderForm = () => {
+    const { block } = this.props;
+    console.log(block.type);
     return (
       <Form name="blockSettings">
         <Textarea
@@ -74,6 +75,7 @@ export default class BlockSettingsModal extends React.PureComponent {
               name="width"
               label="Width"
               id="input-block-settings-width"
+              readOnly={constants.blockType(block.type) !== 'image'}
             />
           </Column>
           <Column xl={6} sm={12}>
@@ -92,6 +94,12 @@ export default class BlockSettingsModal extends React.PureComponent {
    * @returns {*}
    */
   render() {
+    const { block } = this.props;
+
+    if (!block) {
+      return null;
+    }
+
     return (
       <Modal
         name="blockSettings"

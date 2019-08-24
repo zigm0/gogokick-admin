@@ -101,7 +101,9 @@ export default class BlockEditorImage extends React.PureComponent {
         <div className="block-editor block-editor-image">
           <Upload maxSizeMB={2} accept="image/*" system="block_images" onDrop={this.handleDrop}>
             <figure>
-              <img className="upload-container-img" src={block.media.url} alt="" />
+              {block.media && (
+                <img className="upload-container-img" src={block.media.url} alt="" />
+              )}
             </figure>
           </Upload>
           <div className="block-editor-image-caption">

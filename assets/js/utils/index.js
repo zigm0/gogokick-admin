@@ -1,5 +1,6 @@
 import { connect, mapDispatchToProps } from 'utils/state';
 import history from 'store/history';
+import styles from 'store/styles';
 
 export { default as api } from './api';
 export { default as browser } from './browser';
@@ -17,6 +18,7 @@ export { default as video } from './video';
 export { default as acl } from './acl';
 
 export {
+  styles,
   connect,
   history,
   mapDispatchToProps
