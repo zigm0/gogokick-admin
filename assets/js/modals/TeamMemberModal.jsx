@@ -123,6 +123,9 @@ export default class TeamMemberModal extends React.PureComponent {
 
     const isOwner = teamMember.roles.includes(constants.projectRole('owner'));
     const canEdit = acl(meTeamMember.roles, 'edit', 'teamMember');
+    if (!isOwner && !canEdit) {
+      return null;
+    }
 
     return (
       <Form name="teamMember">
@@ -132,7 +135,6 @@ export default class TeamMemberModal extends React.PureComponent {
               name="roleLead"
               label="Lead"
               id="input-team-member-role-lead"
-              disabled={isOwner || !canEdit}
             />
           </Column>
           <Column xl={4}>
@@ -140,7 +142,6 @@ export default class TeamMemberModal extends React.PureComponent {
               name="roleWriter"
               label="Writer"
               id="input-team-member-role-writer"
-              disabled={isOwner || !canEdit}
             />
           </Column>
           <Column xl={4}>
@@ -148,7 +149,6 @@ export default class TeamMemberModal extends React.PureComponent {
               name="roleGraphics"
               label="Graphics"
               id="input-team-member-role-graphics"
-              disabled={isOwner || !canEdit}
             />
           </Column>
         </Row>
@@ -158,7 +158,6 @@ export default class TeamMemberModal extends React.PureComponent {
               name="roleVideo"
               label="Video"
               id="input-team-member-role-video"
-              disabled={isOwner || !canEdit}
             />
           </Column>
           <Column xl={4}>
@@ -166,7 +165,6 @@ export default class TeamMemberModal extends React.PureComponent {
               name="roleAudio"
               label="Audio"
               id="input-team-member-role-audio"
-              disabled={isOwner || !canEdit}
             />
           </Column>
         </Row>
