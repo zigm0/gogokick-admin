@@ -25,6 +25,11 @@
     width: 77px;
     height: 77px;
   }
+
+  &.project-settings-banner {
+    min-height: 200px;
+    height: auto;
+  }
 }
 
 .upload-container-circle-container {

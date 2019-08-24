@@ -137,10 +137,12 @@ export default class EditorNew extends React.PureComponent {
                     accept="image/*"
                     system="project_images"
                     onUploaded={this.handleUploaded}
-                    className="border-grey margin-bottom"
+                    className="border-grey margin-bottom project-settings-banner"
                     cropping
                   >
-                    <img src={media.url} alt="Banner" />
+                    {media.url && (
+                      <img src={media.url} alt="Banner" />
+                    )}
                   </Upload>
                   <p>
                     Add an image that clearly represents your project.

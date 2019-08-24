@@ -20,7 +20,6 @@ const DashboardHeader = React.lazy(() => import('./dashboard/DashboardHeader'));
 const CropperModal    = React.lazy(() => import('./modals/CropperModal'));
 
 const mapStateToProps = state => ({
-  modals:        state.ui.modals,
   workspace:     state.ui.workspace,
   campaignType:  state.project.campaignType,
   projectIsBusy: state.project.isBusy,
@@ -34,7 +33,6 @@ const mapStateToProps = state => ({
 )
 export default class App extends React.Component {
   static propTypes = {
-    modals:        PropTypes.object.isRequired,
     workspace:     PropTypes.string.isRequired,
     campaignType:  PropTypes.number.isRequired,
     userIsBusy:    PropTypes.bool.isRequired,
@@ -56,16 +54,12 @@ export default class App extends React.Component {
    * @returns {*}
    */
   renderModals = () => {
-    const { modals } = this.props;
-
     return (
       <ErrorBoundary>
         <Modals.OpenModal />
         <Modals.PreviewModal />
         <Modals.ConfirmModal />
-        {modals.cropper && (
-          <CropperModal />
-        )}
+        <CropperModal />
         <Modals.PromptModal />
         <Modals.MemberActionsModal />
         <Modals.AddMemberModal />
