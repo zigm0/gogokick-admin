@@ -1,5 +1,12 @@
 @import "vars";
 
+.form-control {
+  &:disabled,
+  &:read-only {
+    background-color: #cccccc;
+  }
+}
+
 /**
  * Checkboxes
  *

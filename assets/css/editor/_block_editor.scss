@@ -35,9 +35,16 @@
     margin-bottom: 0;
   }
 
+  $caption-height: 40px;
+
   .block-editor-image-caption {
+    height: $caption-height;
     padding: $gutter-size-sm;
     background-color: $color-block-image;
+    position: absolute;
+    bottom: -$caption-height;
+    left: 0;
+    right: 0;
 
     input {
       width: 100%;

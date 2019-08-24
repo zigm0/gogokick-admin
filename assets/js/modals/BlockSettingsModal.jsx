@@ -35,10 +35,13 @@ export default class BlockSettingsModal extends React.PureComponent {
     const { block: prevBlock } = prevProps;
 
     if ((block && !prevBlock) || (block && block.id !== prevBlock.id)) {
+      const width  = block.width || styles.widths.blocks[campaignType];
+      const height = block.height || styles.heights.blocks[campaignType][block.type];
+
       formChanges('blockSettings', {
         description: block.description || 'Description',
-        width:       block.width || styles.widths.blocks[campaignType],
-        height:      block.height || styles.heights.blocks[campaignType][block.type]
+        width,
+        height
       });
     }
   }
@@ -47,13 +50,24 @@ export default class BlockSettingsModal extends React.PureComponent {
    *
    */
   handleClosed = () => {
-    const { block, blockSettings, editorBlockSettings } = this.props;
+    const { block, blockSettings, campaignType, formChanges, editorBlockSettings } = this.props;
+
+    let width = parseInt(blockSettings.width || styles.widths.blocks[campaignType], 10);
+    if (width > styles.widths.blocks[campaignType]) {
+      width = styles.widths.blocks[campaignType];
+    }
+    const height = parseInt(blockSettings.height || styles.heights.blocks[campaignType][block.type], 10);
 
     editorBlockSettings(objects.merge(block, {
       description: blockSettings.description,
-      width:       parseInt(blockSettings.width || 0, 10),
-      height:      parseInt(blockSettings.height || 0, 10)
+      width,
+      height
     }));
+    formChanges('blockSettings', {
+      description: block.description || 'Description',
+      width,
+      height
+    });
   };
 
   /**
@@ -61,7 +75,9 @@ export default class BlockSettingsModal extends React.PureComponent {
    */
   renderForm = () => {
     const { block } = this.props;
-    console.log(block.type);
+
+    const bt = constants.blockType(block.type);
+
     return (
       <Form name="blockSettings">
         <Textarea
@@ -75,7 +91,7 @@ export default class BlockSettingsModal extends React.PureComponent {
               name="width"
               label="Width"
               id="input-block-settings-width"
-              readOnly={constants.blockType(block.type) !== 'image'}
+              readOnly={bt !== 'image'}
             />
           </Column>
           <Column xl={6} sm={12}>
@@ -83,6 +99,7 @@ export default class BlockSettingsModal extends React.PureComponent {
               name="height"
               label="Height"
               id="input-block-settings-height"
+              readOnly={bt === 'video' || bt === 'audio'}
             />
           </Column>
         </Row>

@@ -79,7 +79,7 @@
   transition: box-shadow 0.1s ease-in-out, color 0.2s ease-in-out;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
 
-  &::after {
+  .block-empty-dims {
     position: absolute;
     bottom: $gutter-size-sm;
     right: $gutter-size;
@@ -93,17 +93,9 @@
     border-left-style: solid;
     border-left-color: $color-block-text;
 
-    &::after {
-      content: '680x100';
-    }
-
     &.block-active {
       background-color: $color-canvas-block-active-bg;
       background-image: none;
-
-      &::after {
-        content: '';
-      }
     }
   }
 
@@ -112,17 +104,9 @@
     border-left-style: solid;
     border-left-color: $color-block-image;
 
-    &::after {
-      content: '400x100';
-    }
-
     &.block-active {
       background-color: $color-canvas-block-active-bg;
       background-image: none;
-
-      &::after {
-        content: '';
-      }
     }
   }
 
@@ -131,17 +115,9 @@
     border-left-style: solid;
     border-left-color: $color-block-video;
 
-    &::after {
-      content: '382x100';
-    }
-
     &.block-active {
       background-color: $color-canvas-block-active-bg;
       background-image: none;
-
-      &::after {
-        content: '';
-      }
     }
   }
 
@@ -150,17 +126,9 @@
     border-left-style: solid;
     border-left-color: $color-block-audio;
 
-    &::after {
-      content: '300x100';
-    }
-
     &.block-active {
       background-color: $color-canvas-block-active-bg;
       background-image: none;
-
-      &::after {
-        content: '';
-      }
     }
   }
 }
@@ -248,8 +216,7 @@
 
 .block-description {
   position: absolute;
-  width: 680px;
-  height: 50px;
+  min-height: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;

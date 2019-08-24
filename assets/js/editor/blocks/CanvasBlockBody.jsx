@@ -70,18 +70,21 @@ export default class CanvasBlockBody extends React.PureComponent {
    */
   render() {
     const { block, campaignType, isActive, isHover, isDragging, onChange } = this.props;
+
     const isEmpty = block.text === '' && !block.media && !block.videoUrl && !block.audioUrl;
+    const width   = block.width  || styles.widths.blocks[campaignType];
+    const height  = block.height || styles.heights.blocks[campaignType][block.type];
 
     if (isActive && !block.isLocked) {
       switch (block.type) {
         case 1:
-          return <BlockEditorText block={block} onChange={onChange} />;
+          return <BlockEditorText block={block} height={height} onChange={onChange} />;
         case 2:
-          return <BlockEditorImage block={block} onChange={onChange} />;
+          return <BlockEditorImage block={block} height={height} onChange={onChange} />;
         case 3:
-          return <BlockEditorVideo block={block} onChange={onChange} />;
+          return <BlockEditorVideo block={block} height={height} onChange={onChange} />;
         case 4:
-          return <BlockEditorAudio block={block} onChange={onChange} />;
+          return <BlockEditorAudio block={block} height={height} onChange={onChange} />;
         default:
           console.error(`Invalid block type ${block.type}`);
           return null;
@@ -99,12 +102,15 @@ export default class CanvasBlockBody extends React.PureComponent {
 
     if (isEmpty) {
       const blockStyles = {
-        width:  block.width  || styles.widths.blocks[campaignType],
-        height: block.height || styles.heights.blocks[campaignType][block.type]
+        width,
+        height
       };
 
       return (
         <div className={classes} style={blockStyles}>
+          <div className="block-empty-dims">
+            {blockStyles.width}x{blockStyles.height}
+          </div>
           <h2 className="block-description">
             <Icon name={this.getIcon(constants.blockType(block.type))} />
             {block.description || 'Description'}

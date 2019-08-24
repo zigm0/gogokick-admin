@@ -16,6 +16,7 @@ export default class BlockEditorImage extends React.PureComponent {
       type:         PropTypes.number.isRequired,
       origFilename: PropTypes.string
     }).isRequired,
+    height:            PropTypes.number.isRequired,
     mediaUpload:       PropTypes.func.isRequired,
     editorUpdateBlock: PropTypes.func.isRequired,
     onChange:          PropTypes.func.isRequired
@@ -83,7 +84,7 @@ export default class BlockEditorImage extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { block } = this.props;
+    const { block, height } = this.props;
     const { caption } = this.state;
 
     let buttons = '';
@@ -95,10 +96,15 @@ export default class BlockEditorImage extends React.PureComponent {
       );
     }
 
+    const styles = {};
+    if (!block.media) {
+      styles.height = height;
+    }
+
     return (
       <>
         <BlockMenu block={block} buttons={buttons} />
-        <div className="block-editor block-editor-image">
+        <div className="block-editor block-editor-image" style={styles}>
           <Upload maxSizeMB={2} accept="image/*" system="block_images" onDrop={this.handleDrop}>
             <figure>
               {block.media && (
