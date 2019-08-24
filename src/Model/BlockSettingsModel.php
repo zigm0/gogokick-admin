@@ -27,6 +27,12 @@ class BlockSettingsModel
     protected $width;
 
     /**
+     * @var string
+     * @Assert\Type("string")
+     */
+    protected $description;
+
+    /**
      * @return bool
      */
     public function isLocked(): bool
@@ -82,6 +88,26 @@ class BlockSettingsModel
     public function setWidth(int $width): BlockSettingsModel
     {
         $this->width = $width;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     *
+     * @return BlockSettingsModel
+     */
+    public function setDescription(string $description): BlockSettingsModel
+    {
+        $this->description = $description;
 
         return $this;
     }

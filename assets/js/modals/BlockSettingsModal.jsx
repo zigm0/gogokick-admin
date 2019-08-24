@@ -59,12 +59,12 @@ export default class BlockSettingsModal extends React.PureComponent {
     const height = parseInt(blockSettings.height || styles.heights.blocks[campaignType][block.type], 10);
 
     editorBlockSettings(objects.merge(block, {
-      description: blockSettings.description,
+      description: blockSettings.description || 'Description',
       width,
       height
     }));
     formChanges('blockSettings', {
-      description: block.description || 'Description',
+      description: blockSettings.description || 'Description',
       width,
       height
     });

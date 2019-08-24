@@ -395,9 +395,10 @@ const onEditorBlockSettings = (state, action) => {
   const index = arrays.findIndexByID(blocks, block.id);
   // console.log(index, block.id, blocks);
 
-  blocks[index].isLocked = block.isLocked;
-  blocks[index].height   = block.height;
-  blocks[index].width    = block.width;
+  blocks[index].isLocked    = block.isLocked;
+  blocks[index].height      = block.height;
+  blocks[index].width       = block.width;
+  blocks[index].description = block.description;
   canvasBlocks[blockIndex] = blocks;
 
   return {
