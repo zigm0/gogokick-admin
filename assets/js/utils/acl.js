@@ -19,6 +19,10 @@ const permissions = {
   ],
   resources: [
     { name: 'blocks' },
+    { name: 'block-text' },
+    { name: 'block-image' },
+    { name: 'block-video' },
+    { name: 'block-audio' },
     { name: 'teamMember' }
   ],
   rules: [
@@ -31,8 +35,14 @@ const permissions = {
     {
       role:       lead,
       access:     'allow',
-      privileges: ['view', 'edit', 'add', 'delete', 'drag'],
-      resources:  ['teamMember', 'blocks']
+      privileges: ['view', 'edit', 'add', 'delete', 'drag', 'settings'],
+      resources:  ['blocks', 'block-text', 'block-image', 'block-video', 'block-audio']
+    },
+    {
+      role:       lead,
+      access:     'allow',
+      privileges: ['view'],
+      resources:  ['teamMember']
     },
     {
       role:       writer,
@@ -41,10 +51,22 @@ const permissions = {
       resources:  ['teamMember']
     },
     {
+      role:       writer,
+      access:     'allow',
+      privileges: ['edit'],
+      resources:  ['block-text']
+    },
+    {
       role:       graphics,
       access:     'allow',
       privileges: ['view'],
       resources:  ['teamMember']
+    },
+    {
+      role:       graphics,
+      access:     'allow',
+      privileges: ['edit'],
+      resources:  ['block-image']
     },
     {
       role:       video,
@@ -53,10 +75,22 @@ const permissions = {
       resources:  ['teamMember']
     },
     {
+      role:       video,
+      access:     'allow',
+      privileges: ['edit'],
+      resources:  ['block-video']
+    },
+    {
       role:       audio,
       access:     'allow',
       privileges: ['view'],
       resources:  ['teamMember']
+    },
+    {
+      role:       audio,
+      access:     'allow',
+      privileges: ['edit'],
+      resources:  ['block-audio']
     }
   ]
 };

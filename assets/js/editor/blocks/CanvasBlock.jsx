@@ -20,8 +20,12 @@ const mapStateToProps = state => ({
 export default class CanvasBlock extends React.PureComponent {
   static propTypes = {
     block: PropTypes.shape({
-      id:   PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-      type: PropTypes.number.isRequired
+      id:       PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+      type:     PropTypes.number.isRequired,
+      text:     PropTypes.string,
+      media:    PropTypes.object,
+      videoUrl: PropTypes.string,
+      audioUrl: PropTypes.string
     }).isRequired,
     index:               PropTypes.number.isRequired,
     meTeamMember:        PropTypes.object.isRequired,
@@ -85,9 +89,12 @@ export default class CanvasBlock extends React.PureComponent {
    *
    */
   handleMouseEnter = () => {
-    const { block, editorHoverBlock } = this.props;
+    const { block, editorHoverBlock, meTeamMember } = this.props;
 
-    editorHoverBlock(block.id);
+    const resource = `block-${constants.blockType(block.type)}`;
+    if (acl(meTeamMember.roles, 'edit', resource)) {
+      editorHoverBlock(block.id);
+    }
   };
 
   /**
