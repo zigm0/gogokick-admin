@@ -118,4 +118,25 @@ class TeamController extends ApiController
 
         return $this->jsonEntityResponse($projectUser);
     }
+
+    /**
+     * @Route("/{id}", name="_delete", methods={"DELETE"})
+     *
+     * @param int $id
+     * @param ProjectUserRepository $repository
+     *
+     * @return JsonResponse
+     */
+    public function removeAction($id, ProjectUserRepository $repository)
+    {
+        $projectUser = $repository->findByID($id);
+        if (!$projectUser) {
+            throw $this->createNotFoundException();
+        }
+
+        $this->em->remove($projectUser);
+        $this->em->flush();
+
+        return new JsonResponse('ok');
+    }
 }

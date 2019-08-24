@@ -23,6 +23,7 @@ export default class TeamMemberModal extends React.PureComponent {
     teamMember:       PropTypes.object,
     formChanges:      PropTypes.func.isRequired,
     teamMemberUpdate: PropTypes.func.isRequired,
+    teamMemberRemove: PropTypes.func.isRequired,
     uiModal:          PropTypes.func.isRequired
   };
 
@@ -99,6 +100,17 @@ export default class TeamMemberModal extends React.PureComponent {
       modal: 'teamMember',
       open:  false
     })
+  };
+
+  /**
+   *
+   */
+  handleRemoveClick = () => {
+    const { teamMember, teamMemberRemove } = this.props;
+
+    if (confirm('Are you sure you want to remove this team member?')) {
+      teamMemberRemove(teamMember);
+    }
   };
 
   /**
@@ -189,6 +201,7 @@ export default class TeamMemberModal extends React.PureComponent {
           key="remove"
           className="modal-delete-btn"
           theme="danger"
+          onClick={this.handleRemoveClick}
         >
           Remove
         </Button>

@@ -175,7 +175,7 @@
   height: 80px;
   top: 10px;
   left: 10px;
-  background: #77bdc6;
+  background: $color-block-text;
   -webkit-animation: lds-cube 1s cubic-bezier(0, 0.5, 0.5, 1) infinite;
   animation: lds-cube 1s cubic-bezier(0, 0.5, 0.5, 1) infinite;
   -webkit-animation-delay: -0.3s;
@@ -185,7 +185,7 @@
 .loading-cube-inner div:nth-child(2) {
   top: 10px;
   left: 110px;
-  background: #d977ee;
+  background: $color-block-image;
   -webkit-animation-delay: -0.2s;
   animation-delay: -0.2s;
 }
@@ -193,7 +193,7 @@
 .loading-cube-inner div:nth-child(3) {
   top: 110px;
   left: 110px;
-  background: #d25151;
+  background: $color-block-video;
   -webkit-animation-delay: 0s;
   animation-delay: 0s;
 }
@@ -201,7 +201,7 @@
 .loading-cube-inner div:nth-child(4) {
   top: 110px;
   left: 10px;
-  background: #ffc561;
+  background: $color-block-audio;
   -webkit-animation-delay: -0.1s;
   animation-delay: -0.1s;
 }

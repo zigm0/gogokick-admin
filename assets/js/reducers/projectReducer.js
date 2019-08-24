@@ -201,6 +201,26 @@ const onProjectUpdateTeamMember = (state, action) => {
   };
 };
 
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onProjectRemoveTeamMember = (state, action) => {
+  const team       = objects.clone(state.team);
+  const teamMember = objects.clone(action.payload);
+
+  const index = arrays.findIndexByID(team, teamMember.id);
+  if (index !== -1) {
+    team.splice(index, 1);
+  }
+
+  return {
+    ...state,
+    team
+  };
+};
+
 const handlers = {
   [types.PROJECT_RESET]:              onProjectReset,
   [types.PROJECT_BUSY]:               onProjectBusy,
@@ -212,7 +232,8 @@ const handlers = {
   [types.PROJECT_SET]:                onProjectSet,
   [types.PROJECT_NEW]:                onProjectNew,
   [types.PROJECT_OPEN]:               onProjectOpen,
-  [types.PROJECT_UPDATE_TEAM_MEMBER]: onProjectUpdateTeamMember
+  [types.PROJECT_UPDATE_TEAM_MEMBER]: onProjectUpdateTeamMember,
+  [types.PROJECT_REMOVE_TEAM_MEMBER]: onProjectRemoveTeamMember
 };
 
 /**

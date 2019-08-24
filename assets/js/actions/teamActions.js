@@ -1,9 +1,10 @@
 import { api, router, constants } from 'utils';
 import { uiModal, uiToast } from './uiActions';
-import { projectUpdateTeamMember } from './projectActions';
+import { projectUpdateTeamMember, projectRemoveTeamMember } from './projectActions';
 import { formReset } from './formActions';
 
 export const TEAM_INVITE = 'TEAM_INVITE';
+export const TEAM_REMOVE = 'TEAM_REMOVE';
 
 /**
  * @param {*} payload
@@ -64,4 +65,17 @@ export const teamMemberUpdate = (payload) => {
         dispatch(projectUpdateTeamMember(resp));
       });
   };
+};
+
+/**
+ * @param {*} payload
+ * @returns {Function}
+ */
+export const teamMemberRemove = (payload) => {
+  return (dispatch) => {
+    api.req('DELETE', router.generate('api_team_delete', { id: payload.id }))
+      .then(() => {
+        dispatch(projectRemoveTeamMember(payload));
+      });
+  }
 };

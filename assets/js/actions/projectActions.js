@@ -8,6 +8,7 @@ export const PROJECT_SET                = 'PROJECT_SET';
 export const PROJECT_NEW                = 'PROJECT_NEW_PROJECT';
 export const PROJECT_OPEN               = 'PROJECT_OPEN_PROJECT';
 export const PROJECT_UPDATE_TEAM_MEMBER = 'PROJECT_UPDATE_TEAM_MEMBER';
+export const PROJECT_REMOVE_TEAM_MEMBER = 'PROJECT_REMOVE_TEAM_MEMBER';
 export const PROJECT_SETTINGS           = 'PROJECT_SETTINGS';
 export const PROJECT_DELETE             = 'PROJECT_DELETE_PROJECT';
 export const PROJECT_MARK_READ          = 'PROJECT_MARK_READ';
@@ -208,6 +209,17 @@ export const projectMarkRead = (payload) => {
 export const projectUpdateTeamMember = (payload) => {
   return {
     type: PROJECT_UPDATE_TEAM_MEMBER,
+    payload
+  };
+};
+
+/**
+ * @param {*} payload
+ * @returns {{payload: *, type: string}}
+ */
+export const projectRemoveTeamMember = (payload) => {
+  return {
+    type: PROJECT_REMOVE_TEAM_MEMBER,
     payload
   };
 };
