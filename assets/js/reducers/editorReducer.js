@@ -2,16 +2,17 @@ import { objects, constants, arrays } from 'utils';
 import * as types from 'actions/editorActions';
 
 const initialState = objects.merge({
-  isBusy:         false,
-  isChanged:      false,
-  projects:       [],
-  teamMember:     null,
-  meTeamMember:   { roles: [] },
-  blockIndex:     0,
-  activeBlockID:  0,
-  hoverBlockID:   0,
-  canvasBlocks:   [[]],
-  sidebarBlocks:  [
+  isLoaded:      false,
+  isBusy:        false,
+  isChanged:     false,
+  projects:      [],
+  teamMember:    null,
+  meTeamMember:  { roles: [] },
+  blockIndex:    0,
+  activeBlockID: 0,
+  hoverBlockID:  0,
+  canvasBlocks:  [[]],
+  sidebarBlocks: [
     {
       id:          1,
       type:        'text',
@@ -114,6 +115,17 @@ const move = (source, destination, droppableSource, droppableDestination) => {
  */
 const onEditorReset = () => {
   return objects.clone(initialState);
+};
+
+/**
+ * @param {*} state
+ * @returns {*}
+ */
+const onEditorLoaded = (state) => {
+  return {
+    ...state,
+    isLoaded: true
+  }
 };
 
 /**
@@ -457,6 +469,7 @@ const onEditorBlockMedia = (state, action) => {
 
 const handlers = {
   [types.EDITOR_RESET]:          onEditorReset,
+  [types.EDITOR_LOADED]:         onEditorLoaded,
   [types.EDITOR_BUSY]:           onEditorBusy,
   [types.EDITOR_NEW]:            onEditorNew,
   [types.EDITOR_DROP]:           onEditorDrop,

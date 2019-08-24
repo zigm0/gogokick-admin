@@ -1,7 +1,9 @@
 import { api, router } from 'utils';
+import { setPermissions } from 'utils/acl';
 import { projectSave } from './projectActions';
 
 export const EDITOR_RESET          = 'EDITOR_RESET';
+export const EDITOR_LOADED         = 'EDITOR_LOADED';
 export const EDITOR_BUSY           = 'EDITOR_BUSY';
 export const EDITOR_CHANGED        = 'EDITOR_CHANGED';
 export const EDITOR_NEW            = 'EDITOR_NEW';
@@ -24,6 +26,21 @@ export const EDITOR_ACTIVATE_BLOCK = 'EDITOR_ACTIVATE_BLOCK';
 export const editorReset = () => {
   return {
     type: EDITOR_RESET
+  };
+};
+
+/**
+ * @returns {Function}
+ */
+export const editorLoad = () => {
+  return (dispatch) => {
+    api.get(router.generate('api_editor_load'))
+      .then((resp) => {
+        setPermissions(resp.permissions);
+        dispatch({
+          type: EDITOR_LOADED
+        });
+      });
   };
 };
 
