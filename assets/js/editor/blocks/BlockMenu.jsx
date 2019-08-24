@@ -143,6 +143,13 @@ export default class BlockMenu extends React.PureComponent {
               onClick={this.handleLockClick}
             />
           )}
+          {(block.isLocked && !acl(roles, 'lock', 'blocks')) && (
+            <Button
+              title="Locked"
+              icon="lock"
+              className="block-menu-item"
+            />
+          )}
           {acl(roles, 'delete', 'blocks') && (
             <Button
               title="Delete"
