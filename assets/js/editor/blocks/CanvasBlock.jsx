@@ -115,7 +115,6 @@ export default class CanvasBlock extends React.PureComponent {
 
     if (!e.target.classList.contains('icon') && block.id !== activeBlockID && !block.isLocked) {
       const resource = `block-${constants.blockType(block.type)}`;
-      console.log(acl(meTeamMember.roles, 'edit', resource));
       if (acl(meTeamMember.roles, 'edit', resource)) {
         editorActivateBlock(block.id);
       }
