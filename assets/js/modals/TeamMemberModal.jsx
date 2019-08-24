@@ -135,7 +135,7 @@ export default class TeamMemberModal extends React.PureComponent {
 
     const isOwner = teamMember.roles.includes(constants.projectRole('owner'));
     const canEdit = acl(meTeamMember.roles, 'edit', 'teamMember');
-    if (!isOwner && !canEdit) {
+    if (isOwner || !canEdit) {
       return null;
     }
 
