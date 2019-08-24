@@ -40,6 +40,10 @@
   margin-right: $gutter-size-sm;
 }
 
+.marginless {
+  margin: 0 !important;
+}
+
 .circle {
   border-radius: 50%;
   display: inline-block;

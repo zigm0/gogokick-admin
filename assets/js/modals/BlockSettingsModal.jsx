@@ -86,7 +86,7 @@ export default class BlockSettingsModal extends React.PureComponent {
           id="input-block-settings-description"
         />
         <Row>
-          <Column xl={6} sm={12}>
+          <Column className="marginless" xl={6} sm={12}>
             <Input
               name="width"
               label="Width"
@@ -94,7 +94,7 @@ export default class BlockSettingsModal extends React.PureComponent {
               readOnly={bt !== 'image'}
             />
           </Column>
-          <Column xl={6} sm={12}>
+          <Column className="marginless" xl={6} sm={12}>
             <Input
               name="height"
               label="Height"
