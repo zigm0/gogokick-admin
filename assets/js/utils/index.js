@@ -14,6 +14,7 @@ export { default as system } from './system';
 export { default as team } from './team';
 export { default as constants } from './constants';
 export { default as video } from './video';
+export { default as acl } from './acl';
 
 export {
   connect,

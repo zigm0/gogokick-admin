@@ -40,7 +40,7 @@ export const projectBusy = (payload) => {
  * @returns {Function}
  */
 export const projectOpen = (id) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     if (!id) {
       dispatch(projectReset());
       return;
@@ -49,6 +49,9 @@ export const projectOpen = (id) => {
     dispatch(projectBusy(true));
     api.get(router.generate('api_projects_open', { id }))
       .then((payload) => {
+        const { user } = getState();
+
+        payload.me = user;
         dispatch(editorNew(payload));
         dispatch({
           type: PROJECT_OPEN,

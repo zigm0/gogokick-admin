@@ -4,9 +4,9 @@ import * as types from 'actions/editorActions';
 const initialState = objects.merge({
   isBusy:         false,
   isChanged:      false,
-  isDragDisabled: false,
   projects:       [],
   teamMember:     null,
+  meTeamMember:   { roles: [] },
   blockIndex:     0,
   activeBlockID:  0,
   hoverBlockID:   0,
@@ -186,6 +186,9 @@ const onEditorChanged = (state, action) => {
  */
 const onEditorNew = (state, action) => {
   const blocks = Array.from(action.payload.blocks);
+  const team   = Array.from(action.payload.team);
+  const user   = objects.clone(action.payload.user);
+  const me     = objects.clone(action.payload.me);
 
   blocks.sort((a, b) => {
     return (a.sortOrder > b.sortOrder) ? 1 : -1;
@@ -193,8 +196,22 @@ const onEditorNew = (state, action) => {
 
   const canvasBlocks = [blocks];
 
+  let meTeamMember;
+  for (let i = 0; i < team.length; i++) {
+    if (team[i].user.id === me.id) {
+      meTeamMember = team[i];
+    }
+  }
+  if (!meTeamMember && user.id === me.id) {
+    meTeamMember = {
+      user:  me,
+      roles: [constants.projectRole('owner')]
+    }
+  }
+
   return {
     ...state,
+    meTeamMember,
     canvasBlocks,
     blockIndex: 0,
     isChanged:  false
@@ -438,20 +455,6 @@ const onEditorBlockMedia = (state, action) => {
   };
 };
 
-/**
- * @param {*} state
- * @param {*} action
- * @returns {*}
- */
-const onEditorDragDisabled = (state, action) => {
-  const isDragDisabled = action.payload;
-
-  return {
-    ...state,
-    isDragDisabled
-  };
-};
-
 const handlers = {
   [types.EDITOR_RESET]:          onEditorReset,
   [types.EDITOR_BUSY]:           onEditorBusy,
@@ -467,7 +470,6 @@ const handlers = {
   [types.EDITOR_TEAM_MEMBER]:    onEditorTeamMember,
   [types.EDITOR_PROJECTS]:       onEditorProjects,
   [types.EDITOR_CHANGED]:        onEditorChanged,
-  [types.EDITOR_DRAG_DISABLED]:  onEditorDragDisabled,
   [types.EDITOR_ACTIVATE_BLOCK]: onEditorActiveBlock,
   [types.EDITOR_HOVER_BLOCK]:    onEditorHoverBlock
 };

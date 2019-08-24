@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Droppable } from 'react-beautiful-dnd';
-import { connect, history, constants, mapDispatchToProps } from 'utils';
+import { connect, history, constants, acl, mapDispatchToProps } from 'utils';
 import { Icon, TeamMemberItem } from 'components';
 import { Button } from 'components/bootstrap';
 import { SidebarBlock } from 'editor/blocks';
@@ -10,6 +10,8 @@ import { editorActions, uiActions } from 'actions';
 const mapStateToProps = state => ({
   user:          state.user,
   project:       state.project,
+  teamMember:    state.editor.teamMember,
+  meTeamMember:  state.editor.meTeamMember,
   workspace:     state.ui.workspace,
   sidebarBlocks: state.editor.sidebarBlocks
 });
@@ -20,12 +22,13 @@ const mapStateToProps = state => ({
 )
 export default class EditorSidebar extends React.PureComponent {
   static propTypes = {
-    workspace:        PropTypes.string.isRequired,
-    user:             PropTypes.object.isRequired,
-    project:          PropTypes.object.isRequired,
-    uiModal:          PropTypes.func.isRequired,
-    editorTeamMember: PropTypes.func.isRequired,
-    sidebarBlocks:    PropTypes.array.isRequired
+    workspace:     PropTypes.string.isRequired,
+    teamMember:    PropTypes.object,
+    meTeamMember:  PropTypes.object.isRequired,
+    user:          PropTypes.object.isRequired,
+    project:       PropTypes.object.isRequired,
+    uiModal:       PropTypes.func.isRequired,
+    sidebarBlocks: PropTypes.array.isRequired
   };
 
   /**
@@ -33,28 +36,32 @@ export default class EditorSidebar extends React.PureComponent {
    * @param {*} user
    */
   handleMemberClick = (e, user) => {
-    const { uiModal, editorTeamMember } = this.props;
+    const { uiModal, meTeamMember } = this.props;
 
-    editorTeamMember(user);
-    uiModal({
-      modal: 'teamMember',
-      open:  true
-    });
+    if (acl(meTeamMember.roles, 'view', 'teamMember')) {
+      uiModal({
+        modal: 'teamMember',
+        open:  true,
+        meta:  user
+      });
+    }
   };
 
   /**
    *
    */
   handleAddMemberClick = () => {
-    const { user, uiModal } = this.props;
+    const { user, uiModal, meTeamMember } = this.props;
 
-    if (!user.isAuthenticated) {
-      history.push('/login');
-    } else {
-      uiModal({
-        modal: 'addMember',
-        open:  true
-      });
+    if (acl(meTeamMember.roles, 'add', 'teamMember')) {
+      if (!user.isAuthenticated) {
+        history.push('/login');
+      } else {
+        uiModal({
+          modal: 'addMember',
+          open:  true
+        });
+      }
     }
   };
 
@@ -65,12 +72,12 @@ export default class EditorSidebar extends React.PureComponent {
   handleMemberBadgeClick = (e, user) => {
     e.stopPropagation();
 
-    const { uiModal, editorTeamMember } = this.props;
+    const { uiModal } = this.props;
 
-    editorTeamMember(user);
     uiModal({
       modal: 'memberActions',
-      open:  true
+      open:  true,
+      meta:  user
     });
   };
 
@@ -101,7 +108,7 @@ export default class EditorSidebar extends React.PureComponent {
    * @returns {*}
    */
   renderTeam = () => {
-    const { project } = this.props;
+    const { project, meTeamMember } = this.props;
 
     return (
       <>
@@ -128,13 +135,15 @@ export default class EditorSidebar extends React.PureComponent {
             ))}
           </ul>
         )}
-        <Button theme="none" className="editor-team-btn" onClick={this.handleAddMemberClick}>
-          <Icon name="plus-circle" />
-          <div className="editor-team-member-info text-left">
-            <span>Invite</span>
-            <small>New Team Member</small>
-          </div>
-        </Button>
+        {acl(meTeamMember.roles, 'add', 'teamMember') && (
+          <Button theme="none" className="editor-team-btn" onClick={this.handleAddMemberClick}>
+            <Icon name="plus-circle" />
+            <div className="editor-team-member-info text-left">
+              <span>Invite</span>
+              <small>New Team Member</small>
+            </div>
+          </Button>
+        )}
       </>
     );
   };

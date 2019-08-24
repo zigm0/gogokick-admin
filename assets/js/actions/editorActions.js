@@ -13,7 +13,6 @@ export const EDITOR_MOVE           = 'EDITOR_MOVE';
 export const EDITOR_DROP           = 'EDITOR_DROP';
 export const EDITOR_CHANGE         = 'EDITOR_CHANGE';
 export const EDITOR_REMOVE         = 'EDITOR_REMOVE';
-export const EDITOR_DRAG_DISABLED  = 'EDITOR_DRAG_DISABLED';
 export const EDITOR_BLOCK_MEDIA    = 'EDITOR_BLOCK_MEDIA';
 export const EDITOR_TEAM_MEMBER    = 'EDITOR_TEAM_MEMBER';
 export const EDITOR_HOVER_BLOCK    = 'EDITOR_HOVER_BLOCK';
@@ -237,17 +236,6 @@ export const editorActivateBlock = (payload) => {
 export const editorHoverBlock = (payload) => {
   return {
     type: EDITOR_HOVER_BLOCK,
-    payload
-  };
-};
-
-/**
- * @param {boolean} payload
- * @returns {{payload: *, type: string}}
- */
-export const editorDragDisabled = (payload) => {
-  return {
-    type: EDITOR_DRAG_DISABLED,
     payload
   };
 };

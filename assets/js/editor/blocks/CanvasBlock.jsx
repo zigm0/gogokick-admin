@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { DragDropContext, Draggable } from 'react-beautiful-dnd';
-import { connect, constants, video, mapDispatchToProps } from 'utils';
+import { Draggable } from 'react-beautiful-dnd';
+import { connect, constants, video, acl, mapDispatchToProps } from 'utils';
 import { editorActions } from 'actions';
 import CanvasBlockBody from './CanvasBlockBody';
 import BlockMenu from './BlockMenu';
 
 const mapStateToProps = state => ({
-  hoverBlockID:   state.editor.hoverBlockID,
-  activeBlockID:  state.editor.activeBlockID,
-  isDragDisabled: state.editor.isDragDisabled
+  meTeamMember:  state.editor.meTeamMember,
+  hoverBlockID:  state.editor.hoverBlockID,
+  activeBlockID: state.editor.activeBlockID
 });
 
 @connect(
@@ -24,7 +24,7 @@ export default class CanvasBlock extends React.PureComponent {
       type: PropTypes.number.isRequired
     }).isRequired,
     index:               PropTypes.number.isRequired,
-    isDragDisabled:      PropTypes.bool.isRequired,
+    meTeamMember:        PropTypes.object.isRequired,
     hoverBlockID:        PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     activeBlockID:       PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     editorHoverBlock:    PropTypes.func.isRequired,
@@ -176,10 +176,15 @@ export default class CanvasBlock extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { block, index, isDragDisabled } = this.props;
+    const { block, index, meTeamMember } = this.props;
 
     return (
-      <Draggable key={block.id} draggableId={block.id} index={index} isDragDisabled={isDragDisabled}>
+      <Draggable
+        key={block.id}
+        draggableId={block.id}
+        index={index}
+        isDragDisabled={!acl(meTeamMember.roles, 'drag', 'blocks')}
+      >
         {(provided, source) => (
           this.renderBlock(provided, source)
         )}

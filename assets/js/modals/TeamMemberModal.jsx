@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, history, constants, objects, mapDispatchToProps } from 'utils';
+import { connect, history, constants, objects, acl, mapDispatchToProps } from 'utils';
 import { Form, Checkbox } from 'components/forms';
 import { Row, Column, Button } from 'components/bootstrap';
 import { Modal } from 'components';
 import { formActions, teamActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({
-  teamMember: state.editor.teamMember,
-  form:       state.forms.teamMember
+  teamMember:   state.ui.modalMeta,
+  meTeamMember: state.editor.meTeamMember,
+  form:         state.forms.teamMember
 });
 
 @connect(
@@ -18,6 +19,7 @@ const mapStateToProps = state => ({
 export default class TeamMemberModal extends React.PureComponent {
   static propTypes = {
     form:             PropTypes.object.isRequired,
+    meTeamMember:     PropTypes.object.isRequired,
     teamMember:       PropTypes.object,
     formChanges:      PropTypes.func.isRequired,
     teamMemberUpdate: PropTypes.func.isRequired,
@@ -41,7 +43,7 @@ export default class TeamMemberModal extends React.PureComponent {
 
     if (!prevProps.teamMember && teamMember) {
       this.handleUpdate();
-    } else if (prevProps.teamMember.id !== teamMember.id) {
+    } else if (teamMember && prevProps.teamMember.id !== teamMember.id) {
       this.handleUpdate();
     }
   }
@@ -117,9 +119,10 @@ export default class TeamMemberModal extends React.PureComponent {
    * @returns {*}
    */
   renderForm = () => {
-    const { teamMember } = this.props;
+    const { teamMember, meTeamMember } = this.props;
 
     const isOwner = teamMember.roles.includes(constants.projectRole('owner'));
+    const canEdit = acl(meTeamMember.roles, 'edit', 'teamMember');
 
     return (
       <Form name="teamMember">
@@ -129,7 +132,7 @@ export default class TeamMemberModal extends React.PureComponent {
               name="roleLead"
               label="Lead"
               id="input-team-member-role-lead"
-              disabled={isOwner}
+              disabled={isOwner || !canEdit}
             />
           </Column>
           <Column xl={4}>
@@ -137,7 +140,7 @@ export default class TeamMemberModal extends React.PureComponent {
               name="roleWriter"
               label="Writer"
               id="input-team-member-role-writer"
-              disabled={isOwner}
+              disabled={isOwner || !canEdit}
             />
           </Column>
           <Column xl={4}>
@@ -145,7 +148,7 @@ export default class TeamMemberModal extends React.PureComponent {
               name="roleGraphics"
               label="Graphics"
               id="input-team-member-role-graphics"
-              disabled={isOwner}
+              disabled={isOwner || !canEdit}
             />
           </Column>
         </Row>
@@ -155,7 +158,7 @@ export default class TeamMemberModal extends React.PureComponent {
               name="roleVideo"
               label="Video"
               id="input-team-member-role-video"
-              disabled={isOwner}
+              disabled={isOwner || !canEdit}
             />
           </Column>
           <Column xl={4}>
@@ -163,7 +166,7 @@ export default class TeamMemberModal extends React.PureComponent {
               name="roleAudio"
               label="Audio"
               id="input-team-member-role-audio"
-              disabled={isOwner}
+              disabled={isOwner || !canEdit}
             />
           </Column>
         </Row>
@@ -175,17 +178,21 @@ export default class TeamMemberModal extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { teamMember } = this.props;
+    const { teamMember, meTeamMember } = this.props;
 
     if (!teamMember) {
       return null;
     }
 
     const buttons = [];
-    if (!teamMember.roles.includes(constants.projectRole('owner'))) {
+    if (!teamMember.roles.includes(constants.projectRole('owner')) && acl(meTeamMember.roles, 'delete', 'teamMember')) {
       buttons.push(
-        <Button key="remove" className="modal-delete-btn" theme="danger">
-          Remove Team Member
+        <Button
+          key="remove"
+          className="modal-delete-btn"
+          theme="danger"
+        >
+          Remove
         </Button>
       )
     }
@@ -195,11 +202,13 @@ export default class TeamMemberModal extends React.PureComponent {
         Profile
       </Button>
     );
-    buttons.push(
-      <Button key="save" onClick={this.handleSaveClick}>
-        Save
-      </Button>
-    );
+    if (acl(meTeamMember.roles, 'edit', 'teamMember')) {
+      buttons.push(
+        <Button key="save" onClick={this.handleSaveClick}>
+          Save
+        </Button>
+      );
+    }
 
     const title = (
       <div>
