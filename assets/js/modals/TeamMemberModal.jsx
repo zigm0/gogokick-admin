@@ -99,17 +99,21 @@ export default class TeamMemberModal extends React.PureComponent {
     uiModal({
       modal: 'teamMember',
       open:  false
-    })
+    });
   };
 
   /**
    *
    */
   handleRemoveClick = () => {
-    const { teamMember, teamMemberRemove } = this.props;
+    const { teamMember, teamMemberRemove, uiModal } = this.props;
 
     if (confirm('Are you sure you want to remove this team member?')) {
       teamMemberRemove(teamMember);
+      uiModal({
+        modal: 'teamMember',
+        open:  false
+      });
     }
   };
 
