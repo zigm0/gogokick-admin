@@ -16,6 +16,7 @@ export const EDITOR_DROP           = 'EDITOR_DROP';
 export const EDITOR_CHANGE         = 'EDITOR_CHANGE';
 export const EDITOR_REMOVE         = 'EDITOR_REMOVE';
 export const EDITOR_BLOCK_MEDIA    = 'EDITOR_BLOCK_MEDIA';
+export const EDITOR_BLOCK_SETTINGS = 'EDITOR_BLOCK_SETTINGS';
 export const EDITOR_TEAM_MEMBER    = 'EDITOR_TEAM_MEMBER';
 export const EDITOR_HOVER_BLOCK    = 'EDITOR_HOVER_BLOCK';
 export const EDITOR_ACTIVATE_BLOCK = 'EDITOR_ACTIVATE_BLOCK';
@@ -74,6 +75,22 @@ export const editorBlocks = (payload) => {
   return {
     type: EDITOR_BLOCKS,
     payload
+  };
+};
+
+/**
+ * @param {*} payload
+ * @returns {Function}
+ */
+export const editorBlockSettings = (payload) => {
+  return (dispatch) => {
+    api.post(router.generate('api_editor_block_settings', { id: payload.id }), payload)
+      .then((resp) => {
+        dispatch({
+          type:    EDITOR_BLOCK_SETTINGS,
+          payload: resp
+        });
+      });
   };
 };
 

@@ -467,6 +467,27 @@ const onEditorBlockMedia = (state, action) => {
   };
 };
 
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onEditorBlockSettings = (state, action) => {
+  let { canvasBlocks, blockIndex } = objects.clone(state);
+  const block = objects.clone(action.payload);
+
+  const blocks = Array.from(canvasBlocks[blockIndex]);
+  const index = arrays.findIndexByID(blocks, block.id);
+
+  blocks[index].isLocked = block.isLocked;
+  canvasBlocks[blockIndex] = blocks;
+
+  return {
+    ...state,
+    canvasBlocks
+  };
+};
+
 const handlers = {
   [types.EDITOR_RESET]:          onEditorReset,
   [types.EDITOR_LOADED]:         onEditorLoaded,
@@ -479,6 +500,7 @@ const handlers = {
   [types.EDITOR_UNDO]:           onEditorUndo,
   [types.EDITOR_REDO]:           onEditorRedo,
   [types.EDITOR_BLOCKS]:         onEditorBlocks,
+  [types.EDITOR_BLOCK_SETTINGS]: onEditorBlockSettings,
   [types.EDITOR_BLOCK_MEDIA]:    onEditorBlockMedia,
   [types.EDITOR_TEAM_MEMBER]:    onEditorTeamMember,
   [types.EDITOR_PROJECTS]:       onEditorProjects,

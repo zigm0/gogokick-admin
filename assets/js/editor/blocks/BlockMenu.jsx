@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { connect, constants, acl, mapDispatchToProps } from 'utils';
+import { connect, constants, objects, acl, mapDispatchToProps } from 'utils';
 import { Button } from 'components';
 import { editorActions, uiActions } from 'actions';
 
@@ -16,15 +16,17 @@ const mapStateToProps = state => ({
 export default class BlockMenu extends React.PureComponent {
   static propTypes = {
     block: PropTypes.shape({
-      id:   PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-      type: PropTypes.number.isRequired
+      id:       PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+      type:     PropTypes.number.isRequired,
+      isLocked: PropTypes.bool
     }).isRequired,
-    buttons:      PropTypes.node,
-    className:    PropTypes.string,
-    meTeamMember: PropTypes.object.isRequired,
-    editorMove:   PropTypes.func.isRequired,
-    editorRemove: PropTypes.func.isRequired,
-    uiModal:      PropTypes.func.isRequired,
+    buttons:             PropTypes.node,
+    className:           PropTypes.string,
+    meTeamMember:        PropTypes.object.isRequired,
+    editorMove:          PropTypes.func.isRequired,
+    editorRemove:        PropTypes.func.isRequired,
+    editorBlockSettings: PropTypes.func.isRequired,
+    uiModal:             PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -80,6 +82,17 @@ export default class BlockMenu extends React.PureComponent {
   };
 
   /**
+   *
+   */
+  handleLockClick = () => {
+    const { block, editorBlockSettings } = this.props;
+
+    const newBlock = objects.clone(block);
+    newBlock.isLocked = !block.isLocked;
+    editorBlockSettings(newBlock);
+  };
+
+  /**
    * @returns {*}
    */
   render() {
@@ -120,6 +133,14 @@ export default class BlockMenu extends React.PureComponent {
           {buttons}
         </div>
         <div className="block-menu-group justify-content-end">
+          {acl(roles, 'lock', 'blocks') && (
+            <Button
+              title={block.isLocked ? 'Unlock' : 'Lock'}
+              icon={block.isLocked ? 'lock' : 'unlock'}
+              className="block-menu-item"
+              onClick={this.handleLockClick}
+            />
+          )}
           {acl(roles, 'delete', 'blocks') && (
             <Button
               title="Delete"

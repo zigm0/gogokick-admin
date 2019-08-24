@@ -104,6 +104,13 @@ class Block
     protected $isHeadline = false;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     * @Groups({"web"})
+     */
+    protected $isLocked = false;
+
+    /**
      * @var DateTime
      * @ORM\Column(type="datetime")
      * @Groups({"web"})
@@ -305,6 +312,26 @@ class Block
     public function setIsHeadline(bool $isHeadline): Block
     {
         $this->isHeadline = $isHeadline;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLocked(): ?bool
+    {
+        return $this->isLocked;
+    }
+
+    /**
+     * @param bool $isLocked
+     *
+     * @return Block
+     */
+    public function setIsLocked(bool $isLocked): Block
+    {
+        $this->isLocked = $isLocked;
 
         return $this;
     }

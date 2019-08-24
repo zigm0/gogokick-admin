@@ -30,6 +30,7 @@ parameters:
                   - add
                   - delete
                   - drag
+                  - lock
                   - settings
               resources:
                   - blocks
