@@ -147,7 +147,8 @@ export default class BlockMenu extends React.PureComponent {
             <Button
               title="Locked"
               icon="lock"
-              className="block-menu-item"
+              className="block-menu-item default-cursor"
+              disabled
             />
           )}
           {acl(roles, 'delete', 'blocks') && (

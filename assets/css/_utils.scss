@@ -53,6 +53,10 @@
   cursor: pointer;
 }
 
+.default-cursor {
+  cursor: default !important;
+}
+
 .border-grey {
   border: 1px solid #dadada;
 }
