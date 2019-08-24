@@ -15,12 +15,14 @@ import BlockAudio from './BlockAudio';
 export default class CanvasBlockBody extends React.PureComponent {
   static propTypes = {
     block: PropTypes.shape({
-      text:       PropTypes.string,
-      type:       PropTypes.number.isRequired,
-      media:      PropTypes.object,
-      videoUrl:   PropTypes.string,
-      audioUrl:   PropTypes.string,
-      isHeadline: PropTypes.bool
+      text:        PropTypes.string,
+      type:        PropTypes.number.isRequired,
+      media:       PropTypes.object,
+      videoUrl:    PropTypes.string,
+      audioUrl:    PropTypes.string,
+      isLocked:    PropTypes.bool,
+      isHeadline:  PropTypes.bool,
+      description: PropTypes.string
     }).isRequired,
     isActive:   PropTypes.bool.isRequired,
     isHover:    PropTypes.bool.isRequired,
@@ -59,7 +61,7 @@ export default class CanvasBlockBody extends React.PureComponent {
     const { block, isActive, isHover, isDragging, onChange } = this.props;
     const isEmpty = block.text === '' && !block.media && !block.videoUrl && !block.audioUrl;
 
-    if (isActive) {
+    if (isActive && !block.isLocked) {
       switch (block.type) {
         case 1:
           return <BlockEditorText block={block} onChange={onChange} />;

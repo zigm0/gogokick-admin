@@ -46,12 +46,14 @@ const onWorkspace = (state, action) => {
  */
 const onModal = (state, action) => {
   const modals         = objects.clone(state.modals);
-  const modalMeta      = Array.from(state.modalMeta);
-  const modalCallbacks = Array.from(state.modalCallbacks);
+  const modalMeta      = objects.clone(state.modalMeta);
+  const modalCallbacks = objects.clone(state.modalCallbacks);
   const { modal, open, meta, onComplete } = action.payload;
 
-  modals[modal]         = open;
-  modalMeta[modal]      = meta;
+  modals[modal] = open;
+  if (meta) {
+    modalMeta[modal] = meta;
+  }
   modalCallbacks[modal] = onComplete || (() => {});
 
   return {

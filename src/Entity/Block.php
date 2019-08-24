@@ -68,6 +68,20 @@ class Block
     protected $text = '';
 
     /**
+     * @var int
+     * @ORM\Column(type="smallint")
+     * @Groups({"web"})
+     */
+    protected $width = 0;
+
+    /**
+     * @var int
+     * @ORM\Column(type="smallint")
+     * @Groups({"web"})
+     */
+    protected $height = 0;
+
+    /**
      * @var Media
      * @ORM\OneToOne(targetEntity="Media")
      * @ORM\JoinColumn(name="media_id", referencedColumnName="id", nullable=true)
@@ -252,6 +266,46 @@ class Block
     public function setText(string $text): Block
     {
         $this->text = $text;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWidth(): int
+    {
+        return $this->width;
+    }
+
+    /**
+     * @param int $width
+     *
+     * @return Block
+     */
+    public function setWidth(int $width): Block
+    {
+        $this->width = $width;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getHeight(): int
+    {
+        return $this->height;
+    }
+
+    /**
+     * @param int $height
+     *
+     * @return Block
+     */
+    public function setHeight(int $height): Block
+    {
+        $this->height = $height;
 
         return $this;
     }

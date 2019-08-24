@@ -140,7 +140,7 @@ class Input extends React.PureComponent {
           disabled={context.disabled || disabled}
           onChange={e => this.handleChange(e, context)}
           {...objects.keyFilter(props, Input.propTypes)}
-          value={format(context.values[inputName] || value)}
+          value={format(context.values[inputName] !== undefined ? context.values[inputName] : value)}
         />
       </FormGroup>
     );

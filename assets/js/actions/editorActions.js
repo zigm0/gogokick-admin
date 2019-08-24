@@ -1,4 +1,4 @@
-import { api, router } from 'utils';
+import { api, router, arrays } from 'utils';
 import { setPermissions } from 'utils/acl';
 import { projectSave } from './projectActions';
 
@@ -13,7 +13,7 @@ export const EDITOR_UNDO           = 'EDITOR_UNDO';
 export const EDITOR_REDO           = 'EDITOR_REDO';
 export const EDITOR_MOVE           = 'EDITOR_MOVE';
 export const EDITOR_DROP           = 'EDITOR_DROP';
-export const EDITOR_CHANGE         = 'EDITOR_CHANGE';
+export const EDITOR_UPDATE_BLOCK   = 'EDITOR_UPDATE_BLOCK';
 export const EDITOR_REMOVE         = 'EDITOR_REMOVE';
 export const EDITOR_BLOCK_MEDIA    = 'EDITOR_BLOCK_MEDIA';
 export const EDITOR_BLOCK_SETTINGS = 'EDITOR_BLOCK_SETTINGS';
@@ -75,22 +75,6 @@ export const editorBlocks = (payload) => {
   return {
     type: EDITOR_BLOCKS,
     payload
-  };
-};
-
-/**
- * @param {*} payload
- * @returns {Function}
- */
-export const editorBlockSettings = (payload) => {
-  return (dispatch) => {
-    api.post(router.generate('api_editor_block_settings', { id: payload.id }), payload)
-      .then((resp) => {
-        dispatch({
-          type:    EDITOR_BLOCK_SETTINGS,
-          payload: resp
-        });
-      });
   };
 };
 
@@ -228,13 +212,34 @@ export const editorRemove = (payload) => {
  * @param {*} payload
  * @returns {Function}
  */
-export const editorChange = (payload) => {
+export const editorUpdateBlock = (payload) => {
+  return (dispatch, getState) => {
+    const { editor } = getState();
+    const { canvasBlocks, blockIndex } = editor;
+
+    const block = arrays.findByID(canvasBlocks[blockIndex], payload.id);
+    if (block && !block.isLocked) {
+      dispatch({
+        type: EDITOR_UPDATE_BLOCK,
+        payload
+      });
+      dispatch(projectSave());
+    }
+  };
+};
+
+/**
+ * @param {*} payload
+ * @returns {Function}
+ */
+export const editorBlockSettings = (payload) => {
   return (dispatch) => {
     dispatch({
-      type: EDITOR_CHANGE,
+      type: EDITOR_BLOCK_SETTINGS,
       payload
     });
-    dispatch(projectSave());
+
+    api.post(router.generate('api_editor_block_settings', { id: payload.id }), payload);
   };
 };
 

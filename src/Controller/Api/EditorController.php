@@ -40,7 +40,10 @@ class EditorController extends ApiController
         $model = new BlockSettingsModel();
         $handler->handleRequest($model, $request);
 
-        $block->setIsLocked($model->isLocked());
+        $block
+            ->setWidth($model->getWidth())
+            ->setHeight($model->getHeight())
+            ->setIsLocked($model->isLocked());
         $this->em->flush();
 
         return $this->jsonEntityResponse($block);

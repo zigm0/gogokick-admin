@@ -18,8 +18,8 @@ export default class BlockEditorVideo extends React.PureComponent {
     block: PropTypes.shape({
       videoUrl: PropTypes.string
     }).isRequired,
-    onChange:     PropTypes.func.isRequired,
-    editorChange: PropTypes.func.isRequired
+    onChange:          PropTypes.func.isRequired,
+    editorUpdateBlock: PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -57,10 +57,10 @@ export default class BlockEditorVideo extends React.PureComponent {
    *
    */
   componentWillUnmount() {
-    const { block, editorChange } = this.props;
+    const { block, editorUpdateBlock } = this.props;
     const { videoUrl } = this.state;
 
-    editorChange(objects.merge(block, { videoUrl }));
+    editorUpdateBlock(objects.merge(block, { videoUrl }));
   }
 
   /**

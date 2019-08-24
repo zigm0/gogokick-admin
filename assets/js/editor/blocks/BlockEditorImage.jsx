@@ -16,9 +16,9 @@ export default class BlockEditorImage extends React.PureComponent {
       type:         PropTypes.number.isRequired,
       origFilename: PropTypes.string
     }).isRequired,
-    mediaUpload:  PropTypes.func.isRequired,
-    editorChange: PropTypes.func.isRequired,
-    onChange:     PropTypes.func.isRequired
+    mediaUpload:       PropTypes.func.isRequired,
+    editorUpdateBlock: PropTypes.func.isRequired,
+    onChange:          PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -50,10 +50,10 @@ export default class BlockEditorImage extends React.PureComponent {
    *
    */
   componentWillUnmount() {
-    const { block, editorChange } = this.props;
+    const { block, editorUpdateBlock } = this.props;
     const { caption } = this.state;
 
-    editorChange(objects.merge(block, { caption }));
+    editorUpdateBlock(objects.merge(block, { caption }));
   }
 
   /**

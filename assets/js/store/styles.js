@@ -16,3 +16,14 @@ export const deviceHeights = {
   xl: 1200
 };
 
+export const widths = {
+  blocks: {
+    kickstarter: parseInt(styles.widthBlockKickstarter, 10)
+  }
+};
+
+export default {
+  breakpoints,
+  deviceHeights,
+  widths
+}

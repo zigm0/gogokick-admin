@@ -18,8 +18,8 @@ export default class BlockEditorAudio extends React.PureComponent {
     block: PropTypes.shape({
       audioUrl: PropTypes.string
     }).isRequired,
-    onChange:     PropTypes.func.isRequired,
-    editorChange: PropTypes.func.isRequired
+    onChange:          PropTypes.func.isRequired,
+    editorUpdateBlock: PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -48,10 +48,10 @@ export default class BlockEditorAudio extends React.PureComponent {
    *
    */
   componentWillUnmount() {
-    const { block, editorChange } = this.props;
+    const { block, editorUpdateBlock } = this.props;
     const { audioUrl } = this.state;
 
-    editorChange(objects.merge(block, { audioUrl }));
+    editorUpdateBlock(objects.merge(block, { audioUrl }));
   }
 
   /**

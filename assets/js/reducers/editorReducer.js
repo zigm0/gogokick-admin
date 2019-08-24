@@ -354,9 +354,9 @@ const onEditorRemove = (state, action) => {
  * @param {*} action
  * @returns {*}
  */
-const onEditorChange = (state, action) => {
+const onEditorUpdateBlock = (state, action) => {
   let { canvasBlocks, blockIndex, isChanged } = objects.clone(state);
-  const { id, text, caption, description, videoUrl, audioUrl, isHeadline } = action.payload;
+  const { id, text, caption, description, videoUrl, audioUrl, isHeadline, isLocked } = action.payload;
 
   const blocks = Array.from(canvasBlocks[blockIndex]);
   const index  = arrays.findIndexByID(blocks, id);
@@ -364,6 +364,7 @@ const onEditorChange = (state, action) => {
   if (index !== -1) {
     blocks[index].text           = text;
     blocks[index].caption        = caption;
+    blocks[index].isLocked       = isLocked;
     blocks[index].isHeadline     = isHeadline;
     blocks[index].description    = description;
     blocks[index].videoUrl       = videoUrl;
@@ -379,6 +380,28 @@ const onEditorChange = (state, action) => {
     canvasBlocks,
     isChanged
   }
+};
+
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onEditorBlockSettings = (state, action) => {
+  let { canvasBlocks, blockIndex } = objects.clone(state);
+  const block = objects.clone(action.payload);
+
+  const blocks = Array.from(canvasBlocks[blockIndex]);
+  const index = arrays.findIndexByID(blocks, block.id);
+  // console.log(index, block.id, blocks);
+
+  blocks[index].isLocked = block.isLocked;
+  canvasBlocks[blockIndex] = blocks;
+
+  return {
+    ...state,
+    canvasBlocks
+  };
 };
 
 /**
@@ -467,27 +490,6 @@ const onEditorBlockMedia = (state, action) => {
   };
 };
 
-/**
- * @param {*} state
- * @param {*} action
- * @returns {*}
- */
-const onEditorBlockSettings = (state, action) => {
-  let { canvasBlocks, blockIndex } = objects.clone(state);
-  const block = objects.clone(action.payload);
-
-  const blocks = Array.from(canvasBlocks[blockIndex]);
-  const index = arrays.findIndexByID(blocks, block.id);
-
-  blocks[index].isLocked = block.isLocked;
-  canvasBlocks[blockIndex] = blocks;
-
-  return {
-    ...state,
-    canvasBlocks
-  };
-};
-
 const handlers = {
   [types.EDITOR_RESET]:          onEditorReset,
   [types.EDITOR_LOADED]:         onEditorLoaded,
@@ -496,7 +498,7 @@ const handlers = {
   [types.EDITOR_DROP]:           onEditorDrop,
   [types.EDITOR_MOVE]:           onEditorMove,
   [types.EDITOR_REMOVE]:         onEditorRemove,
-  [types.EDITOR_CHANGE]:         onEditorChange,
+  [types.EDITOR_UPDATE_BLOCK]:   onEditorUpdateBlock,
   [types.EDITOR_UNDO]:           onEditorUndo,
   [types.EDITOR_REDO]:           onEditorRedo,
   [types.EDITOR_BLOCKS]:         onEditorBlocks,

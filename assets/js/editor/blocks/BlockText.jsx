@@ -5,7 +5,8 @@ import { strings } from 'utils';
 export default class BlockText extends React.PureComponent {
   static propTypes = {
     block: PropTypes.shape({
-      text: PropTypes.string.isRequired
+      text:       PropTypes.string.isRequired,
+      isHeadline: PropTypes.bool
     }).isRequired
   };
 

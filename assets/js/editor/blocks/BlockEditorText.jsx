@@ -14,11 +14,12 @@ import BlockMenu from './BlockMenu';
 export default class BlockEditorText extends React.PureComponent {
   static propTypes = {
     block: PropTypes.shape({
-      text: PropTypes.string,
-      type: PropTypes.number.isRequired
+      text:       PropTypes.string,
+      type:       PropTypes.number.isRequired,
+      isHeadline: PropTypes.bool
     }).isRequired,
-    editorChange: PropTypes.func.isRequired,
-    onChange:     PropTypes.func.isRequired
+    editorUpdateBlock: PropTypes.func.isRequired,
+    onChange:          PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -33,7 +34,7 @@ export default class BlockEditorText extends React.PureComponent {
     this.content = React.createRef();
     this.state   = {
       text,
-      cmds:       {
+      cmds: {
         insertUnorderedList: false,
         createLink:          false,
         bold:                false,
@@ -56,10 +57,10 @@ export default class BlockEditorText extends React.PureComponent {
    *
    */
   componentWillUnmount() {
-    const { block, editorChange } = this.props;
+    const { block, editorUpdateBlock } = this.props;
     const { text } = this.state;
 
-    editorChange(objects.merge(block, { text }));
+    editorUpdateBlock(objects.merge(block, { text }));
   }
 
   /**
@@ -80,10 +81,10 @@ export default class BlockEditorText extends React.PureComponent {
    * @param {string} value
    */
   handleMenuItemClick = (e, cmd, value = '') => {
-    const { block, editorChange, onChange } = this.props;
+    const { block, editorUpdateBlock, onChange } = this.props;
 
     if (cmd === 'headline') {
-      editorChange(objects.merge(block, {
+      editorUpdateBlock(objects.merge(block, {
         isHeadline: !block.isHeadline
       }));
       onChange(e, value);

@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, objects, mapDispatchToProps } from 'utils';
+import { connect, objects, constants, mapDispatchToProps } from 'utils';
 import { Modal } from 'components';
 import { Form, Textarea, Input } from 'components/forms';
 import { Row, Column } from 'components/bootstrap';
 import { formActions, editorActions } from 'actions';
+import styles from 'store/styles';
 
 const mapStateToProps = state => ({
+  block:         state.ui.modalMeta.blockSettings,
   blockSettings: state.forms.blockSettings,
-  block:         state.ui.modalMeta.blockSettings
+  campaignType:  state.project.campaignType,
 });
 
 @connect(
@@ -17,10 +19,11 @@ const mapStateToProps = state => ({
 )
 export default class BlockSettingsModal extends React.PureComponent {
   static propTypes = {
-    blockSettings: PropTypes.object.isRequired,
-    block:         PropTypes.object,
-    editorChange:  PropTypes.func.isRequired,
-    formChanges:   PropTypes.func.isRequired
+    block:               PropTypes.object,
+    blockSettings:       PropTypes.object.isRequired,
+    campaignType:        PropTypes.number.isRequired,
+    editorBlockSettings: PropTypes.func.isRequired,
+    formChanges:         PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -29,14 +32,14 @@ export default class BlockSettingsModal extends React.PureComponent {
    * @param {*} prevProps
    */
   componentDidUpdate(prevProps) {
-    const { block, formChanges } = this.props;
+    const { block, campaignType, formChanges } = this.props;
     const { block: prevBlock } = prevProps;
 
     if ((block && !prevBlock) || (block && block.id !== prevBlock.id)) {
       formChanges('blockSettings', {
         description: block.description || 'Description',
-        width:       '0',
-        height:      '0'
+        width:       block.width || styles.widths.blocks[constants.campaignType(campaignType)],
+        height:      block.height || ''
       });
     }
   }
@@ -45,10 +48,12 @@ export default class BlockSettingsModal extends React.PureComponent {
    *
    */
   handleClosed = () => {
-    const { block, blockSettings, editorChange } = this.props;
+    const { block, blockSettings, editorBlockSettings } = this.props;
 
-    editorChange(objects.merge(block, {
-      description: blockSettings.description
+    editorBlockSettings(objects.merge(block, {
+      description: blockSettings.description,
+      width:       parseInt(blockSettings.width || 0, 10),
+      height:      parseInt(blockSettings.height || 0, 10)
     }));
   };
 
