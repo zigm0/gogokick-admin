@@ -1,1 +1,13 @@
-You have been invited... go to {{ url }}.
+The team at {{ invite.project.name }} has invited you to work on their project on GoGoKick.
+
+{% if isLead %}
+You’ve been invited to be a Lead. You’ll have full creative freedom to manage the arrangement of the page and edit any content.
+{% else %}
+They’re looking for your expertise in:
+{% if isWriter %}Writing copy for their story page.{% endif %}
+{% if isGraphics %}Designing graphics and photos for their story page.{% endif %}
+{% if isVideo %}Video storyboarding and scripting.{% endif %}
+{% if isAudio %}Audio composing.{% endif %}
+{% endif %}
+
+Click the link to accept the invite: {{ url }}

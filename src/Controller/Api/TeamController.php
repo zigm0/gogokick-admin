@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller\Api;
 
+use App\Entity\ProjectUser;
 use App\Http\ModelRequestHandler;
 use App\Http\Request;
 use App\Model\InviteModel;
@@ -42,6 +43,7 @@ class TeamController extends ApiController
         $model = new InviteModel();
         $handler->handleRequest($model, $request);
         $email = $model->getEmail();
+        $roles = $model->getRoles();
 
         $project = $this->getProject($model->getProject());
         if ($invite = $repository->findByProjectAndEmail($project, $email)) {
@@ -56,28 +58,32 @@ class TeamController extends ApiController
             }
         }
 
-        $invite = $repository->create($project, $email, $model->getRoles());
+        $invite = $repository->create($project, $email, $roles);
         $url    = $this->generateUrl(
             'invite_accept',
             ['hash' => $invite->getHash(), 'id' => $invite->getId()],
             UrlGeneratorInterface::ABSOLUTE_URL
         );
 
-        $message = (new Swift_Message('Hello Email'))
+        $params = [
+            'url'        => $url,
+            'invite'     => $invite,
+            'isLead'     => in_array(ProjectUser::ROLE_LEAD, $roles),
+            'isWriter'   => in_array(ProjectUser::ROLE_WRITER, $roles),
+            'isGraphics' => in_array(ProjectUser::ROLE_GRAPHICS, $roles),
+            'isVideo'    => in_array(ProjectUser::ROLE_VIDEO, $roles),
+            'isAudio'    => in_array(ProjectUser::ROLE_AUDIO, $roles)
+        ];
+
+        $message = (new Swift_Message('Invitation to GoGoKick project'))
             ->setFrom('invites@gogokick.com')
             ->setTo($email)
             ->setBody(
-                $this->renderView(
-                    '_emails/invite.html.twig',
-                    ['invite' => $invite, 'url' => $url]
-                ),
+                $this->renderView('_emails/invite.html.twig', $params),
                 'text/html'
             )
             ->addPart(
-                $this->renderView(
-                    '_emails/invite.txt.twig',
-                    ['invite' => $invite, 'url' => $url]
-                ),
+                $this->renderView('_emails/invite.txt.twig', $params),
                 'text/plain'
             )
         ;

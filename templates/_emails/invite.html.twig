@@ -1,1 +1,13 @@
-You have been invited... click <a href="{{ url }}">{{ url }}</a>.
+The team at {{ invite.project.name }} has invited you to work on their project on GoGoKick.<br /><br />
+
+{% if isLead %}
+You’ve been invited to be a Lead. You’ll have full creative freedom to manage the arrangement of the page and edit any content.<br />
+{% else %}
+They’re looking for your expertise in:<br />
+{% if isWriter %}Writing copy for their story page.<br />{% endif %}
+{% if isGraphics %}Designing graphics and photos for their story page.<br />{% endif %}
+{% if isVideo %}Video storyboarding and scripting.<br />{% endif %}
+{% if isAudio %}Audio composing.<br />{% endif %}
+{% endif %}
+<br />
+Click the link to accept the invite: {{ url }}
