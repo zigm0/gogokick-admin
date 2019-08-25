@@ -91,11 +91,10 @@ export default class App extends React.Component {
   render() {
     const { workspace, campaignType, userIsBusy, editorIsBusy, projectIsBusy } = this.props;
 
-    const classes = classNames(
-      'editor h-100',
-      `workspace-${workspace}`,
-      `editor-campaign-type-${constants.campaignType(campaignType)}`
-    );
+    const classes = classNames(`workspace-${workspace}`, {
+      'editor h-100':                                                   workspace === 'editor',
+      [`editor-campaign-type-${constants.campaignType(campaignType)}`]: workspace === 'editor'
+    });
 
     return (
       <Suspense fallback={<LoadingCubes />}>
