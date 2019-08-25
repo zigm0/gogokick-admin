@@ -91,6 +91,7 @@ export default class UserMenu extends React.PureComponent {
                 <Icon name="sign-in-alt" />
                 Login
               </Link>
+              <div className="dropdown-divider" />
               <Link to="/register" className="dropdown-item">
                 <Icon name="user" />
                 Register
