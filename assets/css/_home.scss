@@ -1,2 +1,36 @@
 @import "vars";
 
+.home-page-header {
+  height: 70px;
+  color: #FFF;
+  width: 100%;
+  display: flex;
+  position: fixed;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home-page-header-brand {
+  flex: 0 0 $width-sidebar;
+
+  img {
+    height: 65px;
+  }
+}
+
+.home-page-header-links {
+  flex-grow: 2;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 1.15rem;
+
+  a {
+    font-weight: 700;
+    padding: 0 0.5rem;
+    border-right: 1px solid #FFF;
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+}

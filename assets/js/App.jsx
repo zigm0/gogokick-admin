@@ -15,6 +15,7 @@ const Profile         = React.lazy(() => import('./dashboard/Profile'));
 const Dashboard       = React.lazy(() => import('./dashboard/Dashboard'));
 const Invite          = React.lazy(() => import('./dashboard/Invite'));
 const Editor          = React.lazy(() => import('./editor/Editor'));
+const HomeHeader      = React.lazy(() => import('./dashboard/HomeHeader'));
 const EditorHeader    = React.lazy(() => import('./editor/EditorHeader'));
 const DashboardHeader = React.lazy(() => import('./dashboard/DashboardHeader'));
 const CropperModal    = React.lazy(() => import('./modals/CropperModal'));
@@ -72,6 +73,21 @@ export default class App extends React.Component {
   /**
    * @returns {*}
    */
+  renderHeader = () => {
+    const { workspace } = this.props;
+
+    if (workspace === 'editor') {
+      return <EditorHeader />;
+    } else if (workspace === 'home') {
+      return <HomeHeader />;
+    } else {
+      return <DashboardHeader />;
+    }
+  };
+
+  /**
+   * @returns {*}
+   */
   render() {
     const { workspace, campaignType, userIsBusy, editorIsBusy, projectIsBusy } = this.props;
 
@@ -84,11 +100,7 @@ export default class App extends React.Component {
     return (
       <Suspense fallback={<LoadingCubes />}>
         <div className={classes}>
-          {workspace === 'editor' ? (
-            <EditorHeader />
-          ) : (
-            <DashboardHeader />
-          )}
+          {this.renderHeader()}
           <Router history={history}>
             <Switch>
               <Route exact path="/" component={Home} />
