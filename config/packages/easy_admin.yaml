@@ -6,6 +6,7 @@ easy_admin:
         menu:
             - { entity: User, label: 'Users', icon: 'user' }
             - { entity: Project, label: 'Projects', icon: 'user' }
+            - { entity: Content, label: 'Content', icon: 'user' }
     entities:
         User:
             class: App\Entity\User
@@ -38,3 +39,14 @@ easy_admin:
                     - name
                     - { property: 'subtitle', type_options: { required: false, empty_data: '' } }
 
+
+        Content:
+            class: App\Entity\Content
+            list:
+                fields:
+                    - id
+                    - title
+            form:
+                fields:
+                    - title
+                    - { property: 'html', type: 'fos_ckeditor' }

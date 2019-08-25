@@ -17,6 +17,7 @@ const Invite          = React.lazy(() => import('./dashboard/Invite'));
 const Editor          = React.lazy(() => import('./editor/Editor'));
 const HomeHeader      = React.lazy(() => import('./dashboard/HomeHeader'));
 const EditorHeader    = React.lazy(() => import('./editor/EditorHeader'));
+const Content         = React.lazy(() => import('./dashboard/Content'));
 const DashboardHeader = React.lazy(() => import('./dashboard/DashboardHeader'));
 const CropperModal    = React.lazy(() => import('./modals/CropperModal'));
 
@@ -104,6 +105,7 @@ export default class App extends React.Component {
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/about" render={() => <Content name="about" />} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/profile/:id" component={Profile} />
               <Route exact path="/invite/:id/:hash" component={Invite} />
