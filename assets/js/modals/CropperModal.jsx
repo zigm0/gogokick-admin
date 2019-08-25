@@ -18,7 +18,7 @@ const mapStateToProps = state => ({
 export default class CropperModal extends React.PureComponent {
   static propTypes = {
     settings:     PropTypes.object,
-    onComplete:   PropTypes.func.isRequired,
+    onComplete:   PropTypes.func,
     mediaReplace: PropTypes.func.isRequired
   };
 

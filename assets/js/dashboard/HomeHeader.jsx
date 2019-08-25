@@ -19,13 +19,49 @@ export default class HomeHeader extends React.PureComponent {
   static defaultProps = {};
 
   /**
+   * @param {*} props
+   */
+  constructor(props) {
+    super(props);
+    this.header = React.createRef();
+  }
+
+
+  /**
+   *
+   */
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll, false);
+  }
+
+  /**
+   *
+   */
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll, false);
+  }
+
+  /**
+   *
+   */
+  handleScroll = () => {
+    const top = document.body.scrollTop || document.documentElement.scrollTop;
+
+    if (top > 100 && !this.header.current.classList.contains('home-page-header-opaque')) {
+      this.header.current.classList.add('home-page-header-opaque');
+    } else if (top < 100 && this.header.current.classList.contains('home-page-header-opaque')) {
+      this.header.current.classList.remove('home-page-header-opaque');
+    }
+  };
+
+  /**
    * @returns {*}
    */
   render() {
     const { isAuthenticated } = this.props;
 
     return (
-      <header className="home-page-header">
+      <header ref={this.header} className="home-page-header">
         <Container className="d-flex align-items-center">
           <div className="home-page-header-brand">
             <Link to="/">
