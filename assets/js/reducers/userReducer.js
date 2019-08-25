@@ -44,11 +44,17 @@ const onUserMe = (state, action) => {
  * @returns {*}
  */
 const onUserSave = (state, action) => {
+  let { profile } = state;
   const user = objects.clone(action.payload);
+
+  if (profile.id === user.id) {
+    profile = user;
+  }
 
   return {
     ...state,
-    ...user
+    ...user,
+    profile
   };
 };
 
