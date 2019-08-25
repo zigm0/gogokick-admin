@@ -216,10 +216,18 @@ export default class Profile extends React.PureComponent {
       );
     }
 
+    const makeLink = (part) => {
+      if (part.indexOf('http') === 0) {
+        return part;
+      }
+
+      return `https://${part}`;
+    };
+
     return (
       <section className="profile-section profile-section-social">
         {profile.social.twitter && (
-          <a href="#" rel="noopener" target="_blank">
+          <a href={makeLink(profile.social.twitter)} rel="noopener noreferrer" target="_blank">
             <Icon
               name="twitter-square"
               className="profile-social-icon profile-social-icon-twitter margin-right-sm"
@@ -229,7 +237,7 @@ export default class Profile extends React.PureComponent {
           </a>
         )}
         {profile.social.youtube && (
-          <a href="#" rel="noopener" target="_blank">
+          <a href={makeLink(profile.social.youtube)} rel="noopener noreferrer" target="_blank">
             <Icon
               name="youtube-square"
               className="profile-social-icon profile-social-icon-youtube margin-right-sm"
@@ -239,7 +247,7 @@ export default class Profile extends React.PureComponent {
           </a>
         )}
         {profile.social.facebook && (
-          <a href="#" rel="noopener" target="_blank">
+          <a href={makeLink(profile.social.facebook)} rel="noopener noreferrer" target="_blank">
             <Icon
               name="facebook-square"
               className="profile-social-icon profile-social-icon-facebook margin-right-sm"
@@ -249,7 +257,7 @@ export default class Profile extends React.PureComponent {
           </a>
         )}
         {profile.social.instagram && (
-          <a href="#" rel="noopener" target="_blank">
+          <a href={makeLink(profile.social.instagram)} rel="noopener noreferrer" target="_blank">
             <Icon
               name="instagram"
               className="profile-social-icon profile-social-icon-instagram margin-right-sm"
