@@ -88,7 +88,7 @@ export default class DashboardHeader extends React.PureComponent {
       <header className="editor-header">
         <div className="editor-header-left">
           <Link to="/">
-            <img src="/images/logo.png" alt="Logo" />
+            <img src="/images/logo-2.png" alt="Logo" />
           </Link>
         </div>
         <div className="editor-header-middle">
