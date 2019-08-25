@@ -182,22 +182,42 @@ export default class Profile extends React.PureComponent {
       <section className="profile-section profile-section-social">
         {profile.social.twitter && (
           <a href="#" rel="noopener" target="_blank">
-            <Icon name="twitter-square" className="profile-social-icon profile-social-icon-twitter" fab />
+            <Icon
+              name="twitter-square"
+              className="profile-social-icon profile-social-icon-twitter margin-right-sm"
+              fixed={false}
+              fab
+            />
           </a>
         )}
         {profile.social.youtube && (
           <a href="#" rel="noopener" target="_blank">
-            <Icon name="youtube-square" className="profile-social-icon profile-social-icon-youtube" fab />
+            <Icon
+              name="youtube-square"
+              className="profile-social-icon profile-social-icon-youtube margin-right-sm"
+              fixed={false}
+              fab
+            />
           </a>
         )}
         {profile.social.facebook && (
           <a href="#" rel="noopener" target="_blank">
-            <Icon name="facebook-square" className="profile-social-icon profile-social-icon-facebook" fab />
+            <Icon
+              name="facebook-square"
+              className="profile-social-icon profile-social-icon-facebook margin-right-sm"
+              fixed={false}
+              fab
+            />
           </a>
         )}
         {profile.social.instagram && (
           <a href="#" rel="noopener" target="_blank">
-            <Icon name="instagram" className="profile-social-icon profile-social-icon-instagram" fab />
+            <Icon
+              name="instagram"
+              className="profile-social-icon profile-social-icon-instagram margin-right-sm"
+              fixed={false}
+              fab
+            />
           </a>
         )}
       </section>
@@ -313,7 +333,7 @@ export default class Profile extends React.PureComponent {
           key="save"
           icon="save"
           title="Save changes"
-          className="btn-circle btn-profile-edit border-grey margin-right-sm"
+          className="btn-circle btn-profile-save border-grey margin-right-sm"
           onClick={this.handleSaveClick}
         />
       );
@@ -358,7 +378,7 @@ export default class Profile extends React.PureComponent {
             {this.renderButtons()}
           </div>
         </div>
-        <div className="profile border-grey">
+        <div className="profile">
           <Row>
             <Column className="text-center" xl={5} md={12}>
               {this.renderAvatar()}
