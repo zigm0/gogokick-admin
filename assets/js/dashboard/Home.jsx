@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect, mapDispatchToProps } from 'utils';
 import { Button } from 'components';
+import { uiActions } from 'actions';
 
 const mapStateToProps = state => ({
 
@@ -9,31 +10,32 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps()
+  mapDispatchToProps(uiActions)
 )
 export default class Home extends React.PureComponent {
-  static propTypes = {};
+  static propTypes = {
+    uiWorkspace: PropTypes.func.isRequired
+  };
 
   static defaultProps = {};
+
+  /**
+   *
+   */
+  componentDidMount() {
+    const { uiWorkspace } = this.props;
+
+    uiWorkspace('home');
+  }
 
   /**
    * @returns {*}
    */
   render() {
     return (
-      <div className="gutter-top">
-        <div className="row">
-          <div className="col col-xl-4 offset-xl-4 text-center gutter-lg">
-            <Button theme="primary" to="/dashboard">
-              Dashboard
-            </Button>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col col-xl-4 offset-xl-4 text-center gutter-lg">
-
-          </div>
-        </div>
+      <div className="home-page">
+        <img src="/images/header-image.jpg" alt="Banner" />
+        <img src="/images/header-sub.jpg" alt="Banner" />
       </div>
     );
   }

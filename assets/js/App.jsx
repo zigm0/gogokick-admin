@@ -98,7 +98,6 @@ export default class App extends React.Component {
               <Route exact path="/invite/:id/:hash" component={Invite} />
               <ProtectedRoute path="/editor" component={Editor} />
               <ProtectedRoute path="/dashboard" component={Dashboard} />
-              <Route path="/profile" component={Editor} />
             </Switch>
           </Router>
           {this.renderModals()}
