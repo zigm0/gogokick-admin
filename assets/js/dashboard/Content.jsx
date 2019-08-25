@@ -47,7 +47,6 @@ export default class Component extends React.PureComponent {
         if (resp._error) {
           this.setState({ error: resp._error });
         } else {
-          console.log(resp);
           browser.title(resp.title);
           this.setState({ content: resp });
         }

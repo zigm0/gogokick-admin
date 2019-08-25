@@ -106,6 +106,8 @@ export default class App extends React.Component {
               <Route exact path="/" component={Home} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/about" render={() => <Content name="about" />} />
+              <Route exact path="/terms" render={() => <Content name="terms" />} />
+              <Route exact path="/privacy" render={() => <Content name="privacy" />} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/profile/:id" component={Profile} />
               <Route exact path="/invite/:id/:hash" component={Invite} />
