@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { Route, Router, Switch } from 'react-router-dom';
 import { connect, history, mapDispatchToProps } from 'utils';
@@ -49,9 +50,13 @@ export default class Editor extends React.PureComponent {
       return <LoadingCubes />;
     }
 
+    const classes = classNames('editor-body', {
+      'editor-body-auto-height': document.location.pathname === '/editor/new'
+    });
+
     return (
       <DragDropContext onDragEnd={editorDrop}>
-        <div className="editor-body">
+        <div className={classes}>
           <EditorSidebar />
           <div className="editor-content">
             <Router history={history}>

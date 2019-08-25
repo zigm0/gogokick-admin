@@ -13,3 +13,12 @@
     transform: translateX(-150px);
   }
 }
+
+.workspace-content,
+.workspace-dashboard,
+.workspace-new-project,
+.workspace-profile {
+  .workspace-body {
+    min-height: calc(100vh - #{$height-header} - #{$height-footer});
+  }
+}

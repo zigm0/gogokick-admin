@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import { connect, history, constants, mapDispatchToProps } from 'utils';
 import { LoadingCubes, ErrorBoundary, ProtectedRoute } from 'components';
 import { projectActions, userActions } from 'actions';
+import Footer from 'layout/Footer';
 import * as Modals from 'modals';
 
 const Home            = React.lazy(() => import('./dashboard/Home'));
@@ -92,8 +93,8 @@ export default class App extends React.Component {
   render() {
     const { workspace, campaignType, userIsBusy, editorIsBusy, projectIsBusy } = this.props;
 
-    const classes = classNames(`workspace-${workspace}`, {
-      'editor h-100':                                                   workspace === 'editor',
+    const classes = classNames(`workspace-${workspace} h-min-100`, {
+      'editor':                                                         workspace === 'editor',
       [`editor-campaign-type-${constants.campaignType(campaignType)}`]: workspace === 'editor'
     });
 
@@ -101,25 +102,30 @@ export default class App extends React.Component {
       <Suspense fallback={<div />}>
         <div className={classes}>
           {this.renderHeader()}
-          <Router history={history}>
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/about" render={() => <Content name="about" />} />
-              <Route exact path="/terms" render={() => <Content name="terms" />} />
-              <Route exact path="/privacy" render={() => <Content name="privacy" />} />
-              <Route exact path="/register" component={Register} />
-              <Route exact path="/profile/:id" component={Profile} />
-              <Route exact path="/invite/:id/:hash" component={Invite} />
-              <ProtectedRoute path="/editor" component={Editor} />
-              <ProtectedRoute path="/dashboard" component={Dashboard} />
-            </Switch>
-          </Router>
+          <div className="workspace-body">
+            <Router history={history}>
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/about" render={() => <Content name="about" />} />
+                <Route exact path="/terms" render={() => <Content name="terms" />} />
+                <Route exact path="/privacy" render={() => <Content name="privacy" />} />
+                <Route exact path="/register" component={Register} />
+                <Route exact path="/profile/:id" component={Profile} />
+                <Route exact path="/invite/:id/:hash" component={Invite} />
+                <ProtectedRoute path="/editor" component={Editor} />
+                <ProtectedRoute path="/dashboard" component={Dashboard} />
+              </Switch>
+            </Router>
+          </div>
           {this.renderModals()}
           {(userIsBusy || editorIsBusy || projectIsBusy) && (
             <LoadingCubes />
           )}
           <ToastContainer />
+          {workspace !== 'editor' && (
+            <Footer />
+          )}
         </div>
       </Suspense>
     );

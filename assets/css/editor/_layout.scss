@@ -27,6 +27,11 @@ a {
   height: calc(100vh - #{$height-header});
   display: flex;
   flex-direction: row;
+
+  &.editor-body-auto-height {
+    height: auto;
+    min-height: 100%;
+  }
 }
 
 .editor-sidebar {
