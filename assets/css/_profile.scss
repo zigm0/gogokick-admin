@@ -9,7 +9,8 @@
 .profile-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
+  padding-bottom: $gutter-size-sm;
 }
 
 .profile-avatar-container {

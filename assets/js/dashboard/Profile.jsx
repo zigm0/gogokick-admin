@@ -353,31 +353,26 @@ export default class Profile extends React.PureComponent {
 
     return (
       <Container className="gutter-top">
-        <Row>
-          <Column xl={8} offsetXl={2}>
-            <div className="profile-header">
-              <h2>Profile</h2>
-              <div>
-                {this.renderButtons()}
-              </div>
-            </div>
-            <div className="profile border-grey">
-              <Row>
-                <Column className="text-center" xl={5} md={12}>
-                  {this.renderAvatar()}
-                </Column>
-                <Column xl={7} md={12}>
-                  <Form name="profile">
-                    {this.renderName()}
-                    {this.renderSocial()}
-                    {this.renderSkills()}
-                    {this.renderBio()}
-                  </Form>
-                </Column>
-              </Row>
-            </div>
-          </Column>
-        </Row>
+        <div className="profile-header">
+          <div>
+            {this.renderButtons()}
+          </div>
+        </div>
+        <div className="profile border-grey">
+          <Row>
+            <Column className="text-center" xl={5} md={12}>
+              {this.renderAvatar()}
+            </Column>
+            <Column xl={7} md={12}>
+              <Form name="profile">
+                {this.renderName()}
+                {this.renderSocial()}
+                {this.renderSkills()}
+                {this.renderBio()}
+              </Form>
+            </Column>
+          </Row>
+        </div>
       </Container>
     );
   }

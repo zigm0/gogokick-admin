@@ -22,3 +22,9 @@
     min-height: calc(100vh - #{$height-header} - #{$height-footer});
   }
 }
+
+.workspace-editor {
+  .editor-header-left {
+    padding-left: $gutter-size;
+  }
+}
