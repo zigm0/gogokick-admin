@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ReactTags from 'react-tag-autocomplete';
 import { withRouter } from 'react-router-dom';
 import { connect, browser, objects, strings, mapDispatchToProps } from 'utils';
 import { Container, Row, Column } from 'components/bootstrap';
@@ -40,7 +41,8 @@ export default class Profile extends React.PureComponent {
     super(props);
 
     this.state = {
-      isEditing: false
+      isEditing: false,
+      skills:    []
     };
   }
 
@@ -75,6 +77,11 @@ export default class Profile extends React.PureComponent {
           skills:          user.skills.join(', ')
         }));
       }
+
+      const skills = profile.skills.map(skill => (
+        { id: skill, name: skill }
+      ));
+      this.setState({ skills });
     }
   }
 
@@ -82,9 +89,14 @@ export default class Profile extends React.PureComponent {
    *
    */
   handleEditClick = () => {
+    const { profile } = this.props;
     const { isEditing } = this.state;
 
-    this.setState({ isEditing: !isEditing });
+    const skills = profile.skills.map(skill => (
+      { id: skill, name: skill }
+    ));
+
+    this.setState({ isEditing: !isEditing, skills });
   };
 
   /**
@@ -92,12 +104,15 @@ export default class Profile extends React.PureComponent {
    */
   handleSaveClick = () => {
     const { form, userSave } = this.props;
+    const { skills } = this.state;
+
+    const newSkills = skills.map(s => s.name);
 
     userSave({
       name:   form.name,
       bio:    form.bio,
       avatar: form.avatar,
-      skills: form.skills.split(',').map(s => $.trim(s)),
+      skills: newSkills,
       social: {
         twitter:   form.socialTwitter || '',
         youtube:   form.socialYoutube || '',
@@ -116,6 +131,29 @@ export default class Profile extends React.PureComponent {
     const { formChange } = this.props;
 
     formChange('profile', 'avatar', media.url);
+  };
+
+  /**
+   * @param {*} skill
+   */
+  handleSkillAdd = (skill) => {
+    const { skills } = this.state;
+
+    this.setState({
+      skills: [].concat(skills, skill)
+    });
+  };
+
+  /**
+   * @param {number} i
+   */
+  handleSkillRemove = (i) => {
+    const { skills } = this.state;
+
+    const newSkills = skills.slice(0);
+    newSkills.splice(i, 1);
+
+    this.setState({ skills: newSkills });
   };
 
   /**
@@ -228,25 +266,33 @@ export default class Profile extends React.PureComponent {
    * @returns {*}
    */
   renderSkills = () => {
-    const { profile } = this.props;
-    const { isEditing } = this.state;
+    const { isEditing, skills } = this.state;
 
     if (isEditing) {
+      const suggestions = [
+        { id: 'Copy Writer',  name: 'Copy Writer' },
+        { id: 'Graphics',     name: 'Graphics' },
+        { id: 'Video Editor', name: 'Video Editor' },
+        { id: 'Voice Talent', name: 'Voice Talent' }
+      ];
+
       return (
-        <Input
-          name="skills"
-          id="input-profile-skills"
-          label="Skills"
-          help="Comma separated list of words."
+        <ReactTags
+          tags={skills}
+          suggestions={suggestions}
+          handleDelete={this.handleSkillRemove}
+          handleAddition={this.handleSkillAdd}
+          placeholder="Add new skill"
+          allowNew
         />
       );
     }
 
     return (
       <section className="profile-section profile-section-skills">
-        {profile.skills.map((skill, i) => (
+        {skills.map((skill, i) => (
           <div key={i} className="badge badge-success badge-skill margin-right-sm">
-            {strings.ucWords(skill)}
+            {strings.ucWords(skill.name)}
           </div>
         ))}
       </section>
