@@ -38,13 +38,13 @@
   flex-grow: 2;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .editor-header-right {
   flex: 0 0 $width-sidebar;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .editor-header-project-name {

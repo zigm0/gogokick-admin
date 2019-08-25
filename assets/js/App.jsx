@@ -98,7 +98,7 @@ export default class App extends React.Component {
     });
 
     return (
-      <Suspense fallback={<LoadingCubes />}>
+      <Suspense fallback={<div />}>
         <div className={classes}>
           {this.renderHeader()}
           <Router history={history}>

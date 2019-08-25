@@ -1,0 +1,17 @@
+@import "vars";
+
+.dashboard-header {
+  .editor-header-left {
+    text-align: left;
+  }
+
+  .editor-header-middle {
+    a {
+      font-weight: 400;
+    }
+  }
+
+  .editor-header-right {
+    justify-content: flex-end;
+  }
+}
