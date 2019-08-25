@@ -71,6 +71,7 @@ export default class CropperModal extends React.PureComponent {
         name="cropper"
         title="Crop Image"
         icon="crop"
+        role="modal"
         buttons={buttons}
         lg
       >

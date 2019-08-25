@@ -161,6 +161,7 @@
 
 .loading-cube {
   position: relative;
+  z-index: 2000;
 
   &.middle {
     position: fixed;
