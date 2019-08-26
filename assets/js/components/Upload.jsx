@@ -4,7 +4,7 @@ import Dropzone from 'react-dropzone';
 import classNames from 'classnames';
 import { connect, mapDispatchToProps } from 'utils';
 import { Icon, Loading } from 'components';
-import { mediaActions } from 'actions';
+import { mediaActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({
   isUploading: state.media.isUploading
@@ -12,7 +12,7 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(mediaActions)
+  mapDispatchToProps(mediaActions, uiActions)
 )
 export default class Upload extends React.PureComponent {
   static propTypes = {
@@ -24,6 +24,7 @@ export default class Upload extends React.PureComponent {
     className:   PropTypes.string,
     children:    PropTypes.node,
     isUploading: PropTypes.bool.isRequired,
+    uiToast:     PropTypes.func.isRequired,
     onDrop:      PropTypes.func,
     onUploaded:  PropTypes.func,
     mediaCrop:   PropTypes.func.isRequired,
@@ -42,9 +43,19 @@ export default class Upload extends React.PureComponent {
 
   /**
    * @param {File[]} files
+   * @param {File[]} rejected
    */
-  handleDrop = (files) => {
-    const { system, cropping, cropOptions, mediaUpload, mediaCrop, onDrop, onUploaded } = this.props;
+  handleDrop = (files, rejected) => {
+    const { system, maxSizeMB, cropping, cropOptions, mediaUpload, mediaCrop, onDrop, onUploaded, uiToast } = this.props;
+
+    if (rejected.length > 0) {
+      uiToast(`File must be ${maxSizeMB}MB or less.`, { type: 'error' });
+      return;
+    }
+
+    if (files.length === 0) {
+      return;
+    }
 
     const e = new CustomEvent('upload');
     onDrop(e, files[0]);
@@ -80,7 +91,8 @@ export default class Upload extends React.PureComponent {
       <Dropzone
         accept={accept}
         maxSize={maxSizeMB * 1024 * 1024}
-        onDrop={files => this.handleDrop(files)}
+        onDrop={(acceptedFiles, rejectedFiles) => this.handleDrop(acceptedFiles, rejectedFiles)}
+        multiple={false}
       >
         {({ getRootProps, getInputProps, isDragActive }) => {
           const classes = classNames('upload-container', className, {

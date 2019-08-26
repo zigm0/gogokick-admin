@@ -133,7 +133,7 @@ export default class EditorSettings extends React.PureComponent {
           <label>Project Image</label>
           <Upload
             accept="image/*"
-            maxSizeMB={2}
+            maxSizeMB={10}
             system="project_images"
             onUploaded={this.handleUploaded}
             cropping

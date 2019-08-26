@@ -1,7 +1,7 @@
 import { api, router, system as systemUtils } from 'utils';
 import { projectSettings, projectBusy } from './projectActions';
 import { editorBlockMedia } from './editorActions';
-import { uiModal } from './uiActions';
+import { uiModal, uiToast } from './uiActions';
 
 export const MEDIA_UPLOADING = 'MEDIA_UPLOADING';
 export const MEDIA_CROP      = 'MEDIA_CROP';
@@ -45,7 +45,9 @@ export const mediaUpload = (payload) => {
         }
       })
       .catch((err) => {
-        systemUtils.prompt('Upload error', err);
+        uiToast(err.toString(), {
+          type: 'error'
+        });
       })
       .finally(() => {
         // prompts.loading(false);

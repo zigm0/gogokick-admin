@@ -12,8 +12,11 @@ import { editorActions, mediaActions } from 'actions';
 export default class BlockEditorImage extends React.PureComponent {
   static propTypes = {
     block: PropTypes.shape({
+      id:           PropTypes.number,
       text:         PropTypes.string,
+      media:        PropTypes.object,
       type:         PropTypes.number.isRequired,
+      caption:      PropTypes.string,
       origFilename: PropTypes.string
     }).isRequired,
     height:            PropTypes.number.isRequired,
@@ -105,7 +108,7 @@ export default class BlockEditorImage extends React.PureComponent {
       <>
         <BlockMenu block={block} buttons={buttons} />
         <div className="block-editor block-editor-image" style={styles}>
-          <Upload maxSizeMB={2} accept="image/*" system="block_images" onDrop={this.handleDrop}>
+          <Upload maxSizeMB={50} accept="image/*" system="block_images" onDrop={this.handleDrop}>
             <figure>
               {block.media && (
                 <img className="upload-container-img" src={block.media.url} alt="" />
