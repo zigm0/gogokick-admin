@@ -159,7 +159,7 @@ export default class EditorSettings extends React.PureComponent {
       <div className="editor-settings gutter-top">
         <Row>
           <Column xl={6} offsetXl={3} className="gutter-bottom d-flex justify-content-between">
-            <Link to={`/editor/${project.id}`} icon="caret-left" btn>
+            <Link to={`/editor/${project.id}`} theme="success" icon="caret-left" btn>
               Back to project
             </Link>
             <Button theme="danger" onClick={this.handleDeleteClick}>

@@ -8,12 +8,23 @@
   }
 }
 
-.btn-primary {
+.btn-primary,
+a.btn-primary {
   color: #FFF !important;
   background-color: $color-primary;
 
   &:hover {
     background-color: $color-primary-selected;
+  }
+}
+
+.btn-success,
+a.btn-success {
+  color: #FFF !important;
+  background-color: $color-success;
+
+  &:hover {
+    background-color: lighten($color-success, 5%);
   }
 }
 
