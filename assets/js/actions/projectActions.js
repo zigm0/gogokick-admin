@@ -1,5 +1,6 @@
 import { api, router, history } from 'utils';
-import { editorReset, editorNew, editorBlocks, editorChanged, editorProjects } from "./editorActions";
+import { editorReset, editorNew, editorBlocks, editorChanged, editorProjects } from './editorActions';
+import { uiToast } from './uiActions';
 
 export const PROJECT_RESET              = 'PROJECT_RESET';
 export const PROJECT_BUSY               = 'PROJECT_BUSY';
@@ -141,6 +142,13 @@ export const projectSave = () => {
         dispatch(editorBlocks(payload.project.blocks));
         dispatch(editorProjects(payload.projects));
         dispatch(editorChanged(false));
+      })
+      .catch((err) => {
+        if (err.response.data._error) {
+          dispatch(uiToast(err.response.data._error, { type: 'error' }));
+        } else {
+          dispatch(uiToast(err.toString(), { type: 'error' }));
+        }
       })
       .finally(() => {
         dispatch({

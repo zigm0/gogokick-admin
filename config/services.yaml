@@ -65,3 +65,7 @@ services:
     App\Service\ScreenshotService:
         arguments:
             - 'http://127.0.0.1:8080'
+
+    App\EventListener\ApiExceptionListener:
+        tags:
+            - { name: kernel.event_listener, method: onKernelException, event: kernel.exception }
