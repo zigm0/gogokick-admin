@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect, system, browser, history, mapDispatchToProps } from 'utils';
 import { Row, Column, Button } from 'components/bootstrap';
 import { Form, Input } from 'components/forms';
-import { Upload } from 'components';
+import { Upload, Link } from 'components';
 import { formActions, projectActions, mediaActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({
@@ -95,15 +95,6 @@ export default class EditorSettings extends React.PureComponent {
   };
 
   /**
-   *
-   */
-  handleCloseClick = () => {
-    const { project } = this.props;
-
-    history.push(`/editor/${project.id}`);
-  };
-
-  /**
    * @param {*} image
    */
   handleUploaded = (image) => {
@@ -162,12 +153,17 @@ export default class EditorSettings extends React.PureComponent {
    * @returns {*}
    */
   render() {
+    const { project } = this.props;
+
     return (
       <div className="editor-settings gutter-top">
         <Row>
-          <Column xl={6} offsetXl={3} className="gutter-bottom">
-            <Button icon="caret-left" onClick={this.handleCloseClick}>
+          <Column xl={6} offsetXl={3} className="gutter-bottom d-flex justify-content-between">
+            <Link to={`/editor/${project.id}`} icon="caret-left" btn>
               Back to project
+            </Link>
+            <Button theme="danger" onClick={this.handleDeleteClick}>
+              Delete Project
             </Button>
           </Column>
         </Row>
