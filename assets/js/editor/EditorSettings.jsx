@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, system, browser, history, mapDispatchToProps } from 'utils';
+import { withRouter } from 'react-router-dom';
+import { connect, system, browser, mapDispatchToProps } from 'utils';
 import { Row, Column, Button } from 'components/bootstrap';
 import { Form, Input } from 'components/forms';
 import { Upload, Link } from 'components';
@@ -13,6 +14,7 @@ const mapStateToProps = state => ({
   editor:  state.editor
 });
 
+@withRouter
 @connect(
   mapStateToProps,
   mapDispatchToProps(formActions, projectActions, mediaActions, uiActions)
@@ -20,6 +22,7 @@ const mapStateToProps = state => ({
 export default class EditorSettings extends React.PureComponent {
   static propTypes = {
     user:            PropTypes.object.isRequired,
+    match:           PropTypes.object.isRequired,
     forms:           PropTypes.object.isRequired,
     editor:          PropTypes.object.isRequired,
     project:         PropTypes.object.isRequired,
@@ -37,12 +40,14 @@ export default class EditorSettings extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { user, project, formChanges, uiWorkspace } = this.props;
+    const { match, project, formChanges, uiWorkspace, projectOpen } = this.props;
 
-    if (!user.isAuthenticated || !project.id) {
-      history.push('/dashboard');
+    uiWorkspace('project-settings');
+    if (!project.id) {
+      projectOpen(match.params.id, {
+        redirectAfterOpen: false
+      });
     } else {
-      uiWorkspace('project-settings');
       formChanges('projectSettings', {
         name: project.name
       });

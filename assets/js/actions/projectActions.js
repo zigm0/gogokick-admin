@@ -39,9 +39,10 @@ export const projectBusy = (payload) => {
 
 /**
  * @param {number} id
+ * @param {*} meta
  * @returns {Function}
  */
-export const projectOpen = (id) => {
+export const projectOpen = (id, meta = {}) => {
   return (dispatch, getState) => {
     if (!id) {
       dispatch(projectReset());
@@ -59,11 +60,15 @@ export const projectOpen = (id) => {
           type: PROJECT_OPEN,
           payload,
         });
-        setTimeout(() => {
-          dispatch(projectBusy(false));
-          history.push(`/editor/${payload.id}`);
-        }, 1000);
 
+        if (meta.redirectAfterOpen === undefined || meta.redirectAfterOpen) {
+          setTimeout(() => {
+            dispatch(projectBusy(false));
+            history.push(`/editor/${payload.id}`);
+          }, 1000);
+        } else {
+          dispatch(projectBusy(false));
+        }
       })
       .catch(() => {
         dispatch(projectBusy(false));
