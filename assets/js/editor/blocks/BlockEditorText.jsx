@@ -116,6 +116,7 @@ export default class BlockEditorText extends React.PureComponent {
     }
 
     this.setState({ cmds });
+    this.content.current.focus();
   };
 
   /**

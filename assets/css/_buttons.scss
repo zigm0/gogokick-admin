@@ -1,5 +1,13 @@
 @import "vars";
 
+.btn {
+  &:focus,
+  &:active {
+    outline: 0;
+    box-shadow: none;
+  }
+}
+
 .btn-primary {
   color: #FFF !important;
   background-color: $color-primary;
