@@ -7,6 +7,7 @@ use App\Entity\Project;
 use App\Http\ModelRequestHandler;
 use App\Http\Request;
 use App\Model\ProjectModel;
+use App\Model\ProjectSettingsModel;
 use App\Repository\BlockRepository;
 use App\Repository\MediaRepository;
 use App\Repository\ProjectRepository;
@@ -292,25 +293,25 @@ class ProjectsController extends ApiController
     /**
      * @Route("/{id}/settings", name="_settings", methods={"POST"})
      *
-     * @param int             $id
-     * @param Request         $request
-     * @param MediaRepository $mediaRepository
+     * @param int                 $id
+     * @param Request             $request
+     * @param MediaRepository     $mediaRepository
+     * @param ModelRequestHandler $handler
      *
      * @return JsonResponse
      */
-    public function settingsAction($id, Request $request, MediaRepository $mediaRepository)
+    public function settingsAction($id, Request $request, MediaRepository $mediaRepository, ModelRequestHandler $handler)
     {
         $project = $this->getProject($id);
+        $model   = new ProjectSettingsModel();
+        $handler->handleRequest($model, $request);
 
-        $name = $request->json->get('name');
-        if ($name) {
-            $project->setName($name);
+        if ($model->getName()) {
+            $project->setName($model->getName());
         }
+        $project->setSubtitle($model->getSubtitle());
 
-        $subtitle = $request->json->get('subtitle');
-        $project->setSubtitle($subtitle);
-
-        $image = $request->json->get('image');
+        $image = $model->getImage();
         if ($image) {
             $media = $mediaRepository->findByID($image['id']);
             if ($media) {
