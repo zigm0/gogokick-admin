@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { api, router, browser, mapDispatchToProps } from 'utils';
 import { Container } from 'components/bootstrap';
-import { LoadingCubes } from 'components';
 import { connect } from "react-redux";
 import { uiActions } from 'actions';
 
@@ -82,7 +81,7 @@ export default class Content extends React.PureComponent {
     const { content, error } = this.state;
 
     if (!content && !error) {
-      return <LoadingCubes />;
+      return null;
     }
 
     if (error) {
