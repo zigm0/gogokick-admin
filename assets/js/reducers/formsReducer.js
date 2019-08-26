@@ -38,7 +38,8 @@ const initialState = {
     ...commonForms
   },
   projectSettings: {
-    name: '',
+    name:     '',
+    subtitle: '',
     ...commonForms
   },
   blockSettings: {

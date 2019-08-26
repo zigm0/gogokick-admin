@@ -4,6 +4,7 @@ import * as types from 'actions/projectActions';
 const initialState = objects.merge({
   id:           0,
   name:         '',
+  subtitle:     '',
   image:        {},
   owner:        {},
   isBusy:       false,
@@ -133,8 +134,9 @@ const onProjectSettings = (state, action) => {
 
   return {
     ...state,
-    name:  settings.name,
-    image: settings.image
+    name:     settings.name,
+    subtitle: settings.subtitle,
+    image:    settings.image
   }
 };
 
@@ -159,16 +161,12 @@ const onProjectNew = (state, action) => {
  * @returns {*}
  */
 const onProjectOpen = (state, action) => {
-  const { id, name, image, user, team, campaignType } = action.payload;
+  const project = objects.clone(action.payload);
 
   return {
     ...state,
-    id,
-    name,
-    team,
-    image,
-    campaignType,
-    owner: user
+    ...project,
+    owner: project.user
   };
 };
 

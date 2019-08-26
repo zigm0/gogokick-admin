@@ -49,7 +49,8 @@ export default class EditorSettings extends React.PureComponent {
       });
     } else {
       formChanges('projectSettings', {
-        name: project.name
+        name:     project.name,
+        subtitle: project.subtitle
       });
     }
   }
@@ -63,7 +64,8 @@ export default class EditorSettings extends React.PureComponent {
     browser.title(`${project.name} - Settings`);
     if (prevProps.project.name !== project.name) {
       formChanges('projectSettings', {
-        name: project.name
+        name:     project.name,
+        subtitle: project.subtitle
       });
     }
   }
@@ -76,7 +78,8 @@ export default class EditorSettings extends React.PureComponent {
 
     if (project.id) {
       projectSettings({
-        name: forms.projectSettings.name
+        name:     forms.projectSettings.name,
+        subtitle: forms.projectSettings.subtitle
       });
     }
   }
@@ -121,9 +124,14 @@ export default class EditorSettings extends React.PureComponent {
         <Input
           name="name"
           type="text"
-          label="Project Name"
+          label="Project Title"
           id="input-project-settings-name"
           sm
+        />
+        <Input
+          name="subtitle"
+          label="Project Subtitle"
+          id="input-project-settings-sub-title"
         />
         <div className="form-group">
           <label>Project Image</label>

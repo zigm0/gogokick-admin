@@ -208,7 +208,7 @@ class Project
      */
     public function getSubtitle(): ?string
     {
-        return $this->subtitle;
+        return (string)$this->subtitle;
     }
 
     /**

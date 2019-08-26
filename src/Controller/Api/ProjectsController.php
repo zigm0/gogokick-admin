@@ -307,6 +307,9 @@ class ProjectsController extends ApiController
             $project->setName($name);
         }
 
+        $subtitle = $request->json->get('subtitle');
+        $project->setSubtitle($subtitle);
+
         $image = $request->json->get('image');
         if ($image) {
             $media = $mediaRepository->findByID($image['id']);
