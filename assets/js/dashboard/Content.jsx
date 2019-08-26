@@ -14,7 +14,7 @@ const mapStateToProps = state => ({
   mapStateToProps,
   mapDispatchToProps(uiActions)
 )
-export default class Component extends React.PureComponent {
+export default class Content extends React.PureComponent {
   static propTypes = {
     name:        PropTypes.string.isRequired,
     uiWorkspace: PropTypes.func.isRequired
@@ -38,9 +38,31 @@ export default class Component extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { name, uiWorkspace } = this.props;
+    const { uiWorkspace } = this.props;
 
     uiWorkspace('content');
+    this.handleUpdate();
+  }
+
+  /**
+   * @param {*} prevProps
+   */
+  componentDidUpdate(prevProps) {
+    const { name } = this.props;
+    const { name: prevName } = prevProps;
+
+    if (name !== prevName) {
+      this.setState({ content: null, error: null }, () => {
+        this.handleUpdate();
+      });
+    }
+  }
+
+  /**
+   *
+   */
+  handleUpdate = () => {
+    const { name } = this.props;
 
     api.get(router.generate('api_content_index', { name }))
       .then((resp) => {
@@ -51,7 +73,7 @@ export default class Component extends React.PureComponent {
           this.setState({ content: resp });
         }
       });
-  }
+  };
 
   /**
    * @returns {*}
