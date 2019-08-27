@@ -188,87 +188,12 @@
 .loading-cube {
   position: relative;
   z-index: 2000;
+  width: 100px;
+  height: 100px;
 
   &.middle {
     position: fixed;
     top: calc(50% - 75px);
     left: calc(50% - 75px);
   }
-}
-
-.lds-grid {
-  position: relative;
-}
-.lds-grid div {
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  -webkit-animation: lds-grid linear 0.6s infinite;
-  animation: lds-grid linear 0.6s infinite;
-}
-.lds-grid div:nth-child(1),
-.lds-grid div:nth-child(6),
-.lds-grid div:nth-child(8) {
-  -webkit-animation-delay: -0.3996s;
-  animation-delay: -0.3996s;
-}
-.lds-grid div:nth-child(2),
-.lds-grid div:nth-child(5),
-.lds-grid div:nth-child(7) {
-  -webkit-animation-delay: -0.1998s;
-  animation-delay: -0.1998s;
-}
-.lds-grid div:nth-child(1),
-.lds-grid div:nth-child(2),
-.lds-grid div:nth-child(3) {
-  top: 50px;
-}
-.lds-grid div:nth-child(4),
-.lds-grid div:nth-child(5),
-.lds-grid div:nth-child(6) {
-  top: 100px;
-}
-.lds-grid div:nth-child(7),
-.lds-grid div:nth-child(8),
-.lds-grid div:nth-child(9) {
-  top: 150px;
-}
-.lds-grid div:nth-child(1),
-.lds-grid div:nth-child(4),
-.lds-grid div:nth-child(7) {
-  left: 50px;
-}
-.lds-grid div:nth-child(2),
-.lds-grid div:nth-child(5),
-.lds-grid div:nth-child(8) {
-  left: 100px;
-}
-.lds-grid div:nth-child(3),
-.lds-grid div:nth-child(6),
-.lds-grid div:nth-child(9) {
-  left: 150px;
-}
-.lds-grid div:nth-child(1),
-.lds-grid div:nth-child(6),
-.lds-grid div:nth-child(8) {
-  background: $color-block-image;
-}
-.lds-grid div:nth-child(2),
-.lds-grid div:nth-child(4),
-.lds-grid div:nth-child(9) {
-  background: $color-block-video;
-}
-.lds-grid div:nth-child(3),
-.lds-grid div:nth-child(5),
-.lds-grid div:nth-child(7) {
-  background: $color-block-text;
-}
-.lds-grid {
-  width: 200px !important;
-  height: 200px !important;
-  -webkit-transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
-  transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
 }
