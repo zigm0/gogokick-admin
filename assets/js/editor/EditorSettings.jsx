@@ -88,12 +88,12 @@ export default class EditorSettings extends React.PureComponent {
    *
    */
   handleDeleteClick = () => {
-    const { projectDelete, uiModal } = this.props;
+    const { project, projectDelete, uiModal } = this.props;
 
     system.confirm('Are you SURE you want to delete this project? This action cannot be undone.')
       .then((resp) => {
         if (resp) {
-          projectDelete();
+          projectDelete(project.id);
           uiModal({
             modal: 'settings',
             open:  false

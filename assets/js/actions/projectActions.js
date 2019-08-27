@@ -178,6 +178,7 @@ export const projectDelete = (id) => {
         dispatch({
           type: PROJECT_DELETE
         });
+        history.push('/dashboard');
       })
       .finally(() => {
         dispatch(projectBusy(false));

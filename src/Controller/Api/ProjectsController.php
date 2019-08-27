@@ -198,7 +198,6 @@ class ProjectsController extends ApiController
         $project->setName($model->getName())
             ->setBlocks($updatedBlocks)
             ->setDateUpdated(new DateTime());
-
         $this->em->flush();
 
         $resp = [
