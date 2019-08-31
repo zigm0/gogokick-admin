@@ -69,9 +69,15 @@ export default class HomeHeader extends React.PureComponent {
             </Link>
           </div>
           <div className="home-page-header-links">
-            <Link to="/">
-              Start a project
-            </Link>
+            {isAuthenticated ? (
+              <Link to="/editor/new">
+                Start a project
+              </Link>
+            ) : (
+              <Link to="/login">
+                Start a project
+              </Link>
+            )}
             {isAuthenticated ? (
               <Link to="/dashboard">
                 Dashboard

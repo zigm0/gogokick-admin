@@ -43,3 +43,11 @@ a {
   width: 100%;
   transition: transform .3s ease-in-out;
 }
+
+.switch-wrapper {
+  position: relative;
+}
+
+.switch-wrapper > div {
+  position: absolute;
+}
