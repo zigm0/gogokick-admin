@@ -82,7 +82,7 @@ export default class BlockSettingsModal extends React.PureComponent {
 
     editorBlockSettings(objects.merge(block, {
       description: blockSettings.description || 'Description',
-      wordCount:   blockSettings.wordCount,
+      wordCount:   parseInt(blockSettings.wordCount, 10),
       aspectRatio: blockSettings.aspectRatio,
       width,
       height
@@ -90,7 +90,7 @@ export default class BlockSettingsModal extends React.PureComponent {
 
     formChanges('blockSettings', {
       description: blockSettings.description || 'Description',
-      wordCount:   blockSettings.wordCount,
+      wordCount:   parseInt(blockSettings.wordCount, 10),
       aspectRatio: blockSettings.aspectRatio,
       width,
       height
@@ -131,6 +131,7 @@ export default class BlockSettingsModal extends React.PureComponent {
               name="wordCount"
               label="Estimated Word Count (EWC)"
               id="input-block-settings-ewc"
+              focused
             />
           </Column>
         </Row>

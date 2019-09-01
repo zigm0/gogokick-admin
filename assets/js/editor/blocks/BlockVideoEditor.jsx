@@ -13,10 +13,10 @@ const mapStateToProps = state => ({
   mapStateToProps,
   mapDispatchToProps(editorActions)
 )
-export default class BlockEditorAudio extends React.PureComponent {
+export default class BlockVideoEditor extends React.PureComponent {
   static propTypes = {
     block: PropTypes.shape({
-      audioUrl: PropTypes.string
+      videoUrl: PropTypes.string
     }).isRequired,
     onChange:          PropTypes.func.isRequired,
     editorUpdateBlock: PropTypes.func.isRequired
@@ -31,9 +31,18 @@ export default class BlockEditorAudio extends React.PureComponent {
     super(props);
 
     this.input = React.createRef();
+
+    let backgroundImage = '';
+    if (props.block.videoUrl) {
+      const youtubeId = video.extractYoutubeId(props.block.videoUrl);
+      if (youtubeId) {
+        backgroundImage = `https://img.youtube.com/vi/${youtubeId}/0.jpg`;
+      }
+    }
+
     this.state = {
-      audioUrl:        props.block.audioUrl,
-      backgroundImage: ''
+      videoUrl: props.block.videoUrl,
+      backgroundImage
     };
   }
 
@@ -49,9 +58,9 @@ export default class BlockEditorAudio extends React.PureComponent {
    */
   componentWillUnmount() {
     const { block, editorUpdateBlock } = this.props;
-    const { audioUrl } = this.state;
+    const { videoUrl } = this.state;
 
-    editorUpdateBlock(objects.merge(block, { audioUrl }));
+    editorUpdateBlock(objects.merge(block, { videoUrl }));
   }
 
   /**
@@ -60,12 +69,14 @@ export default class BlockEditorAudio extends React.PureComponent {
   handleChange = (e) => {
     const { value } = e.target;
 
-    this.setState({ audioUrl: value });
-    const trackId = video.extractSoundCloudTrackId(value);
-    if (trackId) {
+    const youtubeId = video.extractYoutubeId(value);
+    if (youtubeId) {
       this.setState({
-        backgroundImage: `https://i1.sndcdn.com/artworks-${trackId}-movvch-t500x500.jpg`
+        videoUrl:        value,
+        backgroundImage: `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`
       });
+    } else {
+      this.setState({ videoUrl: value });
     }
   };
 
@@ -74,37 +85,38 @@ export default class BlockEditorAudio extends React.PureComponent {
    */
   render() {
     const { block } = this.props;
-    const { audioUrl, backgroundImage } = this.state;
+    const { videoUrl, backgroundImage } = this.state;
 
     let buttons = '';
-    if (audioUrl) {
+    if (videoUrl) {
       buttons = (
         <div className="block-menu-title">
-          {audioUrl}
+          {video.youtubeShortUrl(videoUrl)}
         </div>
       );
     }
 
     const styles = {
-      backgroundImage: `url(https://www.youredm.com/wp-content/uploads/2015/08/soundcloud-ad.png)`
+      backgroundImage: `url(${backgroundImage})`
     };
 
     return (
       <>
         <BlockMenu block={block} buttons={buttons} />
-        <div className="block-editor block-editor-audio" style={styles}>
-          <div className="block-editor-audio-mask" />
-          <div className="block-editor-audio-contents">
+        <div className="block-editor block-editor-video" style={styles}>
+          <div className="block-editor-video-mask" />
+          <div className="block-editor-video-contents">
             <div>
-              <Icon name="soundcloud" fab />
+              <Icon name="youtube" fab />
+              <Icon name="vimeo" fab />
             </div>
             <input
               ref={this.input}
-              name="audioUrl"
-              id="input-block-editor-audio-url"
-              value={audioUrl}
+              name="videoUrl"
+              id="input-block-editor-video-url"
+              value={videoUrl}
               className="form-control"
-              placeholder="https://soundcloud.com/..."
+              placeholder="https://www.youtube.com/..."
               onChange={this.handleChange}
             />
           </div>

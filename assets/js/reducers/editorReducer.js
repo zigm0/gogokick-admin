@@ -8,9 +8,9 @@ const commonBlock = {
   media:       null,
   videoUrl:    '',
   audioUrl:    '',
-  height:      '0',
-  width:       '0',
-  wordCount:   '0',
+  height:      0,
+  width:       0,
+  wordCount:   0,
   aspectRatio: '16:9',
   isHeadline:  false
 };

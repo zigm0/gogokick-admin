@@ -2,11 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { connect, constants, mapDispatchToProps, styles } from 'utils';
-import { Icon } from 'components';
-import BlockEditorText from './BlockEditorText';
-import BlockEditorImage from './BlockEditorImage';
-import BlockEditorVideo from './BlockEditorVideo';
-import BlockEditorAudio from './BlockEditorAudio';
+import BlockTextEditor from './BlockTextEditor';
+import BlockImageEditor from './BlockImageEditor';
+import BlockVideoEditor from './BlockVideoEditor';
+import BlockAudioEditor from './BlockAudioEditor';
+import BlockTextEmpty from './BlockTextEmpty';
+import BlockImageEmpty from './BlockImageEmpty';
+import BlockVideoEmpty from './BlockVideoEmpty';
+import BlockAudioEmpty from './BlockAudioEmpty';
 import BlockText from './BlockText';
 import BlockImage from './BlockImage';
 import BlockVideo from './BlockVideo';
@@ -53,38 +56,24 @@ export default class CanvasBlockBody extends React.PureComponent {
   }
 
   /**
-   * @param {string} type
-   * @returns {string}
-   */
-  getIcon = (type) => {
-    return  {
-      text:  'align-center',
-      image: 'image',
-      video: 'video',
-      audio: 'music'
-    }[type];
-  };
-
-  /**
    * @returns {*}
    */
   render() {
     const { block, campaignType, isActive, isHover, isDragging, onChange } = this.props;
 
     const isEmpty = block.text === '' && !block.media && !block.videoUrl && !block.audioUrl;
-    const width   = block.width  || styles.widths.blocks[campaignType];
     const height  = block.height || styles.heights.blocks[campaignType][block.type];
 
     if (isActive && !block.isLocked) {
       switch (block.type) {
         case 1:
-          return <BlockEditorText block={block} height={height} onChange={onChange} />;
+          return <BlockTextEditor block={block} height={height} onChange={onChange} />;
         case 2:
-          return <BlockEditorImage block={block} height={height} onChange={onChange} />;
+          return <BlockImageEditor block={block} height={height} onChange={onChange} />;
         case 3:
-          return <BlockEditorVideo block={block} height={height} onChange={onChange} />;
+          return <BlockVideoEditor block={block} height={height} onChange={onChange} />;
         case 4:
-          return <BlockEditorAudio block={block} height={height} onChange={onChange} />;
+          return <BlockAudioEditor block={block} height={height} onChange={onChange} />;
         default:
           console.error(`Invalid block type ${block.type}`);
           return null;
@@ -92,7 +81,6 @@ export default class CanvasBlockBody extends React.PureComponent {
     }
 
     const classes = classNames(`block block-${constants.blockType(block.type)}`, {
-      'block-empty':         isEmpty && !isActive,
       'block-active':        isActive,
       'block-expanded':      (isActive || isHover) && !isEmpty,
       'block-hover':         isHover,
@@ -101,22 +89,16 @@ export default class CanvasBlockBody extends React.PureComponent {
     });
 
     if (isEmpty) {
-      const blockStyles = {
-        width,
-        height
-      };
-
-      return (
-        <div className={classes} style={blockStyles}>
-          <div className="block-empty-dims">
-            {blockStyles.width}x{blockStyles.height}
-          </div>
-          <h2 className="block-description">
-            <Icon name={this.getIcon(constants.blockType(block.type))} />
-            {block.description || 'Description'}
-          </h2>
-        </div>
-      );
+      switch (block.type) {
+        case 1:
+          return <BlockTextEmpty block={block} campaignType={campaignType} />;
+        case 2:
+          return <BlockImageEmpty block={block} campaignType={campaignType} />;
+        case 3:
+          return <BlockVideoEmpty block={block} campaignType={campaignType} />;
+        case 4:
+          return <BlockAudioEmpty block={block} campaignType={campaignType} />;
+      }
     }
 
     return (

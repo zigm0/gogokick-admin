@@ -9,7 +9,7 @@ import { editorActions, mediaActions } from 'actions';
   null,
   mapDispatchToProps(mediaActions, editorActions)
 )
-export default class BlockEditorImage extends React.PureComponent {
+export default class BlockImageEditor extends React.PureComponent {
   static propTypes = {
     block: PropTypes.shape({
       id:           PropTypes.number,

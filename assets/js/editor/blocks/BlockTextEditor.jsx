@@ -11,7 +11,7 @@ import BlockMenu from './BlockMenu';
   null,
   mapDispatchToProps(editorActions)
 )
-export default class BlockEditorText extends React.PureComponent {
+export default class BlockTextEditor extends React.PureComponent {
   static propTypes = {
     block: PropTypes.shape({
       text:       PropTypes.string,
