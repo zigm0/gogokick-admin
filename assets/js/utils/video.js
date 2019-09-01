@@ -11,17 +11,6 @@ export function videoExtractYoutubeId(url) {
 
 /**
  * @param {string} url
- * @returns {boolean|string}
- */
-export function videoExtractSoundCloudTrackId(url) {
-  const regExp = /soundcloud\.com\/tracks\/([\d]+)/;
-  const match  = url.match(regExp);
-
-  return (match && match[1]) ? match[1] : false;
-}
-
-/**
- * @param {string} url
  * @returns {string|boolean}
  */
 export function videoYoutubeShortUrl(url) {
@@ -34,7 +23,6 @@ export function videoYoutubeShortUrl(url) {
 }
 
 export default {
-  extractYoutubeId:         videoExtractYoutubeId,
-  extractSoundCloudTrackId: videoExtractSoundCloudTrackId,
-  youtubeShortUrl:          videoYoutubeShortUrl
+  extractYoutubeId: videoExtractYoutubeId,
+  youtubeShortUrl:  videoYoutubeShortUrl
 }

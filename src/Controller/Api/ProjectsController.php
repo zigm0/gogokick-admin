@@ -134,7 +134,11 @@ class ProjectsController extends ApiController
                     ->setType($blockData['type'])
                     ->setProject($project)
                     ->setSortOrder($sortOrder++)
-                    ->setDescription($blockData['description']);
+                    ->setDescription($blockData['description'])
+                    ->setHeight($blockData['height'])
+                    ->setWidth($blockData['width'])
+                    ->setWordCount($blockData['wordCount'])
+                    ->setAspectRatio($blockData['aspectRatio']);
                 switch($block->getType()) {
                     case Block::TYPE_TEXT:
                         $block->setText($blockData['text']);
@@ -162,7 +166,11 @@ class ProjectsController extends ApiController
                 if ($block) {
                     $block
                         ->setSortOrder($sortOrder++)
-                        ->setDescription($blockData['description']);
+                        ->setDescription($blockData['description'])
+                        ->setHeight($blockData['height'])
+                        ->setWidth($blockData['width'])
+                        ->setWordCount($blockData['wordCount'])
+                        ->setAspectRatio($blockData['aspectRatio']);
                     switch($block->getType()) {
                         case Block::TYPE_TEXT:
                             $block->setText($blockData['text']);

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { connect, objects, constants, styles, mapDispatchToProps } from 'utils';
 import { Row, Column, Modal, ModalBody, ModalFooter, Button } from 'components/bootstrap';
 import { Form, Textarea, Input } from 'components/forms';
@@ -23,6 +24,7 @@ export default class BlockSettingsModal extends React.PureComponent {
     blockSettings:       PropTypes.object.isRequired,
     campaignType:        PropTypes.number.isRequired,
     editorBlockSettings: PropTypes.func.isRequired,
+    formChange:          PropTypes.func.isRequired,
     formChanges:         PropTypes.func.isRequired,
     uiModal:             PropTypes.func.isRequired
   };
@@ -98,6 +100,26 @@ export default class BlockSettingsModal extends React.PureComponent {
   };
 
   /**
+   * @param {Event} e
+   * @param {number|string} height
+   */
+  handleHeightChange = (e, height) => {
+    const { formChange } = this.props;
+
+    formChange('blockSettings', 'height', height);
+  };
+
+  /**
+   * @param {Event} e
+   * @param {string} aspectRatio
+   */
+  handleAspectRatioChange = (e, aspectRatio) => {
+    const { formChange } = this.props;
+
+    formChange('blockSettings', 'aspectRatio', aspectRatio);
+  };
+
+  /**
    * @returns {*}
    */
   renderFormText = () => {
@@ -127,28 +149,71 @@ export default class BlockSettingsModal extends React.PureComponent {
    * @returns {*}
    */
   renderFormImage = () => {
-    const { block } = this.props;
+    const { blockSettings } = this.props;
 
-    const bt = constants.blockType(block.type);
+    const height     = parseInt(blockSettings.height, 10) || '';
+    const inputValue = (height !== 383 && height !== 510 && height !== 680 && height !== 910) ? height : '';
+    const classes    = 'badge badge-primary form-control';
 
     return (
       <Form name="blockSettings">
         <Row>
-          <Column className="marginless" xl={6} sm={12}>
-            <Input
-              name="width"
-              label="Width"
-              id="input-block-settings-width"
-              readOnly={bt !== 'image'}
-            />
+          <Column className="marginless" xl={2} sm={12}>
+            <div className="form-group">
+              <label>Height</label>
+              <div
+                onClick={e => this.handleHeightChange(e, 383)}
+                className={classNames(classes, { 'badge-block-image': height === 383 })}
+              >
+                383
+              </div>
+            </div>
           </Column>
-          <Column className="marginless" xl={6} sm={12}>
-            <Input
-              name="height"
-              label="Height"
-              id="input-block-settings-height"
-              readOnly={bt === 'video' || bt === 'audio'}
-            />
+          <Column className="marginless" xl={2} sm={12}>
+            <div className="form-group">
+              <label>&nbsp;</label>
+              <div
+                onClick={e => this.handleHeightChange(e, 510)}
+                className={classNames(classes, { 'badge-block-image': height === 510 })}
+              >
+                510
+              </div>
+            </div>
+          </Column>
+          <Column className="marginless" xl={2} sm={12}>
+            <div className="form-group">
+              <label>&nbsp;</label>
+              <div
+                onClick={e => this.handleHeightChange(e, 680)}
+                className={classNames(classes, { 'badge-block-image': height === 680 })}
+              >
+                680
+              </div>
+            </div>
+          </Column>
+          <Column className="marginless" xl={2} sm={12}>
+            <div className="form-group">
+              <label>&nbsp;</label>
+              <div
+                onClick={e => this.handleHeightChange(e, 910)}
+                className={classNames(classes, { 'badge-block-image': height === 910 })}
+              >
+                910
+              </div>
+            </div>
+          </Column>
+          <Column className="marginless" xl={4} sm={12}>
+            <div className="form-group">
+              <label htmlFor="input-block-settings-height">
+                Custom Height
+              </label>
+              <input
+                value={inputValue}
+                className="form-control"
+                id="input-block-settings-height"
+                onChange={e => this.handleHeightChange(e, e.target.value)}
+              />
+            </div>
           </Column>
         </Row>
         <Textarea
@@ -166,28 +231,44 @@ export default class BlockSettingsModal extends React.PureComponent {
    * @returns {*}
    */
   renderFormVideo = () => {
-    const { block } = this.props;
+    const { blockSettings } = this.props;
+    const { aspectRatio } = blockSettings;
 
-    const bt = constants.blockType(block.type);
+    const classes = 'badge badge-primary form-control';
 
     return (
       <Form name="blockSettings">
+        <label>Aspect Ratio</label>
         <Row>
-          <Column className="marginless" xl={6} sm={12}>
-            <Input
-              name="width"
-              label="Width"
-              id="input-block-settings-width"
-              readOnly={bt !== 'image'}
-            />
+          <Column className="marginless" xl={2} sm={12}>
+            <div className="form-group">
+              <div
+                onClick={e => this.handleAspectRatioChange(e, '16:9')}
+                className={classNames(classes, { 'badge-block-video': aspectRatio === '16:9' })}
+              >
+                16:9
+              </div>
+            </div>
           </Column>
-          <Column className="marginless" xl={6} sm={12}>
-            <Input
-              name="height"
-              label="Height"
-              id="input-block-settings-height"
-              readOnly={bt === 'video' || bt === 'audio'}
-            />
+          <Column className="marginless" xl={2} sm={12}>
+            <div className="form-group">
+              <div
+                onClick={e => this.handleAspectRatioChange(e, '4:3')}
+                className={classNames(classes, { 'badge-block-video': aspectRatio === '4:3' })}
+              >
+                4:3
+              </div>
+            </div>
+          </Column>
+          <Column className="marginless" xl={2} sm={12}>
+            <div className="form-group">
+              <div
+                onClick={e => this.handleAspectRatioChange(e, '1:1')}
+                className={classNames(classes, { 'badge-block-video': aspectRatio === '1:1' })}
+              >
+                1:1
+              </div>
+            </div>
           </Column>
         </Row>
         <Textarea
@@ -205,30 +286,8 @@ export default class BlockSettingsModal extends React.PureComponent {
    * @returns {*}
    */
   renderFormAudio = () => {
-    const { block } = this.props;
-
-    const bt = constants.blockType(block.type);
-
     return (
       <Form name="blockSettings">
-        <Row>
-          <Column className="marginless" xl={6} sm={12}>
-            <Input
-              name="width"
-              label="Width"
-              id="input-block-settings-width"
-              readOnly={bt !== 'image'}
-            />
-          </Column>
-          <Column className="marginless" xl={6} sm={12}>
-            <Input
-              name="height"
-              label="Height"
-              id="input-block-settings-height"
-              readOnly={bt === 'video' || bt === 'audio'}
-            />
-          </Column>
-        </Row>
         <Textarea
           name="description"
           label="Description"

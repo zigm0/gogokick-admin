@@ -1,38 +1,46 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, mapDispatchToProps } from 'utils';
+import { api } from 'utils';
 
-const mapStateToProps = state => ({
-
-});
-
-@connect(
-  mapStateToProps,
-  mapDispatchToProps()
-)
 export default class SoundCloudPlayer extends React.PureComponent {
   static propTypes = {
-    userId:  PropTypes.number,
-    trackId: PropTypes.number
+    audioUrl: PropTypes.string
   };
 
   static defaultProps = {};
 
   /**
+   * @param {*} props
+   */
+  constructor(props) {
+    super(props);
+    this.state = {
+      src: ''
+    }
+  }
+
+  /**
+   *
+   */
+  componentDidMount() {
+    const { audioUrl } = this.props;
+
+    if (audioUrl) {
+      api.get('https://soundcloud.com/oembed?format=json&url=' + encodeURIComponent(audioUrl))
+        .then((resp) => {
+          const matches = resp.html.match(/src="([^"]+)"/);
+          if (matches.length === 2) {
+            this.setState({ src: matches[1] });
+          }
+        });
+    }
+  }
+
+  /**
    * @returns {*}
    */
   render() {
-    const { userId, trackId } = this.props;
-
-    let src;
-    if (trackId) {
-      src = `https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/${trackId}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true`;
-    } else if (userId) {
-      src =`https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/${userId}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true`;
-    } else {
-      console.error('No userId or trackId provided.');
-      return null;
-    }
+    const { src } = this.state;
 
     return (
       <iframe

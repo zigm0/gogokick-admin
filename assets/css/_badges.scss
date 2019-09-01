@@ -4,3 +4,28 @@
   color: #FFF;
   padding: 0.75rem 2rem;
 }
+
+.badge.form-control {
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  cursor: pointer;
+  border-color: transparent;
+
+  &.badge-primary {
+    background-color: $color-primary !important;
+  }
+
+  &:hover {
+    background-color: lighten($color-primary, 10%) !important;
+  }
+
+  &.badge-block-image {
+    background-color: $color-block-image !important;
+  }
+
+  &.badge-block-video {
+    background-color: $color-block-video !important;
+  }
+}

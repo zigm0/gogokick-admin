@@ -1,6 +1,20 @@
 import { objects, constants, arrays } from 'utils';
 import * as types from 'actions/editorActions';
 
+const commonBlock = {
+  text:        '',
+  caption:     '',
+  description: '',
+  media:       null,
+  videoUrl:    '',
+  audioUrl:    '',
+  height:      '0',
+  width:       '0',
+  wordCount:   '0',
+  aspectRatio: '16:9',
+  isHeadline:  false
+};
+
 const initialState = objects.merge({
   isLoaded:      false,
   isBusy:        false,
@@ -14,48 +28,24 @@ const initialState = objects.merge({
   canvasBlocks:  [[]],
   sidebarBlocks: [
     {
-      id:          1,
-      type:        'text',
-      text:        '',
-      caption:     '',
-      description: '',
-      media:       null,
-      videoUrl:    '',
-      audioUrl:    '',
-      isHeadline:  false
+      id:   1,
+      type: 'text',
+      ...commonBlock
     },
     {
-      id:          2,
-      type:        'image',
-      text:        '',
-      caption:     '',
-      description: '',
-      media:       null,
-      videoUrl:    '',
-      audioUrl:    '',
-      isHeadline:  false
+      id:   2,
+      type: 'image',
+      ...commonBlock
     },
     {
-      id:          3,
-      type:        'video',
-      text:        '',
-      caption:     '',
-      description: '',
-      media:       null,
-      videoUrl:    '',
-      audioUrl:    '',
-      isHeadline:  false
+      id:   3,
+      type: 'video',
+      ...commonBlock
     },
     {
-      id:          4,
-      type:        'audio',
-      text:        '',
-      caption:     '',
-      description: '',
-      media:       null,
-      videoUrl:    '',
-      audioUrl:    '',
-      isHeadline:  false
+      id:   4,
+      type: 'audio',
+      ...commonBlock
     }
   ]
 }, window.initialState.editor);
