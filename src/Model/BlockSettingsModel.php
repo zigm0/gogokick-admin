@@ -12,25 +12,37 @@ class BlockSettingsModel
      * @var bool
      * @Assert\Type("boolean")
      */
-    protected $isLocked;
+    protected $isLocked = false;
 
     /**
      * @var int
      * @Assert\Type("integer")
      */
-    protected $height;
+    protected $height = 0;
 
     /**
      * @var int
      * @Assert\Type("integer")
      */
-    protected $width;
+    protected $width = 0;
+
+    /**
+     * @var int
+     * @Assert\Type("integer")
+     */
+    protected $wordCount = 0;
 
     /**
      * @var string
      * @Assert\Type("string")
      */
-    protected $description;
+    protected $aspectRatio = '1:1';
+
+    /**
+     * @var string
+     * @Assert\Type("string")
+     */
+    protected $description = '';
 
     /**
      * @return bool
@@ -88,6 +100,46 @@ class BlockSettingsModel
     public function setWidth(int $width): BlockSettingsModel
     {
         $this->width = $width;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWordCount(): int
+    {
+        return $this->wordCount;
+    }
+
+    /**
+     * @param int $wordCount
+     *
+     * @return BlockSettingsModel
+     */
+    public function setWordCount(int $wordCount): BlockSettingsModel
+    {
+        $this->wordCount = $wordCount;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAspectRatio(): string
+    {
+        return $this->aspectRatio;
+    }
+
+    /**
+     * @param string $aspectRatio
+     *
+     * @return BlockSettingsModel
+     */
+    public function setAspectRatio(string $aspectRatio): BlockSettingsModel
+    {
+        $this->aspectRatio = $aspectRatio;
 
         return $this;
     }

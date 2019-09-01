@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect, objects, constants, styles, mapDispatchToProps } from 'utils';
-import { Modal } from 'components';
+import { Row, Column, Modal, ModalBody, ModalFooter, Button } from 'components/bootstrap';
 import { Form, Textarea, Input } from 'components/forms';
-import { Row, Column } from 'components/bootstrap';
-import { formActions, editorActions } from 'actions';
+import { formActions, editorActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({
+  modals:        state.ui.modals,
   block:         state.ui.modalMeta.blockSettings,
   blockSettings: state.forms.blockSettings,
   campaignType:  state.project.campaignType,
@@ -14,15 +14,17 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(editorActions, formActions)
+  mapDispatchToProps(editorActions, formActions, uiActions)
 )
 export default class BlockSettingsModal extends React.PureComponent {
   static propTypes = {
     block:               PropTypes.object,
+    modals:              PropTypes.object.isRequired,
     blockSettings:       PropTypes.object.isRequired,
     campaignType:        PropTypes.number.isRequired,
     editorBlockSettings: PropTypes.func.isRequired,
-    formChanges:         PropTypes.func.isRequired
+    formChanges:         PropTypes.func.isRequired,
+    uiModal:             PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -31,15 +33,21 @@ export default class BlockSettingsModal extends React.PureComponent {
    * @param {*} prevProps
    */
   componentDidUpdate(prevProps) {
-    const { block, campaignType, formChanges } = this.props;
-    const { block: prevBlock } = prevProps;
+    const { block, campaignType, formChanges, modals } = this.props;
+    const { block: prevBlock, modals: prevModals } = prevProps;
 
-    if ((block && !prevBlock) || (block && block.id !== prevBlock.id)) {
+    if (
+      (block && !prevBlock)
+      || (block && block.id !== prevBlock.id)
+      || (block && modals.blockSettings !== prevModals.blockSettings))
+    {
       const width  = block.width || styles.widths.blocks[campaignType];
       const height = block.height || styles.heights.blocks[campaignType][block.type];
 
       formChanges('blockSettings', {
         description: block.description || 'Description',
+        wordCount:   block.wordCount,
+        aspectRatio: block.aspectRatio,
         width,
         height
       });
@@ -50,6 +58,18 @@ export default class BlockSettingsModal extends React.PureComponent {
    *
    */
   handleClosed = () => {
+    const { uiModal } = this.props;
+
+    uiModal({
+      modal: 'blockSettings',
+      open:  false
+    });
+  };
+
+  /**
+   *
+   */
+  handleSave = () => {
     const { block, blockSettings, campaignType, formChanges, editorBlockSettings } = this.props;
 
     let width = parseInt(blockSettings.width || styles.widths.blocks[campaignType], 10);
@@ -60,31 +80,59 @@ export default class BlockSettingsModal extends React.PureComponent {
 
     editorBlockSettings(objects.merge(block, {
       description: blockSettings.description || 'Description',
+      wordCount:   blockSettings.wordCount,
+      aspectRatio: blockSettings.aspectRatio,
       width,
       height
     }));
+
     formChanges('blockSettings', {
       description: blockSettings.description || 'Description',
+      wordCount:   blockSettings.wordCount,
+      aspectRatio: blockSettings.aspectRatio,
       width,
       height
     });
+
+    this.handleClosed();
   };
 
   /**
    * @returns {*}
    */
-  renderForm = () => {
+  renderFormText = () => {
+    return (
+      <Form name="blockSettings">
+        <Row>
+          <Column className="marginless" xl={6} sm={12}>
+            <Input
+              name="wordCount"
+              label="Estimated Word Count (EWC)"
+              id="input-block-settings-ewc"
+            />
+          </Column>
+        </Row>
+        <Textarea
+          name="description"
+          label="Description"
+          id="input-block-settings-description"
+          className="modal-block-settings-input-description"
+          formGroupClassName="marginless"
+        />
+      </Form>
+    );
+  };
+
+  /**
+   * @returns {*}
+   */
+  renderFormImage = () => {
     const { block } = this.props;
 
     const bt = constants.blockType(block.type);
 
     return (
       <Form name="blockSettings">
-        <Textarea
-          name="description"
-          label="Description"
-          id="input-block-settings-description"
-        />
         <Row>
           <Column className="marginless" xl={6} sm={12}>
             <Input
@@ -103,6 +151,13 @@ export default class BlockSettingsModal extends React.PureComponent {
             />
           </Column>
         </Row>
+        <Textarea
+          name="description"
+          label="Description"
+          id="input-block-settings-description"
+          className="modal-block-settings-input-description"
+          formGroupClassName="marginless"
+        />
       </Form>
     );
   };
@@ -110,20 +165,128 @@ export default class BlockSettingsModal extends React.PureComponent {
   /**
    * @returns {*}
    */
-  render() {
+  renderFormVideo = () => {
     const { block } = this.props;
 
-    if (!block) {
+    const bt = constants.blockType(block.type);
+
+    return (
+      <Form name="blockSettings">
+        <Row>
+          <Column className="marginless" xl={6} sm={12}>
+            <Input
+              name="width"
+              label="Width"
+              id="input-block-settings-width"
+              readOnly={bt !== 'image'}
+            />
+          </Column>
+          <Column className="marginless" xl={6} sm={12}>
+            <Input
+              name="height"
+              label="Height"
+              id="input-block-settings-height"
+              readOnly={bt === 'video' || bt === 'audio'}
+            />
+          </Column>
+        </Row>
+        <Textarea
+          name="description"
+          label="Description"
+          id="input-block-settings-description"
+          className="modal-block-settings-input-description"
+          formGroupClassName="marginless"
+        />
+      </Form>
+    );
+  };
+
+  /**
+   * @returns {*}
+   */
+  renderFormAudio = () => {
+    const { block } = this.props;
+
+    const bt = constants.blockType(block.type);
+
+    return (
+      <Form name="blockSettings">
+        <Row>
+          <Column className="marginless" xl={6} sm={12}>
+            <Input
+              name="width"
+              label="Width"
+              id="input-block-settings-width"
+              readOnly={bt !== 'image'}
+            />
+          </Column>
+          <Column className="marginless" xl={6} sm={12}>
+            <Input
+              name="height"
+              label="Height"
+              id="input-block-settings-height"
+              readOnly={bt === 'video' || bt === 'audio'}
+            />
+          </Column>
+        </Row>
+        <Textarea
+          name="description"
+          label="Description"
+          id="input-block-settings-description"
+          className="modal-block-settings-input-description"
+          formGroupClassName="marginless"
+        />
+      </Form>
+    );
+  };
+
+  /**
+   * @returns {*}
+   */
+  renderForm = () => {
+    const { block } = this.props;
+
+    switch (block.type) {
+      case constants.blockType('text'):
+        return this.renderFormText();
+      case constants.blockType('image'):
+        return this.renderFormImage();
+      case constants.blockType('video'):
+        return this.renderFormVideo();
+      case constants.blockType('audio'):
+        return this.renderFormAudio();
+    }
+  };
+
+  /**
+   * @returns {*}
+   */
+  render() {
+    const { block, modals } = this.props;
+
+    if (!modals.blockSettings) {
       return null;
     }
 
+    const blockType = constants.blockType(block.type);
+
     return (
       <Modal
-        name="blockSettings"
-        title="Block Settings"
-        onClosed={this.handleClosed}
+        className={`modal-block-settings modal-block-settings-${blockType}`}
+        closeable={false}
+        open
       >
-        {this.renderForm()}
+        <ModalBody>
+          {this.renderForm()}
+        </ModalBody>
+        <ModalFooter>
+          <Button theme={`block-${blockType}`} onClick={this.handleSave} sm>
+            Save
+          </Button>
+          <Button onClick={this.handleClosed} sm>
+            Close
+          </Button>
+        </ModalFooter>
       </Modal>
     );
   }

@@ -70,3 +70,38 @@
 #modal-prompt {
   z-index: 2000;
 }
+
+.modal-block-settings {
+  .modal-content {
+    border-top-width: 4px;
+    border-top-style: solid;
+  }
+}
+
+.modal-block-settings-text {
+  .modal-content {
+    border-top-color: $color-block-text;
+  }
+}
+
+.modal-block-settings-image {
+  .modal-content {
+    border-top-color: $color-block-image;
+  }
+}
+
+.modal-block-settings-video {
+  .modal-content {
+    border-top-color: $color-block-video;
+  }
+}
+
+.modal-block-settings-audio {
+  .modal-content {
+    border-top-color: $color-block-audio;
+  }
+}
+
+.modal-block-settings-input-description {
+  height: 100px !important;
+}

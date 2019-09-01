@@ -12,37 +12,39 @@ class Textarea extends React.PureComponent {
   static contextType = FormContext;
 
   static propTypes = {
-    id:           PropTypes.string,
-    sm:           PropTypes.bool,
-    help:         PropTypes.string,
-    name:         PropTypes.string,
-    value:        PropTypes.string,
-    label:        PropTypes.string,
-    errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    placeholder:  PropTypes.string,
-    className:    PropTypes.string,
-    disabled:     PropTypes.bool,
-    required:     PropTypes.bool,
-    format:       PropTypes.func,
-    parse:        PropTypes.func,
-    onChange:     PropTypes.func
+    id:                 PropTypes.string,
+    sm:                 PropTypes.bool,
+    help:               PropTypes.string,
+    name:               PropTypes.string,
+    value:              PropTypes.string,
+    label:              PropTypes.string,
+    errorMessage:       PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+    placeholder:        PropTypes.string,
+    className:          PropTypes.string,
+    formGroupClassName: PropTypes.string,
+    disabled:           PropTypes.bool,
+    required:           PropTypes.bool,
+    format:             PropTypes.func,
+    parse:              PropTypes.func,
+    onChange:           PropTypes.func
   };
 
   static defaultProps = {
-    id:           '',
-    help:         '',
-    name:         '',
-    value:        '',
-    label:        '',
-    errorMessage: '',
-    placeholder:  '',
-    className:    '',
-    sm:           false,
-    disabled:     false,
-    required:     false,
-    format:       v => v,
-    parse:        v => v,
-    onChange:     null
+    id:                 '',
+    help:               '',
+    name:               '',
+    value:              '',
+    label:              '',
+    errorMessage:       '',
+    placeholder:        '',
+    className:          '',
+    formGroupClassName: '',
+    sm:                 false,
+    disabled:           false,
+    required:           false,
+    format:             v => v,
+    parse:              v => v,
+    onChange:           null
   };
 
   static unityFormType = 'textarea';
@@ -75,6 +77,7 @@ class Textarea extends React.PureComponent {
       className,
       disabled,
       required,
+      formGroupClassName,
       ...props
     } = this.props;
     const { context } = this;
@@ -88,6 +91,7 @@ class Textarea extends React.PureComponent {
         help={help}
         htmlFor={id}
         label={label}
+        className={formGroupClassName}
         required={context.required || required}
         errorMessage={context.errorFields[inputName] || errorMessage}
       >

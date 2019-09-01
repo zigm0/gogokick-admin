@@ -8,5 +8,9 @@ export default [
   'light',
   'dark',
   'link',
-  'none'
+  'none',
+  'block-text',
+  'block-image',
+  'block-video',
+  'block-audio'
 ];

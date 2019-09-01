@@ -44,6 +44,8 @@ const initialState = {
   },
   blockSettings: {
     description: '',
+    wordCount:   '0',
+    aspectRatio: '1:1',
     width:       '0',
     height:      '0',
     ...commonForms

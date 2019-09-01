@@ -43,6 +43,8 @@ class EditorController extends ApiController
         $block
             ->setWidth($model->getWidth())
             ->setHeight($model->getHeight())
+            ->setWordCount($model->getWordCount())
+            ->setAspectRatio($model->getAspectRatio())
             ->setIsLocked($model->isLocked())
             ->setDescription($model->getDescription());
         $this->em->flush();

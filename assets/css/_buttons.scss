@@ -29,15 +29,43 @@ a.btn-success {
 }
 
 .btn-block-text {
+  color: #FFF;
   background-color: $color-block-text;
+
+  &:hover {
+    color: #FFF;
+    background-color: lighten($color-block-text, 10%);
+  }
 }
 
 .btn-block-image {
+  color: #FFF;
   background-color: $color-block-image;
+
+  &:hover {
+    color: #FFF;
+    background-color: lighten($color-block-image, 10%);
+  }
 }
 
 .btn-block-video {
+  color: #FFF;
   background-color: $color-block-video;
+
+  &:hover {
+    color: #FFF;
+    background-color: lighten($color-block-video, 10%);
+  }
+}
+
+.btn-block-audio {
+  color: #FFF;
+  background-color: $color-block-audio;
+
+  &:hover {
+    color: #FFF;
+    background-color: lighten($color-block-audio, 10%);
+  }
 }
 
 .btn-spaced-group {

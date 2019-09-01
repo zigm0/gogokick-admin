@@ -53,7 +53,7 @@ export default class Modal extends React.PureComponent {
   /**
    *
    */
-  close = () => {
+  close = (e) => {
     const { name, uiModal, onClosed } = this.props;
 
     onClosed();

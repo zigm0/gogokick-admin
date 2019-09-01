@@ -69,17 +69,31 @@ class Block
 
     /**
      * @var int
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", options={"unsigned"=true})
      * @Groups({"web"})
      */
     protected $width = 0;
 
     /**
      * @var int
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", options={"unsigned"=true})
      * @Groups({"web"})
      */
     protected $height = 0;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @Groups({"web"})
+     */
+    protected $wordCount = 0;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=6)
+     * @Groups({"web"})
+     */
+    protected $aspectRatio;
 
     /**
      * @var Media
@@ -273,7 +287,7 @@ class Block
     /**
      * @return int
      */
-    public function getWidth(): int
+    public function getWidth(): ?int
     {
         return $this->width;
     }
@@ -293,7 +307,7 @@ class Block
     /**
      * @return int
      */
-    public function getHeight(): int
+    public function getHeight(): ?int
     {
         return $this->height;
     }
@@ -306,6 +320,46 @@ class Block
     public function setHeight(int $height): Block
     {
         $this->height = $height;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWordCount(): ?int
+    {
+        return $this->wordCount;
+    }
+
+    /**
+     * @param int $wordCount
+     *
+     * @return Block
+     */
+    public function setWordCount(int $wordCount): Block
+    {
+        $this->wordCount = $wordCount;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAspectRatio(): ?string
+    {
+        return $this->aspectRatio;
+    }
+
+    /**
+     * @param string $aspectRatio
+     *
+     * @return Block
+     */
+    public function setAspectRatio(string $aspectRatio): Block
+    {
+        $this->aspectRatio = $aspectRatio;
 
         return $this;
     }
