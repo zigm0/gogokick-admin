@@ -22,7 +22,7 @@ export default class BlockTextEmpty extends React.PureComponent {
 
     const blockStyles = {
       height: block.wordCount
-        ? (13 * (block.wordCount / 13))
+        ? (14 * (block.wordCount / 13))
         : styles.heights.blocks[campaignType][constants.blockType('text')]
     };
 

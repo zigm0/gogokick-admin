@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { connect, objects, constants, styles, mapDispatchToProps } from 'utils';
+import { connect, objects, constants, styles, acl, mapDispatchToProps } from 'utils';
 import { Row, Column, Modal, ModalBody, ModalFooter, Button } from 'components/bootstrap';
 import { Form, Textarea, Input } from 'components/forms';
 import { formActions, editorActions, uiActions } from 'actions';
@@ -11,6 +11,7 @@ const mapStateToProps = state => ({
   block:         state.ui.modalMeta.blockSettings,
   blockSettings: state.forms.blockSettings,
   campaignType:  state.project.campaignType,
+  meTeamMember:  state.editor.meTeamMember
 });
 
 @connect(
@@ -21,6 +22,7 @@ export default class BlockSettingsModal extends React.PureComponent {
   static propTypes = {
     block:               PropTypes.object,
     modals:              PropTypes.object.isRequired,
+    meTeamMember:        PropTypes.object.isRequired,
     blockSettings:       PropTypes.object.isRequired,
     campaignType:        PropTypes.number.isRequired,
     editorBlockSettings: PropTypes.func.isRequired,
@@ -104,9 +106,12 @@ export default class BlockSettingsModal extends React.PureComponent {
    * @param {number|string} height
    */
   handleHeightChange = (e, height) => {
-    const { formChange } = this.props;
+    const { formChange, meTeamMember } = this.props;
+    const { roles } = meTeamMember;
 
-    formChange('blockSettings', 'height', height);
+    if (acl(roles, 'settings', 'blocks')) {
+      formChange('blockSettings', 'height', height);
+    }
   };
 
   /**
@@ -114,15 +119,21 @@ export default class BlockSettingsModal extends React.PureComponent {
    * @param {string} aspectRatio
    */
   handleAspectRatioChange = (e, aspectRatio) => {
-    const { formChange } = this.props;
+    const { formChange, meTeamMember } = this.props;
+    const { roles } = meTeamMember;
 
-    formChange('blockSettings', 'aspectRatio', aspectRatio);
+    if (acl(roles, 'settings', 'blocks')) {
+      formChange('blockSettings', 'aspectRatio', aspectRatio);
+    }
   };
 
   /**
    * @returns {*}
    */
   renderFormText = () => {
+    const { meTeamMember } = this.props;
+    const { roles } = meTeamMember;
+
     return (
       <Form name="blockSettings">
         <Row>
@@ -131,6 +142,7 @@ export default class BlockSettingsModal extends React.PureComponent {
               name="wordCount"
               label="Estimated Word Count (EWC)"
               id="input-block-settings-ewc"
+              readOnly={!acl(roles, 'settings', 'blocks')}
               focused
             />
           </Column>
@@ -141,6 +153,7 @@ export default class BlockSettingsModal extends React.PureComponent {
           id="input-block-settings-description"
           className="modal-block-settings-input-description"
           formGroupClassName="marginless"
+          readOnly={!acl(roles, 'settings', 'blocks')}
         />
       </Form>
     );
@@ -150,7 +163,8 @@ export default class BlockSettingsModal extends React.PureComponent {
    * @returns {*}
    */
   renderFormImage = () => {
-    const { blockSettings } = this.props;
+    const { blockSettings, meTeamMember } = this.props;
+    const { roles } = meTeamMember;
 
     const height     = parseInt(blockSettings.height, 10) || '';
     const inputValue = (height !== 383 && height !== 510 && height !== 680 && height !== 910) ? height : '';
@@ -213,6 +227,7 @@ export default class BlockSettingsModal extends React.PureComponent {
                 className="form-control"
                 id="input-block-settings-height"
                 onChange={e => this.handleHeightChange(e, e.target.value)}
+                readOnly={!acl(roles, 'settings', 'blocks')}
               />
             </div>
           </Column>
@@ -223,6 +238,7 @@ export default class BlockSettingsModal extends React.PureComponent {
           id="input-block-settings-description"
           className="modal-block-settings-input-description"
           formGroupClassName="marginless"
+          readOnly={!acl(roles, 'settings', 'blocks')}
         />
       </Form>
     );
@@ -232,8 +248,9 @@ export default class BlockSettingsModal extends React.PureComponent {
    * @returns {*}
    */
   renderFormVideo = () => {
-    const { blockSettings } = this.props;
+    const { blockSettings, meTeamMember } = this.props;
     const { aspectRatio } = blockSettings;
+    const { roles } = meTeamMember;
 
     const classes = 'badge badge-primary form-control';
 
@@ -278,6 +295,7 @@ export default class BlockSettingsModal extends React.PureComponent {
           id="input-block-settings-description"
           className="modal-block-settings-input-description"
           formGroupClassName="marginless"
+          readOnly={!acl(roles, 'settings', 'blocks')}
         />
       </Form>
     );
@@ -287,6 +305,9 @@ export default class BlockSettingsModal extends React.PureComponent {
    * @returns {*}
    */
   renderFormAudio = () => {
+    const { meTeamMember } = this.props;
+    const { roles } = meTeamMember;
+
     return (
       <Form name="blockSettings">
         <Textarea
@@ -295,6 +316,7 @@ export default class BlockSettingsModal extends React.PureComponent {
           id="input-block-settings-description"
           className="modal-block-settings-input-description"
           formGroupClassName="marginless"
+          readOnly={!acl(roles, 'settings', 'blocks')}
         />
       </Form>
     );
@@ -322,7 +344,8 @@ export default class BlockSettingsModal extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { block, modals } = this.props;
+    const { block, modals, meTeamMember } = this.props;
+    const { roles } = meTeamMember;
 
     if (!modals.blockSettings) {
       return null;
@@ -340,9 +363,11 @@ export default class BlockSettingsModal extends React.PureComponent {
           {this.renderForm()}
         </ModalBody>
         <ModalFooter>
-          <Button theme={`block-${blockType}`} onClick={this.handleSave} sm>
-            Save
-          </Button>
+          {acl(roles, 'settings', 'blocks') && (
+            <Button theme={`block-${blockType}`} onClick={this.handleSave} sm>
+              Save
+            </Button>
+          )}
           <Button onClick={this.handleClosed} sm>
             Close
           </Button>

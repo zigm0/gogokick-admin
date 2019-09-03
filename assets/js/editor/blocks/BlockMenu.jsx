@@ -106,14 +106,12 @@ export default class BlockMenu extends React.PureComponent {
     return (
       <div className={classes}>
         <div className="block-menu-group">
-          {acl(roles, 'settings', 'blocks') && (
-            <Button
-              title="Settings"
-              icon="cog"
-              className="block-menu-item"
-              onClick={this.handleSettingsClick}
-            />
-          )}
+          <Button
+            title="Settings"
+            icon="cog"
+            className="block-menu-item"
+            onClick={this.handleSettingsClick}
+          />
           {acl(roles, 'drag', 'blocks') && (
             <Button
               title="Move up"
