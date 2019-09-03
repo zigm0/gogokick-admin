@@ -49,7 +49,7 @@ export default class BlockSettingsModal extends React.PureComponent {
       const height = block.height || styles.heights.blocks[campaignType][block.type];
 
       formChanges('blockSettings', {
-        description: block.description || 'Description',
+        description: block.description || '',
         wordCount:   block.wordCount,
         aspectRatio: block.aspectRatio,
         width,
@@ -83,7 +83,7 @@ export default class BlockSettingsModal extends React.PureComponent {
     const height = parseInt(blockSettings.height || styles.heights.blocks[campaignType][block.type], 10);
 
     editorBlockSettings(objects.merge(block, {
-      description: blockSettings.description || 'Description',
+      description: blockSettings.description || '',
       wordCount:   parseInt(blockSettings.wordCount, 10),
       aspectRatio: blockSettings.aspectRatio,
       width,
@@ -91,7 +91,7 @@ export default class BlockSettingsModal extends React.PureComponent {
     }));
 
     formChanges('blockSettings', {
-      description: blockSettings.description || 'Description',
+      description: blockSettings.description || '',
       wordCount:   parseInt(blockSettings.wordCount, 10),
       aspectRatio: blockSettings.aspectRatio,
       width,
@@ -151,6 +151,7 @@ export default class BlockSettingsModal extends React.PureComponent {
           name="description"
           label="Description"
           id="input-block-settings-description"
+          placeholder="Type a description for this block."
           className="modal-block-settings-input-description"
           formGroupClassName="marginless"
           readOnly={!acl(roles, 'settings', 'blocks')}
@@ -238,6 +239,7 @@ export default class BlockSettingsModal extends React.PureComponent {
           name="description"
           label="Description"
           id="input-block-settings-description"
+          placeholder="Type a description for this block."
           className="modal-block-settings-input-description"
           formGroupClassName="marginless"
           readOnly={!acl(roles, 'settings', 'blocks')}
@@ -297,6 +299,7 @@ export default class BlockSettingsModal extends React.PureComponent {
           name="description"
           label="Description"
           id="input-block-settings-description"
+          placeholder="Type a description for this block."
           className="modal-block-settings-input-description"
           formGroupClassName="marginless"
           readOnly={!acl(roles, 'settings', 'blocks')}
@@ -320,6 +323,7 @@ export default class BlockSettingsModal extends React.PureComponent {
           name="description"
           label="Description"
           id="input-block-settings-description"
+          placeholder="Type a description for this block."
           className="modal-block-settings-input-description"
           formGroupClassName="marginless"
           readOnly={!acl(roles, 'settings', 'blocks')}
