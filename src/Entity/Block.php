@@ -48,7 +48,7 @@ class Block
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=60)
+     * @ORM\Column(type="string", length=255)
      * @Groups({"web"})
      */
     protected $description;

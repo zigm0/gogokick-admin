@@ -22,8 +22,10 @@ class Textarea extends React.PureComponent {
     placeholder:        PropTypes.string,
     className:          PropTypes.string,
     formGroupClassName: PropTypes.string,
+    maxLength:          PropTypes.number,
     disabled:           PropTypes.bool,
     required:           PropTypes.bool,
+    counter:            PropTypes.bool,
     format:             PropTypes.func,
     parse:              PropTypes.func,
     onChange:           PropTypes.func
@@ -39,9 +41,11 @@ class Textarea extends React.PureComponent {
     placeholder:        '',
     className:          '',
     formGroupClassName: '',
+    maxLength:          0,
     sm:                 false,
     disabled:           false,
     required:           false,
+    counter:            false,
     format:             v => v,
     parse:              v => v,
     onChange:           null
@@ -72,6 +76,8 @@ class Textarea extends React.PureComponent {
       value,
       label,
       format,
+      counter,
+      maxLength,
       placeholder,
       errorMessage,
       className,
@@ -85,6 +91,8 @@ class Textarea extends React.PureComponent {
     const classes = classNames(className, 'form-control', {
       'form-control-sm': context.sm || sm
     });
+    const inputValue = format(context.values[inputName] || value);
+    const valueLength = inputValue.length;
 
     return (
       <FormGroup
@@ -95,17 +103,23 @@ class Textarea extends React.PureComponent {
         required={context.required || required}
         errorMessage={context.errorFields[inputName] || errorMessage}
       >
+        {(counter && maxLength) && (
+          <div className="form-counter">
+            {valueLength} / {maxLength}
+          </div>
+        )}
         <textarea
           id={id}
           name={inputName}
           className={classes}
+          maxLength={maxLength !== 0 ? maxLength : undefined}
           placeholder={placeholder}
           ref={ref => this.textarea = ref}
           required={context.required || required}
           disabled={context.disabled || disabled}
           onChange={e => this.handleChange(e, context)}
           {...objects.keyFilter(props, Textarea.propTypes)}
-          value={format(context.values[inputName] || value)}
+          value={inputValue}
         />
       </FormGroup>
     );

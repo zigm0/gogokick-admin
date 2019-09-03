@@ -154,6 +154,8 @@ export default class BlockSettingsModal extends React.PureComponent {
           className="modal-block-settings-input-description"
           formGroupClassName="marginless"
           readOnly={!acl(roles, 'settings', 'blocks')}
+          maxLength={255}
+          counter
         />
       </Form>
     );
@@ -239,6 +241,8 @@ export default class BlockSettingsModal extends React.PureComponent {
           className="modal-block-settings-input-description"
           formGroupClassName="marginless"
           readOnly={!acl(roles, 'settings', 'blocks')}
+          maxLength={255}
+          counter
         />
       </Form>
     );
@@ -296,6 +300,8 @@ export default class BlockSettingsModal extends React.PureComponent {
           className="modal-block-settings-input-description"
           formGroupClassName="marginless"
           readOnly={!acl(roles, 'settings', 'blocks')}
+          maxLength={255}
+          counter
         />
       </Form>
     );
@@ -317,6 +323,8 @@ export default class BlockSettingsModal extends React.PureComponent {
           className="modal-block-settings-input-description"
           formGroupClassName="marginless"
           readOnly={!acl(roles, 'settings', 'blocks')}
+          maxLength={255}
+          counter
         />
       </Form>
     );
