@@ -83,7 +83,7 @@ export default class HomeHeader extends React.PureComponent {
                 Dashboard
               </Link>
             ) : (
-              <Link to="/">
+              <Link to="/login">
                 Login
               </Link>
             )}

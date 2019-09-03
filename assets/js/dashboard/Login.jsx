@@ -5,7 +5,7 @@ import { connect, history, mapDispatchToProps } from 'utils';
 import { Form, Input } from 'components/forms';
 import { Link } from 'components';
 import { Container, Row, Column, Card, CardHeader, CardBody, Button } from 'components/bootstrap';
-import { userActions } from 'actions';
+import { userActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({
   isAuthenticated: state.user.isAuthenticated
@@ -13,12 +13,13 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(userActions)
+  mapDispatchToProps(userActions, uiActions)
 )
 export default class Login extends React.PureComponent {
   static propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
-    userLogin:       PropTypes.func.isRequired
+    userLogin:       PropTypes.func.isRequired,
+    uiWorkspace:     PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -27,10 +28,12 @@ export default class Login extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { isAuthenticated } = this.props;
+    const { isAuthenticated, uiWorkspace } = this.props;
 
     if (isAuthenticated) {
       history.push('/dashboard');
+    } else {
+      uiWorkspace('login');
     }
   }
 

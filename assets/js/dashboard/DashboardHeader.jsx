@@ -44,7 +44,7 @@ export default class DashboardHeader extends React.PureComponent {
                 Dashboard
               </Link>
             ) : (
-              <Link to="/">
+              <Link to="/login">
                 Login
               </Link>
             )}
