@@ -28,12 +28,10 @@ export default class BlockVideo extends React.PureComponent {
     };
 
     return (
-      <div>
-        <YouTube
-          videoId={videoId}
-          opts={opts}
-        />
-      </div>
+      <YouTube
+        videoId={videoId}
+        opts={opts}
+      />
     );
   }
 }

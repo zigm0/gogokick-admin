@@ -101,7 +101,7 @@ export default class BlockDescription extends React.PureComponent {
       return (
         <>
           <div className="block-icon-container">
-            <Icon name={icon} />
+            <Icon name={icon} size={2} />
           </div>
           <div ref={this.description} className="block-description">
             {block.description}
@@ -117,7 +117,7 @@ export default class BlockDescription extends React.PureComponent {
 
     return (
       <div ref={this.description} className="block-description empty">
-        <Icon name={icon} />
+        <Icon name={icon} size={2} />
         Description
       </div>
     );

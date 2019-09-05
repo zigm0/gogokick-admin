@@ -19,6 +19,7 @@ export default class BlockVideoEmpty extends React.PureComponent {
    */
   render() {
     const { block, campaignType } = this.props;
+    const { aspectRatio } = block;
 
     const height = styles.heights.blocks[campaignType][constants.blockType('video')];
 
@@ -27,6 +28,7 @@ export default class BlockVideoEmpty extends React.PureComponent {
         <div className="block-empty-dims">
           {block.aspectRatio}
         </div>
+        <div className={`block-video-shadow block-video-shadow-${aspectRatio.replace(':', '-')}`} />
         <BlockDescription block={block} icon="video" height={height} />
       </div>
     );
