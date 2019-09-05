@@ -23,6 +23,7 @@ class Textarea extends React.PureComponent {
     className:          PropTypes.string,
     formGroupClassName: PropTypes.string,
     maxLength:          PropTypes.number,
+    focused:            PropTypes.bool,
     disabled:           PropTypes.bool,
     required:           PropTypes.bool,
     counter:            PropTypes.bool,
@@ -42,6 +43,7 @@ class Textarea extends React.PureComponent {
     className:          '',
     formGroupClassName: '',
     maxLength:          0,
+    focused:            false,
     sm:                 false,
     disabled:           false,
     required:           false,
@@ -52,6 +54,26 @@ class Textarea extends React.PureComponent {
   };
 
   static unityFormType = 'textarea';
+
+  /**
+   * Called when the component mounts
+   */
+  componentDidMount() {
+    const { focused } = this.props;
+
+    if (focused) {
+      setTimeout(() => {
+        this.focus();
+      }, 500);
+    }
+  }
+
+  /**
+   * Gives focus to the element
+   */
+  focus = () => {
+    this.textarea.focus();
+  };
 
   /**
    * @param {React.FormEvent} e

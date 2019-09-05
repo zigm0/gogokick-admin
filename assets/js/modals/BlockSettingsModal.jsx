@@ -6,6 +6,8 @@ import { Row, Column, Modal, ModalBody, ModalFooter, Button } from 'components/b
 import { Form, Textarea, Input } from 'components/forms';
 import { formActions, editorActions, uiActions } from 'actions';
 
+const descriptionMaxLength = 1000;
+
 const mapStateToProps = state => ({
   modals:        state.ui.modals,
   block:         state.ui.modalMeta.blockSettings,
@@ -155,7 +157,7 @@ export default class BlockSettingsModal extends React.PureComponent {
           className="modal-block-settings-input-description"
           formGroupClassName="marginless"
           readOnly={!acl(roles, 'settings', 'blocks')}
-          maxLength={255}
+          maxLength={descriptionMaxLength}
           counter
         />
       </Form>
@@ -243,8 +245,9 @@ export default class BlockSettingsModal extends React.PureComponent {
           className="modal-block-settings-input-description"
           formGroupClassName="marginless"
           readOnly={!acl(roles, 'settings', 'blocks')}
-          maxLength={255}
+          maxLength={descriptionMaxLength}
           counter
+          focused
         />
       </Form>
     );
@@ -303,8 +306,9 @@ export default class BlockSettingsModal extends React.PureComponent {
           className="modal-block-settings-input-description"
           formGroupClassName="marginless"
           readOnly={!acl(roles, 'settings', 'blocks')}
-          maxLength={255}
+          maxLength={descriptionMaxLength}
           counter
+          focused
         />
       </Form>
     );
@@ -327,8 +331,9 @@ export default class BlockSettingsModal extends React.PureComponent {
           className="modal-block-settings-input-description"
           formGroupClassName="marginless"
           readOnly={!acl(roles, 'settings', 'blocks')}
-          maxLength={255}
+          maxLength={descriptionMaxLength}
           counter
+          focused
         />
       </Form>
     );
@@ -370,6 +375,7 @@ export default class BlockSettingsModal extends React.PureComponent {
         className={`modal-block-settings modal-block-settings-${blockType}`}
         closeable={false}
         open
+        lg
       >
         <ModalBody>
           {this.renderForm()}
