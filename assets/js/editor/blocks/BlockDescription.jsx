@@ -59,9 +59,9 @@ export default class BlockDescription extends React.PureComponent {
    *
    */
   handleUpdate() {
-    const { height } = this.props;
+    const { block, height } = this.props;
 
-    if (!height) {
+    if (!height || !block.description) {
       return;
     }
 
