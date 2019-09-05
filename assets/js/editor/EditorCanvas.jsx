@@ -79,8 +79,8 @@ export default class EditorCanvas extends React.PureComponent {
 
     return (
       <div
-        className={`editor-canvas editor-canvas-campaign-${constants.campaignType(campaignType)} h-100`}
         onClick={this.handleClick}
+        className={`editor-canvas editor-canvas-campaign-${constants.campaignType(campaignType)} h-100`}
       >
         <div className={bodyClasses}>
           <Container className="h-100">

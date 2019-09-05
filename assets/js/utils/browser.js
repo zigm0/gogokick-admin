@@ -157,7 +157,7 @@ export function browserIFrameSrc(iframe, html) {
 }
 
 /**
- * @param {HTMLElement|Node} element
+ * @param {HTMLElement|Node|EventTarget} element
  * @param {string} className
  * @returns {boolean}
  */
