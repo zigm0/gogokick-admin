@@ -18,9 +18,7 @@ export default class BlockAudio extends React.PureComponent {
     const { block } = this.props;
 
     return (
-      <div>
-        <SoundCloudPlayer audioUrl={block.audioUrl} />
-      </div>
+      <SoundCloudPlayer audioUrl={block.audioUrl} />
     );
   }
 }

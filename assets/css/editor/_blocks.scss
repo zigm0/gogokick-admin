@@ -218,6 +218,22 @@
   height: $height-block-audio;
 }
 
+.block-audio-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+  background: url(/images/soundcloud-bg.webp) center center no-repeat;
+
+  & > div {
+    color: #FFF;
+    background-color: black;
+    border-radius: $border-radius-blocks;
+    padding: $gutter-size-sm;
+  }
+}
+
 .block-description {
   position: absolute;
   min-height: 50px;

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, video, mapDispatchToProps, objects } from 'utils';
+import { connect, mapDispatchToProps, objects } from 'utils';
 import { Icon } from 'components';
 import BlockMenu from './BlockMenu';
 import { editorActions } from 'actions';
@@ -61,12 +61,6 @@ export default class BlockAudioEditor extends React.PureComponent {
     const { value } = e.target;
 
     this.setState({ audioUrl: value });
-    const trackId = video.extractSoundCloudTrackId(value);
-    if (trackId) {
-      this.setState({
-        backgroundImage: `https://i1.sndcdn.com/artworks-${trackId}-movvch-t500x500.jpg`
-      });
-    }
   };
 
   /**
@@ -74,7 +68,7 @@ export default class BlockAudioEditor extends React.PureComponent {
    */
   render() {
     const { block } = this.props;
-    const { audioUrl, backgroundImage } = this.state;
+    const { audioUrl } = this.state;
 
     let buttons = '';
     if (audioUrl) {
@@ -86,7 +80,7 @@ export default class BlockAudioEditor extends React.PureComponent {
     }
 
     const styles = {
-      backgroundImage: `url(https://www.youredm.com/wp-content/uploads/2015/08/soundcloud-ad.png)`
+      backgroundImage: `url(/images/soundcloud-bg.webp)`
     };
 
     return (
