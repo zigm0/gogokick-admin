@@ -235,18 +235,9 @@
 }
 
 .block-description {
-  position: absolute;
-  min-height: 50px;
   width: 100%;
-  padding: $gutter-size-sm;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  overflow: hidden;
+  padding: 0 $gutter-size-sm;
   margin: auto;
   white-space: pre;
   font-size: 1.25rem;
@@ -254,6 +245,34 @@
   color: $color-canvas-block;
   font-family: "Roboto", sans-serif;
   word-break: break-word;
+
+  &.empty {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+.block-icon-container {
+  text-align: center;
+  padding-top: $gutter-size-sm;
+  color: $color-canvas-block;
+  font-family: "Roboto", sans-serif;
+}
+
+.block-empty-read-more {
+  cursor: pointer;
+  text-align: center;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  color: $color-canvas-block;
+  font-family: "Roboto", sans-serif;
 }
 
 .block-highlighted {

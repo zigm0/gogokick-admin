@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { styles, constants } from 'utils';
-import { Icon } from 'components';
+import BlockDescription from './BlockDescription';
 
 export default class BlockImageEmpty extends React.PureComponent {
   static propTypes = {
@@ -29,10 +29,7 @@ export default class BlockImageEmpty extends React.PureComponent {
         <div className="block-empty-dims">
           680x{blockStyles.height}
         </div>
-        <h2 className="block-description">
-          <Icon name="image" />
-          {block.description || 'Description'}
-        </h2>
+        <BlockDescription block={block} icon="image" height={blockStyles.height} />
       </div>
     );
   }

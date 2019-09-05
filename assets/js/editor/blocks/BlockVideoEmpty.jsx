@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from 'components';
+import { styles, constants } from 'utils';
+import BlockDescription from './BlockDescription';
 
 export default class BlockVideoEmpty extends React.PureComponent {
   static propTypes = {
@@ -17,19 +18,16 @@ export default class BlockVideoEmpty extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { block } = this.props;
+    const { block, campaignType } = this.props;
 
-    const blockStyles = {};
+    const height = styles.heights.blocks[campaignType][constants.blockType('video')];
 
     return (
-      <div className="block block-video block-empty" style={blockStyles}>
+      <div className="block block-video block-empty">
         <div className="block-empty-dims">
           {block.aspectRatio}
         </div>
-        <h2 className="block-description">
-          <Icon name="video" />
-          {block.description || 'Description'}
-        </h2>
+        <BlockDescription block={block} icon="video" height={height} />
       </div>
     );
   }

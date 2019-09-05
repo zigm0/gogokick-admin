@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from 'components';
+import { styles, constants } from 'utils';
+import BlockDescription from './BlockDescription';
 
 export default class BlockAudioEmpty extends React.PureComponent {
   static propTypes = {
@@ -16,16 +17,13 @@ export default class BlockAudioEmpty extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { block } = this.props;
+    const { block, campaignType } = this.props;
 
-    const blockStyles = {};
+    const height = styles.heights.blocks[campaignType][constants.blockType('audio')];
 
     return (
-      <div className="block block-audio block-empty" style={blockStyles}>
-        <h2 className="block-description">
-          <Icon name="music" />
-          {block.description || 'Description'}
-        </h2>
+      <div className="block block-audio block-empty">
+        <BlockDescription block={block} icon="music" height={height} />
       </div>
     );
   }
