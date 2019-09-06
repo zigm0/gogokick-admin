@@ -2,6 +2,7 @@
 namespace App\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * Class ProjectModel
@@ -10,13 +11,13 @@ class ProjectModel
 {
     /**
      * @var string
-     * @Assert\Type("string")
+     * @Type("string")
      */
     protected $name;
 
     /**
      * @var string
-     * @Assert\Type("string")
+     * @Type("string")
      */
     protected $subtitle;
 
@@ -28,7 +29,25 @@ class ProjectModel
 
     /**
      * @var array
-     * @Assert\Type("array")
+     * @Assert\All({
+     *      @Assert\Collection(
+     *          fields = {
+     *              "id"          = @Assert\NotBlank,
+     *              "type"        = @Type("integer"),
+     *              "text"        = @Type("string"),
+     *              "caption"     = @Type("string"),
+     *              "description" = @Type("string"),
+     *              "height"      = @Type("integer"),
+     *              "width"       = @Type("integer"),
+     *              "wordCount"   = @Type("integer"),
+     *              "aspectRatio" = @Type("string"),
+     *              "isHeadline"  = @Type("boolean"),
+     *              "videoUrl"    = @Type("string"),
+     *              "audioUrl"    = @Type("string")
+     *          },
+     *          allowExtraFields = true
+     *      )
+     * })
      */
     protected $blocks = [];
 

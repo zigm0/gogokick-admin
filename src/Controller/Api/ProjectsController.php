@@ -129,77 +129,54 @@ class ProjectsController extends ApiController
         $updatedBlocks = new ArrayCollection();
 
         foreach($model->getBlocks() as $blockData) {
-            if ($blockData['id'][0] === 'n') {
-                $block = (new Block())
-                    ->setType($blockData['type'])
-                    ->setProject($project)
-                    ->setSortOrder($sortOrder++)
-                    ->setDescription($blockData['description'])
-                    ->setHeight($blockData['height'])
-                    ->setWidth($blockData['width'])
-                    ->setWordCount($blockData['wordCount'])
-                    ->setAspectRatio($blockData['aspectRatio']);
-                switch($block->getType()) {
-                    case Block::TYPE_TEXT:
-                        $blockData['text'] = str_replace('<h1>', '', $blockData['text']);
-                        $blockData['text'] = str_replace('</h1>', '', $blockData['text']);
-                        $block->setText($blockData['text']);
-                        $block->setIsHeadline($blockData['isHeadline']);
-                        break;
-                    case Block::TYPE_IMAGE:
-                        $block->setCaption($blockData['caption']);
-                        if (!empty($blockData['media']) && !empty($blockData['media']['id'])) {
-                            $media = $this->getMedia($blockData['media']['id']);
-                            $block->setMedia($media);
-                        }
-                        break;
-                    case Block::TYPE_VIDEO:
-                        $block->setVideoUrl($blockData['videoUrl']);
-                        break;
-                    case Block::TYPE_AUDIO:
-                        $block->setAudioUrl($blockData['audioUrl']);
-                        break;
+            if ($blockData['id'][0] !== 'n') {
+                $block = $blockRepository->findByID($blockData['id']);
+                if (!$block) {
+                    throw new BadRequestHttpException('Unknown block.');
                 }
+            } else {
+                $block = (new Block())
+                    ->setProject($project)
+                    ->setType($blockData['type']);
+            }
 
+            $block
+                ->setSortOrder($sortOrder++)
+                ->setDescription($blockData['description'])
+                ->setHeight($blockData['height'])
+                ->setWidth($blockData['width'])
+                ->setWordCount($blockData['wordCount'])
+                ->setAspectRatio($blockData['aspectRatio']);
+            switch($block->getType()) {
+                case Block::TYPE_TEXT:
+                    $blockData['text'] = str_replace('<h1>', '', $blockData['text']);
+                    $blockData['text'] = str_replace('</h1>', '', $blockData['text']);
+                    $block->setText($blockData['text']);
+                    $block->setIsHeadline($blockData['isHeadline']);
+                    break;
+                case Block::TYPE_IMAGE:
+                    $block->setCaption($blockData['caption']);
+                    if (!empty($blockData['media']) && !empty($blockData['media']['id'])) {
+                        $media = $this->getMedia($blockData['media']['id']);
+                        $block->setMedia($media);
+                    }
+                    break;
+                case Block::TYPE_VIDEO:
+                    $block->setVideoUrl($blockData['videoUrl']);
+                    break;
+                case Block::TYPE_AUDIO:
+                    $block->setAudioUrl($blockData['audioUrl']);
+                    break;
+            }
+
+            if ($blockData['id'][0] !== 'n') {
+                $updatedBlocks->add($block);
+                $removeBlocks = array_filter($removeBlocks, function(Block $item) use($block) {
+                    return $item->getId() !== $block->getId();
+                });
+            } else {
                 $this->em->persist($block);
                 $updatedBlocks->add($block);
-            } else {
-                $block = $blockRepository->findByID($blockData['id']);
-                if ($block) {
-                    $block
-                        ->setSortOrder($sortOrder++)
-                        ->setDescription($blockData['description'])
-                        ->setHeight($blockData['height'])
-                        ->setWidth($blockData['width'])
-                        ->setWordCount($blockData['wordCount'])
-                        ->setAspectRatio($blockData['aspectRatio']);
-                    switch($block->getType()) {
-                        case Block::TYPE_TEXT:
-                            $blockData['text'] = str_replace('<h1>', '', $blockData['text']);
-                            $blockData['text'] = str_replace('</h1>', '', $blockData['text']);
-                            $block->setText($blockData['text']);
-                            $block->setIsHeadline($blockData['isHeadline']);
-                            break;
-                        case Block::TYPE_IMAGE:
-                            $block->setCaption($blockData['caption']);
-                            if (!empty($blockData['media']) && !empty($blockData['media']['id'])) {
-                                $media = $this->getMedia($blockData['media']['id']);
-                                $block->setMedia($media);
-                            }
-                            break;
-                        case Block::TYPE_VIDEO:
-                            $block->setVideoUrl($blockData['videoUrl']);
-                            break;
-                        case Block::TYPE_AUDIO:
-                            $block->setAudioUrl($blockData['audioUrl']);
-                            break;
-                    }
-
-                    $updatedBlocks->add($block);
-                    $removeBlocks = array_filter($removeBlocks, function(Block $item) use($block) {
-                        return $item->getId() !== $block->getId();
-                    });
-                }
             }
         }
 
