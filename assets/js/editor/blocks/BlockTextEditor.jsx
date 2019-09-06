@@ -68,7 +68,9 @@ export default class BlockTextEditor extends React.PureComponent {
    */
   handleChange = (e) => {
     const { onChange } = this.props;
-    const { value } = e.target;
+    let { value } = e.target;
+
+    value = value.replace(/<h1>/g, '').replace(/<\/h1>/g, '');
 
     this.setState({ text: value }, () => {
       onChange(e, value);
@@ -116,7 +118,7 @@ export default class BlockTextEditor extends React.PureComponent {
     }
 
     this.setState({ cmds });
-    this.content.current.focus();
+    // this.content.current.focus();
   };
 
   /**
@@ -126,7 +128,7 @@ export default class BlockTextEditor extends React.PureComponent {
     const { block } = this.props;
     const { text, cmds } = this.state;
 
-    const html = block.isHeadline ? `<h1>${text}</h1>` : text;
+    const html    = block.isHeadline ? `<h1>${text}</h1>` : text;
     const classes = classNames('block-editor block-editor-text block-expanded', {
       'block-editor-headline': block.isHeadline
     });

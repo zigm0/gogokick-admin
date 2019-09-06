@@ -141,6 +141,8 @@ class ProjectsController extends ApiController
                     ->setAspectRatio($blockData['aspectRatio']);
                 switch($block->getType()) {
                     case Block::TYPE_TEXT:
+                        $blockData['text'] = str_replace('<h1>', '', $blockData['text']);
+                        $blockData['text'] = str_replace('</h1>', '', $blockData['text']);
                         $block->setText($blockData['text']);
                         $block->setIsHeadline($blockData['isHeadline']);
                         break;
@@ -173,6 +175,8 @@ class ProjectsController extends ApiController
                         ->setAspectRatio($blockData['aspectRatio']);
                     switch($block->getType()) {
                         case Block::TYPE_TEXT:
+                            $blockData['text'] = str_replace('<h1>', '', $blockData['text']);
+                            $blockData['text'] = str_replace('</h1>', '', $blockData['text']);
                             $block->setText($blockData['text']);
                             $block->setIsHeadline($blockData['isHeadline']);
                             break;
