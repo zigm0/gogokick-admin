@@ -122,7 +122,7 @@ export default class EditorNew extends React.PureComponent {
               <Row>
                 <Column>
                   <p>
-                    Our building tools are slightly different depending ont he platform. If you&apos;re
+                    Our building tools are slightly different depending on the platform. If you&apos;re
                     not sure what platform is best for your project <a href="#">read this</a>.
                   </p>
                 </Column>
@@ -164,23 +164,25 @@ export default class EditorNew extends React.PureComponent {
               </Row>
               <Row>
                 <Column>
-                  <h3>
-                    Project Title
-                  </h3>
                   <Input
                     name="name"
                     id="input-editor-new-name"
+                    label="Project Title"
+                    formGroupClassName="form-group-label-lg"
+                    maxLength={60}
+                    counter
                   />
                   <p>
                     Write a clear, brief title that helps people quickly understand the gist of your
                     project.
                   </p>
-                  <h3>
-                    Project Subtitle
-                  </h3>
                   <Input
                     name="subtitle"
                     id="input-editor-new-sub-title"
+                    label="Project Subtitle"
+                    formGroupClassName="form-group-label-lg"
+                    maxLength={135}
+                    counter
                   />
                   <p>
                     This will appear below the title ad it&apos;s a chance to tell a little more

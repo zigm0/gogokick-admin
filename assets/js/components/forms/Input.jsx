@@ -12,44 +12,50 @@ class Input extends React.PureComponent {
   static contextType = FormContext;
 
   static propTypes = {
-    id:           PropTypes.string.isRequired,
-    sm:           PropTypes.bool,
-    help:         PropTypes.string,
-    name:         PropTypes.string,
-    type:         PropTypes.string,
-    label:        PropTypes.string,
-    value:        PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    placeholder:  PropTypes.string,
-    className:    PropTypes.string,
-    focused:      PropTypes.bool,
-    disabled:     PropTypes.bool,
-    required:     PropTypes.bool,
-    last:         PropTypes.bool,
-    format:       PropTypes.func,
-    parse:        PropTypes.func,
-    onChange:     PropTypes.func,
-    forms:        PropTypes.object
+    id:                 PropTypes.string.isRequired,
+    sm:                 PropTypes.bool,
+    help:               PropTypes.string,
+    name:               PropTypes.string,
+    type:               PropTypes.string,
+    label:              PropTypes.string,
+    maxLength:          PropTypes.number,
+    value:              PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    errorMessage:       PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+    formGroupClassName: PropTypes.string,
+    placeholder:        PropTypes.string,
+    className:          PropTypes.string,
+    focused:            PropTypes.bool,
+    disabled:           PropTypes.bool,
+    required:           PropTypes.bool,
+    last:               PropTypes.bool,
+    counter:            PropTypes.bool,
+    format:             PropTypes.func,
+    parse:              PropTypes.func,
+    onChange:           PropTypes.func,
+    forms:              PropTypes.object
   };
 
   static defaultProps = {
-    help:         '',
-    name:         '',
-    type:         'text',
-    value:        '',
-    label:        '',
-    placeholder:  '',
-    className:    '',
-    errorMessage: '',
-    sm:           false,
-    focused:      false,
-    disabled:     false,
-    required:     false,
-    last:         false,
-    forms:        {},
-    format:       v => v,
-    parse:        v => v,
-    onChange:     null
+    help:               '',
+    name:               '',
+    type:               'text',
+    value:              '',
+    label:              '',
+    placeholder:        '',
+    className:          '',
+    errorMessage:       '',
+    formGroupClassName: '',
+    maxLength:          0,
+    counter:            false,
+    sm:                 false,
+    focused:            false,
+    disabled:           false,
+    required:           false,
+    last:               false,
+    forms:              {},
+    format:             v => v,
+    parse:              v => v,
+    onChange:           null
   };
 
   static unityFormType = 'input';
@@ -106,11 +112,14 @@ class Input extends React.PureComponent {
       value,
       label,
       format,
+      counter,
+      maxLength,
       placeholder,
       errorMessage,
       className,
       disabled,
       required,
+      formGroupClassName,
       ...props
     } = this.props;
     const { context } = this;
@@ -119,16 +128,23 @@ class Input extends React.PureComponent {
     const classes = classNames(className, 'form-control', {
       'form-control-sm': context.sm || sm
     });
+    const inputValue  = format(context.values[inputName] !== undefined ? context.values[inputName] : value);
+    const valueLength = inputValue.length;
 
     return (
       <FormGroup
         help={help}
         htmlFor={id}
         label={label}
-        className={last ? 'form-group-last' : ''}
+        className={last ? 'form-group-last' : formGroupClassName}
         required={context.required || required}
         errorMessage={context.errorFields[inputName] || errorMessage}
       >
+        {(counter && maxLength) && (
+          <div className="form-counter">
+            {valueLength} / {maxLength}
+          </div>
+        )}
         <input
           id={id}
           type={type}
@@ -140,7 +156,8 @@ class Input extends React.PureComponent {
           disabled={context.disabled || disabled}
           onChange={e => this.handleChange(e, context)}
           {...objects.keyFilter(props, Input.propTypes)}
-          value={format(context.values[inputName] !== undefined ? context.values[inputName] : value)}
+          maxLength={maxLength !== 0 ? maxLength : undefined}
+          value={inputValue}
         />
       </FormGroup>
     );

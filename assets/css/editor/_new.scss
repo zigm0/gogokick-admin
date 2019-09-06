@@ -7,6 +7,14 @@
     color: #6c6c6c;
     font-size: 1.3rem;
   }
+
+  .forms-required {
+    display: none;
+  }
+
+  .form-counter {
+    color: $color-dim;
+  }
 }
 
 .editor-new-logo {
