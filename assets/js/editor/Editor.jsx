@@ -6,11 +6,10 @@ import { Route, Router, Switch } from 'react-router-dom';
 import { connect, history, mapDispatchToProps } from 'utils';
 import { LoadingCubes } from 'components';
 import { editorActions } from 'actions';
-
-const EditorCanvas     = React.lazy(() => import('./EditorCanvas'));
-const EditorNew        = React.lazy(() => import('./EditorNew'));
-const EditorSettings   = React.lazy(() => import('./EditorSettings'));
-const EditorSidebar    = React.lazy(() => import('./EditorSidebar'));
+import EditorCanvas from './EditorCanvas';
+import EditorNew from './EditorNew';
+import EditorSettings from './EditorSettings';
+import EditorSidebar from './EditorSidebar';
 
 const mapStateToProps = state => ({
   isLoaded: state.editor.isLoaded
