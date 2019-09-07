@@ -6,10 +6,12 @@ import { objects, react, connect } from 'utils';
 import { formChange, formReset, formComplete } from 'actions/formActions';
 import { Row, Column, Alert } from 'components/bootstrap';
 
-/**
- *
- */
-class Form extends React.PureComponent {
+const mapStateToProps = state => ({
+  forms: state.forms
+});
+
+@connect(mapStateToProps, null, null, { forwardRef: true })
+export default class Form extends React.PureComponent {
   static propTypes = {
     name:       PropTypes.string.isRequired,
     disabled:   PropTypes.bool,
@@ -41,6 +43,7 @@ class Form extends React.PureComponent {
   constructor(props) {
     super(props);
     this.requiredInputs = [];
+    this.form = React.createRef();
   }
 
   /**
@@ -92,11 +95,20 @@ class Form extends React.PureComponent {
   }
 
   /**
+   *
+   */
+  submit = () => {
+    // onSubmit doesn't get called when using form.current.submit().
+    // Have to do it this way instead.
+    this.form.current.dispatchEvent(new Event('submit'));
+  };
+
+  /**
    * @param {Event} e
    */
   handleSubmit = (e) => {
     const { onSubmit } = this.props;
-    const { elements } = this.form;
+    const { elements } = this.form.current;
 
     const values = {};
     for (let i = 0; i < elements.length; i++) {
@@ -151,7 +163,7 @@ class Form extends React.PureComponent {
       <form
         className={classNames('form', className, { 'form-sm': sm })}
         {...objects.keyFilter(props, Form.propTypes)}
-        ref={ref => this.form = ref}
+        ref={this.form}
         onSubmit={this.handleSubmit}
       >
         {values.successMessage && (
@@ -179,9 +191,3 @@ class Form extends React.PureComponent {
     );
   }
 }
-
-const mapStateToProps = state => ({
-  forms: state.forms
-});
-
-export default connect(mapStateToProps)(Form);

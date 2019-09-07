@@ -100,11 +100,13 @@ export default class Profile extends React.PureComponent {
   };
 
   /**
-   *
+   * @param {Event} e
    */
-  handleSaveClick = () => {
+  handleSubmit = (e) => {
     const { form, userSave } = this.props;
     const { skills } = this.state;
+
+    e.preventDefault();
 
     const newSkills = skills.map(s => s.name);
 
@@ -394,9 +396,9 @@ export default class Profile extends React.PureComponent {
         <Button
           key="save"
           icon="save"
+          type="submit"
           title="Save changes"
           className="btn-circle btn-profile-save border-grey margin-right-sm"
-          onClick={this.handleSaveClick}
         />
       );
       buttons.push(
@@ -435,26 +437,26 @@ export default class Profile extends React.PureComponent {
 
     return (
       <Container className="gutter-top">
-        <div className="profile-header">
-          <div>
-            {this.renderButtons()}
+        <Form name="profile" onSubmit={this.handleSubmit}>
+          <div className="profile-header">
+            <div>
+              {this.renderButtons()}
+            </div>
           </div>
-        </div>
-        <div className="profile">
-          <Row>
-            <Column className="text-center" xl={5} md={12}>
-              {this.renderAvatar()}
-            </Column>
-            <Column xl={7} md={12}>
-              <Form name="profile">
+          <div className="profile">
+            <Row>
+              <Column className="text-center" xl={5} md={12}>
+                {this.renderAvatar()}
+              </Column>
+              <Column xl={7} md={12}>
                 {this.renderName()}
                 {this.renderSocial()}
                 {this.renderSkills()}
                 {this.renderBio()}
-              </Form>
-            </Column>
-          </Row>
-        </div>
+              </Column>
+            </Row>
+          </div>
+        </Form>
       </Container>
     );
   }
