@@ -30,3 +30,9 @@
     padding-left: $gutter-size;
   }
 }
+
+.workspace-project-settings {
+  .editor-body {
+    height: auto;
+  }
+}

@@ -2,6 +2,7 @@
 namespace App\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * Class ProjectSettingsModel
@@ -25,6 +26,11 @@ class ProjectSettingsModel
      * @Assert\Type("array")
      */
     protected $image;
+
+    /**
+     * @var array
+     */
+    protected $social;
 
     /**
      * @return string
@@ -82,6 +88,26 @@ class ProjectSettingsModel
     public function setImage(array $image): ProjectSettingsModel
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSocial(): array
+    {
+        return $this->social;
+    }
+
+    /**
+     * @param array $social
+     *
+     * @return ProjectSettingsModel
+     */
+    public function setSocial(array $social): ProjectSettingsModel
+    {
+        $this->social = $social;
 
         return $this;
     }

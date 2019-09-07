@@ -38,8 +38,12 @@ const initialState = {
     ...commonForms
   },
   projectSettings: {
-    name:     '',
-    subtitle: '',
+    name:            '',
+    subtitle:        '',
+    socialTwitter:   '',
+    socialYoutube:   '',
+    socialFacebook:  '',
+    socialInstagram: '',
     ...commonForms
   },
   blockSettings: {

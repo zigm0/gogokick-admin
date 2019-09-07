@@ -88,6 +88,13 @@ class Project
     protected $description;
 
     /**
+     * @var array
+     * @ORM\Column(type="array")
+     * @Groups({"web"})
+     */
+    protected $social;
+
+    /**
      * @var DateTime
      * @ORM\Column(type="datetime")
      * @Groups({"web"})
@@ -219,6 +226,29 @@ class Project
     public function setSubtitle(string $subtitle): Project
     {
         $this->subtitle = $subtitle;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSocial(): ?array
+    {
+        if (!$this->social) {
+            return [];
+        }
+        return $this->social;
+    }
+
+    /**
+     * @param array $social
+     *
+     * @return Project
+     */
+    public function setSocial(array $social): Project
+    {
+        $this->social = $social;
 
         return $this;
     }

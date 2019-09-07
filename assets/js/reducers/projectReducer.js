@@ -136,7 +136,8 @@ const onProjectSettings = (state, action) => {
     ...state,
     name:     settings.name,
     subtitle: settings.subtitle,
-    image:    settings.image
+    image:    settings.image,
+    social:   settings.social
   }
 };
 

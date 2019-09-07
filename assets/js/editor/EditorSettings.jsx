@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { connect, system, browser, mapDispatchToProps } from 'utils';
+import { connect, system, browser, history, mapDispatchToProps } from 'utils';
 import { Row, Column, Button } from 'components/bootstrap';
 import { Form, Input } from 'components/forms';
 import { Upload, Link } from 'components';
@@ -40,7 +40,7 @@ export default class EditorSettings extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { match, project, formChanges, uiWorkspace, projectOpen } = this.props;
+    const { match, project, uiWorkspace, projectOpen } = this.props;
 
     uiWorkspace('project-settings');
     if (!project.id) {
@@ -48,10 +48,7 @@ export default class EditorSettings extends React.PureComponent {
         redirectAfterOpen: false
       });
     } else {
-      formChanges('projectSettings', {
-        name:     project.name,
-        subtitle: project.subtitle
-      });
+      this.handleUpdate();
     }
   }
 
@@ -59,30 +56,29 @@ export default class EditorSettings extends React.PureComponent {
    * @param {*} prevProps
    */
   componentDidUpdate(prevProps) {
-    const { project, formChanges } = this.props;
+    const { project } = this.props;
 
     browser.title(`${project.name} - Settings`);
     if (prevProps.project.name !== project.name) {
-      formChanges('projectSettings', {
-        name:     project.name,
-        subtitle: project.subtitle
-      });
+      this.handleUpdate();
     }
   }
 
   /**
    *
    */
-  componentWillUnmount() {
-    const { project, forms, projectSettings } = this.props;
+  handleUpdate = () => {
+    const { project, formChanges } = this.props;
 
-    if (project.id) {
-      projectSettings({
-        name:     forms.projectSettings.name,
-        subtitle: forms.projectSettings.subtitle
-      });
-    }
-  }
+    formChanges('projectSettings', {
+      name:            project.name,
+      subtitle:        project.subtitle  || '',
+      socialTwitter:   project.social.twitter || '',
+      socialYoutube:   project.social.youtube || '',
+      socialFacebook:  project.social.facebook || '',
+      socialInstagram: project.social.instagram || ''
+    });
+  };
 
   /**
    *
@@ -114,13 +110,35 @@ export default class EditorSettings extends React.PureComponent {
   };
 
   /**
+   * @param {Event} e
+   */
+  handleSubmit = (e) => {
+    const { project, forms, projectSettings } = this.props;
+
+    e.preventDefault();
+    if (project.id) {
+      projectSettings({
+        name:     forms.projectSettings.name,
+        subtitle: forms.projectSettings.subtitle,
+        social:   {
+          twitter:   forms.projectSettings.socialTwitter,
+          youtube:   forms.projectSettings.socialYoutube,
+          facebook:  forms.projectSettings.socialFacebook,
+          instagram: forms.projectSettings.socialInstagram
+        }
+      });
+      history.push(`/editor/${project.id}`);
+    }
+  };
+
+  /**
    * @returns {*}
    */
   renderForm = () => {
     const { project } = this.props;
 
     return (
-      <Form name="projectSettings">
+      <Form name="projectSettings" className="gutter-bottom" onSubmit={this.handleSubmit}>
         <Input
           name="name"
           type="text"
@@ -158,6 +176,33 @@ export default class EditorSettings extends React.PureComponent {
             </div>
           </Upload>
         </div>
+        <Input
+          name="socialTwitter"
+          id="input-profile-social-twitter"
+          label="Twitter"
+          placeholder="https://"
+        />
+        <Input
+          name="socialYoutube"
+          id="input-profile-social-youtube"
+          label="Youtube"
+          placeholder="https://"
+        />
+        <Input
+          name="socialFacebook"
+          id="input-profile-social-facebook"
+          label="Facebook"
+          placeholder="https://"
+        />
+        <Input
+          name="socialInstagram"
+          id="input-profile-social-instagram"
+          label="Instagram"
+          placeholder="https://"
+        />
+        <Button theme="success" block>
+          Save
+        </Button>
       </Form>
     );
   };

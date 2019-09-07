@@ -51,30 +51,46 @@ export default class ProjectCard extends React.PureComponent {
               Edit
             </Button>
             <div className="card-project-social-icons">
-              <Icon
-                name="twitter-square"
-                className="social-icon social-icon-twitter margin-right-sm"
-                fixed={false}
-                fab
-              />
-              <Icon
-                name="youtube-square"
-                className="social-icon social-icon-youtube margin-right-sm"
-                fixed={false}
-                fab
-              />
-              <Icon
-                name="facebook-square"
-                className="social-icon social-icon-facebook margin-right-sm"
-                fixed={false}
-                fab
-              />
-              <Icon
-                name="instagram"
-                className="social-icon social-icon-instagram"
-                fixed={false}
-                fab
-              />
+              {project.social.twitter && (
+                <a href={project.social.twitter} rel="noopener noreferrer" target="_blank">
+                  <Icon
+                    name="twitter-square"
+                    className="social-icon social-icon-twitter margin-right-sm"
+                    fixed={false}
+                    fab
+                  />
+                </a>
+              )}
+              {project.social.youtube && (
+                <a href={project.social.youtube} rel="noopener noreferrer" target="_blank">
+                  <Icon
+                    name="youtube-square"
+                    className="social-icon social-icon-youtube margin-right-sm"
+                    fixed={false}
+                    fab
+                  />
+                </a>
+              )}
+              {project.social.facebook && (
+                <a href={project.social.facebook} rel="noopener noreferrer" target="_blank">
+                  <Icon
+                    name="facebook-square"
+                    className="social-icon social-icon-facebook margin-right-sm"
+                    fixed={false}
+                    fab
+                  />
+                </a>
+              )}
+              {project.social.instagram && (
+                <a href={project.social.instagram} rel="noopener noreferrer" target="_blank">
+                  <Icon
+                    name="instagram"
+                    className="social-icon social-icon-instagram"
+                    fixed={false}
+                    fab
+                  />
+                </a>
+              )}
             </div>
           </div>
         </div>

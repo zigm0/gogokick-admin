@@ -68,7 +68,7 @@ class ModelRequestHandler
         }
 
         if ($validate && !$this->isValid($obj)) {
-            throw new BadRequestHttpException();
+            throw new BadRequestHttpException((string)$this->getErrors());
         }
 
         return $obj;

@@ -297,7 +297,10 @@ class ProjectsController extends ApiController
         if ($model->getName()) {
             $project->setName($model->getName());
         }
-        $project->setSubtitle($model->getSubtitle());
+
+        $project
+            ->setSocial($model->getSocial())
+            ->setSubtitle($model->getSubtitle());
 
         $image = $model->getImage();
         if ($image) {

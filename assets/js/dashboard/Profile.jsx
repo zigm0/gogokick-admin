@@ -196,21 +196,25 @@ export default class Profile extends React.PureComponent {
             name="socialTwitter"
             id="input-profile-social-twitter"
             label="Twitter"
+            placeholder="https://"
           />
           <Input
             name="socialYoutube"
             id="input-profile-social-youtube"
             label="Youtube"
+            placeholder="https://"
           />
           <Input
             name="socialFacebook"
             id="input-profile-social-facebook"
             label="Facebook"
+            placeholder="https://"
           />
           <Input
             name="socialInstagram"
             id="input-profile-social-instagram"
             label="Instagram"
+            placeholder="https://"
           />
         </section>
       );
