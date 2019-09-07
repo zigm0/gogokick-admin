@@ -177,24 +177,28 @@ export default class EditorSettings extends React.PureComponent {
           </Upload>
         </div>
         <Input
+          type="url"
           name="socialTwitter"
           id="input-profile-social-twitter"
           label="Twitter"
           placeholder="https://"
         />
         <Input
+          type="url"
           name="socialYoutube"
           id="input-profile-social-youtube"
           label="Youtube"
           placeholder="https://"
         />
         <Input
+          type="url"
           name="socialFacebook"
           id="input-profile-social-facebook"
           label="Facebook"
           placeholder="https://"
         />
         <Input
+          type="url"
           name="socialInstagram"
           id="input-profile-social-instagram"
           label="Instagram"

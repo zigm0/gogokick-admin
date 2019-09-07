@@ -294,6 +294,15 @@ class ProjectsController extends ApiController
         $model   = new ProjectSettingsModel();
         $handler->handleRequest($model, $request);
 
+        foreach($model->getSocial() as $key => $value) {
+            if (!in_array($key, ['twitter', 'facebook', 'youtube', 'instagram'])) {
+                throw new BadRequestHttpException("Invalid social media key ${key}.");
+            }
+            if ($value && filter_var($value, FILTER_VALIDATE_URL) === false) {
+                throw new BadRequestHttpException("Invalid social media url ${value}.");
+            }
+        }
+
         if ($model->getName()) {
             $project->setName($model->getName());
         }
