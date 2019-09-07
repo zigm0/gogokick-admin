@@ -22,6 +22,47 @@
 }
 
 .card-project {
+  display: flex;
+  border: 1px solid #dadada;
+  padding: $gutter-size-sm;
+}
+
+.card-project-thumb {
+  cursor: pointer;
+  width: 300px;
+  height: 168px;
+}
+
+.card-project-details {
+  flex-grow: 2;
+  position: relative;
+  padding-left: $gutter-size-sm;
+}
+
+.card-project-name {
+  margin-bottom: 0;
+}
+
+.card-project-subtitle {
+  font-size: $font-size-sm;
+  color: $color-dim;
+}
+
+.card-project-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  padding-left: $gutter-size-sm;
+  justify-content: space-between;
+}
+
+.card-project-social-icons {
+
+}
+
+/*.card-project {
   cursor: pointer;
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.25);
   transition: box-shadow 0.2s ease-in-out;
@@ -40,4 +81,4 @@
 
 .card-project-thumb {
   width: 100%;
-}
+}*/

@@ -51,10 +51,11 @@ export default class Dashboard extends React.PureComponent {
     return (
       <Container className="editor-home">
         <Row>
-          <Column xl={8} offsetXl={2} className="gutter-bottom">
+          <Column xl={10} offsetXl={1} className="gutter-bottom">
+            <h3>My Projects</h3>
             <Row>
               {projects.map(project => (
-                <Column key={project.id} xl={6} md={12}>
+                <Column key={project.id}>
                   <ProjectCard
                     project={project}
                     onClick={this.handleCardClick}

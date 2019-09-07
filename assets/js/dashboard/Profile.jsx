@@ -230,7 +230,7 @@ export default class Profile extends React.PureComponent {
           <a href={makeLink(profile.social.twitter)} rel="noopener noreferrer" target="_blank">
             <Icon
               name="twitter-square"
-              className="profile-social-icon profile-social-icon-twitter margin-right-sm"
+              className="social-icon social-icon-twitter margin-right-sm"
               fixed={false}
               fab
             />
@@ -240,7 +240,7 @@ export default class Profile extends React.PureComponent {
           <a href={makeLink(profile.social.youtube)} rel="noopener noreferrer" target="_blank">
             <Icon
               name="youtube-square"
-              className="profile-social-icon profile-social-icon-youtube margin-right-sm"
+              className="social-icon social-icon-youtube margin-right-sm"
               fixed={false}
               fab
             />
@@ -250,7 +250,7 @@ export default class Profile extends React.PureComponent {
           <a href={makeLink(profile.social.facebook)} rel="noopener noreferrer" target="_blank">
             <Icon
               name="facebook-square"
-              className="profile-social-icon profile-social-icon-facebook margin-right-sm"
+              className="social-icon social-icon-facebook margin-right-sm"
               fixed={false}
               fab
             />
@@ -260,7 +260,7 @@ export default class Profile extends React.PureComponent {
           <a href={makeLink(profile.social.instagram)} rel="noopener noreferrer" target="_blank">
             <Icon
               name="instagram"
-              className="profile-social-icon profile-social-icon-instagram margin-right-sm"
+              className="social-icon social-icon-instagram margin-right-sm"
               fixed={false}
               fab
             />

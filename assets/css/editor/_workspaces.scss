@@ -18,7 +18,8 @@
 .workspace-dashboard,
 .workspace-new-project,
 .workspace-profile,
-.workspace-login {
+.workspace-login,
+.workspace-project-settings {
   .workspace-body {
     min-height: calc(100vh - #{$height-header} - #{$height-footer});
   }
