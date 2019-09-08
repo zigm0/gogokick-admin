@@ -254,7 +254,7 @@ class Project
     }
 
     /**
-     * @return Collection
+     * @return Collection|Block[]
      */
     public function getBlocks(): Collection
     {
@@ -262,7 +262,7 @@ class Project
     }
 
     /**
-     * @param Collection $blocks
+     * @param Collection|Block[] $blocks
      *
      * @return Project
      */

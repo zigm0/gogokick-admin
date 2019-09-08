@@ -55,3 +55,12 @@ parameters:
             size:
                 width: 200
                 height: 200
+
+        downloads:
+            s3:
+                folder:       'gogokick-downloads'
+                bucket:       'arb.headzoo.io'
+                cacheControl: 'max-age=300'
+            cloudfront:
+                id:  'E34SMF4C1NLPCH'
+                url: 'dawo3jgs9j8n8.cloudfront.net'

@@ -1,0 +1,7 @@
+@import "../vars";
+
+.export-export-textarea {
+  height: calc(100vh - 156px) !important;
+  border: 1px solid $color-dim;
+  padding: $gutter-size-sm;
+}

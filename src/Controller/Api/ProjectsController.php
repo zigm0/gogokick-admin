@@ -14,10 +14,12 @@ use App\Repository\ProjectRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Exception;
+use GuzzleHttp\Client;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use ZipArchive;
 
 /**
  * @Route("/api/projects", name="api_projects", options={"expose"=true})
@@ -322,5 +324,53 @@ class ProjectsController extends ApiController
         $this->em->flush();
 
         return $this->jsonEntityResponse($project);
+    }
+
+    /**
+     * @Route("/{id}/images", name="_images", methods={"GET"})
+     *
+     * @param int $id
+     *
+     * @return JsonResponse
+     */
+    public function imagesAction($id)
+    {
+        $project = $this->getProject($id);
+
+        $zipFile = tempnam(sys_get_temp_dir(), 'export');
+        $guzzle  = new Client();
+        $zip     = new ZipArchive();
+        $zip->open($zipFile, ZipArchive::CREATE);
+
+        $counter = 1;
+        foreach($project->getBlocks() as $block) {
+            if ($block->getType() === Block::TYPE_IMAGE) {
+                $url  = $block->getMedia()->getUrl();
+                $path = parse_url($url, PHP_URL_PATH);
+                $name = pathinfo($path, PATHINFO_BASENAME);
+
+                $tmpFile = tempnam(sys_get_temp_dir(), 'export');
+                $guzzle->get($url, ['sink' => $tmpFile]);
+                $zip->addFile($tmpFile, $counter . '-' . $name);
+                $counter++;
+            }
+        }
+
+        $zip->close();
+
+        $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $project->getName())));
+        $data = file_get_contents($zipFile);
+        $path = sprintf('%s-%s.zip', $slug, date('Y-m-d-h-i'));
+        $url  = $this->cdn->upload('downloads', $path, $data);
+
+        return new JsonResponse(['url' => $url]);
+    }
+
+    /**
+     * @Route("/{id}/images/download", name="_images_download", methods={"GET"})
+     */
+    public function downloadZipAction()
+    {
+
     }
 }

@@ -95,9 +95,20 @@ export function stripTags(input, allowed) {
     });
 }
 
+/**
+ * @param {string} url
+ * @returns {string}
+ */
+export function filenameFromUrl(url) {
+  const path = (new URL(url)).pathname;
+
+  return path.replace(/^.*[/]/, '');
+}
+
 export default {
   truncate,
   stripTags,
+  filenameFromUrl,
   roundRobin:  stringRoundRobin,
   spaceCommas: stringSpaceCommas,
   ucWords:     stringUcWords,

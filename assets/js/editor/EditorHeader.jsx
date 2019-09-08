@@ -68,6 +68,15 @@ export default class EditorHeader extends React.PureComponent {
   /**
    *
    */
+  handleExportClick = () => {
+    const { project } = this.props;
+
+    history.push(`/editor/${project.id}/export`);
+  };
+
+  /**
+   *
+   */
   handlePreviewClick = () => {
     const { uiModal } = this.props;
 
@@ -103,7 +112,7 @@ export default class EditorHeader extends React.PureComponent {
               <Button onClick={this.handlePreviewClick}>
                 Preview
               </Button>
-              <Button>
+              <Button onClick={this.handleExportClick}>
                 Export
               </Button>
               <Button onClick={this.handleSettingsClick}>

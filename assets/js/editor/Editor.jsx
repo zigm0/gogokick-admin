@@ -10,6 +10,7 @@ import EditorCanvas from './EditorCanvas';
 import EditorNew from './EditorNew';
 import EditorSettings from './EditorSettings';
 import EditorSidebar from './EditorSidebar';
+import EditorExport from './EditorExport';
 
 const mapStateToProps = state => ({
   isLoaded: state.editor.isLoaded
@@ -62,6 +63,7 @@ export default class Editor extends React.PureComponent {
               <Switch>
                 <Route exact path="/editor/new" component={EditorNew} />
                 <Route exact path="/editor/:id" component={EditorCanvas} />
+                <Route exact path="/editor/:id/export" component={EditorExport} />
                 <Route exact path="/editor/:id/settings" component={EditorSettings} />
               </Switch>
             </Router>

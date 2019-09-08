@@ -11,6 +11,7 @@ export const PROJECT_OPEN               = 'PROJECT_OPEN_PROJECT';
 export const PROJECT_UPDATE_TEAM_MEMBER = 'PROJECT_UPDATE_TEAM_MEMBER';
 export const PROJECT_REMOVE_TEAM_MEMBER = 'PROJECT_REMOVE_TEAM_MEMBER';
 export const PROJECT_SETTINGS           = 'PROJECT_SETTINGS';
+export const PROJECT_DOWNLOAD_IMAGES    = 'PROJECT_DOWNLOAD_IMAGES';
 export const PROJECT_DELETE             = 'PROJECT_DELETE_PROJECT';
 export const PROJECT_MARK_READ          = 'PROJECT_MARK_READ';
 
@@ -203,6 +204,24 @@ export const projectSettings = (payload) => {
       api.post(router.generate('api_projects_settings', { id: project.id }), project);
     }
   };
+};
+
+/**
+ * @param {number} id
+ * @returns {Function}
+ */
+export const projectDownloadImages = (id) => {
+  return (dispatch) => {
+    dispatch(projectBusy(true));
+    api.get(router.generate('api_projects_images', { id }))
+      .then((resp) => {
+        console.log(resp);
+        document.location = resp.url;
+      })
+      .finally(() => {
+        dispatch(projectBusy(false));
+      });
+  }
 };
 
 /**
