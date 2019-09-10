@@ -78,7 +78,7 @@ export default class App extends React.Component {
   renderHeader = () => {
     const { workspace } = this.props;
 
-    if (workspace === 'editor') {
+    if (workspace === 'editor' || workspace === 'project-export' || workspace === 'project-settings') {
       return <EditorHeader />;
     } else if (workspace === 'home') {
       return <HomeHeader />;
