@@ -128,7 +128,11 @@ export default class BlockTextEditor extends React.PureComponent {
     const { block } = this.props;
     const { text, cmds } = this.state;
 
-    const html    = block.isHeadline ? `<h1>${text}</h1>` : text;
+    let html = block.isHeadline ? `<h1>${text}</h1>` : text;
+    if (html === '') {
+      html = '<p><br /></p>';
+    }
+
     const classes = classNames('block-editor block-editor-text block-expanded', {
       'block-editor-headline': block.isHeadline
     });
