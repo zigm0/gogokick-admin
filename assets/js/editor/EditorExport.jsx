@@ -47,6 +47,9 @@ export default class EditorExport extends React.PureComponent {
     projectDownloadImages(project.id);
   };
 
+  /**
+   * @returns {*}
+   */
   renderTextarea = () => {
     const { project } = this.props;
 
@@ -61,22 +64,30 @@ export default class EditorExport extends React.PureComponent {
     blocks.forEach((block) => {
       switch (block.type) {
         case constants.blockType('text'):
-          html = `${html}${block.text}`;
+          if (block.text) {
+            html = `${html}${block.text}<br /><br />`;
+          }
           break;
         case constants.blockType('image'):
-          html = `${html}////// Enter Image: ${imageCounter}-${strings.filenameFromUrl(block.media.url)} //////<br />`;
-          imageCounter += 1;
+          if (block.media) {
+            html = `${html}///// Enter Image: ${imageCounter}-${strings.filenameFromUrl(block.media.url)} /////<br />`;
+            imageCounter += 1;
 
-          if (block.caption) {
-            html = `${html}////// Image Caption: ${block.caption} //////<br />`;
+            if (block.caption) {
+              html = `${html}///// Image Caption: ${block.caption} /////<br />`;
+            }
+            html = `${html}<br />`;
           }
-          html = `${html}<br />`;
           break;
         case constants.blockType('video'):
-          html = `${html}////// Enter Video URL: ${block.videoUrl} //////<br /><br />`;
+          if (block.videoUrl) {
+            html = `${html}///// Enter Video URL: ${block.videoUrl} /////<br /><br />`;
+          }
           break;
         case constants.blockType('audio'):
-          html = `${html}////// Enter Audio URL: ${block.audioUrl} //////<br /><br />`;
+          if (block.audioUrl) {
+            html = `${html}///// Enter Audio URL: ${block.audioUrl} /////<br /><br />`;
+          }
           break;
       }
     });
