@@ -68,6 +68,13 @@ class Block
     protected $text = '';
 
     /**
+     * @var string
+     * @ORM\Column(type="text")
+     * @Groups({"web"})
+     */
+    protected $link = '';
+
+    /**
      * @var int
      * @ORM\Column(type="smallint", options={"unsigned"=true})
      * @Groups({"web"})
@@ -280,6 +287,26 @@ class Block
     public function setText(string $text): Block
     {
         $this->text = $text;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLink(): ?string
+    {
+        return $this->link;
+    }
+
+    /**
+     * @param string $link
+     *
+     * @return Block
+     */
+    public function setLink(string $link): Block
+    {
+        $this->link = $link;
 
         return $this;
     }

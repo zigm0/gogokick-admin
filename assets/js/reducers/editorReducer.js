@@ -5,6 +5,7 @@ const commonBlock = {
   text:        '',
   caption:     '',
   description: '',
+  link:        '',
   media:       null,
   videoUrl:    '',
   audioUrl:    '',
@@ -346,13 +347,14 @@ const onEditorRemove = (state, action) => {
  */
 const onEditorUpdateBlock = (state, action) => {
   let { canvasBlocks, blockIndex, isChanged } = objects.clone(state);
-  const { id, text, caption, description, videoUrl, audioUrl, isHeadline, isLocked } = action.payload;
+  const { id, text, link, caption, description, videoUrl, audioUrl, isHeadline, isLocked } = action.payload;
 
   const blocks = Array.from(canvasBlocks[blockIndex]);
   const index  = arrays.findIndexByID(blocks, id);
 
   if (index !== -1) {
     blocks[index].text           = text;
+    blocks[index].link           = link;
     blocks[index].caption        = caption;
     blocks[index].isLocked       = isLocked;
     blocks[index].isHeadline     = isHeadline;

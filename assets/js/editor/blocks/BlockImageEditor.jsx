@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { connect, objects, mapDispatchToProps } from 'utils';
 import { Upload } from 'components';
 import BlockMenu from './BlockMenu';
-import { editorActions, mediaActions } from 'actions';
+import { editorActions, mediaActions, uiActions } from 'actions';
 
 @connect(
   null,
-  mapDispatchToProps(mediaActions, editorActions)
+  mapDispatchToProps(mediaActions, editorActions, uiActions)
 )
 export default class BlockImageEditor extends React.PureComponent {
   static propTypes = {
@@ -16,13 +16,16 @@ export default class BlockImageEditor extends React.PureComponent {
       text:         PropTypes.string,
       media:        PropTypes.object,
       type:         PropTypes.number.isRequired,
+      link:         PropTypes.string,
       caption:      PropTypes.string,
       origFilename: PropTypes.string
     }).isRequired,
-    height:            PropTypes.number.isRequired,
-    mediaUpload:       PropTypes.func.isRequired,
-    editorUpdateBlock: PropTypes.func.isRequired,
-    onChange:          PropTypes.func.isRequired
+    height:              PropTypes.number.isRequired,
+    mediaUpload:         PropTypes.func.isRequired,
+    editorUpdateBlock:   PropTypes.func.isRequired,
+    editorActivateBlock: PropTypes.func.isRequired,
+    onChange:            PropTypes.func.isRequired,
+    uiToast:             PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -34,6 +37,7 @@ export default class BlockImageEditor extends React.PureComponent {
     super(props);
 
     this.state = {
+      link:    props.block.link,
       caption: props.block.caption
     };
   }
@@ -45,7 +49,8 @@ export default class BlockImageEditor extends React.PureComponent {
     const { block, onChange } = this.props;
     const { block: lastBlock } = prevProps;
 
-    if ((!lastBlock.media && !block.media) || (!lastBlock.media && block.media.id) || (block.media.id !== lastBlock.media.id)) {
+    if ((!lastBlock.media && !block.media)
+      || (!lastBlock.media && block.media.id) || (block.media.id !== lastBlock.media.id)) {
       onChange(null, null);
     }
   }
@@ -54,10 +59,17 @@ export default class BlockImageEditor extends React.PureComponent {
    *
    */
   componentWillUnmount() {
-    const { block, editorUpdateBlock } = this.props;
+    const { block, editorUpdateBlock, editorActivateBlock, uiToast } = this.props;
     const { caption } = this.state;
+    let { link } = this.state;
 
-    editorUpdateBlock(objects.merge(block, { caption }));
+    if (link !== '' && !link.startsWith('http://') && !link.startsWith('https://')) {
+      uiToast('Link must start with https:// or http://', { type: 'error' });
+      link = '';
+      editorActivateBlock(block.id);
+    }
+
+    editorUpdateBlock(objects.merge(block, { caption, link }));
   }
 
   /**
@@ -84,11 +96,18 @@ export default class BlockImageEditor extends React.PureComponent {
   };
 
   /**
+   * @param {Event} e
+   */
+  handleLinkChange = (e) => {
+    this.setState({ link: e.target.value });
+  };
+
+  /**
    * @returns {*}
    */
   render() {
     const { block, height } = this.props;
-    const { caption } = this.state;
+    const { caption, link } = this.state;
 
     let buttons = '';
     if (block.media) {
@@ -121,6 +140,12 @@ export default class BlockImageEditor extends React.PureComponent {
               placeholder="Caption"
               value={caption}
               onChange={this.handleCaptionChange}
+            />
+            <input
+              className="text-center"
+              placeholder="Link URL"
+              value={link}
+              onChange={this.handleLinkChange}
             />
           </div>
         </div>

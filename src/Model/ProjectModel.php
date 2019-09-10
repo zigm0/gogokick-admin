@@ -35,6 +35,7 @@ class ProjectModel
      *              "id"          = @Assert\NotBlank,
      *              "type"        = @Type("integer"),
      *              "text"        = @Type("string"),
+     *              "link"        = @Type("string"),
      *              "caption"     = @Type("string"),
      *              "description" = @Type("string"),
      *              "height"      = @Type("integer"),

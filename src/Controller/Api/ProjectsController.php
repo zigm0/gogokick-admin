@@ -157,7 +157,9 @@ class ProjectsController extends ApiController
                     $block->setIsHeadline($blockData['isHeadline']);
                     break;
                 case Block::TYPE_IMAGE:
-                    $block->setCaption($blockData['caption']);
+                    $block
+                        ->setLink($blockData['link'])
+                        ->setCaption($blockData['caption']);
                     if (!empty($blockData['media']) && !empty($blockData['media']['id'])) {
                         $media = $this->getMedia($blockData['media']['id']);
                         $block->setMedia($media);

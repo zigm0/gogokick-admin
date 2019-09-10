@@ -70,23 +70,26 @@ export default class EditorExport extends React.PureComponent {
           break;
         case constants.blockType('image'):
           if (block.media) {
-            html = `${html}///// Enter Image: ${imageCounter}-${strings.filenameFromUrl(block.media.url)} /////<br />`;
+            html = `${html}## Enter Image: ${imageCounter}-${strings.filenameFromUrl(block.media.url)}<br />`;
             imageCounter += 1;
 
             if (block.caption) {
-              html = `${html}///// Image Caption: ${block.caption} /////<br />`;
+              html = `${html}## Image Caption: ${block.caption}<br />`;
+            }
+            if (block.link) {
+              html = `${html}## Image Link: ${block.link}<br />`;
             }
             html = `${html}<br />`;
           }
           break;
         case constants.blockType('video'):
           if (block.videoUrl) {
-            html = `${html}///// Enter Video URL: ${block.videoUrl} /////<br /><br />`;
+            html = `${html}## Enter Video URL: ${block.videoUrl}<br /><br />`;
           }
           break;
         case constants.blockType('audio'):
           if (block.audioUrl) {
-            html = `${html}///// Enter Audio URL: ${block.audioUrl} /////<br /><br />`;
+            html = `${html}## Enter Audio URL: ${block.audioUrl}<br /><br />`;
           }
           break;
       }
