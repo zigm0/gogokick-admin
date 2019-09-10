@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import ContentEditable from 'react-contenteditable';
-import { connect, browser, objects, mapDispatchToProps } from 'utils';
+import { connect, browser, objects, strings, mapDispatchToProps } from 'utils';
 import { Button } from 'components';
 import { editorActions } from 'actions';
 import BlockMenu from './BlockMenu';
@@ -132,6 +132,7 @@ export default class BlockTextEditor extends React.PureComponent {
     if (html === '') {
       html = '<p><br /></p>';
     }
+    html = strings.stripTags(html, '<div><p><b><i><a><br><ul><li>');
 
     const classes = classNames('block-editor block-editor-text block-expanded', {
       'block-editor-headline': block.isHeadline
