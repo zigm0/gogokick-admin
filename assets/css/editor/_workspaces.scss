@@ -3,7 +3,8 @@
 .workspace-dashboard,
 .workspace-profile,
 .workspace-new-project,
-.workspace-project-settings {
+.workspace-project-settings,
+.workspace-project-export {
 
   .editor-sidebar {
     transform: translateX(-300px);
@@ -19,7 +20,8 @@
 .workspace-new-project,
 .workspace-profile,
 .workspace-login,
-.workspace-project-settings {
+.workspace-project-settings,
+.workspace-project-export {
   .workspace-body {
     min-height: calc(100vh - #{$height-header} - #{$height-footer});
   }
@@ -31,7 +33,8 @@
   }
 }
 
-.workspace-project-settings {
+.workspace-project-settings,
+.workspace-project-export {
   .editor-body {
     height: auto;
   }
