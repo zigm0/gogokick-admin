@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { connect, system, browser, history, mapDispatchToProps } from 'utils';
 import { Row, Column, Button } from 'components/bootstrap';
 import { Form, Input } from 'components/forms';
-import { Upload, Link } from 'components';
+import { Upload, Link, Workspace } from 'components';
 import { formActions, projectActions, mediaActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({
@@ -27,7 +27,6 @@ export default class EditorSettings extends React.PureComponent {
     editor:          PropTypes.object.isRequired,
     project:         PropTypes.object.isRequired,
     uiModal:         PropTypes.func.isRequired,
-    uiWorkspace:     PropTypes.func.isRequired,
     formChanges:     PropTypes.func.isRequired,
     projectOpen:     PropTypes.func.isRequired,
     projectSettings: PropTypes.func.isRequired,
@@ -40,9 +39,8 @@ export default class EditorSettings extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { match, project, uiWorkspace, projectOpen } = this.props;
+    const { match, project, projectOpen } = this.props;
 
-    uiWorkspace('project-settings');
     if (!project.id) {
       projectOpen(match.params.id, {
         redirectAfterOpen: false
@@ -218,23 +216,25 @@ export default class EditorSettings extends React.PureComponent {
     const { project } = this.props;
 
     return (
-      <div className="editor-settings gutter-top">
-        <Row>
-          <Column xl={6} offsetXl={3} className="gutter-bottom d-flex justify-content-between">
-            <Link to={`/editor/${project.id}`} theme="success" icon="caret-left" btn>
-              Back to project
-            </Link>
-            <Button theme="danger" onClick={this.handleDeleteClick}>
-              Delete Project
-            </Button>
-          </Column>
-        </Row>
-        <Row>
-          <Column xl={6} offsetXl={3}>
-            {this.renderForm()}
-          </Column>
-        </Row>
-      </div>
+      <Workspace name="project-settings">
+        <div className="editor-settings gutter-top">
+          <Row>
+            <Column xl={6} offsetXl={3} className="gutter-bottom d-flex justify-content-between">
+              <Link to={`/editor/${project.id}`} theme="success" icon="caret-left" btn>
+                Back to project
+              </Link>
+              <Button theme="danger" onClick={this.handleDeleteClick}>
+                Delete Project
+              </Button>
+            </Column>
+          </Row>
+          <Row>
+            <Column xl={6} offsetXl={3}>
+              {this.renderForm()}
+            </Column>
+          </Row>
+        </div>
+      </Workspace>
     );
   }
 }

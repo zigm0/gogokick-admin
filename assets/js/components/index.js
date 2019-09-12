@@ -11,3 +11,4 @@ export { default as TeamMemberItem } from './TeamMemberItem';
 export { default as Link } from './Link';
 export { default as Upload } from './Upload';
 export { default as ProtectedRoute } from './ProtectedRoute';
+export { default as Workspace } from './Workspace';

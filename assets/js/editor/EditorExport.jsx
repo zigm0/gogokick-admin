@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect, constants, strings, mapDispatchToProps } from 'utils';
 import { Container, Button } from 'components/bootstrap';
-import { Link } from 'components';
-import { projectActions, uiActions } from 'actions';
+import { Link, Workspace } from 'components';
+import { projectActions } from 'actions';
 
 const mapStateToProps = state => ({
   project: state.project
@@ -11,13 +11,12 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(projectActions, uiActions)
+  mapDispatchToProps(projectActions)
 )
 export default class EditorExport extends React.PureComponent {
   static propTypes = {
     match:                 PropTypes.object.isRequired,
     project:               PropTypes.object.isRequired,
-    uiWorkspace:           PropTypes.func.isRequired,
     projectOpen:           PropTypes.func.isRequired,
     projectDownloadImages: PropTypes.func.isRequired
   };
@@ -28,9 +27,8 @@ export default class EditorExport extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { match, project, uiWorkspace, projectOpen } = this.props;
+    const { match, project, projectOpen } = this.props;
 
-    uiWorkspace('project-export');
     if (!project.id) {
       projectOpen(match.params.id, {
         redirectAfterOpen: false
@@ -113,15 +111,17 @@ export default class EditorExport extends React.PureComponent {
     }
 
     return (
-      <Container className="editor-export gutter-top">
-        <Link to={`/editor/${project.id}`} theme="success" icon="caret-left" className="margin-right-sm" btn>
-          Back to project
-        </Link>
-        <Button onClick={this.handleDownloadClick} disabled={project.isBusy}>
-          Download Images ZIP
-        </Button>
-        {this.renderTextarea()}
-      </Container>
+      <Workspace name="project-export">
+        <Container className="editor-export gutter-top">
+          <Link to={`/editor/${project.id}`} theme="success" icon="caret-left" className="margin-right-sm" btn>
+            Back to project
+          </Link>
+          <Button onClick={this.handleDownloadClick} disabled={project.isBusy}>
+            Download Images ZIP
+          </Button>
+          {this.renderTextarea()}
+        </Container>
+      </Workspace>
     );
   }
 }

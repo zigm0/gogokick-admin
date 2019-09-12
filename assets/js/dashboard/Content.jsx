@@ -1,22 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { api, router, browser, mapDispatchToProps } from 'utils';
+import { api, router, browser } from 'utils';
 import { Container } from 'components/bootstrap';
-import { connect } from "react-redux";
-import { uiActions } from 'actions';
+import { Workspace } from 'components';
 
-const mapStateToProps = state => ({
-  projects: state.editor.projects
-});
-
-@connect(
-  mapStateToProps,
-  mapDispatchToProps(uiActions)
-)
 export default class Content extends React.PureComponent {
   static propTypes = {
-    name:        PropTypes.string.isRequired,
-    uiWorkspace: PropTypes.func.isRequired
+    name: PropTypes.string.isRequired
   };
 
   static defaultProps = {};
@@ -37,9 +27,6 @@ export default class Content extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { uiWorkspace } = this.props;
-
-    uiWorkspace('content');
     this.handleUpdate();
   }
 
@@ -93,10 +80,12 @@ export default class Content extends React.PureComponent {
     }
 
     return (
-      <Container className="gutter-top">
-        <h1>{content.title}</h1>
-        <div dangerouslySetInnerHTML={{ __html: content.html }} />
-      </Container>
+      <Workspace name="content">
+        <Container className="gutter-top">
+          <h1>{content.title}</h1>
+          <div dangerouslySetInnerHTML={{ __html: content.html }} />
+        </Container>
+      </Workspace>
     );
   }
 }

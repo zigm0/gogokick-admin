@@ -5,8 +5,8 @@ import { withRouter } from 'react-router-dom';
 import { connect, browser, objects, strings, mapDispatchToProps } from 'utils';
 import { Container, Row, Column } from 'components/bootstrap';
 import { Form, Input, Textarea } from 'components/forms';
-import { Avatar, Icon, Button, Upload } from 'components';
-import { formActions, userActions, uiActions } from 'actions';
+import { Avatar, Icon, Button, Upload, Workspace } from 'components';
+import { formActions, userActions } from 'actions';
 
 const mapStateToProps = state => ({
   user:    state.user,
@@ -17,7 +17,7 @@ const mapStateToProps = state => ({
 @withRouter
 @connect(
   mapStateToProps,
-  mapDispatchToProps(formActions, userActions, uiActions)
+  mapDispatchToProps(formActions, userActions)
 )
 export default class Profile extends React.PureComponent {
   static propTypes = {
@@ -28,8 +28,7 @@ export default class Profile extends React.PureComponent {
     userSave:    PropTypes.func.isRequired,
     userProfile: PropTypes.func.isRequired,
     formChange:  PropTypes.func.isRequired,
-    formChanges: PropTypes.func.isRequired,
-    uiWorkspace: PropTypes.func.isRequired
+    formChanges: PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -50,9 +49,8 @@ export default class Profile extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { match, userProfile, uiWorkspace } = this.props;
+    const { match, userProfile } = this.props;
 
-    uiWorkspace('profile');
     userProfile(match.params.id);
   }
 
@@ -436,28 +434,30 @@ export default class Profile extends React.PureComponent {
     }
 
     return (
-      <Container className="gutter-top">
-        <Form name="profile" onSubmit={this.handleSubmit}>
-          <div className="profile-header">
-            <div>
-              {this.renderButtons()}
+      <Workspace name="profile">
+        <Container className="gutter-top">
+          <Form name="profile" onSubmit={this.handleSubmit}>
+            <div className="profile-header">
+              <div>
+                {this.renderButtons()}
+              </div>
             </div>
-          </div>
-          <div className="profile">
-            <Row>
-              <Column className="text-center" xl={5} md={12}>
-                {this.renderAvatar()}
-              </Column>
-              <Column xl={7} md={12}>
-                {this.renderName()}
-                {this.renderSocial()}
-                {this.renderSkills()}
-                {this.renderBio()}
-              </Column>
-            </Row>
-          </div>
-        </Form>
-      </Container>
+            <div className="profile">
+              <Row>
+                <Column className="text-center" xl={5} md={12}>
+                  {this.renderAvatar()}
+                </Column>
+                <Column xl={7} md={12}>
+                  {this.renderName()}
+                  {this.renderSocial()}
+                  {this.renderSkills()}
+                  {this.renderBio()}
+                </Column>
+              </Row>
+            </div>
+          </Form>
+        </Container>
+      </Workspace>
     );
   }
 }

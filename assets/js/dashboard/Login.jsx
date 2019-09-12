@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { connect, history, mapDispatchToProps } from 'utils';
 import { Form, Input } from 'components/forms';
-import { Link } from 'components';
+import { Link, Workspace } from 'components';
 import { Container, Row, Column, Card, CardHeader, CardBody, Button } from 'components/bootstrap';
-import { userActions, uiActions } from 'actions';
+import { userActions } from 'actions';
 
 const mapStateToProps = state => ({
   isAuthenticated: state.user.isAuthenticated
@@ -13,13 +13,12 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(userActions, uiActions)
+  mapDispatchToProps(userActions)
 )
 export default class Login extends React.PureComponent {
   static propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
-    userLogin:       PropTypes.func.isRequired,
-    uiWorkspace:     PropTypes.func.isRequired
+    userLogin:       PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -28,12 +27,10 @@ export default class Login extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { isAuthenticated, uiWorkspace } = this.props;
+    const { isAuthenticated } = this.props;
 
     if (isAuthenticated) {
       history.push('/dashboard');
-    } else {
-      uiWorkspace('login');
     }
   }
 
@@ -58,44 +55,46 @@ export default class Login extends React.PureComponent {
     }
 
     return (
-      <Container className="gutter-top-lg">
-        <Row>
-          <Column xl={6} offsetXl={3}>
-            <Card>
-              <CardHeader>
-                Login
-              </CardHeader>
-              <CardBody>
-                <Form name="login" onSubmit={this.handleSubmit}>
-                  <Input
-                    name="email"
-                    type="text"
-                    label="Email"
-                    id="input-login-email"
-                    focused
-                    sm
-                  />
-                  <Input
-                    name="password"
-                    type="password"
-                    label="Password"
-                    id="input-login-password"
-                    sm
-                  />
-                  <div>
-                    <Button className="margin-right-sm">
-                      Login
-                    </Button>
-                    <Link to={registerUrl} className="btn btn-primary">
-                      Register
-                    </Link>
-                  </div>
-                </Form>
-              </CardBody>
-            </Card>
-          </Column>
-        </Row>
-      </Container>
+      <Workspace name="login">
+        <Container className="gutter-top-lg">
+          <Row>
+            <Column xl={6} offsetXl={3}>
+              <Card>
+                <CardHeader>
+                  Login
+                </CardHeader>
+                <CardBody>
+                  <Form name="login" onSubmit={this.handleSubmit}>
+                    <Input
+                      name="email"
+                      type="text"
+                      label="Email"
+                      id="input-login-email"
+                      focused
+                      sm
+                    />
+                    <Input
+                      name="password"
+                      type="password"
+                      label="Password"
+                      id="input-login-password"
+                      sm
+                    />
+                    <div>
+                      <Button className="margin-right-sm">
+                        Login
+                      </Button>
+                      <Link to={registerUrl} className="btn btn-primary">
+                        Register
+                      </Link>
+                    </div>
+                  </Form>
+                </CardBody>
+              </Card>
+            </Column>
+          </Row>
+        </Container>
+      </Workspace>
     );
   }
 }
