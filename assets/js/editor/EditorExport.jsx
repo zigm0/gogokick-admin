@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Clipboard from 'clipboard';
+import YouTube from 'react-youtube';
 import { connect, constants, strings, mapDispatchToProps } from 'utils';
-import { Container, Button } from 'components/bootstrap';
+import { Row, Column, Button } from 'components/bootstrap';
 import { Link, Workspace } from 'components';
 import { projectActions } from 'actions';
 
@@ -24,6 +26,16 @@ export default class EditorExport extends React.PureComponent {
   static defaultProps = {};
 
   /**
+   * @param {*} props
+   */
+  constructor(props) {
+    super(props);
+
+    this.btnCopy = React.createRef();
+    this.clipboard = null;
+  }
+
+  /**
    *
    */
   componentDidMount() {
@@ -33,6 +45,18 @@ export default class EditorExport extends React.PureComponent {
       projectOpen(match.params.id, {
         redirectAfterOpen: false
       });
+    }
+  }
+
+  /**
+   * @param {*} prevProps
+   */
+  componentDidUpdate(prevProps) {
+    const { project } = this.props;
+    const { project: prevProject } = prevProps;
+
+    if (project.id !== prevProject.id && this.clipboard === null) {
+      this.clipboard = new Clipboard(this.btnCopy.current);
     }
   }
 
@@ -95,7 +119,11 @@ export default class EditorExport extends React.PureComponent {
 
     return (
       <div className="gutter-top">
-        <div className="export-export-textarea" dangerouslySetInnerHTML={{ __html: html }} />
+        <div
+          id="project-export-textarea"
+          className="export-export-textarea"
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
       </div>
     );
   };
@@ -112,15 +140,55 @@ export default class EditorExport extends React.PureComponent {
 
     return (
       <Workspace name="project-export">
-        <Container className="editor-export gutter-top">
-          <Link to={`/editor/${project.id}`} theme="success" icon="caret-left" className="margin-right-sm" btn>
-            Back to project
-          </Link>
-          <Button onClick={this.handleDownloadClick} disabled={project.isBusy}>
-            Download Images ZIP
-          </Button>
-          {this.renderTextarea()}
-        </Container>
+        <Row className="editor-export gutter-top">
+          <Column xl={6} offsetXl={3}>
+            <Link to={`/editor/${project.id}`} icon="caret-left" className="margin-right-sm" btn>
+              Back to project
+            </Link>
+            <ul className="project-export-list">
+              <li>
+                <h3>Step 1</h3>
+                <p>
+                  Click Download below and save the Zip file in a convenient area on your computer.
+                </p>
+                <Button
+                  className="project-export-btn"
+                  theme="success"
+                  onClick={this.handleDownloadClick}
+                  disabled={project.isBusy}
+                >
+                  Download
+                </Button>
+              </li>
+              <li>
+                <h3>Step 2</h3>
+                <p>
+                  Click the Copy button to copy your page to your clipboard.
+                </p>
+                <button
+                  ref={this.btnCopy}
+                  className="btn btn-success project-export-btn"
+                  data-clipboard-target="#project-export-textarea"
+                >
+                  Copy
+                </button>
+                {this.renderTextarea()}
+              </li>
+              <li>
+                <h3>Step 3</h3>
+                <p>
+                  You now have everything you need to move your page
+                  to {strings.ucWords(constants.campaignType(project.campaignType))}. Follow along with this short video
+                  to get everything in place.
+                </p>
+                <YouTube
+                  videoId="Pzj9vtN3NwI"
+                  opts={{ width: '100%' }}
+                />
+              </li>
+            </ul>
+          </Column>
+        </Row>
       </Workspace>
     );
   }

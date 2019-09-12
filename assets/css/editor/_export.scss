@@ -1,10 +1,11 @@
 @import "../vars";
 
 .export-export-textarea {
-  min-height: calc(100vh - 156px) !important;
+  height: 200px;
   border: 1px solid $color-dim;
   padding: $gutter-size-sm;
   margin-bottom: $gutter-size;
+  overflow-y: auto;
 
   ul {
     list-style: disc;
@@ -19,4 +20,16 @@
       list-style-type: disc;
     }
   }
+}
+
+.project-export-list {
+  padding-top: $gutter-size;
+
+  li {
+    margin-bottom: $gutter-size-lg;
+  }
+}
+
+.project-export-btn {
+  width: 150px;
 }
