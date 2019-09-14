@@ -51,19 +51,4 @@ class EditorController extends ApiController
 
         return $this->jsonEntityResponse($block);
     }
-
-    /**
-     * @param int $id
-     *
-     * @return Block|object
-     */
-    protected function getBlock($id)
-    {
-        $block = $this->em->getRepository(Block::class)->findByID($id);
-        if (!$block) {
-            throw $this->createNotFoundException();
-        }
-
-        return $block;
-    }
 }

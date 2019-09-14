@@ -165,6 +165,16 @@ export const projectSave = () => {
   };
 };
 
+export const projectSaveBlock = (payload) => {
+  return (dispatch) => {
+    const url = router.generate('api_projects_save_block', { id: payload.id });
+    api.post(url, payload)
+      .then((resp) => {
+        console.log(resp);
+      });
+  };
+};
+
 /**
  * @param {number} id
  * @returns {Function}

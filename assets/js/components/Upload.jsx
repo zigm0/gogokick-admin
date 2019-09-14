@@ -57,7 +57,7 @@ export default class Upload extends React.PureComponent {
       return;
     }
 
-    const e = new CustomEvent('upload');
+    const e = new CustomEvent('upload', { cancelable: true });
     onDrop(e, files[0]);
 
     if (!e.defaultPrevented) {

@@ -283,6 +283,31 @@ class ProjectsController extends ApiController
     }
 
     /**
+     * @Route("/blocks/{id}", name="_save_block", methods={"POST"})
+     *
+     * @param int                 $id
+     * @param Request             $request
+     * @param ModelRequestHandler $handler
+     *
+     * @return JsonResponse
+     */
+    public function saveBlockAction($id, Request $request, ModelRequestHandler $handler)
+    {
+        $block = $this->getBlock($id);
+
+        $values = $request->json->all();
+        if ($values['media']) {
+            $values['media'] = $this->getMedia($values['media']['id']);
+        }
+
+        $handler->handleRequest($block, $values);
+
+        $this->em->flush();
+
+        return $this->jsonEntityResponse($block);
+    }
+
+    /**
      * @Route("/{id}/settings", name="_settings", methods={"POST"})
      *
      * @param int                 $id

@@ -2,6 +2,7 @@
 namespace App\Controller\Api;
 
 use App\Controller\Controller;
+use App\Entity\Block;
 use App\Entity\Media;
 use App\Entity\Project;
 use App\Media\CDNInterface;
@@ -105,6 +106,21 @@ class ApiController extends Controller
         }
 
         return $project;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return Block|object
+     */
+    public function getBlock($id)
+    {
+        $block = $this->em->getRepository(Block::class)->findByID($id);
+        if (!$block) {
+            throw $this->createNotFoundException();
+        }
+
+        return $block;
     }
 
     /**

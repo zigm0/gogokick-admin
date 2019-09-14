@@ -83,7 +83,7 @@ export default class BlockImageEditor extends React.PureComponent {
 
     mediaUpload({
       file,
-      block:  block.id,
+      block,
       system: 'block_images'
     });
   };

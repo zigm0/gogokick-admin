@@ -1,6 +1,8 @@
 <?php
 namespace App\Http;
 
+use DateTime;
+use Exception;
 use InvalidArgumentException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
@@ -63,6 +65,13 @@ class ModelRequestHandler
 
         foreach($request as $key => $value) {
             if ($this->propertyAccessor->isWritable($obj, $key)) {
+                if (strpos($key, 'date') === 0) {
+                    try {
+                    $value = new DateTime($value);
+                    } catch (Exception $e) {
+                        throw new BadRequestHttpException($e->getMessage());
+                    }
+                }
                 $this->propertyAccessor->setValue($obj, $key, $value);
             }
         }

@@ -484,7 +484,7 @@ class Block
      *
      * @return Block
      */
-    public function setMedia(Media $media): Block
+    public function setMedia(?Media $media): Block
     {
         $this->media = $media;
 

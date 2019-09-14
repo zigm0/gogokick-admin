@@ -1,4 +1,4 @@
-import { api, router, system as systemUtils } from 'utils';
+import { api, router } from 'utils';
 import { projectSettings, projectBusy } from './projectActions';
 import { editorBlockMedia } from './editorActions';
 import { uiModal, uiToast } from './uiActions';
@@ -18,7 +18,7 @@ export const mediaUpload = (payload) => {
     body.append('file', file);
     body.append('system', system);
     if (block) {
-      body.append('block', block);
+      body.append('block', block.id);
     }
 
     dispatch({

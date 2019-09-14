@@ -1,6 +1,6 @@
 import { api, router, arrays } from 'utils';
 import { setPermissions } from 'utils/acl';
-import { projectSave } from './projectActions';
+import { projectSave, projectSaveBlock } from './projectActions';
 
 export const EDITOR_RESET          = 'EDITOR_RESET';
 export const EDITOR_LOADED         = 'EDITOR_LOADED';
@@ -223,7 +223,7 @@ export const editorUpdateBlock = (payload) => {
         type: EDITOR_UPDATE_BLOCK,
         payload
       });
-      dispatch(projectSave());
+      dispatch(projectSaveBlock(payload));
     }
   };
 };
@@ -245,6 +245,7 @@ export const editorBlockSettings = (payload) => {
 
 /**
  * @param {*} payload
+ * @param {*} block
  * @returns {Function}
  */
 export const editorBlockMedia = (payload) => {
@@ -253,7 +254,6 @@ export const editorBlockMedia = (payload) => {
       type: EDITOR_BLOCK_MEDIA,
       payload
     });
-    dispatch(projectSave());
   };
 };
 
