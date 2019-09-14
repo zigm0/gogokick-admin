@@ -1,4 +1,5 @@
 const path                 = require('path');
+const webpack              = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ManifestPlugin       = require('webpack-manifest-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -38,6 +39,9 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.DefinePlugin({
+      __DEV__: JSON.stringify(process.env.NODE_ENV !== 'production')
+    }),
     new MiniCssExtractPlugin({
       filename: 'css/[name].[chunkhash].css'
     }),

@@ -2,27 +2,54 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default class ErrorBoundary extends React.Component {
+  static propTypes = {
+    children: PropTypes.node
+  };
+
   constructor(props) {
     super(props);
-    this.state = { hasError: false };
+    this.state = {
+      error: null
+    };
   }
 
+  /**
+   * @param {*} error
+   * @returns {{error: *}}
+   */
   static getDerivedStateFromError(error) {
-    // Update state so the next render will show the fallback UI.
-    return { hasError: true };
+    return { error };
   }
 
+  /**
+   * @param {*} error
+   * @param {*} errorInfo
+   */
   componentDidCatch(error, errorInfo) {
-    console.log(error);
-    // You can also log the error to an error reporting service
+    console.log(errorInfo);
   }
 
+  /**
+   * @returns {*}
+   */
   render() {
-    if (this.state.hasError) {
-      // You can render any custom fallback UI
-      return <h1>Something went wrong.</h1>;
+    const { children } = this.props;
+    const { error } = this.state;
+
+    if (error) {
+      return (
+        <div className="error-boundary-message">
+          <h1>
+            <i className="fa fa-exclamation-triangle margin-right-sm" />
+            Something went wrong.
+          </h1>
+          {__DEV__ && (
+            <p>{error.toString()}</p>
+          )}
+        </div>
+      );
     }
 
-    return this.props.children;
+    return children;
   }
 }

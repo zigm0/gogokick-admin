@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { Route, Router, Switch } from 'react-router-dom';
 import { connect, history, mapDispatchToProps } from 'utils';
-import { LoadingCubes } from 'components';
+import { LoadingCubes, ErrorBoundary } from 'components';
 import { editorActions } from 'actions';
 import EditorCanvas from './EditorCanvas';
 import EditorNew from './EditorNew';
@@ -59,14 +59,16 @@ export default class Editor extends React.PureComponent {
         <div className={classes}>
           <EditorSidebar />
           <div className="editor-content">
-            <Router history={history}>
-              <Switch>
-                <Route exact path="/editor/new" component={EditorNew} />
-                <Route exact path="/editor/:id" component={EditorCanvas} />
-                <Route exact path="/editor/:id/export" component={EditorExport} />
-                <Route exact path="/editor/:id/settings" component={EditorSettings} />
-              </Switch>
-            </Router>
+            <ErrorBoundary>
+              <Router history={history}>
+                <Switch>
+                  <Route exact path="/editor/new" component={EditorNew} />
+                  <Route exact path="/editor/:id" component={EditorCanvas} />
+                  <Route exact path="/editor/:id/export" component={EditorExport} />
+                  <Route exact path="/editor/:id/settings" component={EditorSettings} />
+                </Switch>
+              </Router>
+            </ErrorBoundary>
           </div>
         </div>
       </DragDropContext>
