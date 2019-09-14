@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { connect, system, browser, history, mapDispatchToProps } from 'utils';
+import { connect, system, browser, history, acl, mapDispatchToProps } from 'utils';
 import { Row, Column, Button } from 'components/bootstrap';
 import { Form, Input } from 'components/forms';
 import { Upload, Link, Workspace } from 'components';
@@ -39,7 +39,12 @@ export default class EditorSettings extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { match, project, projectOpen } = this.props;
+    const { match, editor, project, projectOpen } = this.props;
+    const { meTeamMember } = editor;
+
+    if (meTeamMember.user && !acl(meTeamMember.roles, 'settings', 'project')) {
+      history.push('/');
+    }
 
     if (!project.id) {
       projectOpen(match.params.id, {
@@ -54,7 +59,12 @@ export default class EditorSettings extends React.PureComponent {
    * @param {*} prevProps
    */
   componentDidUpdate(prevProps) {
-    const { project } = this.props;
+    const { project, editor } = this.props;
+    const { meTeamMember } = editor;
+
+    if (meTeamMember.user && !acl(meTeamMember.roles, 'settings', 'project')) {
+      history.push('/');
+    }
 
     browser.title(`${project.name} - Settings`);
     if (prevProps.project.name !== project.name) {
@@ -220,7 +230,7 @@ export default class EditorSettings extends React.PureComponent {
         <div className="editor-settings gutter-top">
           <Row>
             <Column xl={6} offsetXl={3} className="gutter-bottom d-flex justify-content-between">
-              <Link to={`/editor/${project.id}`} theme="success" icon="caret-left" btn>
+              <Link to={`/editor/${project.id}`} icon="caret-left" btn>
                 Back to project
               </Link>
               <Button theme="danger" onClick={this.handleDeleteClick}>

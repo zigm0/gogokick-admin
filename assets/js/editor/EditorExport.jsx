@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Clipboard from 'clipboard';
 import YouTube from 'react-youtube';
-import { connect, constants, strings, mapDispatchToProps } from 'utils';
+import { connect, constants, strings, acl, history, mapDispatchToProps } from 'utils';
 import { Row, Column, Button } from 'components/bootstrap';
 import { Link, Workspace } from 'components';
 import { projectActions } from 'actions';
 
 const mapStateToProps = state => ({
-  project: state.project
+  project:      state.project,
+  meTeamMember: state.editor.meTeamMember
 });
 
 @connect(
@@ -19,6 +20,7 @@ export default class EditorExport extends React.PureComponent {
   static propTypes = {
     match:                 PropTypes.object.isRequired,
     project:               PropTypes.object.isRequired,
+    meTeamMember:          PropTypes.object.isRequired,
     projectOpen:           PropTypes.func.isRequired,
     projectDownloadImages: PropTypes.func.isRequired
   };
@@ -39,7 +41,12 @@ export default class EditorExport extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { match, project, projectOpen } = this.props;
+    const { match, project, projectOpen, meTeamMember } = this.props;
+    const { user, roles } = meTeamMember;
+
+    if (user && !acl(roles, 'export', 'project')) {
+      history.push('/');
+    }
 
     if (!project.id) {
       projectOpen(match.params.id, {
@@ -52,8 +59,13 @@ export default class EditorExport extends React.PureComponent {
    * @param {*} prevProps
    */
   componentDidUpdate(prevProps) {
-    const { project } = this.props;
+    const { project, meTeamMember } = this.props;
     const { project: prevProject } = prevProps;
+    const { user, roles } = meTeamMember;
+
+    if (user && !acl(roles, 'export', 'project')) {
+      history.push('/');
+    }
 
     if (project.id !== prevProject.id && this.clipboard === null) {
       this.clipboard = new Clipboard(this.btnCopy.current);

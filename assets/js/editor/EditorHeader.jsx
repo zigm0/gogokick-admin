@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, history, mapDispatchToProps, router } from 'utils';
+import { connect, history, acl, mapDispatchToProps, router } from 'utils';
 import { Icon, Link } from 'components';
 import { Row, Column, Button } from 'components/bootstrap';
 import UserMenu from 'layout/UserMenu';
@@ -91,7 +91,8 @@ export default class EditorHeader extends React.PureComponent {
    */
   render() {
     const { editor, editorUndo, editorRedo } = this.props;
-    const { canvasBlocks, blockIndex } = editor;
+    const { canvasBlocks, blockIndex, meTeamMember } = editor;
+    const { roles } = meTeamMember;
 
     return (
       <header className="editor-header">
@@ -109,15 +110,21 @@ export default class EditorHeader extends React.PureComponent {
               <Button onClick={this.handleNewClick}>
                 New
               </Button>
-              <Button onClick={this.handlePreviewClick}>
-                Preview
-              </Button>
-              <Button onClick={this.handleExportClick}>
-                Export
-              </Button>
-              <Button onClick={this.handleSettingsClick}>
-                Settings
-              </Button>
+              {acl(roles, 'preview', 'project') && (
+                <Button onClick={this.handlePreviewClick}>
+                  Preview
+                </Button>
+              )}
+              {acl(roles, 'export', 'project') && (
+                <Button onClick={this.handleExportClick}>
+                  Export
+                </Button>
+              )}
+              {acl(roles, 'settings', 'project') && (
+                <Button onClick={this.handleSettingsClick}>
+                  Settings
+                </Button>
+              )}
               <Button disabled={blockIndex === 0} onClick={editorUndo}>
                 Undo
               </Button>

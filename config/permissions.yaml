@@ -11,6 +11,7 @@ parameters:
             - name: video
             - name: audio
         resources:
+            - name: project
             - name: blocks
             - name: block-text
             - name: block-image
