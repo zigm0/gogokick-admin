@@ -144,6 +144,17 @@ class Project
     }
 
     /**
+     * @return string
+     * @Groups({"web"})
+     */
+    public function getSlug()
+    {
+        $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $this->getName())));
+
+        return trim($slug, '-');
+    }
+
+    /**
      * @return int
      */
     public function getId(): int

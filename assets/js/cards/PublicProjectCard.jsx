@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect, strings, arrays, mapDispatchToProps } from 'utils';
 import { Card, CardBody, CardFooter, CardImage, Button } from 'components/bootstrap';
-import { Icon } from 'components';
+import { Icon, Link } from 'components';
 import { projectActions } from 'actions';
 
 const mapStateToProps = state => ({
@@ -47,7 +47,9 @@ export default class PublicProjectCard extends React.PureComponent {
 
     return (
       <Card className="card-public-project">
-        <CardImage src={project.image.url} />
+        <Link to={`/p/${project.id}/${project.slug}`}>
+          <CardImage src={project.image.url} />
+        </Link>
         <CardBody className="card-public-project-body">
           <div className="card-public-project-title">
             {strings.truncate(project.name, 25)}

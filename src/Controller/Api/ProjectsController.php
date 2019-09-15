@@ -2,7 +2,6 @@
 namespace App\Controller\Api;
 
 use App\Entity\Block;
-use App\Entity\Media;
 use App\Entity\Project;
 use App\Entity\Watch;
 use App\Http\ModelRequestHandler;
@@ -17,7 +16,6 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Exception;
 use GuzzleHttp\Client;
-use RuntimeException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -45,6 +43,34 @@ class ProjectsController extends ApiController
         $projects = $projectRepository->findByTeamMember($user);
 
         return $this->jsonEntityResponse($projects);
+    }
+
+    /**
+     * @Route("/public/{id}", name="_public", methods={"GET"})
+     *
+     * @param int $id
+     *
+     * @return JsonResponse
+     */
+    public function publicAction($id)
+    {
+        $project = $this->getProject($id);
+        if (!$project->isPublic()) {
+            throw $this->createNotFoundException();
+        }
+
+        $project = $this->arrayEntityGroup($project);
+        $uid = $project['user']['id'];
+
+        unset($project['user']);
+        unset($project['blocks']);
+        unset($project['team']);
+        if (!empty($project['image'])) {
+            unset($project['image']['user']);
+        }
+        $project['user'] = ['id' => $uid];
+
+        return new JsonResponse($project);
     }
 
     /**

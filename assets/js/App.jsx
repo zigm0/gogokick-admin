@@ -14,6 +14,7 @@ const Login           = React.lazy(() => import('./dashboard/Login'));
 const Register        = React.lazy(() => import('./dashboard/Register'));
 const Profile         = React.lazy(() => import('./dashboard/Profile'));
 const Dashboard       = React.lazy(() => import('./dashboard/Dashboard'));
+const Project         = React.lazy(() => import('./dashboard/Project'));
 const Invite          = React.lazy(() => import('./dashboard/Invite'));
 const Editor          = React.lazy(() => import('./editor/Editor'));
 const HomeHeader      = React.lazy(() => import('./dashboard/HomeHeader'));
@@ -109,6 +110,7 @@ export default class App extends React.Component {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/about" render={() => <Content name="about" />} />
                 <Route exact path="/terms" render={() => <Content name="terms" />} />
+                <Route exact path="/p/:id/:slug" component={Project} />
                 <Route exact path="/privacy" render={() => <Content name="privacy" />} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/profile/:id" component={Profile} />

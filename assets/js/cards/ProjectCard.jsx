@@ -50,7 +50,13 @@ export default class ProjectCard extends React.PureComponent {
           </div>
           <div className="card-project-footer">
             {watching ? (
-              <Link to="/" theme="success" className="d-flex align-items-center" btn sm>
+              <Link
+                to={`/p/${project.id}/${project.slug}`}
+                theme="success"
+                className="d-flex align-items-center"
+                btn
+                sm
+              >
                 Go to Campaign
               </Link>
             ) : (
