@@ -8,6 +8,7 @@ import { LoadingCubes, ErrorBoundary } from 'components';
 import { editorActions } from 'actions';
 import EditorCanvas from './EditorCanvas';
 import EditorNew from './EditorNew';
+import EditorMenuSidebar from './EditorMenuSidebar';
 import EditorSettings from './EditorSettings';
 import EditorSidebar from './EditorSidebar';
 import EditorExport from './EditorExport';
@@ -58,6 +59,7 @@ export default class Editor extends React.PureComponent {
       <DragDropContext onDragEnd={editorDrop}>
         <div className={classes}>
           <EditorSidebar />
+          <EditorMenuSidebar />
           <div className="editor-content">
             <ErrorBoundary>
               <Router history={history}>

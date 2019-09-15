@@ -2,8 +2,9 @@ import { objects } from 'utils';
 import * as types from 'actions/uiActions';
 
 const initialState = {
-  workspace: 'editor',
-  modals:    {
+  workspace:    'editor',
+  sideMenuOpen: false,
+  modals:       {
     login:         false,
     preview:       false,
     cropper:       false,
@@ -64,9 +65,24 @@ const onModal = (state, action) => {
   };
 };
 
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onSidebarMenuOpen = (state, action) => {
+  const sideMenuOpen = action.payload;
+
+  return {
+    ...state,
+    sideMenuOpen
+  };
+};
+
 const handlers = {
-  [types.UI_WORKSPACE]: onWorkspace,
-  [types.UI_MODAL]:     onModal
+  [types.UI_SIDEBAR_MENU_OPEN]: onSidebarMenuOpen,
+  [types.UI_WORKSPACE]:         onWorkspace,
+  [types.UI_MODAL]:             onModal
 };
 
 /**

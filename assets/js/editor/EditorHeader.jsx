@@ -7,9 +7,10 @@ import UserMenu from 'layout/UserMenu';
 import { editorActions, projectActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({
-  editor:  state.editor,
-  project: state.project,
-  user:    state.user
+  editor:       state.editor,
+  project:      state.project,
+  user:         state.user,
+  sideMenuOpen: state.ui.sideMenuOpen
 });
 
 @connect(
@@ -18,16 +19,27 @@ const mapStateToProps = state => ({
 )
 export default class EditorHeader extends React.PureComponent {
   static propTypes = {
-    user:        PropTypes.object.isRequired,
-    editor:      PropTypes.object.isRequired,
-    project:     PropTypes.object.isRequired,
-    editorUndo:  PropTypes.func.isRequired,
-    editorRedo:  PropTypes.func.isRequired,
-    uiModal:     PropTypes.func.isRequired,
-    projectSave: PropTypes.func.isRequired
+    user:              PropTypes.object.isRequired,
+    editor:            PropTypes.object.isRequired,
+    project:           PropTypes.object.isRequired,
+    sideMenuOpen:      PropTypes.bool.isRequired,
+    editorUndo:        PropTypes.func.isRequired,
+    editorRedo:        PropTypes.func.isRequired,
+    uiModal:           PropTypes.func.isRequired,
+    uiSidebarMenuOpen: PropTypes.func.isRequired,
+    projectSave:       PropTypes.func.isRequired
   };
 
   static defaultProps = {};
+
+  /**
+   *
+   */
+  handleSidebarMenuClick = () => {
+    const { sideMenuOpen, uiSidebarMenuOpen } = this.props;
+
+    uiSidebarMenuOpen(!sideMenuOpen);
+  };
 
   /**
    *
@@ -103,6 +115,20 @@ export default class EditorHeader extends React.PureComponent {
         </div>
         <div className="editor-header-middle">
           <Row style={{ width: '100%' }}>
+            <Column className="editor-header-buttons d-lg-none" offsetXl={3}>
+              <Button onClick={this.handleSidebarMenuClick}>
+                <Icon name="bars" />
+              </Button>
+              <Button disabled={blockIndex === 0} onClick={editorUndo}>
+                <Icon name="undo" />
+              </Button>
+              <Button disabled={blockIndex === canvasBlocks.length - 1} onClick={editorRedo}>
+                <Icon name="redo" />
+              </Button>
+              <Button onClick={this.handleHelpClick}>
+                <Icon name="question" />
+              </Button>
+            </Column>
             <Column className="editor-header-buttons d-none d-lg-block d-xl-block" offsetXl={3}>
               <Button onClick={this.handleOpenClick}>
                 Dashboard
@@ -136,30 +162,6 @@ export default class EditorHeader extends React.PureComponent {
               </Button>
             </Column>
           </Row>
-          <div className="editor-header-mobile-buttons d-lg-none">
-            <button
-              type="button"
-              className="navbar-toggler toggler-example"
-              data-toggle="collapse"
-              data-target="#navbarSupportedContent8"
-              aria-controls="navbarSupportedContent8"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span>
-                <Icon name="bars" fas />
-              </span>
-            </button>
-            <Button icon="align-center" className="btn-block-text" sm>
-              <span className="d-none d-lg-inline d-md-inline d-xl-inline">Add Text</span>
-            </Button>
-            <Button icon="image" className="btn-block-image" sm>
-              <span className="d-none d-lg-inline d-md-inline d-xl-inline">Add Image</span>
-            </Button>
-            <Button icon="video" className="btn-block-video" sm>
-              <span className="d-none d-lg-inline d-md-inline d-xl-inline">Add Video</span>
-            </Button>
-          </div>
         </div>
         <div className="editor-header-right">
           <UserMenu />

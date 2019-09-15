@@ -6,7 +6,7 @@ import { connect, browser, mapDispatchToProps, constants } from 'utils';
 import { Container, Row, Column } from 'components/bootstrap';
 import { Workspace } from 'components';
 import { CanvasBlock } from './blocks';
-import { editorActions, projectActions, userActions } from 'actions';
+import { editorActions, projectActions, userActions, uiActions } from 'actions';
 
 const mapStateToProps = state => ({
   project:      state.project,
@@ -16,7 +16,7 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(projectActions, userActions, editorActions)
+  mapDispatchToProps(projectActions, userActions, editorActions, uiActions)
 )
 export default class EditorCanvas extends React.PureComponent {
   static propTypes = {
@@ -26,7 +26,8 @@ export default class EditorCanvas extends React.PureComponent {
     match:               PropTypes.object.isRequired,
     project:             PropTypes.object.isRequired,
     projectOpen:         PropTypes.func.isRequired,
-    editorActivateBlock: PropTypes.func.isRequired
+    editorActivateBlock: PropTypes.func.isRequired,
+    uiSidebarMenuOpen:   PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -37,8 +38,9 @@ export default class EditorCanvas extends React.PureComponent {
    *
    */
   componentDidMount() {
-    const { match, project, projectOpen } = this.props;
+    const { match, project, projectOpen, uiSidebarMenuOpen } = this.props;
 
+    uiSidebarMenuOpen(false);
     const matchId = parseInt(match.params.id, 10);
     if (!isNaN(matchId) && project.id !== matchId) {
       projectOpen(matchId);
@@ -84,7 +86,7 @@ export default class EditorCanvas extends React.PureComponent {
         >
           <div className={bodyClasses}>
             <Container className="h-100">
-              <Row>
+              <Row className="justify-content-center">
                 <Column className="editor-canvas-body-col" xl={8}>
                   <div className="block-text">
                     <h3 className="block-text-headline-about">About</h3>

@@ -9,6 +9,12 @@
 .editor-sidebar {
   color: #FFF;
   background-color: #242424;
+  flex: 1 0 $width-sidebar;
+  transition: transform .3s ease-in-out;
+
+  @include media-md {
+    flex: 1 0 $width-sidebar-md;
+  }
 }
 
 .editor-sidebar-body {
@@ -64,4 +70,30 @@
 .editor-sidebar-block-over {
   width: $width-block !important;
   height: 100px !important;
+}
+
+.editor-menu-sidebar {
+  color: #FFF;
+  width: $width-sidebar;
+  position: absolute;
+  background-color: #242424;
+  flex: 1 0 $width-sidebar;
+  padding: $gutter-size;
+  transition: transform .2s ease-in-out;
+  transform: translateX(-$width-sidebar);
+
+  @include media-md {
+    width: $width-sidebar-md;
+    flex: 1 0 $width-sidebar-md;
+    transform: translateX(-$width-sidebar-md);
+  }
+
+  &.editor-menu-sidebar-open {
+    transform: translateX(0);
+  }
+
+  .btn {
+    width: 100%;
+    margin-bottom: $gutter-size-sm;
+  }
 }

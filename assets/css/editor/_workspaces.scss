@@ -6,8 +6,9 @@
 .workspace-project-settings,
 .workspace-project-export {
 
-  .editor-sidebar {
-    transform: translateX(-300px);
+  .editor-sidebar,
+  .editor-menu-sidebar {
+    transform: translateX(-$width-sidebar) !important;
   }
 
   .editor-content {

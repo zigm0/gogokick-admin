@@ -2,9 +2,10 @@ import React from 'react';
 import { toast } from 'react-toastify';
 import ToastBody from 'components/ToastBody';
 
-export const UI_WORKSPACE = 'UI_WORKSPACE';
-export const UI_MODAL     = 'UI_MODAL';
-export const UI_TOAST     = 'UI_TOAST';
+export const UI_WORKSPACE         = 'UI_WORKSPACE';
+export const UI_SIDEBAR_MENU_OPEN = 'UI_SIDEBAR_MENU_OPEN';
+export const UI_MODAL             = 'UI_MODAL';
+export const UI_TOAST             = 'UI_TOAST';
 
 /**
  * @param {*} payload
@@ -17,6 +18,16 @@ export const uiWorkspace = (payload) => {
   };
 };
 
+/**
+ * @param {boolean} payload
+ * @returns {{payload: *, type: string}}
+ */
+export const uiSidebarMenuOpen = (payload) => {
+  return {
+    type: UI_SIDEBAR_MENU_OPEN,
+    payload
+  };
+};
 
 /**
  * @param {*} payload

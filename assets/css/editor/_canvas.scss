@@ -20,6 +20,10 @@
   padding-left: 0;
   padding-right: 0;
   max-width: 680px;
+
+  @include media-md {
+    width: $width-block-md;
+  }
 }
 
 .editor-canvas-blocks {

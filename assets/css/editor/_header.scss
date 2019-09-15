@@ -27,6 +27,10 @@
 .editor-header-left {
   flex: 0 0 $width-sidebar;
 
+  @include media-md {
+    flex: 0 0 $width-sidebar-md;
+  }
+
   img {
     height: 54px;
   }
@@ -43,6 +47,10 @@
   flex: 0 0 $width-sidebar;
   display: flex;
   justify-content: flex-end;
+
+  @include media-md {
+    flex: 0 0 $width-sidebar-md;
+  }
 }
 
 .editor-header-project-name {
@@ -50,17 +58,5 @@
 
   div {
     margin-left: -46px;
-  }
-}
-
-.editor-header-mobile-buttons {
-  width: 100%;
-  justify-content: space-evenly;
-  display: flex;
-  align-items: center;
-
-  .navbar-toggler {
-    color: #FFF;
-    cursor: pointer;
   }
 }

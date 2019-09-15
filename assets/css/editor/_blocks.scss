@@ -47,13 +47,7 @@
   }
 
   @include media-md {
-    width: 100% !important;
-  }
-  @include media-sm {
-    width: 100% !important;
-  }
-  @include media-xs {
-    width: 100% !important;
+    width: $width-block-md !important;
   }
 }
 
