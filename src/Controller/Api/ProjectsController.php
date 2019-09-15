@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 use App\Entity\Block;
 use App\Entity\Media;
 use App\Entity\Project;
+use App\Entity\Watch;
 use App\Http\ModelRequestHandler;
 use App\Http\Request;
 use App\Model\ProjectModel;
@@ -11,6 +12,7 @@ use App\Model\ProjectSettingsModel;
 use App\Repository\BlockRepository;
 use App\Repository\MediaRepository;
 use App\Repository\ProjectRepository;
+use App\Repository\WatchRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Exception;
@@ -343,6 +345,48 @@ class ProjectsController extends ApiController
         $this->em->flush();
 
         return $this->jsonEntityResponse($project);
+    }
+
+    /**
+     * @Route("/{id}/watch", name="_watch", methods={"POST"})
+     *
+     * @param int             $id
+     * @param WatchRepository $repository
+     *
+     * @return JsonResponse
+     */
+    public function watchAction($id, WatchRepository $repository)
+    {
+        $project = $this->getProject($id);
+        $user    = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException();
+        }
+
+        $watch = $repository->findByUserAndProject($user, $project);
+        if ($watch) {
+            $this->em->remove($watch);
+        } else {
+            $watch = (new Watch())
+                ->setUser($user)
+                ->setProject($project);
+            $this->em->persist($watch);
+        }
+
+        $this->em->flush();
+
+        $watching = [];
+        $watches  = $repository->findByUser($user);
+        $watches  = $this->arrayEntityGroup($watches);
+        foreach($watches as $watch) {
+            $project = $watch['project'];
+            unset($project['user']);
+            unset($project['blocks']);
+            unset($project['team']);
+            $watching[] = $project;
+        }
+
+        return new JsonResponse($watching);
     }
 
     /**

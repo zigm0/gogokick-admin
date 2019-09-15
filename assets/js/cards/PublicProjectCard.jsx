@@ -1,36 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, strings, mapDispatchToProps } from 'utils';
+import { connect, strings, arrays, mapDispatchToProps } from 'utils';
 import { Card, CardBody, CardFooter, CardImage, Button } from 'components/bootstrap';
 import { Icon } from 'components';
+import { projectActions } from 'actions';
 
 const mapStateToProps = state => ({
-
+  watching: state.project.watching
 });
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps()
+  mapDispatchToProps(projectActions)
 )
 export default class PublicProjectCard extends React.PureComponent {
   static propTypes = {
-    project: PropTypes.object.isRequired
+    watching:     PropTypes.array.isRequired,
+    project:      PropTypes.object.isRequired,
+    projectWatch: PropTypes.func.isRequired
   };
 
   static defaultProps = {};
 
   /**
-   * @param {Event} e
+   *
    */
-  handleWatchlistClick = (e) => {
+  handleWatchlistClick = () => {
+    const { project, projectWatch } = this.props;
 
+    projectWatch(project.id);
   };
 
   /**
    * @returns {*}
    */
   render() {
-    const { project } = this.props;
+    const { project, watching } = this.props;
+
+    const index = arrays.findIndexByID(watching, project.id);
 
     return (
       <Card className="card-public-project">
@@ -86,7 +93,7 @@ export default class PublicProjectCard extends React.PureComponent {
             </a>
           )}
           <Button onClick={this.handleWatchlistClick} sm>
-            Add to Watchlist
+            {index === -1 ? 'Add to Watchlist' : 'Remove' }
           </Button>
         </CardFooter>
       </Card>

@@ -6,6 +6,7 @@ use App\Entity\Block;
 use App\Entity\Project;
 use App\Entity\ProjectUser;
 use App\Repository\ProjectRepository;
+use App\Repository\WatchRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -27,11 +28,12 @@ class HomeController extends ApiController
     /**
      * @Route("/editor", name="editor")
      *
-     * @param ProjectRepository $repository
+     * @param ProjectRepository $projectRepository
+     * @param WatchRepository   $watchRepository
      *
      * @return Response
      */
-    public function editorAction(ProjectRepository $repository)
+    public function editorAction(ProjectRepository $projectRepository, WatchRepository $watchRepository)
     {
         $constants = [
             'blockTypes'    => array_flip(Block::TYPES),
@@ -49,13 +51,12 @@ class HomeController extends ApiController
             $user['isAuthenticated'] = true;
         }
 
-        $projects = $repository->createQueryBuilder('p')
+        $projects = $projectRepository->createQueryBuilder('p')
             ->where('p.isPublic = 1')
             ->andWhere('p.isDeleted = 0')
             ->getQuery()
             ->execute();
         $projects = $this->arrayEntityGroup($projects);
-
         foreach($projects as &$project) {
             unset($project['user']);
             unset($project['blocks']);
@@ -65,11 +66,26 @@ class HomeController extends ApiController
             }
         }
 
+        $watching = [];
+        if ($user = $this->getUser()) {
+            $watches = $watchRepository->findByUser($user);
+            $watches = $this->arrayEntityGroup($watches);
+            foreach ($watches as $watch) {
+                $p = $watch['project'];
+                unset($p['user']);
+                unset($p['blocks']);
+                unset($p['team']);
+                $watching[] = $p;
+            }
+        }
+
         return $this->render('editor/index.html.twig', [
             'constants'    => $constants,
             'initialState' => [
                 'editor'         => [],
-                'project'        => [],
+                'project'        => [
+                    'watching' => $watching
+                ],
                 'user'           => $user,
                 'publicProjects' => $projects
             ]

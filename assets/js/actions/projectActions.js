@@ -11,6 +11,7 @@ export const PROJECT_OPEN               = 'PROJECT_OPEN_PROJECT';
 export const PROJECT_UPDATE_TEAM_MEMBER = 'PROJECT_UPDATE_TEAM_MEMBER';
 export const PROJECT_REMOVE_TEAM_MEMBER = 'PROJECT_REMOVE_TEAM_MEMBER';
 export const PROJECT_SETTINGS           = 'PROJECT_SETTINGS';
+export const PROJECT_WATCHING           = 'PROJECT_WATCHING';
 export const PROJECT_DOWNLOAD_IMAGES    = 'PROJECT_DOWNLOAD_IMAGES';
 export const PROJECT_DELETE             = 'PROJECT_DELETE_PROJECT';
 export const PROJECT_MARK_READ          = 'PROJECT_MARK_READ';
@@ -271,5 +272,31 @@ export const projectRemoveTeamMember = (payload) => {
   return {
     type: PROJECT_REMOVE_TEAM_MEMBER,
     payload
+  };
+};
+
+/**
+ * @param {number} id
+ * @returns {Function}
+ */
+export const projectWatch = (id) => {
+  return (dispatch, getState) => {
+    const { user } = getState();
+
+    if (!user.isAuthenticated) {
+      history.push('/login');
+    }
+
+    dispatch(projectBusy(true));
+    api.post(router.generate('api_projects_watch', { id }))
+      .then((watching) => {
+        dispatch({
+          type: PROJECT_WATCHING,
+          watching
+        });
+      })
+      .finally(() => {
+        dispatch(projectBusy(false));
+      });
   };
 };

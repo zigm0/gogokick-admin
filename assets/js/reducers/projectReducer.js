@@ -11,7 +11,8 @@ const initialState = objects.merge({
   isBusy:       false,
   isSaving:     false,
   campaignType: 1,
-  team:         []
+  team:         [],
+  watching:     []
 }, window.initialState.project);
 
 /**
@@ -176,6 +177,20 @@ const onProjectRemoveTeamMember = (state, action) => {
   };
 };
 
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onProjectWatching = (state, action) => {
+  const watching = Array.from(action.watching);
+
+  return {
+    ...state,
+    watching
+  };
+};
+
 const handlers = {
   [types.PROJECT_RESET]:              onProjectReset,
   [types.PROJECT_BUSY]:               onProjectBusy,
@@ -187,6 +202,7 @@ const handlers = {
   [types.PROJECT_SET]:                onProjectSet,
   [types.PROJECT_NEW]:                onProjectNew,
   [types.PROJECT_OPEN]:               onProjectOpen,
+  [types.PROJECT_WATCHING]:           onProjectWatching,
   [types.PROJECT_UPDATE_TEAM_MEMBER]: onProjectUpdateTeamMember,
   [types.PROJECT_REMOVE_TEAM_MEMBER]: onProjectRemoveTeamMember
 };
