@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Button } from 'components/bootstrap';
-import { Icon } from 'components';
+import { Icon, Link } from 'components';
 
 export default class ProjectCard extends React.PureComponent {
   static propTypes = {
@@ -49,7 +49,11 @@ export default class ProjectCard extends React.PureComponent {
             {project.subtitle}
           </div>
           <div className="card-project-footer">
-            {!watching && (
+            {watching ? (
+              <Link to="/" theme="success" className="d-flex align-items-center" btn sm>
+                Go to Campaign
+              </Link>
+            ) : (
               <Button theme="success" onClick={e => onClick(e, project)} sm>
                 Edit
               </Button>

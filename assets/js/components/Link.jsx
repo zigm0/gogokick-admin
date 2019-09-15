@@ -9,6 +9,7 @@ export default class Link extends React.PureComponent {
   static propTypes = {
     to:        PropTypes.string.isRequired,
     btn:       PropTypes.bool,
+    sm:        PropTypes.bool,
     icon:      PropTypes.string,
     theme:     PropTypes.oneOf(themes),
     onClick:   PropTypes.func,
@@ -18,6 +19,7 @@ export default class Link extends React.PureComponent {
 
   static defaultProps = {
     btn:       false,
+    sm:        false,
     theme:     themes[0],
     onClick:   () => {},
     icon:      '',
@@ -42,10 +44,11 @@ export default class Link extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { btn, icon, theme, className, children, ...props } = this.props;
+    const { btn, sm, icon, theme, className, children, ...props } = this.props;
 
     const classes = classNames('pointer', {
-      [`btn btn-${theme}`]: btn
+      [`btn btn-${theme}`]: btn,
+      'btn-sm':             sm
     }, className);
 
     return (

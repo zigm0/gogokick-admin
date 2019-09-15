@@ -59,29 +59,12 @@
 }
 
 .card-project-social-icons {
+  margin-left: auto;
 
-}
-
-/*.card-project {
-  cursor: pointer;
-  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.25);
-  transition: box-shadow 0.2s ease-in-out;
-
-  &:hover {
-    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
-  }
-
-  .card-body {
-    height: 128px;
-    padding: 0;
-    overflow: hidden;
-    background-color: #FFF;
+  .social-icon {
+    font-size: 2rem;
   }
 }
-
-.card-project-thumb {
-  width: 100%;
-}*/
 
 .card-public-project {
   border: 0;
