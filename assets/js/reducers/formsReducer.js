@@ -40,6 +40,7 @@ const initialState = {
   projectSettings: {
     name:            '',
     subtitle:        '',
+    isPublic:        false,
     socialTwitter:   '',
     socialYoutube:   '',
     socialFacebook:  '',

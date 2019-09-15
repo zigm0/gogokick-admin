@@ -7,6 +7,7 @@ const initialState = objects.merge({
   subtitle:     '',
   image:        {},
   owner:        {},
+  isPublic:     false,
   isBusy:       false,
   isSaving:     false,
   campaignType: 1,
@@ -136,6 +137,7 @@ const onProjectSettings = (state, action) => {
     ...state,
     name:     settings.name,
     subtitle: settings.subtitle,
+    isPublic: settings.isPublic,
     image:    settings.image,
     social:   settings.social
   }

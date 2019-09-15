@@ -48,7 +48,7 @@ export const uiModal = (payload) => {
 export const uiToast = (payload, meta = {}) => {
   toast(<ToastBody type={meta.type || 'default'} message={payload} />, {
     position:        'bottom-center',
-    autoClose:       5000,
+    autoClose:       4000,
     hideProgressBar: true,
     closeOnClick:    true,
     pauseOnHover:    true,

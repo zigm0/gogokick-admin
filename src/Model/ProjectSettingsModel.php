@@ -22,6 +22,12 @@ class ProjectSettingsModel
     protected $subtitle;
 
     /**
+     * @var boolean
+     * @Assert\Type("boolean")
+     */
+    protected $isPublic;
+
+    /**
      * @var array
      * @Assert\Type("array")
      */
@@ -68,6 +74,26 @@ class ProjectSettingsModel
     public function setSubtitle(string $subtitle): ProjectSettingsModel
     {
         $this->subtitle = $subtitle;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPublic(): bool
+    {
+        return $this->isPublic;
+    }
+
+    /**
+     * @param bool $isPublic
+     *
+     * @return ProjectSettingsModel
+     */
+    public function setIsPublic(bool $isPublic): ProjectSettingsModel
+    {
+        $this->isPublic = $isPublic;
 
         return $this;
     }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect, system, browser, history, acl, mapDispatchToProps } from 'utils';
 import { Row, Column, Button } from 'components/bootstrap';
-import { Form, Input } from 'components/forms';
+import { Form, Input, Checkbox } from 'components/forms';
 import { Upload, Link, Workspace } from 'components';
 import { formActions, projectActions, mediaActions, uiActions } from 'actions';
 
@@ -81,6 +81,7 @@ export default class EditorSettings extends React.PureComponent {
     formChanges('projectSettings', {
       name:            project.name,
       subtitle:        project.subtitle  || '',
+      isPublic:        project.isPublic || false,
       socialTwitter:   project.social.twitter || '',
       socialYoutube:   project.social.youtube || '',
       socialFacebook:  project.social.facebook || '',
@@ -128,6 +129,7 @@ export default class EditorSettings extends React.PureComponent {
       projectSettings({
         name:     forms.projectSettings.name,
         subtitle: forms.projectSettings.subtitle,
+        isPublic: forms.projectSettings.isPublic,
         social:   {
           twitter:   forms.projectSettings.socialTwitter,
           youtube:   forms.projectSettings.socialYoutube,
@@ -184,6 +186,11 @@ export default class EditorSettings extends React.PureComponent {
             </div>
           </Upload>
         </div>
+        <Checkbox
+          name="isPublic"
+          label="Public"
+          className="margin-bottom"
+        />
         <Input
           type="url"
           name="socialTwitter"

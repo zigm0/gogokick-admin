@@ -165,6 +165,10 @@ export const projectSave = () => {
   };
 };
 
+/**
+ * @param {*} payload
+ * @returns {Function}
+ */
 export const projectSaveBlock = (payload) => {
   return (dispatch) => {
     const url = router.generate('api_projects_save_block', { id: payload.id });
@@ -211,7 +215,10 @@ export const projectSettings = (payload) => {
 
     const { project } = getState();
     if (project.id) {
-      api.post(router.generate('api_projects_settings', { id: project.id }), project);
+      api.post(router.generate('api_projects_settings', { id: project.id }), project)
+        .then(() => {
+          uiToast('Project settings updated.');
+        });
     }
   };
 };

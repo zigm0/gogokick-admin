@@ -60,19 +60,12 @@ class ProjectsController extends ApiController
             throw $this->createAccessDeniedException();
         }
 
-        if ($id == '0') {
-            $project = $projectRepository->findLastUpdatedByUser($user);
-            if (!$project) {
-                throw $this->createAccessDeniedException();
-            }
-        } else {
-            $project = $projectRepository->findByID($id);
-            if (!$project || !$project->hasTeamMember($user)) {
-                throw $this->createNotFoundException();
-            }
+        $project = $projectRepository->findByID($id);
+        if (!$project || !$project->hasTeamMember($user) || $project->isDeleted()) {
+            throw $this->createNotFoundException();
         }
 
-        $project->getUser();
+        // $project->getUser();
 
         return $this->jsonEntityResponse($project);
     }
@@ -96,7 +89,7 @@ class ProjectsController extends ApiController
             throw $this->createNotFoundException();
         }
 
-        $this->em->remove($project);
+        $project->setIsDeleted(true);
         $this->em->flush();
 
         return $this->jsonEntityResponse($projectRepository->findByTeamMember($user));
@@ -293,15 +286,13 @@ class ProjectsController extends ApiController
      */
     public function saveBlockAction($id, Request $request, ModelRequestHandler $handler)
     {
-        $block = $this->getBlock($id);
-
+        $block  = $this->getBlock($id);
         $values = $request->json->all();
         if ($values['media']) {
             $values['media'] = $this->getMedia($values['media']['id']);
         }
 
         $handler->handleRequest($block, $values);
-
         $this->em->flush();
 
         return $this->jsonEntityResponse($block);
@@ -337,6 +328,7 @@ class ProjectsController extends ApiController
         }
 
         $project
+            ->setIsPublic($model->isPublic())
             ->setSocial($model->getSocial())
             ->setSubtitle($model->getSubtitle());
 

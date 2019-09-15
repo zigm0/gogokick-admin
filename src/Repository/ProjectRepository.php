@@ -41,7 +41,7 @@ class ProjectRepository extends ServiceEntityRepository
     public function findByUser(User $user)
     {
         return $this->findBy([
-            'user'       => $user
+            'user' => $user
         ]);
     }
 
@@ -54,8 +54,8 @@ class ProjectRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->leftJoin(ProjectUser::class, 'pu', Join::WITH, 'pu.project = p')
-            ->where('p.user = :user')
-            ->orWhere('pu.user = :user')
+            ->where('p.isDeleted = 0')
+            ->andWhere('p.user = :user OR pu.user = :user')
             ->setParameter(':user', $user)
             ->getQuery()
             ->execute();

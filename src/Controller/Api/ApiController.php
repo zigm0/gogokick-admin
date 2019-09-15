@@ -100,8 +100,9 @@ class ApiController extends Controller
      */
     public function getProject($id)
     {
-        $project = $this->em->getRepository(Project::class)->findByID($id);
-        if (!$project) {
+        $project = $this->em->getRepository(Project::class)
+            ->findByID($id);
+        if (!$project || $project->isDeleted()) {
             throw $this->createNotFoundException();
         }
 

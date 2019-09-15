@@ -26,7 +26,8 @@ class Checkbox extends React.PureComponent {
     required:     PropTypes.bool,
     inline:       PropTypes.bool,
     circle:       PropTypes.bool,
-    onChange:     PropTypes.func
+    onChange:     PropTypes.func,
+    className:    PropTypes.string
   };
 
   static defaultProps = {
@@ -35,6 +36,7 @@ class Checkbox extends React.PureComponent {
     label:        '',
     value:        '',
     errorMessage: '',
+    className:    '',
     theme:        themes[0],
     radio:        false,
     checked:      false,
@@ -95,6 +97,7 @@ class Checkbox extends React.PureComponent {
       radio,
       inline,
       circle,
+      className,
       errorMessage,
       disabled,
       required,
@@ -110,7 +113,7 @@ class Checkbox extends React.PureComponent {
     } else {
       inputChecked = (context.values[inputName] !== undefined) ? context.values[inputName] === value : false;
     }
-    const classes = classNames(`forms-custom-checkbox-${theme}`, {
+    const classes = classNames(`forms-custom-checkbox-${theme}`, className, {
       'forms-custom-checkbox-inline': inline,
       'forms-custom-checkbox-circle': circle
     });

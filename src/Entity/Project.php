@@ -95,6 +95,20 @@ class Project
     protected $social;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     * @Groups({"web"})
+     */
+    protected $isDeleted = false;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     * @Groups({"web"})
+     */
+    protected $isPublic = false;
+
+    /**
      * @var DateTime
      * @ORM\Column(type="datetime")
      * @Groups({"web"})
@@ -360,6 +374,46 @@ class Project
     public function addTeamUser(ProjectUser $user): Project
     {
         $this->team->add($user);
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDeleted(): ?bool
+    {
+        return $this->isDeleted;
+    }
+
+    /**
+     * @param bool $isDeleted
+     *
+     * @return Project
+     */
+    public function setIsDeleted(bool $isDeleted): Project
+    {
+        $this->isDeleted = $isDeleted;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPublic(): ?bool
+    {
+        return $this->isPublic;
+    }
+
+    /**
+     * @param bool $isPublic
+     *
+     * @return Project
+     */
+    public function setIsPublic(bool $isPublic): Project
+    {
+        $this->isPublic = $isPublic;
 
         return $this;
     }
