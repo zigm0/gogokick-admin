@@ -58,17 +58,19 @@ class HomeController extends ApiController
             ->execute();
         $projects = $this->arrayEntityGroup($projects);
         foreach($projects as &$project) {
+            $uid = $project['user']['id'];
             unset($project['user']);
             unset($project['blocks']);
             unset($project['team']);
             if (!empty($project['image'])) {
                 unset($project['image']['user']);
             }
+            $project['user'] = ['id' => $uid];
         }
 
         $watching = [];
-        if ($user = $this->getUser()) {
-            $watches = $watchRepository->findByUser($user);
+        if ($u = $this->getUser()) {
+            $watches = $watchRepository->findByUser($u);
             $watches = $this->arrayEntityGroup($watches);
             foreach ($watches as $watch) {
                 $p = $watch['project'];

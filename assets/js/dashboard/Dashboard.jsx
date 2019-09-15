@@ -7,7 +7,8 @@ import { projectActions } from 'actions';
 import { Workspace } from 'components';
 
 const mapStateToProps = state => ({
-  projects: state.editor.projects
+  projects: state.editor.projects,
+  watching: state.project.watching
 });
 
 @connect(
@@ -17,6 +18,7 @@ const mapStateToProps = state => ({
 export default class Dashboard extends React.PureComponent {
   static propTypes = {
     projects:    PropTypes.array.isRequired,
+    watching:    PropTypes.array.isRequired,
     projectOpen: PropTypes.func.isRequired
   };
 
@@ -35,27 +37,62 @@ export default class Dashboard extends React.PureComponent {
   /**
    * @returns {*}
    */
-  render() {
+  renderProjects = () => {
     const { projects } = this.props;
 
     return (
+      <Row>
+        <Column xl={10} offsetXl={1} className="gutter-bottom">
+          <h3>My Projects</h3>
+          <Row>
+            {projects.map(project => (
+              <Column key={project.id}>
+                <ProjectCard
+                  project={project}
+                  onClick={this.handleCardClick}
+                />
+              </Column>
+            ))}
+          </Row>
+        </Column>
+      </Row>
+    );
+  };
+
+  /**
+   * @returns {*}
+   */
+  renderWatching = () => {
+    const { watching } = this.props;
+
+    return (
+      <Row>
+        <Column xl={10} offsetXl={1} className="gutter-bottom">
+          <h3>Watchlist</h3>
+          <Row>
+            {watching.map(project => (
+              <Column key={project.id}>
+                <ProjectCard
+                  project={project}
+                  watching
+                />
+              </Column>
+            ))}
+          </Row>
+        </Column>
+      </Row>
+    );
+  };
+
+  /**
+   * @returns {*}
+   */
+  render() {
+    return (
       <Workspace name="dashboard" title="Dashboard">
         <Container className="editor-home">
-          <Row>
-            <Column xl={10} offsetXl={1} className="gutter-bottom">
-              <h3>My Projects</h3>
-              <Row>
-                {projects.map(project => (
-                  <Column key={project.id}>
-                    <ProjectCard
-                      project={project}
-                      onClick={this.handleCardClick}
-                    />
-                  </Column>
-                ))}
-              </Row>
-            </Column>
-          </Row>
+          {this.renderProjects()}
+          {this.renderWatching()}
         </Container>
       </Workspace>
     );

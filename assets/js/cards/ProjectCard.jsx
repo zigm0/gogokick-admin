@@ -8,11 +8,13 @@ export default class ProjectCard extends React.PureComponent {
   static propTypes = {
     project:  PropTypes.object.isRequired,
     selected: PropTypes.bool,
+    watching: PropTypes.bool,
     onClick:  PropTypes.func
   };
 
   static defaultProps = {
     selected: false,
+    watching: false,
     onClick:  () => {}
   };
 
@@ -20,7 +22,7 @@ export default class ProjectCard extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { project, selected, onClick } = this.props;
+    const { project, selected, watching, onClick } = this.props;
 
     return (
       <div className={classNames('card-project', { 'card-selected': selected })}>
@@ -47,9 +49,11 @@ export default class ProjectCard extends React.PureComponent {
             {project.subtitle}
           </div>
           <div className="card-project-footer">
-            <Button theme="success" onClick={e => onClick(e, project)} sm>
-              Edit
-            </Button>
+            {!watching && (
+              <Button theme="success" onClick={e => onClick(e, project)} sm>
+                Edit
+              </Button>
+            )}
             <div className="card-project-social-icons">
               {project.social.twitter && (
                 <a href={project.social.twitter} rel="noopener noreferrer" target="_blank">

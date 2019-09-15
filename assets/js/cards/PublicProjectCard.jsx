@@ -6,6 +6,7 @@ import { Icon } from 'components';
 import { projectActions } from 'actions';
 
 const mapStateToProps = state => ({
+  user:     state.user,
   watching: state.project.watching
 });
 
@@ -15,6 +16,7 @@ const mapStateToProps = state => ({
 )
 export default class PublicProjectCard extends React.PureComponent {
   static propTypes = {
+    user:         PropTypes.object.isRequired,
     watching:     PropTypes.array.isRequired,
     project:      PropTypes.object.isRequired,
     projectWatch: PropTypes.func.isRequired
@@ -35,9 +37,13 @@ export default class PublicProjectCard extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { project, watching } = this.props;
+    const { user, project, watching } = this.props;
 
-    const index = arrays.findIndexByID(watching, project.id);
+    const index     = arrays.findIndexByID(watching, project.id);
+    const isOwner   = (user && project.user.id === user.id);
+    const hasFollow = !isOwner && (
+      project.social.twitter || project.social.youtube || project.social.facebook || project.social.instagram
+    );
 
     return (
       <Card className="card-public-project">
@@ -50,7 +56,9 @@ export default class PublicProjectCard extends React.PureComponent {
             {strings.truncate(project.subtitle, 60)}
           </div>
         </CardBody>
-        <small>Follow</small>
+        {hasFollow && (
+          <small>Follow</small>
+        )}
         <CardFooter className="card-public-project-footer">
           {project.social.twitter && (
             <a href={project.social.twitter} rel="noopener noreferrer" target="_blank">
@@ -92,9 +100,11 @@ export default class PublicProjectCard extends React.PureComponent {
               />
             </a>
           )}
-          <Button onClick={this.handleWatchlistClick} sm>
-            {index === -1 ? 'Add to Watchlist' : 'Remove' }
-          </Button>
+          {!isOwner && (
+            <Button onClick={this.handleWatchlistClick} sm>
+              {index === -1 ? 'Add to Watchlist' : 'Remove' }
+            </Button>
+          )}
         </CardFooter>
       </Card>
     );
