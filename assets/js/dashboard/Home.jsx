@@ -1,11 +1,31 @@
 import React from 'react';
 import { Workspace } from 'components';
-import { Container } from 'components/bootstrap';
+import { Container, Row, Column } from 'components/bootstrap';
+import { PublicProjectCard } from 'cards';
 
 export default class Home extends React.PureComponent {
   static propTypes = {};
 
   static defaultProps = {};
+
+  /**
+   * @returns {*}
+   */
+  renderProjects = () => {
+    const { publicProjects } = window.initialState;
+
+    return (
+      <Container>
+        <Row className="home-page-public-projects">
+          {publicProjects.map(project => (
+            <Column key={project.id} className="d-flex align-items-stretch" xl={4} md={6} sm={12} xs={12}>
+              <PublicProjectCard project={project} />
+            </Column>
+          ))}
+        </Row>
+      </Container>
+    );
+  };
 
   /**
    * @returns {*}
@@ -39,6 +59,7 @@ export default class Home extends React.PureComponent {
               </p>
             </Container>
           </div>
+          {this.renderProjects()}
         </div>
       </Workspace>
     );

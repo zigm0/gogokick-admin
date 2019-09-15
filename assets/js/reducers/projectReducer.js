@@ -11,53 +11,7 @@ const initialState = objects.merge({
   isBusy:       false,
   isSaving:     false,
   campaignType: 1,
-  team:         [],
-  /*  teamMembers:      [
-      {
-        id:           1,
-        name:         'Scott K.',
-        avatar:       '/images/avatar-1.jpeg',
-        projectRoles: ['Editor', 'Lead'],
-        actions:      [
-          {
-            id:    1,
-            block: 5,
-            date:  '5 hours ago',
-            title: 'Adds text block',
-            memo:  ''
-          }
-        ]
-      },
-      {
-        id:           2,
-        name:         'Val S.',
-        avatar:       '/images/avatar-2.jpeg',
-        projectRoles: ['Graphics'],
-        actions:      [
-          {
-            id:    2,
-            block: 4,
-            date:  'Yesterday',
-            title: 'Updated image block',
-            memo:  'Uses new product prototype images.'
-          },
-          {
-            id:    3,
-            block: 5,
-            date:  '3 days ago',
-            title: 'Updated image block',
-            memo:  ''
-          },
-        ]
-      },
-      {
-        id:           3,
-        name:         'John R.',
-        avatar:       '/images/avatar-3.jpeg',
-        projectRoles: ['Owner'],
-        actions:      []
-      },
-    ]*/
+  team:         []
 }, window.initialState.project);
 
 /**
