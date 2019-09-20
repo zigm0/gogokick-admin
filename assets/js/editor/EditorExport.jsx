@@ -193,9 +193,13 @@ export default class EditorExport extends React.PureComponent {
                   to {strings.ucWords(constants.campaignType(project.campaignType))}. Follow along with this short video
                   to get everything in place.
                 </p>
-                <YouTube
-                  videoId="Pzj9vtN3NwI"
-                  opts={{ width: '100%' }}
+                <iframe
+                  src="https://player.vimeo.com/video/360025029"
+                  width="100%"
+                  height="460"
+                  frameBorder="0"
+                  allow="autoplay; fullscreen"
+                  allowFullScreen
                 />
               </li>
             </ul>
