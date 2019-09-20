@@ -18,6 +18,12 @@
   }
 }
 
+div.form-control {
+  &:read-only {
+    background-color: #FFF;
+  }
+}
+
 /**
  * Checkboxes
  *

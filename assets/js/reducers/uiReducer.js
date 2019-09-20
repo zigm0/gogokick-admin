@@ -14,12 +14,14 @@ const initialState = {
     teamMember:    false,
     addMember:     false,
     memberActions: false,
-    blockSettings: false
+    blockSettings: false,
+    blockDetails:  false
   },
   modalMeta: {
     cropper:       null,
     teamMember:    null,
-    blockSettings: null
+    blockSettings: null,
+    blockDetails:  null
   },
   modalCallbacks: {
     cropper: null

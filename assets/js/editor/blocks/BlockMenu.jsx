@@ -50,6 +50,20 @@ export default class BlockMenu extends React.PureComponent {
   };
 
   /**
+   * @param {Event} e
+   */
+  handleDetailsClick = (e) => {
+    e.preventDefault();
+    const { block, uiModal } = this.props;
+
+    uiModal({
+      modal: 'blockDetails',
+      open:  true,
+      meta:  block
+    });
+  };
+
+  /**
    *
    */
   handleRemoveClick = () => {
@@ -106,12 +120,21 @@ export default class BlockMenu extends React.PureComponent {
     return (
       <div className={classes}>
         <div className="block-menu-group">
-          <Button
-            title="Settings"
-            icon="cog"
-            className="block-menu-item"
-            onClick={this.handleSettingsClick}
-          />
+          {acl(roles, 'settings', 'blocks') ? (
+            <Button
+              title="Settings"
+              icon="cog"
+              className="block-menu-item"
+              onClick={this.handleSettingsClick}
+            />
+          ) : (
+            <Button
+              title="Details"
+              icon="info-circle"
+              className="block-menu-item"
+              onClick={this.handleDetailsClick}
+            />
+          )}
           {acl(roles, 'drag', 'blocks') && (
             <Button
               title="Move up"

@@ -69,6 +69,7 @@ export default class App extends React.Component {
         <Modals.AddMemberModal />
         <Modals.TeamMemberModal />
         <Modals.BlockSettingsModal />
+        <Modals.BlockDetailsModal />
       </ErrorBoundary>
     );
   };

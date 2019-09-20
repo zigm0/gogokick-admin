@@ -18,7 +18,7 @@
     background-color: $color-primary !important;
   }
 
-  &:hover {
+  &:hover:not(.badge-read-only) {
     background-color: lighten($color-primary, 10%) !important;
   }
 
@@ -28,5 +28,9 @@
 
   &.badge-block-video {
     background-color: $color-block-video !important;
+  }
+
+  &.badge-read-only {
+    cursor: default;
   }
 }

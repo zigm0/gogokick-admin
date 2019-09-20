@@ -6,3 +6,4 @@ export { default as AddMemberModal } from './AddMemberModal';
 export { default as PreviewModal } from './PreviewModal';
 export { default as MemberActionsModal } from './MemberActionsModal';
 export { default as BlockSettingsModal } from './BlockSettingsModal';
+export { default as BlockDetailsModal } from './BlockDetailsModal';
