@@ -188,8 +188,8 @@ const onEditorChanged = (state, action) => {
  * @returns {*}
  */
 const onEditorNew = (state, action) => {
-  const blocks = Array.from(action.payload.blocks);
-  const team   = Array.from(action.payload.team);
+  const blocks = objects.clone(action.payload.blocks);
+  const team   = objects.clone(action.payload.team);
   const user   = objects.clone(action.payload.user);
   const me     = objects.clone(action.payload.me);
 
@@ -230,8 +230,7 @@ const onEditorBlocks = (state, action) => {
   const { canvasBlocks } = objects.clone(state);
   let { blockIndex } = state;
 
-  canvasBlocks[blockIndex + 1] = Array.from(action.payload);
-  blockIndex += 1;
+  canvasBlocks[blockIndex] = objects.clone(action.payload);
 
   return {
     ...state,
@@ -290,7 +289,7 @@ const onEditorMove = (state, action) => {
   const index = arrays.findIndexByID(canvasBlocks[blockIndex], block.id);
   if (direction === 'up' && index > 0) {
     const block     = objects.clone(canvasBlocks[blockIndex][index]);
-    const destClone = Array.from(canvasBlocks[blockIndex]);
+    const destClone =objects.clone(canvasBlocks[blockIndex]);
     destClone.splice(index, 1);
     destClone.splice(index - 1, 0, block);
 
@@ -298,7 +297,7 @@ const onEditorMove = (state, action) => {
     blockIndex += 1;
   } else if (direction === 'down' && index < canvasBlocks[blockIndex].length) {
     const block     = canvasBlocks[blockIndex][index];
-    const destClone = Array.from(canvasBlocks[blockIndex]);
+    const destClone = objects.clone(canvasBlocks[blockIndex]);
     destClone.splice(index, 1);
     destClone.splice(index + 1, 0, block);
 
@@ -349,7 +348,7 @@ const onEditorUpdateBlock = (state, action) => {
   let { canvasBlocks, blockIndex, isChanged } = objects.clone(state);
   const { id, text, link, caption, description, videoUrl, audioUrl, isHeadline, isLocked } = action.payload;
 
-  const blocks = Array.from(canvasBlocks[blockIndex]);
+  const blocks = objects.clone(canvasBlocks[blockIndex]);
   const index  = arrays.findIndexByID(blocks, id);
 
   if (index !== -1) {
@@ -383,7 +382,7 @@ const onEditorBlockSettings = (state, action) => {
   let { canvasBlocks, blockIndex } = objects.clone(state);
   const block = objects.clone(action.payload);
 
-  const blocks = Array.from(canvasBlocks[blockIndex]);
+  const blocks = objects.clone(canvasBlocks[blockIndex]);
   const index = arrays.findIndexByID(blocks, block.id);
 
   blocks[index].isLocked    = block.isLocked;
@@ -406,7 +405,7 @@ const onEditorBlockSettings = (state, action) => {
  * @returns {*}
  */
 const onEditorProjects = (state, action) => {
-  const projects = Array.from(action.payload);
+  const projects = objects.clone(action.payload);
 
   return {
     ...state,
@@ -465,8 +464,8 @@ const onEditorBlockMedia = (state, action) => {
   let { canvasBlocks, blockIndex, isChanged } = objects.clone(state);
   const { block, id, url, origFilename } = action.payload;
 
-  const blocks = Array.from(canvasBlocks[blockIndex]);
-  const index = arrays.findIndexByID(blocks, block.indexOf('n-') === 0 ? block : parseInt(block, 10));
+  const blocks = objects.clone(canvasBlocks[blockIndex]);
+  const index  = arrays.findIndexByID(blocks, block.indexOf('n-') === 0 ? block : parseInt(block, 10));
 
   blocks[index].media = {
     id,

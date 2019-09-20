@@ -174,8 +174,8 @@ export const projectSaveBlock = (payload) => {
   return (dispatch) => {
     const url = router.generate('api_projects_save_block', { id: payload.id });
     api.post(url, payload)
-      .then((resp) => {
-        console.log(resp);
+      .then(() => {
+        // console.log(resp);
       });
   };
 };
@@ -233,7 +233,6 @@ export const projectDownloadImages = (id) => {
     dispatch(projectBusy(true));
     api.get(router.generate('api_projects_images', { id }))
       .then((resp) => {
-        console.log(resp);
         document.location = resp.url;
       })
       .finally(() => {
