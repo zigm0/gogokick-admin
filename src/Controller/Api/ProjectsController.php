@@ -440,7 +440,7 @@ class ProjectsController extends ApiController
 
                 $tmpFile = tempnam(sys_get_temp_dir(), 'export');
                 $guzzle->get($url, ['sink' => $tmpFile]);
-                $zip->addFile($tmpFile, $counter . '-' . $name);
+                $zip->addFile($tmpFile, 'ProjectPageImages/' . $counter . '-' . $name);
                 $counter++;
             }
         }
