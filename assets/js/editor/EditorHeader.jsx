@@ -133,9 +133,9 @@ export default class EditorHeader extends React.PureComponent {
               <Button onClick={this.handleOpenClick}>
                 Dashboard
               </Button>
-              <Button onClick={this.handleNewClick}>
+{/*              <Button onClick={this.handleNewClick}>
                 New
-              </Button>
+              </Button>*/}
               {acl(roles, 'preview', 'project') && (
                 <Button onClick={this.handlePreviewClick}>
                   Preview

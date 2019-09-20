@@ -45,6 +45,14 @@ parameters:
                   - view
               resources:
                   - teamMember
+            - role: lead
+              access: allow
+              privileges:
+                  - settings
+                  - preview
+                  - export
+              resources:
+                  - project
             - role: writer
               access: allow
               privileges:
