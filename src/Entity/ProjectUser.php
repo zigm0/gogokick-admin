@@ -23,13 +23,15 @@ class ProjectUser
     const ROLE_GRAPHICS = 4;
     const ROLE_VIDEO    = 5;
     const ROLE_AUDIO    = 6;
+    const ROLE_GUEST    = 7;
     const ROLES = [
         'owner'    => self::ROLE_OWNER,
         'lead'     => self::ROLE_LEAD,
         'writer'   => self::ROLE_WRITER,
         'graphics' => self::ROLE_GRAPHICS,
         'video'    => self::ROLE_VIDEO,
-        'audio'    => self::ROLE_AUDIO
+        'audio'    => self::ROLE_AUDIO,
+        'guest'    => self::ROLE_GUEST
     ];
 
     /**

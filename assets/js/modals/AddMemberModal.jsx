@@ -16,10 +16,11 @@ const mapStateToProps = state => ({
 )
 export default class AddMemberModal extends React.PureComponent {
   static propTypes = {
-    form:       PropTypes.object.isRequired,
-    formReset:  PropTypes.func.isRequired,
-    formChange: PropTypes.func.isRequired,
-    teamInvite: PropTypes.func.isRequired
+    form:        PropTypes.object.isRequired,
+    formReset:   PropTypes.func.isRequired,
+    formChange:  PropTypes.func.isRequired,
+    formChanges: PropTypes.func.isRequired,
+    teamInvite:  PropTypes.func.isRequired
   };
 
   static defaultProps = {};
@@ -40,12 +41,13 @@ export default class AddMemberModal extends React.PureComponent {
    *
    */
   handleAddClick = () => {
-    const { form, teamInvite } = this.props;
+    const { form, teamInvite, formChange } = this.props;
     const { email, roleWriter, roleGraphics, roleLead, roleVideo, roleAudio } = form;
+    let { roleGuest } = form;
 
     if (!roleWriter && !roleGraphics && !roleLead && !roleVideo && !roleAudio) {
-      this.setState({ error: 'You must select at least one role.' });
-      return;
+      roleGuest = true;
+      formChange('addMember', 'roleGuest', true);
     }
     if (!form.email) {
       this.setState({ error: 'You must enter an email address.' });
@@ -63,7 +65,8 @@ export default class AddMemberModal extends React.PureComponent {
       roleGraphics,
       roleLead,
       roleVideo,
-      roleAudio
+      roleAudio,
+      roleGuest
     });
 
     this.setState({ error: '' });
@@ -87,13 +90,34 @@ export default class AddMemberModal extends React.PureComponent {
   };
 
   /**
+   * @param {Event} e
+   * @param {string} value
+   * @param {string} name
+   */
+  handleFormChange = (e, value, name) => {
+    const { formChange, formChanges } = this.props;
+
+    if (['roleWriter', 'roleLead', 'roleGraphics', 'roleVideo', 'roleAudio'].indexOf(name) !== -1 && value) {
+      formChange('addMember', 'roleGuest', false);
+    } else if (name === 'roleGuest' && value) {
+      formChanges('addMember', {
+        roleVideo:    false,
+        roleAudio:    false,
+        roleWriter:   false,
+        roleLead:     false,
+        roleGraphics: false
+      });
+    }
+  };
+
+  /**
    * @returns {*}
    */
   renderForm = () => {
     const { error } = this.state;
 
     return (
-      <Form name="addMember">
+      <Form name="addMember" onChange={this.handleFormChange}>
         {error && (
           <div className="alert alert-danger">
             {error}
@@ -145,6 +169,13 @@ export default class AddMemberModal extends React.PureComponent {
               name="roleAudio"
               label="Audio"
               id="input-add-member-role-audio"
+            />
+          </Column>
+          <Column xl={4}>
+            <Checkbox
+              name="roleGuest"
+              label="Guest"
+              id="input-team-member-role-guest"
             />
           </Column>
         </Row>

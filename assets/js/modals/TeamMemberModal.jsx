@@ -21,6 +21,7 @@ export default class TeamMemberModal extends React.PureComponent {
     form:             PropTypes.object.isRequired,
     meTeamMember:     PropTypes.object.isRequired,
     teamMember:       PropTypes.object,
+    formChange:       PropTypes.func.isRequired,
     formChanges:      PropTypes.func.isRequired,
     teamMemberUpdate: PropTypes.func.isRequired,
     teamMemberRemove: PropTypes.func.isRequired,
@@ -67,6 +68,7 @@ export default class TeamMemberModal extends React.PureComponent {
       roleGraphics: roles.includes(constants.projectRole('graphics')),
       roleVideo:    roles.includes(constants.projectRole('video')),
       roleAudio:    roles.includes(constants.projectRole('audio')),
+      roleGuest:    roles.includes(constants.projectRole('guest'))
     });
   };
 
@@ -74,7 +76,7 @@ export default class TeamMemberModal extends React.PureComponent {
    *
    */
   handleSaveClick = () => {
-    const { teamMember, form, teamMemberUpdate, uiModal } = this.props;
+    const { teamMember, form, teamMemberUpdate, uiModal, formChange } = this.props;
 
     const roles = [];
     if (form.roleWriter) {
@@ -91,6 +93,14 @@ export default class TeamMemberModal extends React.PureComponent {
     }
     if (form.roleAudio) {
       roles.push(constants.projectRole('audio'));
+    }
+
+    if (form.roleGuest) {
+      roles.push(constants.projectRole('guest'));
+    }
+    if (roles.length === 0) {
+      roles.push(constants.projectRole('guest'));
+      formChange('teamMember', 'roleGuest', true);
     }
 
     teamMemberUpdate(objects.merge(teamMember, {
@@ -132,6 +142,27 @@ export default class TeamMemberModal extends React.PureComponent {
   };
 
   /**
+   * @param {Event} e
+   * @param {string} value
+   * @param {string} name
+   */
+  handleFormChange = (e, value, name) => {
+    const { formChange, formChanges } = this.props;
+
+    if (['roleWriter', 'roleLead', 'roleGraphics', 'roleVideo', 'roleAudio'].indexOf(name) !== -1 && value) {
+      formChange('teamMember', 'roleGuest', false);
+    } else if (name === 'roleGuest' && value) {
+      formChanges('teamMember', {
+        roleVideo:    false,
+        roleAudio:    false,
+        roleWriter:   false,
+        roleLead:     false,
+        roleGraphics: false
+      });
+    }
+  };
+
+  /**
    * @returns {*}
    */
   renderForm = () => {
@@ -144,7 +175,7 @@ export default class TeamMemberModal extends React.PureComponent {
     }
 
     return (
-      <Form name="teamMember">
+      <Form name="teamMember" onChange={this.handleFormChange}>
         <Row>
           <Column xl={4}>
             <Checkbox
@@ -181,6 +212,13 @@ export default class TeamMemberModal extends React.PureComponent {
               name="roleAudio"
               label="Audio"
               id="input-team-member-role-audio"
+            />
+          </Column>
+          <Column xl={4}>
+            <Checkbox
+              name="roleGuest"
+              label="Guest"
+              id="input-team-member-role-guest"
             />
           </Column>
         </Row>

@@ -10,6 +10,8 @@ parameters:
             - name: graphics
             - name: video
             - name: audio
+            - name: guest
+
         resources:
             - name: project
             - name: blocks
@@ -18,11 +20,13 @@ parameters:
             - name: block-video
             - name: block-audio
             - name: teamMember
+
         rules:
             - role: owner
               access: allow
               privileges: ~
               resources: ~
+
             - role: lead
               access: allow
               privileges:
@@ -39,65 +43,104 @@ parameters:
                   - block-image
                   - block-video
                   - block-audio
+
             - role: lead
               access: allow
               privileges:
                   - view
               resources:
                   - teamMember
+
             - role: lead
               access: allow
               privileges:
                   - settings
                   - preview
                   - export
+                  - undo
               resources:
                   - project
+
             - role: writer
               access: allow
               privileges:
                   - view
               resources:
                   - teamMember
+
             - role: writer
               access: allow
               privileges:
                   - edit
               resources:
                   - block-text
+
+            - role: writer
+              access: allow
+              privileges:
+                  - undo
+              resources:
+                  - project
+
             - role: graphics
               access: allow
               privileges:
                   - view
               resources:
                   - teamMember
+
             - role: graphics
               access: allow
               privileges:
                   - edit
               resources:
                   - block-image
+
+            - role: graphics
+              access: allow
+              privileges:
+                  - undo
+              resources:
+                  - project
+
             - role: video
               access: allow
               privileges:
                   - view
               resources:
                   - teamMember
+
             - role: video
               access: allow
               privileges:
                   - edit
               resources:
                   - block-video
+
+            - role: video
+              access: allow
+              privileges:
+                  - undo
+              resources:
+                  - project
+
             - role: audio
               access: allow
               privileges:
                   - view
               resources:
                   - teamMember
+
             - role: audio
               access: allow
               privileges:
                   - edit
               resources:
                   - block-audio
+
+            - role: audio
+              access: allow
+              privileges:
+                  - undo
+              resources:
+                  - project

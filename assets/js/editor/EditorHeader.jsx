@@ -151,12 +151,16 @@ export default class EditorHeader extends React.PureComponent {
                   Settings
                 </Button>
               )}
-              <Button disabled={blockIndex === 0} onClick={editorUndo}>
-                Undo
-              </Button>
-              <Button disabled={blockIndex === canvasBlocks.length - 1} onClick={editorRedo}>
-                Redo
-              </Button>
+              {acl(roles, 'undo', 'project') && (
+                <Button disabled={blockIndex === 0} onClick={editorUndo}>
+                  Undo
+                </Button>
+              )}
+              {acl(roles, 'undo', 'project') && (
+                <Button disabled={blockIndex === canvasBlocks.length - 1} onClick={editorRedo}>
+                  Redo
+                </Button>
+              )}
               <Button onClick={this.handleHelpClick}>
                 Help
               </Button>

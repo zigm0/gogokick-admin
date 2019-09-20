@@ -65,6 +65,7 @@ const initialState = {
     roleLead:     false,
     roleVideo:    false,
     roleAudio:    false,
+    roleGuest:    false,
     ...commonForms
   },
   addMember: {
@@ -74,6 +75,7 @@ const initialState = {
     roleLead:     false,
     roleVideo:    false,
     roleAudio:    false,
+    roleGuest:    false,
     ...commonForms
   },
   newProject: {
