@@ -70,7 +70,7 @@ export default class UserMenu extends React.PureComponent {
                 <Icon name="angle-down" />
                 <Avatar src={user.avatar || 'https://api.adorable.io/avatars/285/abott@adorable.png'} />
               </div>
-              <div>{user.name}</div>
+              <div className="avatar-menu-name">{user.name}</div>
             </div>
           </button>
           {user.isAuthenticated ? (

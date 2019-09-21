@@ -25,6 +25,8 @@
 }
 
 .editor-header-left {
+  flex-grow: 1;
+
   img {
     height: 54px;
 
@@ -46,13 +48,9 @@
 }
 
 .editor-header-right {
-  flex: 0 0 $width-sidebar;
+  flex-grow: 1;
   display: flex;
   justify-content: flex-end;
-
-  @include media-md {
-    flex: 0 0 $width-sidebar-md;
-  }
 }
 
 .editor-header-project-name {

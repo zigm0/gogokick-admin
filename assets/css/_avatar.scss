@@ -136,6 +136,12 @@
   }
 }
 
+.avatar-menu-name {
+  @include media-md {
+    display: none;
+  }
+}
+
 .avatar-header-menu-app {
   .dropdown-menu {
     top: 0;
