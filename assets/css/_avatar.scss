@@ -240,3 +240,29 @@
     }
   }
 }
+
+.dropdown {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.dropdown__content {
+  color: #FFF;
+  z-index: 100;
+  display: none;
+  position: absolute;
+  background-color: $color-header;
+
+  .dropdown-item {
+    color: #FFF;
+    margin: $gutter-size-sm 0;
+
+    &:hover {
+      background-color: lighten($color-header, 10%);
+    }
+  }
+}
+
+.dropdown--active .dropdown__content {
+  display: block;
+}

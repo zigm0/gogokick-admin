@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, router, mapDispatchToProps } from 'utils';
+import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
+import { connect, mapDispatchToProps } from 'utils';
 import { Avatar, Icon, Link } from 'components';
 import { userActions, uiActions } from 'actions';
 
@@ -55,16 +56,8 @@ export default class UserMenu extends React.PureComponent {
 
     return (
       <div className="avatar-header-menu">
-        <div className="btn-group">
-          <button
-            ref={this.menu}
-            className="btn"
-            type="button"
-            id="dropdownMenuButton"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
+        <Dropdown>
+          <DropdownTrigger>
             <div className="avatar-user-menu">
               <div className="avatar-menu" data-toggle="dropdown">
                 <Icon name="angle-down" />
@@ -72,33 +65,35 @@ export default class UserMenu extends React.PureComponent {
               </div>
               <div className="avatar-menu-name">{user.name}</div>
             </div>
-          </button>
-          {user.isAuthenticated ? (
-            <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-              <Link to={`/profile/${user.id}`} className="dropdown-item">
-                <Icon name="user" />
-                Profile
-              </Link>
-              <div className="dropdown-divider" />
-              <a className="dropdown-item" href="#" onClick={this.handleLogoutClick}>
-                <Icon name="sign-out-alt" />
-                Logout
-              </a>
-            </div>
-          ) : (
-            <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-              <Link to="/login" className="dropdown-item">
-                <Icon name="sign-in-alt" />
-                Login
-              </Link>
-              <div className="dropdown-divider" />
-              <Link to="/register" className="dropdown-item">
-                <Icon name="user" />
-                Register
-              </Link>
-            </div>
-          )}
-        </div>
+          </DropdownTrigger>
+          <DropdownContent>
+            {user.isAuthenticated ? (
+              <div>
+                <Link to={`/profile/${user.id}`} className="dropdown-item">
+                  <Icon name="user" />
+                  Profile
+                </Link>
+                <div className="dropdown-divider" />
+                <a className="dropdown-item" href="#" onClick={this.handleLogoutClick}>
+                  <Icon name="sign-out-alt" />
+                  Logout
+                </a>
+              </div>
+            ) : (
+              <div>
+                <Link to="/login" className="dropdown-item">
+                  <Icon name="sign-in-alt" />
+                  Login
+                </Link>
+                <div className="dropdown-divider" />
+                <Link to="/register" className="dropdown-item">
+                  <Icon name="user" />
+                  Register
+                </Link>
+              </div>
+            )}
+          </DropdownContent>
+        </Dropdown>
       </div>
     );
   }
