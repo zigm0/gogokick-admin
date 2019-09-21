@@ -68,6 +68,8 @@
 
 .card-public-project {
   border: 0;
+  width: 100%;
+  margin-bottom: $gutter-size-sm;
   transition: box-shadow 0.1s ease-in-out;
 
   &:hover {

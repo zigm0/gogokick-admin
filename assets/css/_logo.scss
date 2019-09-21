@@ -1,0 +1,45 @@
+@import "vars";
+
+.logo-desktop {
+  @include media-xl {
+    display: block;
+  }
+
+  @include media-lg {
+    display: block;
+  }
+
+  @include media-md {
+    display: none;
+  }
+
+  @include media-sm {
+    display: none;
+  }
+
+  @include media-xs {
+    display: none;
+  }
+}
+
+.logo-mobile {
+  @include media-xl {
+    display: none;
+  }
+
+  @include media-lg {
+    display: none;
+  }
+
+  @include media-md {
+    display: block;
+  }
+
+  @include media-sm {
+    display: block;
+  }
+
+  @include media-xs {
+    display: block;
+  }
+}

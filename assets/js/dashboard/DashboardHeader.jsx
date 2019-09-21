@@ -32,7 +32,8 @@ export default class DashboardHeader extends React.PureComponent {
         <Container className="d-flex align-items-center">
           <div className="editor-header-left">
             <Link to="/">
-              <img src="/images/logo-2.png" alt="Logo" />
+              <img src="/images/logo-2.png" alt="Logo" className="logo-desktop" />
+              <img src="/images/logo-square.png" alt="Logo" className="logo-mobile" />
             </Link>
           </div>
           <div className="editor-header-middle home-page-header-links">

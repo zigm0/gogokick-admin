@@ -65,7 +65,8 @@ export default class HomeHeader extends React.PureComponent {
         <Container className="d-flex align-items-center">
           <div className="home-page-header-brand">
             <Link to="/">
-              <img src="/images/logo-2.png" alt="Logo" />
+              <img src="/images/logo-2.png" alt="Logo" className="logo-desktop" />
+              <img src="/images/logo-square.png" alt="Logo" className="logo-mobile" />
             </Link>
           </div>
           <div className="home-page-header-links">

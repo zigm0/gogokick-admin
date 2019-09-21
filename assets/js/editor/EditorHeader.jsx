@@ -110,7 +110,8 @@ export default class EditorHeader extends React.PureComponent {
       <header className="editor-header">
         <div className="editor-header-left">
           <Link to="/">
-            <img src="/images/logo-2.png" alt="Logo" />
+            <img src="/images/logo-2.png" alt="Logo" className="logo-desktop" />
+            <img src="/images/logo-square.png" alt="Logo" className="logo-mobile" />
           </Link>
         </div>
         <div className="editor-header-middle">

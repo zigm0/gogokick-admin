@@ -26,10 +26,19 @@
     padding: 0 0.5rem;
     line-height: 1.15rem;
     border-right: 1px solid #FFF;
+    white-space: nowrap;
 
     &:last-child {
       border-right: none;
     }
+  }
+
+  @include media-sm {
+    font-size: 1rem;
+  }
+
+  @include media-xs {
+    font-size: 1rem;
   }
 }
 
@@ -55,15 +64,31 @@
 }
 
 .home-page-header-brand {
-  flex: 0 0 $width-sidebar;
-
   img {
     height: 65px;
+
+    @include media-sm {
+      height: 50px;
+    }
+
+    @include media-xs {
+      height: 50px;
+    }
   }
 }
 
 .home-page-used-by {
   padding: $gutter-size;
+
+  h4 {
+    @include media-sm {
+      font-size: 1rem;
+    }
+
+    @include media-xs {
+      font-size: 1rem;
+    }
+  }
 }
 
 .home-page-used-by-images {
@@ -76,14 +101,23 @@
     @include media-md {
       height: 80px;
     }
+
+    @include media-sm {
+      height: 50px;
+    }
+
+    @include media-xs {
+      height: 35px;
+    }
   }
 }
 
 .home-page-description {
   color: #FFF;
-  height: 400px;
+  min-height: 400px;
   display: flex;
   margin-bottom: 50px;
+  padding: $gutter-size 0;
   justify-content: center;
   align-items: center;
   font-size: 1.25rem;

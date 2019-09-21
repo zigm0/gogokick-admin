@@ -25,14 +25,16 @@
 }
 
 .editor-header-left {
-  flex: 0 0 $width-sidebar;
-
-  @include media-md {
-    flex: 0 0 $width-sidebar-md;
-  }
-
   img {
     height: 54px;
+
+    @include media-sm {
+      height: 50px;
+    }
+
+    @include media-xs {
+      height: 50px;
+    }
   }
 }
 
@@ -59,4 +61,9 @@
   div {
     margin-left: -46px;
   }
+}
+
+.editor-header-buttons {
+  display: flex;
+  justify-content: center;
 }
