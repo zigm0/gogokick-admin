@@ -59,7 +59,7 @@ export default class EditorCanvas extends React.PureComponent {
   /**
    * @param {Event} e
    */
-  handleClick = (e) => {
+  handleMouseDown = (e) => {
     const { editorActivateBlock} = this.props;
 
     if (!browser.hasParentClass(e.target, 'block-container')) {
@@ -81,7 +81,7 @@ export default class EditorCanvas extends React.PureComponent {
     return (
       <Workspace name="editor">
         <div
-          onClick={this.handleClick}
+          onMouseDown={this.handleMouseDown}
           className={`editor-canvas editor-canvas-campaign-${constants.campaignType(campaignType)} h-100`}
         >
           <div className={bodyClasses}>
