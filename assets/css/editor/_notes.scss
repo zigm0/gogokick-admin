@@ -17,7 +17,7 @@
 
 .editor-notes-body {
   height: 100%;
-  padding: $gutter-size;
+  padding: $gutter-size $gutter-size-sm $gutter-size $gutter-size;
   display: flex;
   flex-flow: column nowrap;
 }
@@ -43,6 +43,21 @@
 
 .editor-note-item {
   margin-bottom: $gutter-size-sm;
+  padding: $gutter-size-sm;
+
+  &:hover {
+    background-color: #393939;
+  }
+}
+
+.editor-note-item-delete-icon {
+  float: right;
+  color: $color-danger;
+  cursor: pointer;
+
+  &:hover {
+    color: lighten($color-danger, 10%);
+  }
 }
 
 .editor-note-item-avatar {

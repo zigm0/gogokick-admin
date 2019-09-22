@@ -13,6 +13,7 @@ parameters:
             - name: guest
 
         resources:
+            - name: notes
             - name: project
             - name: blocks
             - name: block-text
@@ -51,6 +52,13 @@ parameters:
                   - view
               resources:
                   - teamMember
+
+            - role: lead
+              access: allow
+              privileges:
+                  - delete
+              resources:
+                  - notes
 
             - role: lead
               access: allow

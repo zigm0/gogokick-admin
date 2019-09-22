@@ -5,6 +5,7 @@ use App\Entity\Activity;
 use App\Entity\Note;
 use App\Event\ActivityEvent;
 use App\Http\Request;
+use App\Repository\ActivityRepository;
 use App\Repository\NoteRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -68,5 +69,28 @@ class NotesController extends ApiController
         $notes = $repository->findByBlock($block);
 
         return $this->jsonEntityResponse($notes);
+    }
+
+    /**
+     * @Route("/{id}", name="_delete", methods={"DELETE"})
+     *
+     * @param int                $id
+     * @param NoteRepository     $noteRepository
+     * @param ActivityRepository $activityRepository
+     *
+     * @return JsonResponse
+     */
+    public function deleteAction($id, NoteRepository $noteRepository, ActivityRepository $activityRepository)
+    {
+        $note = $noteRepository->findByID($id);
+        $this->em->remove($note);
+
+        foreach($activityRepository->findByNote($note) as $activity) {
+            $this->em->remove($activity);
+        }
+
+        $this->em->flush();
+
+        return new JsonResponse('ok');
     }
 }

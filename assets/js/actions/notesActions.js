@@ -4,7 +4,7 @@ import { editorActivateBlock } from './editorActions';
 export const NOTES_BUSY           = 'NOTES_BUSY';
 export const NOTES_VISIBLE        = 'NOTES_VISIBLE';
 export const NOTES_FETCH          = 'NOTES_FETCH';
-export const NOTES_TOGGLE_VISIBLE = 'NOTES_TOGGLE_VISIBLE';
+export const NOTES_DELETE         = 'NOTES_DELETE';
 
 /**
  * @param {boolean} isBusy
@@ -81,6 +81,26 @@ export const notesSave = (blockID, message) => {
         dispatch({
           type: NOTES_FETCH,
           notes
+        });
+      })
+      .finally(() => {
+        dispatch(notesBusy(false));
+      });
+  };
+};
+
+/**
+ * @param {number} id
+ * @returns {Function}
+ */
+export const notesDelete = (id) => {
+  return (dispatch) => {
+    dispatch(notesBusy(true));
+    api.req('DELETE', router.generate('api_notes_delete', { id }))
+      .then(() => {
+        dispatch({
+          type: NOTES_DELETE,
+          id
         });
       })
       .finally(() => {

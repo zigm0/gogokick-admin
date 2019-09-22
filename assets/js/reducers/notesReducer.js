@@ -1,4 +1,4 @@
-import { objects } from 'utils';
+import { objects, arrays } from 'utils';
 import * as types from 'actions/notesActions';
 
 const initialState = {
@@ -45,9 +45,30 @@ const onFetch = (state, action) => {
   };
 };
 
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onDelete = (state, action) => {
+  const notes = objects.clone(state.notes);
+  const { id } = action;
+
+  const index = arrays.findIndexByID(notes, id);
+  if (index !== -1) {
+    notes.splice(index, 1);
+  }
+
+  return {
+    ...state,
+    notes
+  };
+};
+
 const handlers = {
   [types.NOTES_BUSY]:    onBusy,
   [types.NOTES_FETCH]:   onFetch,
+  [types.NOTES_DELETE]:  onDelete,
   [types.NOTES_VISIBLE]: onVisible
 };
 

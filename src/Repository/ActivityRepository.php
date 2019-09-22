@@ -3,6 +3,7 @@ namespace App\Repository;
 
 use App\Entity\Activity;
 use App\Entity\Block;
+use App\Entity\Note;
 use App\Entity\Project;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -67,5 +68,17 @@ class ActivityRepository extends ServiceEntityRepository
     public function findByBlock(Block $block, $limit = 20, $offset = 0)
     {
         return $this->findBy(['block' => $block], ['id' => 'desc'], $limit, $offset);
+    }
+
+    /**
+     * @param Note  $note
+     * @param int   $limit
+     * @param int   $offset
+     *
+     * @return Activity[]
+     */
+    public function findByNote(Note $note, $limit = 20, $offset = 0)
+    {
+        return $this->findBy(['note' => $note], ['id' => 'desc'], $limit, $offset);
     }
 }

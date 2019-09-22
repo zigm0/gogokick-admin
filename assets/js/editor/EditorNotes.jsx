@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Moment from 'react-moment';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { connect, mapDispatchToProps } from 'utils';
+import { connect, acl, mapDispatchToProps } from 'utils';
 import { Form, Textarea } from 'components/forms';
 import { Button } from 'components/bootstrap';
 import { Avatar, Icon } from 'components';
@@ -12,7 +12,8 @@ import { notesActions, formActions } from 'actions';
 const mapStateToProps = state => ({
   notes:         state.notes.notes,
   isVisible:     state.notes.isVisible,
-  activeBlockID: state.editor.activeBlockID
+  activeBlockID: state.editor.activeBlockID,
+  meTeamMember:  state.editor.meTeamMember
 });
 
 @connect(
@@ -23,8 +24,10 @@ export default class EditorNotes extends React.PureComponent {
   static propTypes = {
     notes:         PropTypes.array.isRequired,
     isVisible:     PropTypes.bool.isRequired,
+    meTeamMember:  PropTypes.object.isRequired,
     notesFetch:    PropTypes.func.isRequired,
     notesSave:     PropTypes.func.isRequired,
+    notesDelete:   PropTypes.func.isRequired,
     formChange:    PropTypes.func.isRequired,
     activeBlockID: PropTypes.number.isRequired
   };
@@ -74,6 +77,18 @@ export default class EditorNotes extends React.PureComponent {
   };
 
   /**
+   * @param {Event} e
+   * @param {*} note
+   */
+  handleDeleteClick = (e, note) => {
+    const { notesDelete } = this.props;
+
+    if (confirm('Are you sure you want to delete this note?')) {
+      notesDelete(note.id);
+    }
+  };
+
+  /**
    * @returns {*}
    */
   renderForm = () => {
@@ -95,7 +110,11 @@ export default class EditorNotes extends React.PureComponent {
    * @returns {*}
    */
   renderNotes = () => {
-    const { notes } = this.props;
+    const { notes, meTeamMember } = this.props;
+
+    if (!meTeamMember.user) {
+      return null;
+    }
 
     return (
       <Scrollbars ref={this.notes}>
@@ -108,6 +127,14 @@ export default class EditorNotes extends React.PureComponent {
           <ul className="editor-note-items">
             {notes.map(note => (
               <li key={note.id} className="editor-note-item">
+                {(meTeamMember.user.id === note.user.id || acl(meTeamMember.roles, 'delete', 'notes')) && (
+                  <Icon
+                    name="times"
+                    className="editor-note-item-delete-icon"
+                    title="Delete"
+                    onClick={e => this.handleDeleteClick(e, note)}
+                  />
+                )}
                 <div className="editor-note-item-avatar">
                   <Avatar src={note.user.avatar} sm />
                   <div>
