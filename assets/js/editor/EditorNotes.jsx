@@ -1,0 +1,145 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import Moment from 'react-moment';
+import { Scrollbars } from 'react-custom-scrollbars';
+import { connect, mapDispatchToProps } from 'utils';
+import { Form, Textarea } from 'components/forms';
+import { Button } from 'components/bootstrap';
+import { Avatar } from 'components';
+import { notesActions, formActions } from 'actions';
+
+const mapStateToProps = state => ({
+  notes:         state.notes.notes,
+  isVisible:     state.notes.isVisible,
+  activeBlockID: state.editor.activeBlockID
+});
+
+@connect(
+  mapStateToProps,
+  mapDispatchToProps(notesActions, formActions)
+)
+export default class EditorNotes extends React.PureComponent {
+  static propTypes = {
+    notes:         PropTypes.array.isRequired,
+    isVisible:     PropTypes.bool.isRequired,
+    notesFetch:    PropTypes.func.isRequired,
+    notesSave:     PropTypes.func.isRequired,
+    formChange:    PropTypes.func.isRequired,
+    activeBlockID: PropTypes.number.isRequired
+  };
+
+  static defaultProps = {};
+
+  /**
+   * @param {*} props
+   */
+  constructor(props) {
+    super(props);
+    this.message = React.createRef();
+    this.notes   = React.createRef();
+  }
+
+  /**
+   * @param {*} prevProps
+   */
+  componentDidUpdate(prevProps) {
+    const { notes, activeBlockID, isVisible, notesFetch } = this.props;
+    const { notes: prevNotes, isVisible: prevIsVisible } = prevProps;
+
+    if (isVisible && activeBlockID && isVisible !== prevIsVisible) {
+      notesFetch(activeBlockID);
+      setTimeout(() => {
+        this.message.current.focus();
+      }, 500);
+    }
+    if (notes.length !== prevNotes.length) {
+      this.notes.current.scrollToBottom();
+    }
+  }
+
+  /**
+   * @param {Event} e
+   * @param {*} values
+   */
+  handleFormSubmit = (e, values) => {
+    const { activeBlockID, formChange, notesSave } = this.props;
+
+    e.preventDefault();
+    formChange('notes', 'message', '');
+    notesSave(activeBlockID, values.message);
+    setTimeout(() => {
+      this.message.current.focus();
+    }, 500);
+  };
+
+  /**
+   * @returns {*}
+   */
+  renderForm = () => {
+    return (
+      <Form name="notes" className="editor-notes-form" onSubmit={this.handleFormSubmit}>
+        <Textarea
+          ref={this.message}
+          name="message"
+          id="notes-message-input"
+        />
+        <Button theme="success" block>
+          Save
+        </Button>
+      </Form>
+    );
+  };
+
+  /**
+   * @returns {*}
+   */
+  renderNotes = () => {
+    const { notes } = this.props;
+
+    return (
+      <Scrollbars ref={this.notes}>
+        <ul className="editor-note-items">
+          {notes.map(note => (
+            <li key={note.id} className="editor-note-item">
+              <div className="editor-note-item-avatar">
+                <Avatar src={note.user.avatar} sm />
+                <div>
+                  <div className="editor-note-item-avatar-name">
+                    {note.user.name}
+                  </div>
+                  <Moment fromNow>
+                    {note.dateCreated}
+                  </Moment>
+                </div>
+              </div>
+              <div className="editor-note-item-message">
+                {note.text}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </Scrollbars>
+    );
+  };
+
+  /**
+   * @returns {*}
+   */
+  render() {
+    const { isVisible } = this.props;
+
+    const classes = classNames('editor-notes', {
+      'editor-notes-visible': isVisible
+    });
+
+    return (
+      <div className={classes}>
+        <div className="editor-notes-body">
+          {this.renderNotes()}
+          {this.renderForm()}
+        </div>
+      </div>
+    );
+  }
+}

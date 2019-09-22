@@ -173,6 +173,7 @@ class TeamController extends ApiController
         $activity = (new Activity())
             ->setProject($project)
             ->setUser($user)
+            ->setMessage('')
             ->setType(Activity::TYPE_INVITE_ACCEPTED);
         $this->em->persist($activity);
 

@@ -1,0 +1,63 @@
+@import "../vars";
+
+.editor-notes {
+  color: #FFF;
+  background-color: #242424;
+  width: 350px;
+  position: absolute;
+  top: $height-header;
+  right: -350px;
+  bottom: 0;
+  transition: right .2s ease-in-out;
+}
+
+.editor-notes-visible {
+  right: 0;
+}
+
+.editor-notes-body {
+  height: 100%;
+  padding: $gutter-size;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.editor-note-items {
+  flex: auto;
+  overflow-y: auto;
+}
+
+.editor-note-item {
+  margin-bottom: $gutter-size-sm;
+}
+
+.editor-note-item-avatar {
+  display: flex;
+  align-items: center;
+  color: #AAA;
+
+  .avatar {
+    margin-right: $gutter-size-sm;
+  }
+
+  .editor-note-item-avatar-name {
+    font-size: 1rem;
+    line-height: 1rem;
+  }
+
+  time {
+    font-size: 0.8rem;
+  }
+}
+
+.editor-note-item-message {
+  margin-left: 44px;
+}
+
+.editor-notes-form {
+  flex: none;
+/*  position: absolute;
+  bottom: $gutter-size;
+  left: $gutter-size;
+  right: $gutter-size;*/
+}

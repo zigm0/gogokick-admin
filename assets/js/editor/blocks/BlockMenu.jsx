@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { connect, constants, objects, acl, mapDispatchToProps } from 'utils';
 import { Button } from 'components';
-import { editorActions, uiActions } from 'actions';
+import { editorActions, uiActions, notesActions } from 'actions';
 
 const mapStateToProps = state => ({
   meTeamMember: state.editor.meTeamMember
@@ -11,7 +11,7 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(editorActions, uiActions)
+  mapDispatchToProps(editorActions, uiActions, notesActions)
 )
 export default class BlockMenu extends React.PureComponent {
   static propTypes = {
@@ -28,6 +28,7 @@ export default class BlockMenu extends React.PureComponent {
     editorActivateBlock: PropTypes.func.isRequired,
     editorBlockSettings: PropTypes.func.isRequired,
     uiModal:             PropTypes.func.isRequired,
+    notesToggleVisible:  PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -109,13 +110,23 @@ export default class BlockMenu extends React.PureComponent {
   };
 
   /**
+   *
+   */
+  handleNotesClick = () => {
+    const { block, notesToggleVisible } = this.props;
+
+    notesToggleVisible(block.id);
+  };
+
+  /**
    * @returns {*}
    */
   render() {
     const { block, buttons, className, meTeamMember } = this.props;
     const { roles } = meTeamMember;
 
-    const classes = classNames(`block-menu block-menu-${constants.blockType(block.type)}`, className);
+    const classes  = classNames(`block-menu block-menu-${constants.blockType(block.type)}`, className);
+    const notesAcl = acl(roles, 'notes', 'blocks') || acl(roles, 'notes', `block-${constants.blockType(block.type)}`);
 
     return (
       <div className={classes}>
@@ -156,6 +167,14 @@ export default class BlockMenu extends React.PureComponent {
           {buttons}
         </div>
         <div className="block-menu-group justify-content-end">
+          {notesAcl && (
+            <Button
+              title="Notes"
+              icon="comment-alt"
+              className="block-menu-item"
+              onClick={this.handleNotesClick}
+            />
+          )}
           {acl(roles, 'lock', 'blocks') && (
             <Button
               title={block.isLocked ? 'Unlock' : 'Lock'}

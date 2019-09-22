@@ -84,6 +84,10 @@ const initialState = {
     subtitle:     '',
     pictureURL:   '',
     ...commonForms
+  },
+  notes: {
+    message: '',
+    ...commonForms
   }
 };
 

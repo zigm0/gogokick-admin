@@ -1,6 +1,7 @@
 import { api, router, arrays } from 'utils';
 import { setPermissions } from 'utils/acl';
 import { projectSave, projectSaveBlock } from './projectActions';
+import { notesVisible } from './notesActions';
 
 export const EDITOR_RESET          = 'EDITOR_RESET';
 export const EDITOR_LOADED         = 'EDITOR_LOADED';
@@ -245,7 +246,6 @@ export const editorBlockSettings = (payload) => {
 
 /**
  * @param {*} payload
- * @param {*} block
  * @returns {Function}
  */
 export const editorBlockMedia = (payload) => {
@@ -262,9 +262,15 @@ export const editorBlockMedia = (payload) => {
  * @returns {{payload: *, type: string}}
  */
 export const editorActivateBlock = (payload) => {
-  return {
-    type: EDITOR_ACTIVATE_BLOCK,
-    payload
+  return (dispatch) => {
+    if (!payload) {
+      dispatch(notesVisible(false));
+    }
+
+    dispatch({
+      type: EDITOR_ACTIVATE_BLOCK,
+      payload
+    });
   };
 };
 

@@ -11,6 +11,7 @@ import EditorNew from './EditorNew';
 import EditorMenuSidebar from './EditorMenuSidebar';
 import EditorSettings from './EditorSettings';
 import EditorSidebar from './EditorSidebar';
+import EditorNotes from './EditorNotes';
 import EditorExport from './EditorExport';
 
 const mapStateToProps = state => ({
@@ -72,6 +73,7 @@ export default class Editor extends React.PureComponent {
               </Router>
             </ErrorBoundary>
           </div>
+          <EditorNotes />
         </div>
       </DragDropContext>
     );

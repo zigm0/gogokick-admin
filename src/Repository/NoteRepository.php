@@ -1,6 +1,7 @@
 <?php
 namespace App\Repository;
 
+use App\Entity\Block;
 use App\Entity\Note;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -28,5 +29,15 @@ class NoteRepository extends ServiceEntityRepository
     public function findByID($id)
     {
         return $this->findOneBy(['id' => $id]);
+    }
+
+    /**
+     * @param Block $block
+     *
+     * @return Note[]
+     */
+    public function findByBlock(Block $block)
+    {
+        return $this->findBy(['block' => $block]);
     }
 }

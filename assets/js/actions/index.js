@@ -5,9 +5,11 @@ import * as projectActions from './projectActions';
 import * as teamActions from './teamActions';
 import * as userActions from './userActions';
 import * as formActions from './formActions';
+import * as notesActions from './notesActions';
 
 export {
   uiActions,
+  notesActions,
   editorActions,
   mediaActions,
   projectActions,
