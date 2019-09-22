@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 use App\Entity\Activity;
 use App\Entity\Invite;
 use App\Entity\ProjectUser;
+use App\Event\ActivityEvent;
 use App\Http\ModelRequestHandler;
 use App\Http\Request;
 use App\Model\InviteModel;
@@ -178,6 +179,8 @@ class TeamController extends ApiController
         $this->em->persist($activity);
 
         $this->em->flush();
+
+        $this->eventDispatcher->dispatch('app.activity', new ActivityEvent($activity));
 
         return new JsonResponse(sprintf('/editor/%d', $invite->getProject()->getId()));
     }

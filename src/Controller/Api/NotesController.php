@@ -3,6 +3,7 @@ namespace App\Controller\Api;
 
 use App\Entity\Activity;
 use App\Entity\Note;
+use App\Event\ActivityEvent;
 use App\Http\Request;
 use App\Repository\NoteRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -62,6 +63,7 @@ class NotesController extends ApiController
         $this->em->persist($activity);
 
         $this->em->flush();
+        $this->eventDispatcher->dispatch('app.activity', new ActivityEvent($activity));
 
         $notes = $repository->findByBlock($block);
 
