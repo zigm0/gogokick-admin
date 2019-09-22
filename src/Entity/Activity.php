@@ -13,9 +13,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class Activity
 {
     const TYPE_INVITE_ACCEPTED = 1;
+    const TYPE_BLOCK_NOTE = 2;
 
     const TYPES = [
-        'invite_accepted' => self::TYPE_INVITE_ACCEPTED
+        'invite_accepted' => self::TYPE_INVITE_ACCEPTED,
+        'block_note'      => self::TYPE_BLOCK_NOTE
     ];
 
     /**
@@ -48,6 +50,13 @@ class Activity
      * @ORM\JoinColumn(name="block_id", onDelete="CASCADE", referencedColumnName="id", nullable=true)
      */
     protected $block;
+
+    /**
+     * @var Note
+     * @ORM\ManyToOne(targetEntity="Note", inversedBy="activities")
+     * @ORM\JoinColumn(name="note_id", onDelete="CASCADE", referencedColumnName="id", nullable=true)
+     */
+    protected $note;
 
     /**
      * @var int
@@ -144,6 +153,26 @@ class Activity
     public function setBlock(Block $block): Activity
     {
         $this->block = $block;
+
+        return $this;
+    }
+
+    /**
+     * @return Note
+     */
+    public function getNote(): ?Note
+    {
+        return $this->note;
+    }
+
+    /**
+     * @param Note $note
+     *
+     * @return Activity
+     */
+    public function setNote(Note $note): Activity
+    {
+        $this->note = $note;
 
         return $this;
     }

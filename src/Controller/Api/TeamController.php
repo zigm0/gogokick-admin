@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller\Api;
 
+use App\Entity\Activity;
 use App\Entity\Invite;
 use App\Entity\ProjectUser;
 use App\Http\ModelRequestHandler;
@@ -157,15 +158,24 @@ class TeamController extends ApiController
             throw $this->createNotFoundException();
         }
 
-        $user = $this->getUser();
-        if (!$invite->getProject()->hasTeamMember($user)) {
+        $user    = $this->getUser();
+        $project = $invite->getProject();
+        if (!$project->hasTeamMember($user)) {
             $projectUser = (new ProjectUser())
-                ->setProject($invite->getProject())
+                ->setProject($project)
                 ->setRoles($invite->getRoles())
                 ->setUser($user);
             $this->em->persist($projectUser);
         }
+
         $invite->setStatus(Invite::STATUS_ACCEPTED);
+
+        $activity = (new Activity())
+            ->setProject($project)
+            ->setUser($user)
+            ->setType(Activity::TYPE_INVITE_ACCEPTED);
+        $this->em->persist($activity);
+
         $this->em->flush();
 
         return new JsonResponse(sprintf('/editor/%d', $invite->getProject()->getId()));

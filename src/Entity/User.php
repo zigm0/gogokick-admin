@@ -110,6 +110,12 @@ class User implements UserInterface
 
     /**
      * @var Collection
+     * @ORM\OneToMany(targetEntity="Note", mappedBy="user")
+     */
+    protected $notes;
+
+    /**
+     * @var Collection
      * @ORM\OneToMany(targetEntity="ProjectUser", mappedBy="user")
      */
     protected $teamProjects;
@@ -139,6 +145,7 @@ class User implements UserInterface
     {
         try {
             $this->roles         = [];
+            $this->notes         = new ArrayCollection();
             $this->projects      = new ArrayCollection();
             $this->teamProjects  = new ArrayCollection();
             $this->media         = new ArrayCollection();
@@ -369,6 +376,26 @@ class User implements UserInterface
     public function setActivities(Collection $activities): User
     {
         $this->activities = $activities;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    /**
+     * @param Collection $notes
+     *
+     * @return User
+     */
+    public function setNotes(Collection $notes): User
+    {
+        $this->notes = $notes;
 
         return $this;
     }

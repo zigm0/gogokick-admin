@@ -147,6 +147,12 @@ class Block
     protected $activities;
 
     /**
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="Note", mappedBy="block")
+     */
+    protected $notes;
+
+    /**
      * @var bool
      * @ORM\Column(type="boolean")
      * @Groups({"web"})
@@ -536,6 +542,26 @@ class Block
     public function setActivities(Collection $activities): Block
     {
         $this->activities = $activities;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    /**
+     * @param Collection $notes
+     *
+     * @return Block
+     */
+    public function setNotes(Collection $notes): Block
+    {
+        $this->notes = $notes;
 
         return $this;
     }
