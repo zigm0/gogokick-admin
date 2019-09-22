@@ -65,3 +65,9 @@
   display: flex;
   justify-content: center;
 }
+
+.dashboard-header {
+  .editor-header-left {
+    padding-left: $gutter-size;
+  }
+}
