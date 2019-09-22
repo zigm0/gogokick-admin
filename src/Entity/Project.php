@@ -109,6 +109,12 @@ class Project
     protected $isPublic = false;
 
     /**
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="Activity", mappedBy="project")
+     */
+    protected $activities;
+
+    /**
      * @var DateTime
      * @ORM\Column(type="datetime")
      * @Groups({"web"})
@@ -130,6 +136,7 @@ class Project
         try {
             $this->team        = new ArrayCollection();
             $this->blocks      = new ArrayCollection();
+            $this->activities  = new ArrayCollection();
             $this->dateCreated = new DateTime();
             $this->dateUpdated = new DateTime();
         } catch (Exception $e) {}
@@ -425,6 +432,26 @@ class Project
     public function setIsPublic(bool $isPublic): Project
     {
         $this->isPublic = $isPublic;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getActivities(): Collection
+    {
+        return $this->activities;
+    }
+
+    /**
+     * @param Collection $activities
+     *
+     * @return Project
+     */
+    public function setActivities(Collection $activities): Project
+    {
+        $this->activities = $activities;
 
         return $this;
     }

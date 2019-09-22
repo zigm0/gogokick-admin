@@ -104,6 +104,12 @@ class User implements UserInterface
 
     /**
      * @var Collection
+     * @ORM\OneToMany(targetEntity="Activity", mappedBy="user")
+     */
+    protected $activities;
+
+    /**
+     * @var Collection
      * @ORM\OneToMany(targetEntity="ProjectUser", mappedBy="user")
      */
     protected $teamProjects;
@@ -136,6 +142,7 @@ class User implements UserInterface
             $this->projects      = new ArrayCollection();
             $this->teamProjects  = new ArrayCollection();
             $this->media         = new ArrayCollection();
+            $this->activities    = new ArrayCollection();
             $this->dateCreated   = new DateTime();
             $this->dateLastLogin = new DateTime();
         } catch (Exception $e) {
@@ -342,6 +349,26 @@ class User implements UserInterface
     public function setMedia(Collection $media): User
     {
         $this->media = $media;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getActivities(): Collection
+    {
+        return $this->activities;
+    }
+
+    /**
+     * @param Collection $activities
+     *
+     * @return User
+     */
+    public function setActivities(Collection $activities): User
+    {
+        $this->activities = $activities;
 
         return $this;
     }

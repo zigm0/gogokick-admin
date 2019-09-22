@@ -2,6 +2,8 @@
 namespace App\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Exception;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -139,6 +141,12 @@ class Block
     protected $isHeadline = false;
 
     /**
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="Activity", mappedBy="block")
+     */
+    protected $activities;
+
+    /**
      * @var bool
      * @ORM\Column(type="boolean")
      * @Groups({"web"})
@@ -167,6 +175,7 @@ class Block
             $this->dateCreated = new DateTime();
             $this->dateUpdated = new DateTime();
             $this->description = 'Description';
+            $this->activities  = new ArrayCollection();
         } catch (Exception $e) {}
     }
 
@@ -507,6 +516,26 @@ class Block
     public function setSortOrder(int $sortOrder): Block
     {
         $this->sortOrder = $sortOrder;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getActivities(): Collection
+    {
+        return $this->activities;
+    }
+
+    /**
+     * @param Collection $activities
+     *
+     * @return Block
+     */
+    public function setActivities(Collection $activities): Block
+    {
+        $this->activities = $activities;
 
         return $this;
     }
