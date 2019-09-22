@@ -27,6 +27,20 @@
   overflow-y: auto;
 }
 
+.editor-note-items-empty {
+  display: flex;
+  font-size: $font-size-lg;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  .icon {
+    display: block;
+    margin-top: $gutter-size;
+  }
+}
+
 .editor-note-item {
   margin-bottom: $gutter-size-sm;
 }

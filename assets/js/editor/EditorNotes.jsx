@@ -6,7 +6,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import { connect, mapDispatchToProps } from 'utils';
 import { Form, Textarea } from 'components/forms';
 import { Button } from 'components/bootstrap';
-import { Avatar } from 'components';
+import { Avatar, Icon } from 'components';
 import { notesActions, formActions } from 'actions';
 
 const mapStateToProps = state => ({
@@ -99,26 +99,33 @@ export default class EditorNotes extends React.PureComponent {
 
     return (
       <Scrollbars ref={this.notes}>
-        <ul className="editor-note-items">
-          {notes.map(note => (
-            <li key={note.id} className="editor-note-item">
-              <div className="editor-note-item-avatar">
-                <Avatar src={note.user.avatar} sm />
-                <div>
-                  <div className="editor-note-item-avatar-name">
-                    {note.user.name}
+        {notes.length === 0 ? (
+          <div className="editor-note-items editor-note-items-empty">
+            This block does not have any notes.
+            <Icon name="comment-alt" size={3} />
+          </div>
+        ) : (
+          <ul className="editor-note-items">
+            {notes.map(note => (
+              <li key={note.id} className="editor-note-item">
+                <div className="editor-note-item-avatar">
+                  <Avatar src={note.user.avatar} sm />
+                  <div>
+                    <div className="editor-note-item-avatar-name">
+                      {note.user.name}
+                    </div>
+                    <Moment fromNow>
+                      {note.dateCreated}
+                    </Moment>
                   </div>
-                  <Moment fromNow>
-                    {note.dateCreated}
-                  </Moment>
                 </div>
-              </div>
-              <div className="editor-note-item-message">
-                {note.text}
-              </div>
-            </li>
-          ))}
-        </ul>
+                <div className="editor-note-item-message">
+                  {note.text}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </Scrollbars>
     );
   };

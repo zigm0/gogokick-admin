@@ -59,6 +59,7 @@ $height-block-audio: 300px;
 $margin-bottom-block: 30px;
 
 $font-size-sm: 0.9rem;
+$font-size-lg: 1.1rem;
 
 @mixin media-xs {
   @media (min-width: #{$break-xs}) and (max-width: #{$break-sm - 1px}) {
