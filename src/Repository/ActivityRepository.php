@@ -41,6 +41,38 @@ class ActivityRepository extends ServiceEntityRepository
      *
      * @return Activity[]
      */
+    public function findByRelatedUser(User $user, $limit = 20, $offset = 0)
+    {
+        $projectIDs = [];
+        $projects   = $this->getEntityManager()
+            ->getRepository(Project::class)
+            ->findByTeamMember($user);
+        foreach($projects as $project) {
+            $projectIDs[] = $project->getId();
+        }
+
+        $builder = $this->createQueryBuilder('a')
+            ->where('a.user = :user');
+        if ($projectIDs) {
+            $builder->orWhere('a.project IN (:projectIDs)')
+                ->setParameter(':projectIDs', $projectIDs);
+        }
+
+        return $builder
+            ->setParameter(':user', $user)
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @param User $user
+     * @param int  $limit
+     * @param int  $offset
+     *
+     * @return Activity[]
+     */
     public function findByUser(User $user, $limit = 20, $offset = 0)
     {
         return $this->findBy(['user' => $user], ['id' => 'desc'], $limit, $offset);

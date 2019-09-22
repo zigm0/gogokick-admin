@@ -7,6 +7,7 @@ import team from 'reducers/teamReducer';
 import media from 'reducers/mediaReducer';
 import editor from 'reducers/editorReducer';
 import project from 'reducers/projectReducer';
+import activity from 'reducers/activityReducer';
 
 /**
  * @returns {Reducer}
@@ -20,6 +21,7 @@ export default function createRootReducer() {
     media,
     team,
     editor,
-    project
+    project,
+    activity
   });
 }

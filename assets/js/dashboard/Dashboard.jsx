@@ -5,6 +5,7 @@ import { ProjectCard } from 'cards';
 import { Container, Row, Column } from 'components/bootstrap';
 import { projectActions } from 'actions';
 import { Workspace } from 'components';
+import Activities from './Activities';
 
 const mapStateToProps = state => ({
   projects: state.editor.projects,
@@ -42,7 +43,7 @@ export default class Dashboard extends React.PureComponent {
 
     return (
       <Row>
-        <Column xl={10} offsetXl={1} className="gutter-bottom">
+        <Column className="gutter-bottom">
           <h3>My Projects</h3>
           <Row>
             {projects.map(project => (
@@ -67,7 +68,7 @@ export default class Dashboard extends React.PureComponent {
 
     return (
       <Row>
-        <Column xl={10} offsetXl={1} className="gutter-bottom">
+        <Column className="gutter-bottom">
           <h3>Watchlist</h3>
           <Row>
             {watching.map(project => (
@@ -90,9 +91,16 @@ export default class Dashboard extends React.PureComponent {
   render() {
     return (
       <Workspace name="dashboard" title="Dashboard">
-        <Container className="editor-home">
-          {this.renderProjects()}
-          {this.renderWatching()}
+        <Container className="editor-home" fluid>
+          <Row>
+            <Column xl={4}>
+              <Activities />
+            </Column>
+            <Column xl={8}>
+              {this.renderProjects()}
+              {this.renderWatching()}
+            </Column>
+          </Row>
         </Container>
       </Workspace>
     );

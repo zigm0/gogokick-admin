@@ -41,6 +41,7 @@ class Activity
      * @var Project
      * @ORM\ManyToOne(targetEntity="Project", inversedBy="activities")
      * @ORM\JoinColumn(name="project_id", onDelete="CASCADE", referencedColumnName="id", nullable=true)
+     * @Groups({"web"})
      */
     protected $project;
 
@@ -48,6 +49,7 @@ class Activity
      * @var Block
      * @ORM\ManyToOne(targetEntity="Block", inversedBy="activities")
      * @ORM\JoinColumn(name="block_id", onDelete="CASCADE", referencedColumnName="id", nullable=true)
+     * @Groups({"web"})
      */
     protected $block;
 
@@ -55,6 +57,7 @@ class Activity
      * @var Note
      * @ORM\ManyToOne(targetEntity="Note", inversedBy="activities")
      * @ORM\JoinColumn(name="note_id", onDelete="CASCADE", referencedColumnName="id", nullable=true)
+     * @Groups({"web"})
      */
     protected $note;
 

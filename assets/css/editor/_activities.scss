@@ -1,0 +1,39 @@
+@import "../vars";
+
+.editor-activities {
+
+}
+
+.editor-activity-item {
+  margin-bottom: $gutter-size;
+}
+
+.editor-activity-item-avatar {
+  display: flex;
+  align-items: center;
+
+  .avatar {
+    margin-right: $gutter-size-sm;
+  }
+
+  .editor-activity-item-avatar-name {
+    font-size: 1rem;
+    line-height: 1rem;
+  }
+
+  time {
+    font-size: 0.8rem;
+  }
+}
+
+.editor-activity-item-body {
+  margin-left: 42px;
+}
+
+.editor-activity-item-icon {
+  margin-right: $gutter-size-sm;
+}
+
+.editor-activity-item-body-description {
+  font-size: $font-size-sm;
+}

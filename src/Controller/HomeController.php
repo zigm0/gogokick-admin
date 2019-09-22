@@ -2,9 +2,11 @@
 namespace App\Controller;
 
 use App\Controller\Api\ApiController;
+use App\Entity\Activity;
 use App\Entity\Block;
 use App\Entity\Project;
 use App\Entity\ProjectUser;
+use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\WatchRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,17 +30,23 @@ class HomeController extends ApiController
     /**
      * @Route("/editor", name="editor")
      *
-     * @param ProjectRepository $projectRepository
-     * @param WatchRepository   $watchRepository
+     * @param ProjectRepository  $projectRepository
+     * @param WatchRepository    $watchRepository
+     * @param ActivityRepository $activityRepository
      *
      * @return Response
      */
-    public function editorAction(ProjectRepository $projectRepository, WatchRepository $watchRepository)
+    public function editorAction(
+        ProjectRepository $projectRepository,
+        WatchRepository $watchRepository,
+        ActivityRepository $activityRepository
+    )
     {
         $constants = [
             'blockTypes'    => array_flip(Block::TYPES),
             'campaignTypes' => array_flip(Project::CAMPAIGN_TYPES),
-            'projectRoles'  => array_flip(ProjectUser::ROLES)
+            'projectRoles'  => array_flip(ProjectUser::ROLES),
+            'activityTypes' => array_flip(Activity::TYPES)
         ];
 
         $user = [
@@ -81,6 +89,20 @@ class HomeController extends ApiController
             }
         }
 
+        $activities = $activityRepository->findByRelatedUser($this->getUser());
+        $activities = $this->arrayEntityGroup($activities);
+        foreach($activities as &$activity) {
+            $uid    = $activity['user']['id'];
+            $name   = $activity['user']['name'];
+            $avatar = $activity['user']['avatar'];
+            unset($activity['user']);
+            $activity['user'] = [
+                'id'     => $uid,
+                'name'   => $name,
+                'avatar' => $avatar
+            ];
+        }
+
         return $this->render('editor/index.html.twig', [
             'constants'    => $constants,
             'initialState' => [
@@ -89,7 +111,10 @@ class HomeController extends ApiController
                     'watching' => $watching
                 ],
                 'user'           => $user,
-                'publicProjects' => $projects
+                'publicProjects' => $projects,
+                'activity'       => [
+                    'activities' => $activities
+                ]
             ]
         ]);
     }
