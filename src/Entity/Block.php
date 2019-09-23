@@ -567,6 +567,15 @@ class Block
     }
 
     /**
+     * @return int
+     * @Groups({"web"})
+     */
+    public function getNoteCount(): int
+    {
+        return count($this->notes);
+    }
+
+    /**
      * @return DateTime
      */
     public function getDateCreated(): DateTime
