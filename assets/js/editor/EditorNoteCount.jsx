@@ -9,6 +9,9 @@ const EditorNoteCount = ({ canvasBlocks, blockIndex, activeBlockID }) => {
   }
 
   const block = arrays.findByID(canvasBlocks[blockIndex], activeBlockID);
+  if (!block) {
+    return <div className="editor-note-count" />;
+  }
 
   return (
     <div className="editor-note-count editor-note-count-visible">
