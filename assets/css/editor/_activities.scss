@@ -8,32 +8,30 @@
   margin-bottom: $gutter-size;
 }
 
-.editor-activity-item-avatar {
-  display: flex;
-  align-items: center;
-
-  .avatar {
-    margin-right: $gutter-size-sm;
-  }
-
-  .editor-activity-item-avatar-name {
-    font-size: 1rem;
-    line-height: 1rem;
-  }
-
-  time {
-    font-size: 0.8rem;
-  }
-}
-
 .editor-activity-item-body {
-  margin-left: 42px;
+  display: flex;
 }
 
 .editor-activity-item-icon {
-  margin-right: $gutter-size-sm;
+  margin-right: 0.25rem;
 }
 
-.editor-activity-item-body-description {
+.editor-activity-item-avatar-name,
+.editor-activity-item-icon,
+.editor-activity-item-date {
   font-size: $font-size-sm;
+}
+
+.editor-activity-item-avatar-name {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.editor-activity-item-avatar {
+  margin-right: $gutter-size;
+
+  .avatar-sm {
+    height: 46px;
+    width: 46px;
+  }
 }

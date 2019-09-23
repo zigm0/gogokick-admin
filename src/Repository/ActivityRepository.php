@@ -52,14 +52,16 @@ class ActivityRepository extends ServiceEntityRepository
         }
 
         $builder = $this->createQueryBuilder('a')
-            ->where('a.user = :user');
+            ->where('a.id != 0')
+            ->orWhere('a.user = :user')
+            ->setParameter(':user', $user);
         if ($projectIDs) {
             $builder->orWhere('a.project IN (:projectIDs)')
                 ->setParameter(':projectIDs', $projectIDs);
         }
 
         return $builder
-            ->setParameter(':user', $user)
+            ->orderBy('a.id', 'desc')
             ->setMaxResults($limit)
             ->setFirstResult($offset)
             ->getQuery()
