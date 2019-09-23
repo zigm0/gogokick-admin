@@ -35,9 +35,9 @@ export default class Home extends React.PureComponent {
       <Workspace name="home">
         <div className="home-page">
           <div className="home-page-jumbotron">
-            <Container className="home-page-cta">
+            <div className="home-page-cta">
               Crowdfunding tools and services for the DIY creator.
-            </Container>
+            </div>
           </div>
           <Container className="home-page-used-by">
             <h4>Used by:</h4>
