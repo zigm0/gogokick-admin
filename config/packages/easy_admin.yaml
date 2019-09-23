@@ -45,8 +45,10 @@ easy_admin:
             list:
                 fields:
                     - id
+                    - name
                     - title
             form:
                 fields:
                     - title
+                    - name
                     - { property: 'html', type: 'fos_ckeditor' }
