@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, arrays } from 'utils';
+import { connect, arrays, mapDispatchToProps } from 'utils';
 import { Icon } from 'components';
+import { notesActions } from 'actions';
 
-const EditorNoteCount = ({ canvasBlocks, blockIndex, activeBlockID }) => {
+const EditorNoteCount = ({ canvasBlocks, blockIndex, activeBlockID, notesToggleVisible }) => {
   if (!activeBlockID) {
     return <div className="editor-note-count" />;
   }
@@ -14,19 +15,20 @@ const EditorNoteCount = ({ canvasBlocks, blockIndex, activeBlockID }) => {
   }
 
   return (
-    <div className="editor-note-count editor-note-count-visible">
+    <div className="editor-note-count editor-note-count-visible" onClick={() => notesToggleVisible(block.id)}>
       <Icon name="comment-alt" size={2} flipHorizontal />
       <div className="editor-note-count-value">
         {block.noteCount}
       </div>
     </div>
-  )
+  );
 };
 
 EditorNoteCount.propTypes = {
-  activeBlockID: PropTypes.number.isRequired,
-  blockIndex:    PropTypes.number.isRequired,
-  canvasBlocks:  PropTypes.array.isRequired,
+  activeBlockID:      PropTypes.number.isRequired,
+  blockIndex:         PropTypes.number.isRequired,
+  canvasBlocks:       PropTypes.array.isRequired,
+  notesToggleVisible: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -35,4 +37,4 @@ const mapStateToProps = state => ({
   activeBlockID: state.editor.activeBlockID
 });
 
-export default connect(mapStateToProps)(EditorNoteCount);
+export default connect(mapStateToProps, mapDispatchToProps(notesActions))(EditorNoteCount);

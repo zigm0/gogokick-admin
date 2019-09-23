@@ -103,6 +103,7 @@
   top: $height-header + $gutter-size;
   right: $gutter-size * 2;
   opacity: 0;
+  cursor: pointer;
   transition: opacity 0.2s ease-in-out;
 
   .icon {
