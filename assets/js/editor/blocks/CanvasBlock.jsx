@@ -69,9 +69,8 @@ export default class CanvasBlock extends React.PureComponent {
     }
 
     if (nextProps.activeBlockID === nextProps.block.id) {
-      this.$inner
-        .height(1)
-        .height(this.$inner[0].scrollHeight);
+      this.$inner.height(1);
+      this.$inner.height(this.$inner[0].scrollHeight);
     } else {
       this.$inner.css('height', 'auto');
     }
