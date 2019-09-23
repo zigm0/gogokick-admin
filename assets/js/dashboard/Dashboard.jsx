@@ -66,6 +66,10 @@ export default class Dashboard extends React.PureComponent {
   renderWatching = () => {
     const { watching } = this.props;
 
+    if (watching.length === 0) {
+      return null;
+    }
+
     return (
       <Row>
         <Column className="gutter-bottom">
