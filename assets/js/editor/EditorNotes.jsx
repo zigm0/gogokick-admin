@@ -137,7 +137,7 @@ export default class EditorNotes extends React.PureComponent {
                 )}
                 <div className="editor-note-item-avatar">
                   <Avatar src={note.user.avatar} sm />
-                  <div>
+                  <div className="editor-note-item-details">
                     <div className="editor-note-item-avatar-name">
                       {note.user.name}
                     </div>

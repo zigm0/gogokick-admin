@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { team } from 'utils';
 import { strings, constants } from 'utils';
 import { Avatar } from 'components';
 

@@ -44,14 +44,20 @@
 .editor-note-item {
   margin-bottom: $gutter-size-sm;
   padding: $gutter-size-sm;
+  transition: background-color 0.1s ease-in-out;
 
   &:hover {
     background-color: #393939;
+
+    .editor-note-item-delete-icon {
+      display: block;
+    }
   }
 }
 
 .editor-note-item-delete-icon {
   float: right;
+  display: none;
   color: $color-danger;
   cursor: pointer;
 
@@ -66,7 +72,7 @@
   color: #AAA;
 
   .avatar {
-    margin-right: $gutter-size-sm;
+    margin-right: $gutter-size;
   }
 
   .editor-note-item-avatar-name {
@@ -80,13 +86,14 @@
 }
 
 .editor-note-item-message {
-  margin-left: 44px;
+  margin-left: 50px;
 }
 
 .editor-notes-form {
   flex: none;
-/*  position: absolute;
-  bottom: $gutter-size;
-  left: $gutter-size;
-  right: $gutter-size;*/
+}
+
+.editor-note-item-details {
+  display: flex;
+  flex-direction: column;
 }
