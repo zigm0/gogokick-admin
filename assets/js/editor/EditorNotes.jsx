@@ -12,6 +12,7 @@ import { notesActions, formActions } from 'actions';
 const mapStateToProps = state => ({
   notes:         state.notes.notes,
   isVisible:     state.notes.isVisible,
+  formValues:    state.forms.notes,
   activeBlockID: state.editor.activeBlockID,
   meTeamMember:  state.editor.meTeamMember
 });
@@ -24,6 +25,7 @@ export default class EditorNotes extends React.PureComponent {
   static propTypes = {
     notes:         PropTypes.array.isRequired,
     isVisible:     PropTypes.bool.isRequired,
+    formValues:    PropTypes.object.isRequired,
     meTeamMember:  PropTypes.object.isRequired,
     notesFetch:    PropTypes.func.isRequired,
     notesSave:     PropTypes.func.isRequired,
@@ -63,14 +65,13 @@ export default class EditorNotes extends React.PureComponent {
 
   /**
    * @param {Event} e
-   * @param {*} values
    */
-  handleFormSubmit = (e, values) => {
-    const { activeBlockID, formChange, notesSave } = this.props;
+  handleFormSubmit = (e) => {
+    const { activeBlockID, formValues, formChange, notesSave } = this.props;
 
     e.preventDefault();
     formChange('notes', 'message', '');
-    notesSave(activeBlockID, values.message);
+    notesSave(activeBlockID, formValues.message);
     setTimeout(() => {
       this.message.current.focus();
     }, 500);
@@ -89,6 +90,16 @@ export default class EditorNotes extends React.PureComponent {
   };
 
   /**
+   * @param {Event} e
+   */
+  handleMessageKeyUp = (e) => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      this.handleFormSubmit(e);
+    }
+  };
+
+  /**
    * @returns {*}
    */
   renderForm = () => {
@@ -98,6 +109,8 @@ export default class EditorNotes extends React.PureComponent {
           ref={this.message}
           name="message"
           id="notes-message-input"
+          placeholder="Add your message..."
+          onKeyUp={this.handleMessageKeyUp}
         />
         <Button theme="success" block>
           Save

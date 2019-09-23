@@ -10,13 +10,14 @@
   align-items: center;
   padding: $gutter-size-sm;
   border-radius: $border-radius-blocks;
+  transition: background-color 0.1s ease-in-out;
 
   @include media-md {
     justify-content: center;
   }
 
   &:hover {
-    background-color: $color-primary-selected;
+    background-color: #393939;
   }
 
   .avatar {
