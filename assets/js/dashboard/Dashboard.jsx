@@ -42,21 +42,19 @@ export default class Dashboard extends React.PureComponent {
     const { projects } = this.props;
 
     return (
-      <Row>
-        <Column className="gutter-bottom">
-          <h3>My Projects</h3>
-          <Row>
-            {projects.map(project => (
-              <Column key={project.id}>
-                <ProjectCard
-                  project={project}
-                  onClick={this.handleCardClick}
-                />
-              </Column>
-            ))}
-          </Row>
-        </Column>
-      </Row>
+      <Column xl={6} className="gutter-bottom">
+        <h3>My Projects</h3>
+        <Row>
+          {projects.map(project => (
+            <Column key={project.id}>
+              <ProjectCard
+                project={project}
+                onClick={this.handleCardClick}
+              />
+            </Column>
+          ))}
+        </Row>
+      </Column>
     );
   };
 
@@ -71,21 +69,19 @@ export default class Dashboard extends React.PureComponent {
     }
 
     return (
-      <Row>
-        <Column className="gutter-bottom">
-          <h3>Watchlist</h3>
-          <Row>
-            {watching.map(project => (
-              <Column key={project.id}>
-                <ProjectCard
-                  project={project}
-                  watching
-                />
-              </Column>
-            ))}
-          </Row>
-        </Column>
-      </Row>
+      <Column xl={6} className="gutter-bottom">
+        <h3>Watchlist</h3>
+        <Row>
+          {watching.map(project => (
+            <Column key={project.id}>
+              <ProjectCard
+                project={project}
+                watching
+              />
+            </Column>
+          ))}
+        </Row>
+      </Column>
     );
   };
 
@@ -101,8 +97,10 @@ export default class Dashboard extends React.PureComponent {
               <Activities />
             </Column>
             <Column xl={8}>
-              {this.renderProjects()}
-              {this.renderWatching()}
+              <Row>
+                {this.renderProjects()}
+                {this.renderWatching()}
+              </Row>
             </Column>
           </Row>
         </Container>
