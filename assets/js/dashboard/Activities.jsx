@@ -43,7 +43,7 @@ export default class Activities extends React.PureComponent {
                   <span className="editor-activity-item-date">
                     Commented on block <a href="#">#{a.note.block.id}</a> <Moment fromNow>{a.dateCreated}</Moment>.
                   </span>
-                  <div className="editor-activity-item-body-message">
+                  <div className="editor-activity-item-body-message hyphenate">
                     <Icon name="comment-alt" className="editor-activity-item-icon" />
                     {a.note.text}
                   </div>

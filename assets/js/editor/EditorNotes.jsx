@@ -159,7 +159,7 @@ export default class EditorNotes extends React.PureComponent {
                     </Moment>
                   </div>
                 </div>
-                <div className="editor-note-item-message">
+                <div className="editor-note-item-message hyphenate">
                   {note.text}
                 </div>
               </li>

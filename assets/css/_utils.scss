@@ -76,3 +76,11 @@
 .h-min-100 {
   min-height: 100% !important;
 }
+
+.hyphenate {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
