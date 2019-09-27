@@ -24,7 +24,7 @@ export default class BlockText extends React.PureComponent {
     }
 
     return (
-      <div dangerouslySetInnerHTML={{ __html }} />
+      <div className="hyphenate" dangerouslySetInnerHTML={{ __html }} />
     );
   }
 }
