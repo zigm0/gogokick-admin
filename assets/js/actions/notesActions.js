@@ -1,5 +1,6 @@
 import { api, router } from 'utils';
 import { editorActivateBlock } from './editorActions';
+import { activitiesFetch } from './activityActions';
 
 export const NOTES_BUSY           = 'NOTES_BUSY';
 export const NOTES_VISIBLE        = 'NOTES_VISIBLE';
@@ -82,6 +83,7 @@ export const notesSave = (blockID, message) => {
           type: NOTES_FETCH,
           notes
         });
+        dispatch(activitiesFetch());
       })
       .finally(() => {
         dispatch(notesBusy(false));

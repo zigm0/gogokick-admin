@@ -5,8 +5,23 @@ const initialState = objects.merge({
   activities: []
 }, window.initialState.activity);
 
+/**
+ * @param {*} state
+ * @param {*} action
+ * @returns {*}
+ */
+const onFetch = (state, action) => {
+  const activities = objects.clone(action.activities);
 
-const handlers = {};
+  return {
+    ...state,
+    activities
+  };
+};
+
+const handlers = {
+  [types.ACTIVITY_FETCH]: onFetch
+};
 
 /**
  * @param {*} state

@@ -92,15 +92,7 @@ class HomeController extends ApiController
         $activities = $activityRepository->findByRelatedUser($this->getUser());
         $activities = $this->arrayEntityGroup($activities);
         foreach($activities as &$activity) {
-            $uid    = $activity['user']['id'];
-            $name   = $activity['user']['name'];
-            $avatar = $activity['user']['avatar'];
-            unset($activity['user']);
-            $activity['user'] = [
-                'id'     => $uid,
-                'name'   => $name,
-                'avatar' => $avatar
-            ];
+            $activity = $this->sanitizeActivity($activity);
         }
 
         return $this->render('editor/index.html.twig', [

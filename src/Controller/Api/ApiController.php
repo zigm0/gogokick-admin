@@ -2,6 +2,7 @@
 namespace App\Controller\Api;
 
 use App\Controller\Controller;
+use App\Entity\Activity;
 use App\Entity\Block;
 use App\Entity\Media;
 use App\Entity\Project;
@@ -137,5 +138,26 @@ class ApiController extends Controller
         }
 
         return $media;
+    }
+
+    /**
+     * @param array $activity
+     *
+     * @return array
+     */
+    public function sanitizeActivity(array $activity)
+    {
+        $uid    = $activity['user']['id'];
+        $name   = $activity['user']['name'];
+        $avatar = $activity['user']['avatar'];
+        unset($activity['user']);
+
+        $activity['user'] = [
+            'id'     => $uid,
+            'name'   => $name,
+            'avatar' => $avatar
+        ];
+
+        return $activity;
     }
 }
