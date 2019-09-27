@@ -71,6 +71,20 @@ class Note
     }
 
     /**
+     * @Groups({"web"})
+     *
+     * @return int|null
+     */
+    public function getProjectID(): ?int
+    {
+        if ($this->block) {
+            return $this->block->getProject()->getId();
+        }
+
+        return null;
+    }
+
+    /**
      * @return int
      */
     public function getId(): ?int

@@ -22,11 +22,16 @@
   font-size: 1.15rem;
 
   a {
+    color: #FFF;
     font-weight: 700;
     padding: 0 0.5rem;
     line-height: 1.15rem;
     border-right: 1px solid #FFF;
     white-space: nowrap;
+
+    &:hover {
+      color: #FFF;
+    }
 
     &:last-child {
       border-right: none;

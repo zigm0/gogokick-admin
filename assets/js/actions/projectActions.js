@@ -66,7 +66,12 @@ export const projectOpen = (id, meta = {}) => {
         if (meta.redirectAfterOpen === undefined || meta.redirectAfterOpen) {
           setTimeout(() => {
             dispatch(projectBusy(false));
-            history.push(`/editor/${payload.id}`);
+
+            let url = `/editor/${payload.id}`;
+            if (document.location.hash) {
+              url = `${url}${document.location.hash}`;
+            }
+            history.push(url);
           }, 1000);
         } else {
           dispatch(projectBusy(false));

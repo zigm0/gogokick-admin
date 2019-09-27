@@ -44,7 +44,7 @@ export default class Link extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { btn, sm, icon, theme, className, children, ...props } = this.props;
+    const { to, btn, sm, icon, theme, className, children, ...props } = this.props;
 
     const classes = classNames('pointer', {
       [`btn btn-${theme}`]: btn,
@@ -52,7 +52,7 @@ export default class Link extends React.PureComponent {
     }, className);
 
     return (
-      <a className={classes} {...objects.keyFilter(props, 'to')} onClick={this.handleClick}>
+      <a className={classes} href={to} {...objects.keyFilter(props, 'to')} onClick={this.handleClick}>
         {icon && (
           <Icon className="margin-right-sm" name={icon} fixed={false} />
         )}

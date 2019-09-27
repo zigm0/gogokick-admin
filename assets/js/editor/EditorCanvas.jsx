@@ -44,17 +44,43 @@ export default class EditorCanvas extends React.PureComponent {
     const matchId = parseInt(match.params.id, 10);
     if (!isNaN(matchId) && project.id !== matchId) {
       projectOpen(matchId);
+    } else {
+      this.handleUpdate();
+    }
+  }
+
+  /**
+   * @param {*} prevProps
+   */
+  componentDidUpdate(prevProps) {
+    const { project } = this.props;
+    const { project: prevProject } = prevProps;
+
+    browser.title(project.name);
+    if (project.id !== prevProject.id) {
+      this.handleUpdate();
     }
   }
 
   /**
    *
    */
-  componentDidUpdate() {
-    const { project } = this.props;
+  handleUpdate = () => {
+    const { editorActivateBlock } = this.props;
 
-    browser.title(project.name);
-  }
+    if (document.location.hash.indexOf('#block-') === 0) {
+      const parts = document.location.hash.split('-');
+      if (parts.length === 2) {
+        const block = document.querySelector(document.location.hash);
+        setTimeout(() => {
+          editorActivateBlock(parseInt(parts[1], 10));
+          block.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }, 500);
+      }
+    }
+  };
 
   /**
    * @param {Event} e
