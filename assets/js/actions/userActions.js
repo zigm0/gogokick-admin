@@ -1,6 +1,8 @@
 import queryString from 'query-string';
 import { api, router, history } from 'utils';
 import { editorFetchProjects } from './editorActions';
+import { activitiesFetch } from './activityActions';
+import { projectFetchWatching } from './projectActions';
 import { formError } from './formActions';
 
 export const USER_RESET   = 'USER_RESET';
@@ -67,6 +69,8 @@ export const userLogin = () => {
             payload
           });
           dispatch(editorFetchProjects());
+          dispatch(activitiesFetch());
+          dispatch(projectFetchWatching());
 
           const parsed = queryString.parse(document.location.search);
           if (parsed.back) {

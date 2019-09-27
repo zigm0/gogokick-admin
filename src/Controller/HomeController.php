@@ -89,10 +89,13 @@ class HomeController extends ApiController
             }
         }
 
-        $activities = $activityRepository->findByRelatedUser($this->getUser());
-        $activities = $this->arrayEntityGroup($activities);
-        foreach($activities as &$activity) {
-            $activity = $this->sanitizeActivity($activity);
+        $activities = [];
+        if ($u = $this->getUser()) {
+            $activities = $activityRepository->findByRelatedUser($u);
+            $activities = $this->arrayEntityGroup($activities);
+            foreach ($activities as &$activity) {
+                $activity = $this->sanitizeActivity($activity);
+            }
         }
 
         return $this->render('editor/index.html.twig', [

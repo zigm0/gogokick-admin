@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use ZipArchive;
 
 /**
- * @Route("/api/projects", name="api_projects", options={"expose"=true})
+ * @Route("/api/projects", name="api_projects", options={"expose"=true}, requirements={"id"="\d+"})
  */
 class ProjectsController extends ApiController
 {
@@ -410,6 +410,29 @@ class ProjectsController extends ApiController
             unset($project['blocks']);
             unset($project['team']);
             $watching[] = $project;
+        }
+
+        return new JsonResponse($watching);
+    }
+
+    /**
+     * @Route("/watching", name="_fetch_watching", methods={"GET"})
+     *
+     * @param WatchRepository $repository
+     *
+     * @return JsonResponse
+     */
+    public function watchingAction(WatchRepository $repository)
+    {
+        $watching = [];
+        $watches  = $repository->findByUser($this->getUser());
+        $watches  = $this->arrayEntityGroup($watches);
+        foreach ($watches as $watch) {
+            $p = $watch['project'];
+            unset($p['user']);
+            unset($p['blocks']);
+            unset($p['team']);
+            $watching[] = $p;
         }
 
         return new JsonResponse($watching);

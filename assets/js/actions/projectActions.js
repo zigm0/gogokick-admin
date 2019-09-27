@@ -304,3 +304,18 @@ export const projectWatch = (id) => {
       });
   };
 };
+
+/**
+ * @returns {Function}
+ */
+export const projectFetchWatching = () => {
+  return (dispatch) => {
+    api.get(router.generate('api_projects_fetch_watching'))
+      .then((watching) => {
+        dispatch({
+          type: PROJECT_WATCHING,
+          watching
+        });
+      });
+  };
+};
