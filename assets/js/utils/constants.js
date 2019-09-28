@@ -2,10 +2,12 @@ const { constants }        = window;
 export const blockTypes    = constants.blockTypes;
 export const campaignTypes = constants.campaignTypes;
 export const projectRoles  = constants.projectRoles;
+export const activityTypes = constants.activityTypes;
 
 const blockTypesStr    = {};
 const campaignTypesStr = {};
 const projectRolesStr  = {};
+const activityTypesStr = {};
 
 Object.keys(blockTypes).forEach((key) => {
   const value = blockTypes[key];
@@ -20,6 +22,11 @@ Object.keys(campaignTypes).forEach((key) => {
 Object.keys(projectRoles).forEach((key) => {
   const value = projectRoles[key];
   projectRolesStr[value] = parseInt(key, 10);
+});
+
+Object.keys(activityTypes).forEach((key) => {
+  const value = activityTypes[key];
+  activityTypesStr[value] = parseInt(key, 10);
 });
 
 /**
@@ -55,11 +62,24 @@ export function projectRole(type) {
   return projectRoles[type];
 }
 
+/**
+ * @param {number|string} type
+ * @returns {string}
+ */
+export function activityType(type) {
+  if (typeof type === 'string') {
+    return activityTypesStr[type];
+  }
+  return activityTypes[type];
+}
+
 export default {
   blockType,
   campaignType,
   projectRole,
+  activityType,
   blockTypes,
   campaignTypes,
-  projectRoles
+  projectRoles,
+  activityTypes
 }

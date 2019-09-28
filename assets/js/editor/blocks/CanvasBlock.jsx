@@ -80,9 +80,11 @@ export default class CanvasBlock extends React.PureComponent {
    *
    */
   handleChange = () => {
-    this.$inner
-      .height(1)
-      .height(this.$inner[0].scrollHeight);
+    if (this.$inner) {
+      this.$inner
+        .height(1)
+        .height(this.$inner[0].scrollHeight);
+    }
   };
 
   /**

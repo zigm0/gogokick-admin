@@ -6,7 +6,7 @@ import { connect, browser, mapDispatchToProps, constants } from 'utils';
 import { Container, Row, Column } from 'components/bootstrap';
 import { Workspace } from 'components';
 import { CanvasBlock } from './blocks';
-import { editorActions, projectActions, userActions, uiActions } from 'actions';
+import { editorActions, projectActions, userActions, uiActions, notesActions } from 'actions';
 
 const mapStateToProps = state => ({
   project:      state.project,
@@ -16,7 +16,7 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(projectActions, userActions, editorActions, uiActions)
+  mapDispatchToProps(projectActions, userActions, uiActions, notesActions, editorActions)
 )
 export default class EditorCanvas extends React.PureComponent {
   static propTypes = {
@@ -26,8 +26,10 @@ export default class EditorCanvas extends React.PureComponent {
     match:               PropTypes.object.isRequired,
     project:             PropTypes.object.isRequired,
     projectOpen:         PropTypes.func.isRequired,
-    editorActivateBlock: PropTypes.func.isRequired,
     uiSidebarMenuOpen:   PropTypes.func.isRequired,
+    notesOpen:           PropTypes.func.isRequired,
+    notesClose:          PropTypes.func.isRequired,
+    editorActivateBlock: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -65,19 +67,29 @@ export default class EditorCanvas extends React.PureComponent {
   /**
    *
    */
+  componentWillUnmount() {
+    const { notesClose } = this.props;
+
+    notesClose();
+  }
+
+  /**
+   *
+   */
   handleUpdate = () => {
-    const { editorActivateBlock } = this.props;
+    const { notesOpen } = this.props;
 
     if (document.location.hash.indexOf('#block-') === 0) {
       const parts = document.location.hash.split('-');
       if (parts.length === 2) {
         const block = document.querySelector(document.location.hash);
         setTimeout(() => {
-          editorActivateBlock(parseInt(parts[1], 10));
+          const blockID = parseInt(parts[1], 10);
+          notesOpen(blockID);
           block.scrollIntoView({
             behavior: 'smooth'
           });
-        }, 500);
+        }, 250);
       }
     }
   };
@@ -86,7 +98,7 @@ export default class EditorCanvas extends React.PureComponent {
    * @param {Event} e
    */
   handleMouseDown = (e) => {
-    const { editorActivateBlock} = this.props;
+    const { editorActivateBlock } = this.props;
 
     if (!browser.hasParentClass(e.target, 'block-container')) {
       editorActivateBlock(0);

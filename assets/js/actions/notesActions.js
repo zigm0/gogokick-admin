@@ -53,6 +53,27 @@ export const notesToggleVisible = (blockID) => {
  * @param {number} blockID
  * @returns {Function}
  */
+export const notesOpen = (blockID) => {
+  return (dispatch) => {
+    dispatch(editorActivateBlock(blockID));
+    dispatch(notesVisible(true));
+  };
+};
+
+/**
+ * @returns {Function}
+ */
+export const notesClose = () => {
+  return (dispatch) => {
+    dispatch(editorActivateBlock(0));
+    dispatch(notesVisible(false));
+  };
+};
+
+/**
+ * @param {number} blockID
+ * @returns {Function}
+ */
 export const notesFetch = (blockID) => {
   return (dispatch) => {
     dispatch(notesBusy(true));

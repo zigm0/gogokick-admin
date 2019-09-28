@@ -64,15 +64,13 @@ export const projectOpen = (id, meta = {}) => {
         });
 
         if (meta.redirectAfterOpen === undefined || meta.redirectAfterOpen) {
-          setTimeout(() => {
-            dispatch(projectBusy(false));
+          dispatch(projectBusy(false));
 
-            let url = `/editor/${payload.id}`;
-            if (document.location.hash) {
-              url = `${url}${document.location.hash}`;
-            }
-            history.push(url);
-          }, 1000);
+          let url = `/editor/${payload.id}`;
+          if (document.location.hash) {
+            url = `${url}${document.location.hash}`;
+          }
+          history.push(url);
         } else {
           dispatch(projectBusy(false));
         }
