@@ -248,7 +248,30 @@ export function browserCaretAtEnd(el) {
   }
 }
 
+/**
+ * @param {string} event
+ * @param {Function} fn
+ */
+export function browserOff(event, fn) {
+  window.removeEventListener(event, fn, true);
+}
+
+/**
+ * @param {string} event
+ * @param {Function} fn
+ * @returns {Function}
+ */
+export function browserOn(event, fn) {
+  window.addEventListener(event, fn, true);
+
+  return () => {
+    browserOff(event, fn);
+  };
+}
+
 export default {
+  on:               browserOn,
+  off:              browserOff,
   title:            browserTitle,
   scroll:           browserScroll,
   scrollToTop:      browserScrollToTop,

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import classNames from "classnames";
 import { Route, Router, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { connect, history, constants, mapDispatchToProps } from 'utils';
+import { connect, history, constants, browser, mapDispatchToProps } from 'utils';
 import { LoadingCubes, ErrorBoundary, ProtectedRoute } from 'components';
-import { projectActions, userActions } from 'actions';
+import { projectActions, userActions, uiActions } from 'actions';
 import Footer from 'layout/Footer';
 import * as Modals from 'modals';
 
@@ -33,7 +33,7 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(projectActions, userActions)
+  mapDispatchToProps(projectActions, userActions, uiActions)
 )
 export default class App extends React.Component {
   static propTypes = {
@@ -42,17 +42,37 @@ export default class App extends React.Component {
     userIsBusy:    PropTypes.bool.isRequired,
     projectIsBusy: PropTypes.bool.isRequired,
     editorIsBusy:  PropTypes.bool.isRequired,
-    userMe:        PropTypes.func.isRequired
+    userMe:        PropTypes.func.isRequired,
+    uiInitialize:  PropTypes.func.isRequired,
   };
 
   /**
    *
    */
   componentDidMount() {
-    const { userMe } = this.props;
+    const { userMe, uiInitialize } = this.props;
 
+    this.resizeOff = browser.on('resize', this.handleResize);
+
+    uiInitialize(window.innerWidth, window.innerHeight);
     userMe();
   }
+
+  /**
+   *
+   */
+  componentWillUnmount() {
+    this.resizeOff();
+  }
+
+  /**
+   *
+   */
+  handleResize = () => {
+    const { uiInitialize } = this.props;
+
+    uiInitialize(window.innerWidth, window.innerHeight);
+  };
 
   /**
    * @returns {*}

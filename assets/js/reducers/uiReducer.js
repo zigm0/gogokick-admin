@@ -1,10 +1,17 @@
-import { objects } from 'utils';
+import { objects, styles } from 'utils';
 import * as types from 'actions/uiActions';
 
 const initialState = {
   workspace:    'editor',
   sideMenuOpen: false,
-  modals:       {
+  device:       {
+    size:     'xs',
+    width:    500,
+    height:   800,
+    isTablet: false,
+    isMobile: true
+  },
+  modals: {
     login:         false,
     preview:       false,
     cropper:       false,
@@ -27,6 +34,49 @@ const initialState = {
     cropper: null
   }
 };
+
+/**
+ * @param {*} state
+ * @param {*} action
+ */
+function onInitialize(state, action) {
+  const device = objects.clone(state.device);
+  const { width, height } = action;
+  const { breakpoints } = styles;
+
+  device.width  = width;
+  device.height = height;
+  if (height <= breakpoints.sm) {
+    device.size     = 'sm';
+    device.isMobile = true;
+    device.isTablet = false;
+  } else if (width >= breakpoints.xl) {
+    device.size     = 'xl';
+    device.isMobile = false;
+    device.isTablet = false;
+  } else if (width >= breakpoints.lg) {
+    device.size     = 'lg';
+    device.isMobile = false;
+    device.isTablet = false;
+  } else if (width >= breakpoints.md) {
+    device.size     = 'md';
+    device.isMobile = false;
+    device.isTablet = true;
+  } else if (width >= breakpoints.sm) {
+    device.size     = 'sm';
+    device.isMobile = true;
+    device.isTablet = false;
+  } else {
+    device.size     = 'xs';
+    device.isMobile = true;
+    device.isTablet = false;
+  }
+
+  return {
+    ...state,
+    device
+  };
+}
 
 /**
  * @param {*} state
@@ -82,6 +132,7 @@ const onSidebarMenuOpen = (state, action) => {
 };
 
 const handlers = {
+  [types.UI_INITIALIZE]:        onInitialize,
   [types.UI_SIDEBAR_MENU_OPEN]: onSidebarMenuOpen,
   [types.UI_WORKSPACE]:         onWorkspace,
   [types.UI_MODAL]:             onModal
