@@ -127,7 +127,9 @@ export default class EditorCanvas extends React.PureComponent {
               <Row className="justify-content-center">
                 <Column className="editor-canvas-body-col" xl={8}>
                   <div className="block-text">
-                    <h3 className="block-text-headline-about">About</h3>
+                    <h3 className="block-text-headline-about">
+                      {campaignType === constants.campaignType('kickstarter') ? 'About' : 'Overview'}
+                    </h3>
                   </div>
                   <Droppable droppableId="canvasBlocks">
                     {(provided) => (

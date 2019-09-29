@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { connect, system, browser, history, acl, mapDispatchToProps } from 'utils';
+import { connect, system, browser, history, acl, mapDispatchToProps, constants } from 'utils';
 import { Row, Column, Button } from 'components/bootstrap';
-import { Form, Input, Checkbox } from 'components/forms';
+import { Form, Input, Textarea, Checkbox } from 'components/forms';
 import { Upload, Link, Workspace } from 'components';
 import { formActions, projectActions, mediaActions, uiActions } from 'actions';
 
@@ -146,6 +146,17 @@ export default class EditorSettings extends React.PureComponent {
    */
   renderForm = () => {
     const { project } = this.props;
+    const { campaignType } = project;
+
+    const campaignName   = constants.campaignType(campaignType);
+    const indiegogo      = constants.campaignType('indiegogo');
+    const kickstarter    = constants.campaignType('kickstarter');
+    const maxLengthTitle = (campaignType === indiegogo) ? 50 : 60;
+    const maxLengthDesc  = (campaignType === indiegogo) ? 100 : 135;
+    const cropOptions    = {
+      width:  (campaignType === indiegogo) ? 640 : 1024,
+      height: (campaignType === indiegogo) ? 640 : 576
+    };
 
     return (
       <Form name="projectSettings" className="gutter-bottom" onSubmit={this.handleSubmit}>
@@ -154,13 +165,29 @@ export default class EditorSettings extends React.PureComponent {
           type="text"
           label="Project Title"
           id="input-project-settings-name"
+          maxLength={maxLengthTitle}
+          counter
           sm
         />
-        <Input
-          name="subtitle"
-          label="Project Subtitle"
-          id="input-project-settings-sub-title"
-        />
+        {(campaignType === indiegogo) ? (
+          <Textarea
+            name="subtitle"
+            id="input-project-settings-sub-title"
+            label="Project Subtitle"
+            formGroupClassName="form-group-label-lg"
+            maxLength={maxLengthDesc}
+            counter
+          />
+        ) : (
+          <Input
+            name="subtitle"
+            id="input-project-settings-sub-title"
+            label="Project Subtitle"
+            formGroupClassName="form-group-label-lg"
+            maxLength={maxLengthDesc}
+            counter
+          />
+        )}
         <div className="form-group">
           <label>Project Image</label>
           <Upload
@@ -168,6 +195,10 @@ export default class EditorSettings extends React.PureComponent {
             maxSizeMB={10}
             system="project_images"
             onUploaded={this.handleUploaded}
+            cropOptions={cropOptions}
+            className={
+              `border-grey margin-bottom project-settings-banner project-settings-banner-${campaignName}`
+            }
             cropping
           >
             <div className="project-settings-banner">
@@ -190,6 +221,7 @@ export default class EditorSettings extends React.PureComponent {
           name="isPublic"
           label="Public"
           className="margin-bottom"
+          id="project-settings-is-public-input"
         />
         <Input
           type="url"

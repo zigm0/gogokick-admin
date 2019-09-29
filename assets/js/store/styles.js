@@ -19,13 +19,20 @@ export const deviceHeights = {
 
 export const widths = {
   blocks: {
-    [constants.campaignType('kickstarter')]: parseInt(styles.widthBlockKickstarter, 10)
+    [constants.campaignType('kickstarter')]: parseInt(styles.widthBlockKickstarter, 10),
+    [constants.campaignType('indiegogo')]:   parseInt(styles.widthBlockKickstarter, 10)
   }
 };
 
 export const heights = {
   blocks: {
     [constants.campaignType('kickstarter')]: {
+      [constants.blockType('text')]:  parseInt(styles.heightBlockTextKickstarter, 10),
+      [constants.blockType('image')]: parseInt(styles.heightBlockImageKickstarter, 10),
+      [constants.blockType('video')]: parseInt(styles.heightBlockVideoKickstarter, 10),
+      [constants.blockType('audio')]: parseInt(styles.heightBlockAudioKickstarter, 10)
+    },
+    [constants.campaignType('indiegogo')]: {
       [constants.blockType('text')]:  parseInt(styles.heightBlockTextKickstarter, 10),
       [constants.blockType('image')]: parseInt(styles.heightBlockImageKickstarter, 10),
       [constants.blockType('video')]: parseInt(styles.heightBlockVideoKickstarter, 10),
