@@ -107,6 +107,12 @@
     cursor: default;
     opacity: 0.5;
   }
+
+  .editor-canvas-campaign-indiegogo & {
+    @include media-md {
+      font-size: 0.5rem;
+    }
+  }
 }
 
 select.block-menu-item {
