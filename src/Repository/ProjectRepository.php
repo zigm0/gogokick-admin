@@ -57,6 +57,7 @@ class ProjectRepository extends ServiceEntityRepository
             ->where('p.isDeleted = 0')
             ->andWhere('p.user = :user OR pu.user = :user')
             ->setParameter(':user', $user)
+            ->orderBy('p.dateUpdated', 'desc')
             ->getQuery()
             ->execute();
     }

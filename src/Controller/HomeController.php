@@ -54,14 +54,15 @@ class HomeController extends ApiController
             'name'            => 'Guest',
             'isAuthenticated' => false
         ];
-        if ($this->getUser()) {
-            $user = $this->arrayEntityGroup($this->getUser());
+        if ($u = $this->getUser()) {
+            $user = $this->arrayEntityGroup($u);
             $user['isAuthenticated'] = true;
         }
 
         $projects = $projectRepository->createQueryBuilder('p')
             ->where('p.isPublic = 1')
             ->andWhere('p.isDeleted = 0')
+            ->orderBy('p.dateUpdated', 'desc')
             ->getQuery()
             ->execute();
         $projects = $this->arrayEntityGroup($projects);

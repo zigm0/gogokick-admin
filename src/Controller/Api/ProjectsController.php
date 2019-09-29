@@ -311,6 +311,7 @@ class ProjectsController extends ApiController
      * @param ModelRequestHandler $handler
      *
      * @return JsonResponse
+     * @throws Exception
      */
     public function saveBlockAction($id, Request $request, ModelRequestHandler $handler)
     {
@@ -321,6 +322,7 @@ class ProjectsController extends ApiController
         }
 
         $handler->handleRequest($block, $values);
+        $block->getProject()->setDateUpdated(new DateTime());
         $this->em->flush();
 
         return $this->jsonEntityResponse($block);
