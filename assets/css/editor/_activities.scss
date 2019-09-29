@@ -1,11 +1,20 @@
 @import "../vars";
 
 .editor-activities {
+  color: #333;
+  height: 100%;
+  background-color: #F6F8FA;
+  margin: -$gutter-size;
+}
 
+.editor-activities-body {
+  padding: $gutter-size;
 }
 
 .editor-activity-item {
   margin-bottom: $gutter-size;
+  padding-bottom: $gutter-size;
+  border-bottom: 1px solid #dadada;
 }
 
 .editor-activity-item-body {
@@ -24,7 +33,7 @@
 
 .editor-activity-item-avatar-name {
   font-weight: bold;
-  margin-right: 0.5rem;
+  margin-right: 0.25rem;
 }
 
 .editor-activity-item-avatar {

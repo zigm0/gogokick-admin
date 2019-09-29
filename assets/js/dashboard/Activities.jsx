@@ -60,36 +60,38 @@ export default class Activities extends React.PureComponent {
 
     return (
       <div className="editor-activities">
-        <h3>Activities</h3>
-        <ul>
-          {activities.map(a => {
-            let child = null;
-            switch(constants.activityType(a.type)) {
-              case 'block_note':
-                child = this.renderBlockNote(a);
-                break;
-              case 'invite_accepted':
-                child = this.renderInviteAccepted(a);
-                break;
-            }
+        <div className="editor-activities-body">
+          <h3>Activities</h3>
+          <ul>
+            {activities.map(a => {
+              let child = null;
+              switch(constants.activityType(a.type)) {
+                case 'block_note':
+                  child = this.renderBlockNote(a);
+                  break;
+                case 'invite_accepted':
+                  child = this.renderInviteAccepted(a);
+                  break;
+              }
 
-            return (
-              <li key={a.id} className="editor-activity-item">
-                <div className="editor-activity-item-body">
-                  <div className="editor-activity-item-avatar">
-                    <Avatar src={a.user.avatar} sm />
+              return (
+                <li key={a.id} className="editor-activity-item">
+                  <div className="editor-activity-item-body">
+                    <div className="editor-activity-item-avatar">
+                      <Avatar src={a.user.avatar} sm />
+                    </div>
+                    <div className="editor-activity-item-body-description">
+                      <span className="editor-activity-item-avatar-name">
+                        {a.user.name}
+                      </span>
+                      {child}
+                    </div>
                   </div>
-                  <div className="editor-activity-item-body-description">
-                    <span className="editor-activity-item-avatar-name">
-                      {a.user.name}
-                    </span>
-                    {child}
-                  </div>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </div>
     );
   }
