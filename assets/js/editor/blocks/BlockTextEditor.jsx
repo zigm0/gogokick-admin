@@ -2,13 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import ContentEditable from 'react-contenteditable';
-import { connect, browser, objects, strings, mapDispatchToProps } from 'utils';
+import { connect, browser, objects, constants, campaigns, mapDispatchToProps } from 'utils';
 import { Button } from 'components';
 import { editorActions } from 'actions';
 import BlockMenu from './BlockMenu';
 
+const mapStateToProps = state => ({
+  campaignType: state.project.campaignType
+});
+
 @connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps(editorActions)
 )
 export default class BlockTextEditor extends React.PureComponent {
@@ -18,6 +22,7 @@ export default class BlockTextEditor extends React.PureComponent {
       type:       PropTypes.number.isRequired,
       isHeadline: PropTypes.bool
     }).isRequired,
+    campaignType:      PropTypes.number.isRequired,
     editorUpdateBlock: PropTypes.func.isRequired,
     onChange:          PropTypes.func.isRequired
   };
@@ -36,9 +41,17 @@ export default class BlockTextEditor extends React.PureComponent {
       text,
       cmds: {
         insertUnorderedList: false,
+        insertOrderedList:   false,
         createLink:          false,
+        heading:             false,
+        indent:              false,
+        outdent:             false,
         bold:                false,
-        italic:              false
+        italic:              false,
+        underline:           false,
+        justifyLeft:         false,
+        justifyCenter:       false,
+        justifyRight:        false
       }
     }
   }
@@ -62,6 +75,21 @@ export default class BlockTextEditor extends React.PureComponent {
 
     editorUpdateBlock(objects.merge(block, { text }));
   }
+
+  /**
+   * @returns {string}
+   */
+  getHTML = () => {
+    const { block, campaignType } = this.props;
+    const { text } = this.state;
+
+    let html = block.isHeadline ? `<h1>${text}</h1>` : text;
+    if (html === '') {
+      html = '<p><br /></p>';
+    }
+
+    return campaigns.stripHTML(campaignType, html);
+  };
 
   /**
    * @param {Event} e
@@ -124,66 +152,162 @@ export default class BlockTextEditor extends React.PureComponent {
   /**
    * @returns {*}
    */
+  renderButtons = () => {
+    const { block, campaignType } = this.props;
+    const { cmds } = this.state;
+
+    const campaignName = constants.campaignType(campaignType);
+
+    let buttons = null;
+    if (campaignName === 'indiegogo') {
+      buttons = (
+        <>
+          <select
+            className="block-menu-item"
+            onChange={e => this.handleMenuItemClick(e, 'heading', e.target.value)}
+          >
+            <option value="paragraph">
+              Paragraph
+            </option>
+            <option value="H1">
+              Header 1
+            </option>
+            <option value="H2">
+              Header 2
+            </option>
+          </select>
+          <div className="block-menu-item-separator" />
+          <Button
+            icon="list"
+            active={cmds.insertUnorderedList}
+            className="block-menu-item"
+            onClick={e => this.handleMenuItemClick(e, 'insertUnorderedList')}
+          />
+          <Button
+            icon="list-ol"
+            active={cmds.insertOrderedList}
+            className="block-menu-item"
+            onClick={e => this.handleMenuItemClick(e, 'insertOrderedList')}
+          />
+          <Button
+            icon="indent"
+            active={cmds.indent}
+            className="block-menu-item"
+            onClick={e => this.handleMenuItemClick(e, 'indent')}
+          />
+          <Button
+            icon="outdent"
+            active={cmds.outdent}
+            className="block-menu-item"
+            onClick={e => this.handleMenuItemClick(e, 'outdent')}
+          />
+          <div className="block-menu-item-separator" />
+          <Button
+            icon="bold"
+            active={cmds.bold}
+            className="block-menu-item"
+            onClick={e => this.handleMenuItemClick(e, 'bold')}
+          />
+          <Button
+            icon="italic"
+            active={cmds.italic}
+            className="block-menu-item"
+            onClick={e => this.handleMenuItemClick(e, 'italic')}
+          />
+          <Button
+            icon="underline"
+            active={cmds.underline}
+            className="block-menu-item"
+            onClick={e => this.handleMenuItemClick(e, 'underline')}
+          />
+          <Button
+            icon="link"
+            active={cmds.createLink}
+            className="block-menu-item"
+            onClick={e => this.handleMenuItemClick(e, cmds.createLink ? 'unlink' : 'createLink')}
+          />
+          <div className="block-menu-item-separator" />
+          <Button
+            icon="align-left"
+            active={cmds.justifyLeft}
+            className="block-menu-item"
+            onClick={e => this.handleMenuItemClick(e, 'justifyLeft')}
+          />
+          <Button
+            icon="align-center"
+            active={cmds.justifyCenter}
+            className="block-menu-item"
+            onClick={e => this.handleMenuItemClick(e, 'justifyCenter')}
+          />
+          <Button
+            icon="align-right"
+            active={cmds.justifyRight}
+            className="block-menu-item"
+            onClick={e => this.handleMenuItemClick(e, 'justifyRight')}
+          />
+        </>
+      );
+    } else {
+      buttons = (
+        <>
+          <Button
+            active={block.isHeadline}
+            className="block-menu-item"
+            onClick={e => this.handleMenuItemClick(e, 'headline')}
+          >
+            Headline
+          </Button>
+          <Button
+            icon="list"
+            active={cmds.insertUnorderedList}
+            disabled={block.isHeadline}
+            className="block-menu-item"
+            onClick={e => this.handleMenuItemClick(e, 'insertUnorderedList')}
+          />
+          <Button
+            icon="bold"
+            active={cmds.bold}
+            disabled={block.isHeadline}
+            className="block-menu-item"
+            onClick={e => this.handleMenuItemClick(e, 'bold')}
+          />
+          <Button
+            icon="italic"
+            active={cmds.italic}
+            disabled={block.isHeadline}
+            className="block-menu-item"
+            onClick={e => this.handleMenuItemClick(e, 'italic')}
+          />
+          <Button
+            icon="link"
+            active={cmds.createLink}
+            disabled={block.isHeadline}
+            className="block-menu-item"
+            onClick={e => this.handleMenuItemClick(e, cmds.createLink ? 'unlink' : 'createLink')}
+          />
+        </>
+      );
+    }
+
+    return buttons;
+  };
+
+  /**
+   * @returns {*}
+   */
   render() {
     const { block } = this.props;
-    const { text, cmds } = this.state;
-
-    let html = block.isHeadline ? `<h1>${text}</h1>` : text;
-    if (html === '') {
-      html = '<p><br /></p>';
-    }
-    html = strings.stripTags(html, '<div><p><b><i><a><br><ul><li>');
 
     const classes = classNames('block-editor block-editor-text block-expanded', {
       'block-editor-headline': block.isHeadline
     });
 
-    const buttons = (
-      <>
-        <Button
-          active={block.isHeadline}
-          className="block-menu-item"
-          onClick={e => this.handleMenuItemClick(e, 'headline')}
-        >
-          Headline
-        </Button>
-        <Button
-          icon="list"
-          active={cmds.insertUnorderedList}
-          disabled={block.isHeadline}
-          className="block-menu-item"
-          onClick={e => this.handleMenuItemClick(e, 'insertUnorderedList')}
-        />
-        <Button
-          icon="bold"
-          active={cmds.bold}
-          disabled={block.isHeadline}
-          className="block-menu-item"
-          onClick={e => this.handleMenuItemClick(e, 'bold')}
-        />
-        <Button
-          icon="italic"
-          active={cmds.italic}
-          disabled={block.isHeadline}
-          className="block-menu-item"
-          onClick={e => this.handleMenuItemClick(e, 'italic')}
-        />
-        <Button
-          icon="link"
-          active={cmds.createLink}
-          disabled={block.isHeadline}
-          className="block-menu-item"
-          onClick={e => this.handleMenuItemClick(e, cmds.createLink ? 'unlink' : 'createLink')}
-        />
-      </>
-    );
-
     return (
       <>
-        <BlockMenu block={block} buttons={buttons} />
+        <BlockMenu block={block} buttons={this.renderButtons()} />
         <div className={classes}>
           <ContentEditable
-            html={html}
+            html={this.getHTML()}
             innerRef={this.content}
             className="block-editor-text-editable block-text"
             onChange={this.handleChange}

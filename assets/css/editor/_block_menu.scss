@@ -88,8 +88,8 @@
   cursor: pointer;
   color: #FFF;
   border: 0;
-  padding: 0 0.5rem;
-  margin-right: 0.5rem;
+  padding: 0 0.25rem;
+  margin-right: 0.25rem;
   font-size: 1rem;
   background-color: transparent;
 
@@ -107,6 +107,18 @@
     cursor: default;
     opacity: 0.5;
   }
+}
+
+select.block-menu-item {
+  option {
+    color: #000;
+  }
+}
+
+.block-menu-item-separator {
+  height: 1rem;
+  margin-right: 0.25rem;
+  border-right: 1px solid #ffffff73;
 }
 
 .block-menu-title {
