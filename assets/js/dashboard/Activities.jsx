@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
-import { connect, constants, strings, mapDispatchToProps } from 'utils';
+import { connect, constants, strings, objects, mapDispatchToProps } from 'utils';
 import { Avatar, Icon, Link } from 'components';
 
 const mapStateToProps = state => ({
-  activities: state.activity.activities
+  activities: state.activity.activities,
+  device:     state.ui.device
 });
 
 @connect(
@@ -14,10 +15,24 @@ const mapStateToProps = state => ({
 )
 export default class Activities extends React.PureComponent {
   static propTypes = {
+    device:     PropTypes.object.isRequired,
     activities: PropTypes.array.isRequired
   };
 
   static defaultProps = {};
+
+  state = {
+    activitiesOpen: false
+  };
+
+  /**
+   *
+   */
+  handleReadMoreClick = () => {
+    const { activitiesOpen } = this.state;
+
+    this.setState({ activitiesOpen: !activitiesOpen });
+  };
 
   /**
    * @param {*} a
@@ -56,14 +71,25 @@ export default class Activities extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { activities } = this.props;
+    const { activities, device } = this.props;
+    const { activitiesOpen } = this.state;
+
+    let hasMore            = false;
+    let activitiesClone    = objects.clone(activities);
+    const activitiesLength = activitiesClone.length;
+    if (!activitiesOpen && (device.isTablet || device.isMobile)) {
+      activitiesClone = activitiesClone.slice(0, 3);
+      if (activitiesLength > activitiesClone.length) {
+        hasMore = true;
+      }
+    }
 
     return (
       <div className="editor-activities">
         <div className="editor-activities-body">
           <h3>Activities</h3>
-          <ul>
-            {activities.map(a => {
+          <ul className="editor-activity-items">
+            {activitiesClone.map(a => {
               let child = null;
               switch(constants.activityType(a.type)) {
                 case 'block_note':
@@ -92,6 +118,11 @@ export default class Activities extends React.PureComponent {
             })}
           </ul>
         </div>
+        {hasMore && (
+          <div className="editor-activities-read-more" onClick={this.handleReadMoreClick}>
+            Read More
+          </div>
+        )}
       </div>
     );
   }

@@ -11,10 +11,18 @@
   padding: $gutter-size;
 }
 
+.editor-activity-items {
+  margin-bottom: 0;
+}
+
 .editor-activity-item {
   margin-bottom: $gutter-size;
   padding-bottom: $gutter-size;
   border-bottom: 1px solid #dadada;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .editor-activity-item-body {
@@ -47,4 +55,9 @@
 
 .editor-activity-item-body-message {
   word-break: break-all;
+}
+
+.editor-activities-read-more {
+  cursor: pointer;
+  text-align: center;
 }
