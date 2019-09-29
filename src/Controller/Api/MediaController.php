@@ -81,7 +81,7 @@ class MediaController extends ApiController
 
         $data = explode(',', $data);
         $data = base64_decode($data[1]);
-        $data = $this->resizeImage($data, $media->getSystem());
+        // $data = $this->resizeImage($data, $media->getSystem());
         $path = sprintf('%d-%s.png', microtime(true), uniqid());
         $url  = $this->cdn->upload($media->getSystem(), $path, $data);
 

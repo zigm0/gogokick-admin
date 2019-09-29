@@ -46,7 +46,17 @@ export default class Upload extends React.PureComponent {
    * @param {File[]} rejected
    */
   handleDrop = (files, rejected) => {
-    const { system, maxSizeMB, cropping, cropOptions, mediaUpload, mediaCrop, onDrop, onUploaded, uiToast } = this.props;
+    const {
+      system,
+      maxSizeMB,
+      cropping,
+      cropOptions,
+      mediaUpload,
+      mediaCrop,
+      onDrop,
+      onUploaded,
+      uiToast
+    } = this.props;
 
     if (rejected.length > 0) {
       uiToast(`File must be ${maxSizeMB}MB or less.`, { type: 'error' });

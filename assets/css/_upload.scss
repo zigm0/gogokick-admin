@@ -27,8 +27,17 @@
   }
 
   &.project-settings-banner {
-    min-height: 200px;
-    height: auto;
+    transition: height 0.2s ease-in-out;
+
+    &.project-settings-banner-kickstarter {
+      height: 371px;
+      width: 661px;
+    }
+
+    &.project-settings-banner-indiegogo {
+      height: 640px;
+      width: 640px;
+    }
   }
 }
 
