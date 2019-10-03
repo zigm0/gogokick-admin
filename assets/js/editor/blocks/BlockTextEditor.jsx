@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import autosize from 'autosize';
 import ContentEditable from 'react-contenteditable';
 import { connect, browser, objects, constants, campaigns, mapDispatchToProps } from 'utils';
 import { Button, Icon } from 'components';
@@ -38,12 +39,16 @@ export default class BlockTextEditor extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    let { text } = props.block;
-    this.content = React.createRef();
+    let { text }  = props.block;
+    this.content  = React.createRef();
+    this.textarea = React.createRef();
+
     this.state   = {
       text,
       extraOpen:   false,
+      htmlOpen:    false,
       extraStyles: {},
+      format:      'p',
       cmds:        {
         insertUnorderedList: false,
         insertOrderedList:   false,
@@ -89,6 +94,20 @@ export default class BlockTextEditor extends React.PureComponent {
   }
 
   /**
+   * @param {*} prevProps
+   * @param {*} prevState
+   */
+  componentDidUpdate(prevProps, prevState) {
+    const { htmlOpen } = this.state;
+
+    if (htmlOpen && !prevState.htmlOpen) {
+      setTimeout(() => {
+        autosize(this.textarea.current);
+      }, 250);
+    }
+  }
+
+  /**
    * @returns {string}
    */
   getHTML = () => {
@@ -109,8 +128,6 @@ export default class BlockTextEditor extends React.PureComponent {
   handleChange = (e) => {
     const { onChange } = this.props;
     let { value } = e.target;
-
-    value = value.replace(/<h1>/g, '').replace(/<\/h1>/g, '');
 
     this.setState({ text: value }, () => {
       onChange(e, value);
@@ -148,7 +165,9 @@ export default class BlockTextEditor extends React.PureComponent {
    *
    */
   handleEditableClick = () => {
-    const cmds = objects.clone(this.state.cmds);
+    let { format } = this.state;
+    const { cmds: oldCmds, format: oldFormat } = this.state;
+    const cmds = objects.clone(oldCmds);
 
     Object.keys(cmds).forEach((key) => {
       cmds[key] = document.queryCommandState(key);
@@ -159,8 +178,18 @@ export default class BlockTextEditor extends React.PureComponent {
       cmds.createLink = true;
     }
 
-    this.setState({ cmds });
-    // this.content.current.focus();
+    if (browser.hasParentTag(node, 'H3')) {
+      format = 'h3';
+    } else if (browser.hasParentTag(node, 'H2')) {
+      format = 'h2';
+    } else {
+      format = 'p';
+    }
+
+    if (!objects.isEqual(cmds, oldCmds) || format !== oldFormat) {
+      this.setState({ cmds, format });
+      // this.content.current.focus();
+    }
   };
 
   /**
@@ -181,11 +210,20 @@ export default class BlockTextEditor extends React.PureComponent {
   };
 
   /**
+   *
+   */
+  handleCodeClick = () => {
+    const { htmlOpen } = this.state;
+
+    this.setState({ htmlOpen: !htmlOpen });
+  };
+
+  /**
    * @returns {*}
    */
   renderButtons = () => {
     const { block, device, campaignType } = this.props;
-    const { cmds, extraOpen, extraStyles } = this.state;
+    const { cmds, format, extraOpen, extraStyles, htmlOpen } = this.state;
 
     const campaignName = constants.campaignType(campaignType);
 
@@ -205,7 +243,7 @@ export default class BlockTextEditor extends React.PureComponent {
             className="block-menu-item"
             onMouseDown={e => this.handleMenuItemClick(e, 'insertOrderedList')}
           />
-          <Button
+{/*          <Button
             icon="indent"
             active={cmds.indent}
             className="block-menu-item"
@@ -216,7 +254,7 @@ export default class BlockTextEditor extends React.PureComponent {
             active={cmds.outdent}
             className="block-menu-item"
             onMouseDown={e => this.handleMenuItemClick(e, 'outdent')}
-          />
+          />*/}
           <div className="block-menu-item-separator" />
           <Button
             icon="align-left"
@@ -236,6 +274,13 @@ export default class BlockTextEditor extends React.PureComponent {
             className="block-menu-item"
             onMouseDown={e => this.handleMenuItemClick(e, 'justifyRight')}
           />
+          <div className="block-menu-item-separator" />
+          <Button
+            icon="code"
+            active={htmlOpen}
+            className="block-menu-item"
+            onClick={this.handleCodeClick}
+          />
         </>
       );
 
@@ -243,15 +288,16 @@ export default class BlockTextEditor extends React.PureComponent {
         <>
           <select
             className="block-menu-item"
+            value={format}
             onChange={e => this.handleMenuItemClick(e, 'formatBlock', e.target.value)}
           >
             <option value="p">
               Paragraph
             </option>
-            <option value="h1">
+            <option value="h2">
               Header 1
             </option>
-            <option value="h2">
+            <option value="h3">
               Header 2
             </option>
           </select>
@@ -350,6 +396,7 @@ export default class BlockTextEditor extends React.PureComponent {
    */
   render() {
     const { block } = this.props;
+    const { htmlOpen, text } = this.state;
 
     const classes = classNames('block-editor block-editor-text block-expanded', {
       'block-editor-headline': block.isHeadline
@@ -359,13 +406,22 @@ export default class BlockTextEditor extends React.PureComponent {
       <>
         <BlockMenu block={block} buttons={this.renderButtons()} />
         <div className={classes}>
-          <ContentEditable
-            html={this.getHTML()}
-            innerRef={this.content}
-            className="block-editor-text-editable block-text"
-            onChange={this.handleChange}
-            onClick={this.handleEditableClick}
-          />
+          {htmlOpen ? (
+            <textarea
+              value={text}
+              ref={this.textarea}
+              onChange={this.handleChange}
+              className="block-editor-text-editable block-text"
+            />
+          ) : (
+            <ContentEditable
+              html={this.getHTML()}
+              innerRef={this.content}
+              className="block-editor-text-editable block-text"
+              onChange={this.handleChange}
+              onClick={this.handleEditableClick}
+            />
+          )}
         </div>
       </>
     );

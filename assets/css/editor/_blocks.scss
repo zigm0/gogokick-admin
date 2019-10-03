@@ -194,12 +194,30 @@
     }
   }
 
+  img {
+    max-width: 100%;
+  }
+
   &.block-dragging {
     background-color: #FFF;
     width: $width-block + ($gutter-size * 2) !important;
     left: -$gutter-size;
     right: -$gutter-size;
     padding: 0 $gutter-size;
+  }
+
+  .editor-canvas-campaign-indiegogo & {
+    h2 {
+      font-size: 48px;
+      line-height: 62px;
+      margin: 32px 0;
+    }
+
+    h3 {
+      font-size: 40px;
+      line-height: 52px;
+      margin: 32px 0;
+    }
   }
 }
 

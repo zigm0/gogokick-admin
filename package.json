@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "acljs": "^1.1.0",
+    "autosize": "^4.0.2",
     "axios": "^0.19.0",
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.3.1",
@@ -73,6 +74,7 @@
     "redux": "^4.0.2",
     "redux-arc": "^0.7.5",
     "redux-thunk": "^2.3.0",
+    "sanitize-html": "^1.20.1",
     "stickybits": "^3.6.6",
     "webpack-bundle-analyzer": "^3.4.1"
   }
