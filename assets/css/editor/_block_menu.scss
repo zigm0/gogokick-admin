@@ -79,6 +79,21 @@
   }
 }
 
+.block-menu-dropdown-btn {
+  color: #FFF;
+}
+
+.block-menu-dropdown {
+  z-index: 100;
+  width: 130px;
+  position: absolute;
+  background-color: $color-block-text;
+
+  .block-menu-item-separator {
+    display: none;
+  }
+}
+
 .block-menu-middle-group {
   width: 66.3%;
   justify-content: center;
@@ -106,12 +121,6 @@
   &:disabled {
     cursor: default;
     opacity: 0.5;
-  }
-
-  .editor-canvas-campaign-indiegogo & {
-    @include media-md {
-      font-size: 0.5rem;
-    }
   }
 }
 

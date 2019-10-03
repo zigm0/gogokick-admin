@@ -1,13 +1,15 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import ContentEditable from 'react-contenteditable';
 import { connect, browser, objects, constants, campaigns, mapDispatchToProps } from 'utils';
-import { Button } from 'components';
+import { Button, Icon } from 'components';
 import { editorActions } from 'actions';
 import BlockMenu from './BlockMenu';
 
 const mapStateToProps = state => ({
+  device:       state.ui.device,
   campaignType: state.project.campaignType
 });
 
@@ -22,6 +24,7 @@ export default class BlockTextEditor extends React.PureComponent {
       type:       PropTypes.number.isRequired,
       isHeadline: PropTypes.bool
     }).isRequired,
+    device:            PropTypes.object.isRequired,
     campaignType:      PropTypes.number.isRequired,
     editorUpdateBlock: PropTypes.func.isRequired,
     onChange:          PropTypes.func.isRequired
@@ -39,11 +42,13 @@ export default class BlockTextEditor extends React.PureComponent {
     this.content = React.createRef();
     this.state   = {
       text,
-      cmds: {
+      extraOpen:   false,
+      extraStyles: {},
+      cmds:        {
         insertUnorderedList: false,
         insertOrderedList:   false,
         createLink:          false,
-        heading:             false,
+        formatBlock:         false,
         indent:              false,
         outdent:             false,
         bold:                false,
@@ -64,6 +69,12 @@ export default class BlockTextEditor extends React.PureComponent {
 
     browser.caretAtEnd(this.content.current);
     onChange(null, null);
+
+    this.windowClickOff = browser.on('click', (e) => {
+      if (!browser.hasParentClass(e.target, 'block-menu-dropdown')) {
+        this.setState({ extraOpen: false });
+      }
+    });
   }
 
   /**
@@ -74,6 +85,7 @@ export default class BlockTextEditor extends React.PureComponent {
     const { text } = this.state;
 
     editorUpdateBlock(objects.merge(block, { text }));
+    this.windowClickOff();
   }
 
   /**
@@ -150,33 +162,35 @@ export default class BlockTextEditor extends React.PureComponent {
   };
 
   /**
+   * @param {Event} e
+   */
+  handleExtraButtonsClick = (e) => {
+    const { extraOpen } = this.state;
+
+    const rect = e.target.getBoundingClientRect();
+
+    this.setState({
+      extraOpen:   !extraOpen,
+      extraStyles: {
+        top:  rect.top + 27,
+        left: rect.left
+      }
+    })
+  };
+
+  /**
    * @returns {*}
    */
   renderButtons = () => {
-    const { block, campaignType } = this.props;
-    const { cmds } = this.state;
+    const { block, device, campaignType } = this.props;
+    const { cmds, extraOpen, extraStyles } = this.state;
 
     const campaignName = constants.campaignType(campaignType);
 
     let buttons = null;
     if (campaignName === 'indiegogo') {
-      buttons = (
+      const extraButtons = (
         <>
-          <select
-            className="block-menu-item"
-            onChange={e => this.handleMenuItemClick(e, 'heading', e.target.value)}
-          >
-            <option value="paragraph">
-              Paragraph
-            </option>
-            <option value="H1">
-              Header 1
-            </option>
-            <option value="H2">
-              Header 2
-            </option>
-          </select>
-          <div className="block-menu-item-separator" />
           <Button
             icon="list"
             active={cmds.insertUnorderedList}
@@ -203,6 +217,44 @@ export default class BlockTextEditor extends React.PureComponent {
           />
           <div className="block-menu-item-separator" />
           <Button
+            icon="align-left"
+            active={cmds.justifyLeft}
+            className="block-menu-item"
+            onClick={e => this.handleMenuItemClick(e, 'justifyLeft')}
+          />
+          <Button
+            icon="align-center"
+            active={cmds.justifyCenter}
+            className="block-menu-item"
+            onClick={e => this.handleMenuItemClick(e, 'justifyCenter')}
+          />
+          <Button
+            icon="align-right"
+            active={cmds.justifyRight}
+            className="block-menu-item"
+            onClick={e => this.handleMenuItemClick(e, 'justifyRight')}
+          />
+        </>
+      );
+
+      buttons = (
+        <>
+          <select
+            className="block-menu-item"
+            onChange={e => this.handleMenuItemClick(e, 'formatBlock', e.target.value)}
+          >
+            <option value="p">
+              Paragraph
+            </option>
+            <option value="h1">
+              Header 1
+            </option>
+            <option value="h2">
+              Header 2
+            </option>
+          </select>
+          <div className="block-menu-item-separator" />
+          <Button
             icon="bold"
             active={cmds.bold}
             className="block-menu-item"
@@ -227,24 +279,23 @@ export default class BlockTextEditor extends React.PureComponent {
             onClick={e => this.handleMenuItemClick(e, cmds.createLink ? 'unlink' : 'createLink')}
           />
           <div className="block-menu-item-separator" />
-          <Button
-            icon="align-left"
-            active={cmds.justifyLeft}
-            className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, 'justifyLeft')}
-          />
-          <Button
-            icon="align-center"
-            active={cmds.justifyCenter}
-            className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, 'justifyCenter')}
-          />
-          <Button
-            icon="align-right"
-            active={cmds.justifyRight}
-            className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, 'justifyRight')}
-          />
+          {!device.isDesktop ? (
+            <>
+              <Icon
+                name="angle-down"
+                className="block-menu-dropdown-btn"
+                onClick={this.handleExtraButtonsClick}
+              />
+              {extraOpen && ReactDOM.createPortal(
+                <div className="block-menu-dropdown" style={extraStyles}>
+                  {extraButtons}
+                </div>
+                , document.body)
+              }
+            </>
+          ) : (
+            extraButtons
+          )}
         </>
       );
     } else {

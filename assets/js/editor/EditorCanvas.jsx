@@ -100,7 +100,7 @@ export default class EditorCanvas extends React.PureComponent {
   handleMouseDown = (e) => {
     const { editorActivateBlock } = this.props;
 
-    if (!browser.hasParentClass(e.target, 'block-container')) {
+    if (!browser.hasParentClass(e.target, 'block-container') && !browser.hasParentClass(e.target, 'block-menu-item')) {
       editorActivateBlock(0);
     }
   };

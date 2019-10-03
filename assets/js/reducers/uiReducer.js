@@ -5,11 +5,12 @@ const initialState = {
   workspace:    'editor',
   sideMenuOpen: false,
   device:       {
-    size:     'xs',
-    width:    500,
-    height:   800,
-    isTablet: false,
-    isMobile: true
+    size:      'xs',
+    width:     500,
+    height:    800,
+    isTablet:  false,
+    isMobile:  true,
+    isDesktop: false
   },
   modals: {
     login:         false,
@@ -47,29 +48,35 @@ function onInitialize(state, action) {
   device.width  = width;
   device.height = height;
   if (height <= breakpoints.sm) {
-    device.size     = 'sm';
-    device.isMobile = true;
-    device.isTablet = false;
+    device.size      = 'sm';
+    device.isMobile  = true;
+    device.isTablet  = false;
+    device.isDesktop = false;
   } else if (width >= breakpoints.xl) {
     device.size     = 'xl';
-    device.isMobile = false;
-    device.isTablet = false;
+    device.isMobile  = false;
+    device.isTablet  = false;
+    device.isDesktop = true;
   } else if (width >= breakpoints.lg) {
-    device.size     = 'lg';
-    device.isMobile = false;
-    device.isTablet = false;
+    device.size      = 'lg';
+    device.isMobile  = false;
+    device.isTablet  = false;
+    device.isDesktop = true;
   } else if (width >= breakpoints.md) {
-    device.size     = 'md';
-    device.isMobile = false;
-    device.isTablet = true;
+    device.size      = 'md';
+    device.isMobile  = false;
+    device.isTablet  = true;
+    device.isDesktop = false;
   } else if (width >= breakpoints.sm) {
-    device.size     = 'sm';
-    device.isMobile = true;
-    device.isTablet = false;
+    device.size      = 'sm';
+    device.isMobile  = true;
+    device.isTablet  = false;
+    device.isDesktop = false;
   } else {
-    device.size     = 'xs';
-    device.isMobile = true;
-    device.isTablet = false;
+    device.size      = 'xs';
+    device.isMobile  = true;
+    device.isTablet  = false;
+    device.isDesktop = false;
   }
 
   return {
