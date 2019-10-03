@@ -125,6 +125,8 @@ export default class BlockTextEditor extends React.PureComponent {
   handleMenuItemClick = (e, cmd, value = '') => {
     const { block, editorUpdateBlock, onChange } = this.props;
 
+    e.preventDefault();
+
     if (cmd === 'headline') {
       editorUpdateBlock(objects.merge(block, {
         isHeadline: !block.isHeadline
@@ -195,44 +197,44 @@ export default class BlockTextEditor extends React.PureComponent {
             icon="list"
             active={cmds.insertUnorderedList}
             className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, 'insertUnorderedList')}
+            onMouseDown={e => this.handleMenuItemClick(e, 'insertUnorderedList')}
           />
           <Button
             icon="list-ol"
             active={cmds.insertOrderedList}
             className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, 'insertOrderedList')}
+            onMouseDown={e => this.handleMenuItemClick(e, 'insertOrderedList')}
           />
           <Button
             icon="indent"
             active={cmds.indent}
             className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, 'indent')}
+            onMouseDown={e => this.handleMenuItemClick(e, 'indent')}
           />
           <Button
             icon="outdent"
             active={cmds.outdent}
             className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, 'outdent')}
+            onMouseDown={e => this.handleMenuItemClick(e, 'outdent')}
           />
           <div className="block-menu-item-separator" />
           <Button
             icon="align-left"
             active={cmds.justifyLeft}
             className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, 'justifyLeft')}
+            onMouseDown={e => this.handleMenuItemClick(e, 'justifyLeft')}
           />
           <Button
             icon="align-center"
             active={cmds.justifyCenter}
             className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, 'justifyCenter')}
+            onMouseDown={e => this.handleMenuItemClick(e, 'justifyCenter')}
           />
           <Button
             icon="align-right"
             active={cmds.justifyRight}
             className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, 'justifyRight')}
+            onMouseDown={e => this.handleMenuItemClick(e, 'justifyRight')}
           />
         </>
       );
@@ -258,25 +260,25 @@ export default class BlockTextEditor extends React.PureComponent {
             icon="bold"
             active={cmds.bold}
             className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, 'bold')}
+            onMouseDown={e => this.handleMenuItemClick(e, 'bold')}
           />
           <Button
             icon="italic"
             active={cmds.italic}
             className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, 'italic')}
+            onMouseDown={e => this.handleMenuItemClick(e, 'italic')}
           />
           <Button
             icon="underline"
             active={cmds.underline}
             className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, 'underline')}
+            onMouseDown={e => this.handleMenuItemClick(e, 'underline')}
           />
           <Button
             icon="link"
             active={cmds.createLink}
             className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, cmds.createLink ? 'unlink' : 'createLink')}
+            onMouseDown={e => this.handleMenuItemClick(e, cmds.createLink ? 'unlink' : 'createLink')}
           />
           <div className="block-menu-item-separator" />
           {!device.isDesktop ? (
@@ -304,7 +306,7 @@ export default class BlockTextEditor extends React.PureComponent {
           <Button
             active={block.isHeadline}
             className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, 'headline')}
+            onMouseDown={e => this.handleMenuItemClick(e, 'headline')}
           >
             Headline
           </Button>
@@ -313,28 +315,28 @@ export default class BlockTextEditor extends React.PureComponent {
             active={cmds.insertUnorderedList}
             disabled={block.isHeadline}
             className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, 'insertUnorderedList')}
+            onMouseDown={e => this.handleMenuItemClick(e, 'insertUnorderedList')}
           />
           <Button
             icon="bold"
             active={cmds.bold}
             disabled={block.isHeadline}
             className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, 'bold')}
+            onMouseDown={e => this.handleMenuItemClick(e, 'bold')}
           />
           <Button
             icon="italic"
             active={cmds.italic}
             disabled={block.isHeadline}
             className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, 'italic')}
+            onMouseDown={e => this.handleMenuItemClick(e, 'italic')}
           />
           <Button
             icon="link"
             active={cmds.createLink}
             disabled={block.isHeadline}
             className="block-menu-item"
-            onClick={e => this.handleMenuItemClick(e, cmds.createLink ? 'unlink' : 'createLink')}
+            onMouseDown={e => this.handleMenuItemClick(e, cmds.createLink ? 'unlink' : 'createLink')}
           />
         </>
       );
