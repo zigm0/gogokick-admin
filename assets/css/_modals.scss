@@ -1,13 +1,12 @@
 @import "vars";
 
 .modal-content {
-  color: #FFF;
-  background-color: #242424;
+  color: $color-body-text;
+  background-color: $color-header;
 }
 
 .modal-header {
   padding: 11.5px 7.5px 2px 15.5px;
-  @extend .striped-border;
 
   border-top-left-radius: 0;
   border-top-right-radius: 0;
@@ -19,7 +18,7 @@
   }
 
   .close {
-    color: #FFF;
+    color: $color-body-text;
     margin: -1.1rem -1rem -1rem auto;
 
     .icon {

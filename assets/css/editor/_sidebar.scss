@@ -7,8 +7,8 @@
 }
 
 .editor-sidebar {
-  color: #FFF;
-  background-color: #242424;
+  color: $color-body-text;
+  background-color: #f6f6f6;
   flex: 1 0 $width-sidebar;
   transition: transform .3s ease-in-out;
 
@@ -28,8 +28,8 @@
 
 .editor-sidebar-block {
   cursor: pointer;
-  color: #FFF;
-  background-color: $color-canvas-block-bg;
+  color: $color-body-text;
+  background-color: $color-sidebar-block-bg;
   user-select: none;
   border-radius: $border-radius-blocks;
   padding: $gutter-size;

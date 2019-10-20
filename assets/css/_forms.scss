@@ -108,8 +108,8 @@ div.form-control {
   $color: nth($colors-list, $i);
 
   .forms-custom-checkbox-#{$name} input[type="checkbox"]:checked + label::before {
-    border-color: $color-primary;
-    background-color: $color-primary;
+    border-color: darken($color-primary, 5%);
+    background-color: darken($color-primary, 5%);
   }
 
   .forms-custom-checkbox-#{$name} input[type="checkbox"]:checked + label::after {
@@ -117,12 +117,12 @@ div.form-control {
   }
 
   .forms-custom-checkbox-#{$name} input[type="radio"] + label::after {
-    background-color: $color-primary;
+    background-color: darken($color-primary, 5%);
   }
 
   .forms-custom-checkbox-#{$name} input[type="radio"]:checked + label::before {
-    border-color: $color-primary;
-    background-color: $color-primary;
+    border-color: darken($color-primary, 5%);
+    background-color: darken($color-primary, 5%);
   }
 
   .forms-custom-checkbox-#{$name} input[type="radio"]:checked + label::after {

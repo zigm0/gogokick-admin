@@ -5,7 +5,7 @@ $break-lg: 992px;
 $break-xl: 1200px;
 
 $color-brand: #54C067;
-$color-primary: #434343;
+$color-primary: #e5e5e5;
 $color-success: #54C068;
 $color-warning: #e0a800;
 $color-danger: #a92d2d;
@@ -17,16 +17,17 @@ $color-dim: grey;
 $color-primary-selected: lighten($color-primary, 10%);
 
 $color-body-text: #2c2c2c;
-$color-header: $color-primary;
-$color-canvas-block: #FFF;
-$color-canvas-block-icon: #E1E1E1;
-$color-canvas-block-bg: #5C5C5C;
+$color-header: #e5e5e5;
+$color-sidebar-block-bg: #e5e5e5;
+$color-canvas-block: $color-body-text;
+$color-canvas-block-icon: $color-body-text;
+$color-canvas-block-bg: #fcf8ed;
 $color-canvas-block-active-bg: #FFF;
 
-$color-block-text: #54C068;
-$color-block-image: #E61E84;
-$color-block-video: #57C5E6;
-$color-block-audio: #EA7722;
+$color-block-text: #54c068;
+$color-block-image: #e61d85;
+$color-block-video: #23c5e6;
+$color-block-audio: #ea7722;
 
 $color-role-owner: #fff;
 $color-role-lead: #fff;

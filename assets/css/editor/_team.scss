@@ -17,7 +17,7 @@
   }
 
   &:hover {
-    background-color: #393939;
+    background-color: $color-sidebar-block-bg;
   }
 
   .avatar {
@@ -44,7 +44,7 @@
 }
 
 .editor-team-btn {
-  color: #FFF;
+  color: $color-body-text;
   opacity: 0.9;
   margin-left: -4px;
   padding: 0 0 0 0.25rem;
@@ -59,17 +59,17 @@
   .icon {
     margin-right: 0.5rem;
     font-size: 76px;
-    color: $color-canvas-block-bg;
+    color: $color-body-text;
 
     &:hover {
-      color: #FFF;
+      color: $color-body-text;
     }
   }
 
   &:hover,
   &:active,
   &:focus {
-    color: #FFF;
+    color: $color-body-text;
     box-shadow: none;
   }
 

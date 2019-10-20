@@ -131,38 +131,38 @@ export default class EditorHeader extends React.PureComponent {
               </Button>
             </Column>
             <Column className="editor-header-buttons d-none d-lg-block d-xl-block" offsetXl={3}>
-              <Button onClick={this.handleOpenClick}>
+              <Button theme="link" onClick={this.handleOpenClick}>
                 Dashboard
               </Button>
-{/*              <Button onClick={this.handleNewClick}>
+{/*              <Button theme="link" onClick={this.handleNewClick}>
                 New
               </Button>*/}
               {acl(roles, 'preview', 'project') && (
-                <Button onClick={this.handlePreviewClick}>
+                <Button theme="link" onClick={this.handlePreviewClick}>
                   Preview
                 </Button>
               )}
               {acl(roles, 'export', 'project') && (
-                <Button onClick={this.handleExportClick}>
+                <Button theme="link" onClick={this.handleExportClick}>
                   Export
                 </Button>
               )}
               {acl(roles, 'settings', 'project') && (
-                <Button onClick={this.handleSettingsClick}>
+                <Button theme="link" onClick={this.handleSettingsClick}>
                   Settings
                 </Button>
               )}
               {acl(roles, 'undo', 'project') && (
-                <Button disabled={blockIndex === 0} onClick={editorUndo}>
+                <Button theme="link" disabled={blockIndex === 0} onClick={editorUndo}>
                   Undo
                 </Button>
               )}
               {acl(roles, 'undo', 'project') && (
-                <Button disabled={blockIndex === canvasBlocks.length - 1} onClick={editorRedo}>
+                <Button theme="link" disabled={blockIndex === canvasBlocks.length - 1} onClick={editorRedo}>
                   Redo
                 </Button>
               )}
-              <Button onClick={this.handleHelpClick}>
+              <Button theme="link" onClick={this.handleHelpClick}>
                 Help
               </Button>
             </Column>

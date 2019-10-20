@@ -10,6 +10,8 @@
   border-bottom: darken($color-header, 10%);
 
   .btn {
+    color: $color-body-text;
+
     .icon {
       @include media-xl {
         margin-right: 0.25rem;

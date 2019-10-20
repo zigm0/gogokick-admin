@@ -120,14 +120,14 @@
 .avatar-user-menu {
   display: flex;
   justify-content: flex-end;
-  color: #FFF;
+  color: $color-body-text;
   opacity: 0.9;
   align-items: center;
   padding-left: $gutter-size;
   padding-right: $gutter-size;
 
   &:hover {
-    color: #FFF;
+    color: $color-body-text;
     opacity: 1;
   }
 
