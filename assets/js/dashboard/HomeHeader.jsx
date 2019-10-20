@@ -79,6 +79,9 @@ export default class HomeHeader extends React.PureComponent {
                 Start a project
               </Link>
             )}
+            <Link to="/about">
+              About
+            </Link>
             {isAuthenticated ? (
               <Link to="/dashboard">
                 Dashboard
@@ -88,9 +91,6 @@ export default class HomeHeader extends React.PureComponent {
                 Login
               </Link>
             )}
-            <Link to="/about">
-              About
-            </Link>
           </div>
         </Container>
       </header>

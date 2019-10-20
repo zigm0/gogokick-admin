@@ -4,17 +4,19 @@ $break-md: 768px;
 $break-lg: 992px;
 $break-xl: 1200px;
 
+$color-brand: #54C067;
 $color-primary: #434343;
 $color-success: #54C068;
 $color-warning: #e0a800;
 $color-danger: #a92d2d;
-$color-secondary: #173e43;
+$color-secondary: #de0683;
 $color-info: #2384b1;
 $color-link: #00abe5;
 $color-modal-bg: #215857;
 $color-dim: grey;
 $color-primary-selected: lighten($color-primary, 10%);
 
+$color-body-text: #2c2c2c;
 $color-header: $color-primary;
 $color-canvas-block: #FFF;
 $color-canvas-block-icon: #E1E1E1;

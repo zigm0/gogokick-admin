@@ -70,6 +70,7 @@
 .card-public-project {
   border: 0;
   width: 100%;
+  background-color: #FFF;
   margin-bottom: $gutter-size-sm;
   transition: box-shadow 0.1s ease-in-out;
 
@@ -78,8 +79,9 @@
   }
 
   .card-img-top {
-    height: 178px;
+    height: 130px;
     object-fit: cover;
+    border-bottom: 1px solid #EEE;
   }
 
   small {

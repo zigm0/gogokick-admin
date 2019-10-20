@@ -8,7 +8,7 @@ html, body {
 }
 
 body {
-  color: #000;
+  color: $color-body-text;
   display: flex;
   flex-direction: column;
   background-color: #FFF;
