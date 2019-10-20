@@ -3,11 +3,36 @@
 .footer {
   color: #FFF;
   display: flex;
+  font-size: $font-size-sm;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: $height-footer;
-  background-color: $color-header;
+  padding: $gutter-size;
+  min-height: $height-footer;
+  background-color: $color-body-text;
+
+  h6 {
+    color: #bdbdbd;
+    font-size: 0.8rem;
+  }
+
+  ul {
+    @include media-xl {
+      margin-bottom: 0;
+    }
+
+    @include media-md {
+      margin-bottom: 0;
+    }
+  }
+
+  a {
+    color: #e5e5e5;
+
+    &:hover {
+      color: #e5e5e5;
+    }
+  }
 }
 
 .footer-links {

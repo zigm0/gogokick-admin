@@ -1,10 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'utils';
 import { Link, Workspace } from 'components';
 import { Container, Row, Column } from 'components/bootstrap';
 import { PublicProjectCard } from 'cards';
 
+const mapStateToProps = state => ({
+  isAuthenticated: state.user.isAuthenticated
+});
+
+@connect(
+  mapStateToProps
+)
 export default class Home extends React.PureComponent {
-  static propTypes = {};
+  static propTypes = {
+    isAuthenticated: PropTypes.bool.isRequired
+  };
 
   static defaultProps = {};
 
@@ -12,24 +23,32 @@ export default class Home extends React.PureComponent {
    * @returns {*}
    */
   renderHero = () => {
+    const { isAuthenticated } = this.props;
+
     return (
       <div className="home-page-hero">
         <Container className="home-page-container home-page-hero-top">
           <Row>
             <Column xs={12} md={4} xl={4}>
-              <img src="/images/homepage/tools.png" alt="Tools" style={{ height: 180 }} />
+              <img src="/images/homepage/tools.png" alt="Tools" />
             </Column>
             <Column xs={12} md={8} xl={8}>
-              <div>
+              <div className="home-page-hero-cta">
                 <h1>Crowd Funding Tools</h1>
                 <p>
                   Create and manage your campaign with our easy-to-use tools.  Tools we wished existed when we
                   were building and managing our own campaigns.
                 </p>
-                <p className="text-right">
-                  <Link className="btn btn-secondary" to="/editor/new">
-                    Start Project
-                  </Link>
+                <p className="text-center text-xl-right">
+                  {isAuthenticated ? (
+                    <Link className="btn btn-secondary" to="/editor/new">
+                      Start Project
+                    </Link>
+                  ) : (
+                    <Link className="btn btn-secondary" to="/login">
+                      Start Project
+                    </Link>
+                  )}
                 </p>
               </div>
             </Column>
@@ -38,19 +57,19 @@ export default class Home extends React.PureComponent {
         <div className="home-page-hero-footer">
           <Container>
             <Row>
-              <Column xs={4} md={4} xl={4}>
+              <Column xs={3} md={4} xl={4}>
                 <div>
                   <b>620</b>
                   <span>Projects Helped</span>
                 </div>
               </Column>
-              <Column xs={4} md={4} xl={4}>
+              <Column xs={3} md={4} xl={4}>
                 <div>
                   <b>26</b>
                   <span>Live Projects</span>
                 </div>
               </Column>
-              <Column xs={4} md={4} xl={4}>
+              <Column xs={6} md={4} xl={4}>
                 <div>
                   <b>$1,556,002</b>
                   <span>Raised</span>

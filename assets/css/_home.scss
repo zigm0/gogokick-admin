@@ -36,6 +36,7 @@ $header-height: 70px;
   h1 {
     text-transform: uppercase;
     font-size: 1.75rem;
+    line-height: 1.75rem;
     font-weight: 700;
   }
 }
@@ -60,6 +61,14 @@ $header-height: 70px;
     padding-left: $gutter-size-lg;
     padding-right: $gutter-size-lg;
   }
+
+  img {
+    height: 180px;
+
+    @include media-xs {
+      margin-bottom: $gutter-size;
+    }
+  }
 }
 
 .home-page-hero-footer {
@@ -68,6 +77,7 @@ $header-height: 70px;
   min-height: 85px;
   font-size: 1rem;
   line-height: 1rem;
+  box-shadow: 0 -1px 0 rgb(78, 182, 98);
 
   @include media-xs {
     font-size: 0.8rem;
@@ -173,6 +183,10 @@ $header-height: 70px;
   z-index: 100;
   background-color: #e5e5e5;
   transition: background-color 0.2s ease-in-out;
+}
+
+.home-page-header-opaque {
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.25);
 }
 
 .home-page-header-links {
