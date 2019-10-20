@@ -48,7 +48,7 @@
   transition: background-color 0.1s ease-in-out;
 
   &:hover {
-    background-color: #393939;
+    background-color: $color-sidebar-block-bg;
 
     .editor-note-item-delete-icon {
       display: block;

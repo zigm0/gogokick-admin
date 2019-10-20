@@ -98,10 +98,10 @@
     transform: translate3d(-4px, 51px, 0px) !important;
 
     a {
-      color: #FFF;
+      color: $color-body-text;
 
       &:hover {
-        color: #FFF;
+        color: $color-body-text;
         background-color: lighten($color-primary, 5%);
       }
     }
@@ -247,14 +247,14 @@
 }
 
 .dropdown__content {
-  color: #FFF;
+  color: $color-body-text;
   z-index: 100;
   display: none;
   position: absolute;
   background-color: $color-header;
 
   .dropdown-item {
-    color: #FFF;
+    color: $color-body-text;
     margin: $gutter-size-sm 0;
 
     &:hover {
