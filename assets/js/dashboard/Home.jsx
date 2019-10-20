@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'utils';
+import { numbers, connect } from 'utils';
+import Odometer from 'react-odometerjs';
 import { Link, Workspace } from 'components';
 import { Container, Row, Column } from 'components/bootstrap';
 import { PublicProjectCard } from 'cards';
@@ -20,10 +21,43 @@ export default class Home extends React.PureComponent {
   static defaultProps = {};
 
   /**
+   * @param {*} props
+   */
+  constructor(props) {
+    super(props);
+    this.state = {
+      helped: 620,
+      active: 26,
+      raised: 1556002
+    }
+  }
+
+  componentDidMount() {
+    setInterval(() => {
+      const { raised } = this.state;
+      this.setState({ raised: raised + numbers.random(10, 56) });
+    }, 3000);
+    setTimeout(() => {
+      const { raised } = this.state;
+      this.setState({ raised: raised + numbers.random(10, 20) });
+    }, 250);
+
+    setInterval(() => {
+      const { helped } = this.state;
+      this.setState({ helped: helped + numbers.random(1, 2) });
+    }, 3500);
+    setInterval(() => {
+      const { active } = this.state;
+      this.setState({ active: active + numbers.random(1, 2) });
+    }, 2250);
+  }
+
+  /**
    * @returns {*}
    */
   renderHero = () => {
     const { isAuthenticated } = this.props;
+    const { helped, active, raised } = this.state;
 
     return (
       <div className="home-page-hero">
@@ -59,19 +93,19 @@ export default class Home extends React.PureComponent {
             <Row>
               <Column xs={3} md={4} xl={4}>
                 <div>
-                  <b>620</b>
+                  <Odometer value={helped} />
                   <span>Projects Helped</span>
                 </div>
               </Column>
               <Column xs={3} md={4} xl={4}>
                 <div>
-                  <b>26</b>
+                  <Odometer value={active} />
                   <span>Live Projects</span>
                 </div>
               </Column>
               <Column xs={6} md={4} xl={4}>
-                <div>
-                  <b>$1,556,002</b>
+                <div className="home-page-hero-footer-raised">
+                  <Odometer value={raised} />
                   <span>Raised</span>
                 </div>
               </Column>
