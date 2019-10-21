@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, history, acl, mapDispatchToProps, router } from 'utils';
+import { connect, history, acl, mapDispatchToProps } from 'utils';
 import { Icon, Link } from 'components';
 import { Row, Column, Button } from 'components/bootstrap';
 import UserMenu from 'layout/UserMenu';
@@ -45,7 +45,7 @@ export default class EditorHeader extends React.PureComponent {
    *
    */
   handleHelpClick = () => {
-    window.open(router.generate('help_index'));
+    history.push('/help');
   };
 
   /**
