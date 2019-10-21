@@ -2,6 +2,7 @@ const path                 = require('path');
 const webpack              = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ManifestPlugin       = require('webpack-manifest-plugin');
+const CleanObsoleteChunks  = require('webpack-clean-obsolete-chunks');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
@@ -48,6 +49,7 @@ module.exports = {
     new ManifestPlugin({
       publicPath: 'build/'
     }),
+    new CleanObsoleteChunks(),
     // new BundleAnalyzerPlugin()
   ]
 };
