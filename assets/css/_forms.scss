@@ -74,9 +74,7 @@ div.form-control {
   opacity: 0;
 
   &:focus + label::before {
-    outline-offset: -2px;
-    outline: thin dotted;
-    outline: 5px auto -webkit-focus-ring-color;
+    outline: 0;
   }
 
   &:checked + label::after {
@@ -97,6 +95,8 @@ div.form-control {
 
 .forms-custom-checkbox-inline {
   margin-top: 0;
+  margin-right: $gutter-size-sm;
+  display: inline-block;
 }
 
 .forms-custom-checkbox-circle label::before {

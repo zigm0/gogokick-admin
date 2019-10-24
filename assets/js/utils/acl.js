@@ -17,6 +17,10 @@ export function setPermissions(permissions) {
  * @returns {boolean}
  */
 export default (roles, privilege, resource) => {
+  if (!acl) {
+    return false;
+  }
+
   for (let i = 0; i < roles.length; i++) {
     if (acl.isAllowed(constants.projectRole(roles[i]), resource, privilege)) {
       return true;

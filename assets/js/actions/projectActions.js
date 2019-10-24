@@ -6,6 +6,7 @@ export const PROJECT_RESET              = 'PROJECT_RESET';
 export const PROJECT_BUSY               = 'PROJECT_BUSY';
 export const PROJECT_SAVING             = 'PROJECT_SAVING';
 export const PROJECT_SET                = 'PROJECT_SET';
+export const PROJECT_PREVIEW            = 'PROJECT_PREVIEW';
 export const PROJECT_NEW                = 'PROJECT_NEW_PROJECT';
 export const PROJECT_OPEN               = 'PROJECT_OPEN_PROJECT';
 export const PROJECT_UPDATE_TEAM_MEMBER = 'PROJECT_UPDATE_TEAM_MEMBER';
@@ -74,6 +75,36 @@ export const projectOpen = (id, meta = {}) => {
         } else {
           dispatch(projectBusy(false));
         }
+      })
+      .catch(() => {
+        dispatch(projectBusy(false));
+      });
+  };
+};
+
+/**
+ * @param {number} id
+ * @param {string} hash
+ * @returns {Function}
+ */
+export const projectPreview = (id, hash) => {
+  return (dispatch, getState) => {
+    dispatch({
+      type: PROJECT_PREVIEW
+    });
+    dispatch(projectBusy(true));
+    api.get(router.generate('api_previews_open_project', { id, hash }))
+      .then((payload) => {
+        const { user } = getState();
+
+        payload.me = user;
+        dispatch(editorNew(payload));
+        dispatch({
+          type: PROJECT_OPEN,
+          payload,
+        });
+
+        dispatch(projectBusy(false));
       })
       .catch(() => {
         dispatch(projectBusy(false));

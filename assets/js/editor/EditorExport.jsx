@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Clipboard from 'clipboard';
-import YouTube from 'react-youtube';
 import { connect, constants, strings, acl, history, mapDispatchToProps } from 'utils';
 import { Row, Column, Button } from 'components/bootstrap';
 import { Link, Workspace } from 'components';

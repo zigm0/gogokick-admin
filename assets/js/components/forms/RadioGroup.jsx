@@ -23,7 +23,8 @@ class RadioGroup extends React.PureComponent {
     disabled:     PropTypes.bool,
     required:     PropTypes.bool,
     inline:       PropTypes.bool,
-    circle:       PropTypes.bool
+    circle:       PropTypes.bool,
+    onChange:     PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -36,6 +37,7 @@ class RadioGroup extends React.PureComponent {
     required:     false,
     inline:       false,
     circle:       false,
+    onChange:     null
   };
 
   static unityFormType = 'radio';
@@ -81,7 +83,7 @@ class RadioGroup extends React.PureComponent {
 
     return (
       <div id={id} {...objects.keyFilter(props, RadioGroup.propTypes)}>
-        <Label htmlFor={id} required={required}>
+        <Label htmlFor={id} required={required} style={{ display: inline ? 'block' : 'inline' }}>
           {label}
         </Label>
         {(errorMessage !== '' && errorMessage !== true) && (

@@ -10,6 +10,7 @@ const initialState = objects.merge({
   isPublic:     false,
   isBusy:       false,
   isSaving:     false,
+  isPreview:    false,
   campaignType: 1,
   team:         [],
   watching:     []
@@ -191,6 +192,17 @@ const onProjectWatching = (state, action) => {
   };
 };
 
+/**
+ * @param {*} state
+ * @returns {*}
+ */
+const onProjectPreview = (state) => {
+  return {
+    ...state,
+    isPreview: true
+  };
+};
+
 const handlers = {
   [types.PROJECT_RESET]:              onProjectReset,
   [types.PROJECT_BUSY]:               onProjectBusy,
@@ -201,6 +213,7 @@ const handlers = {
   [types.PROJECT_SAVING]:             onProjectSaving,
   [types.PROJECT_SET]:                onProjectSet,
   [types.PROJECT_NEW]:                onProjectNew,
+  [types.PROJECT_PREVIEW]:            onProjectPreview,
   [types.PROJECT_OPEN]:               onProjectOpen,
   [types.PROJECT_WATCHING]:           onProjectWatching,
   [types.PROJECT_UPDATE_TEAM_MEMBER]: onProjectUpdateTeamMember,

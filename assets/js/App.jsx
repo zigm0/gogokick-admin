@@ -11,10 +11,12 @@ import * as Modals from 'modals';
 
 const Home            = React.lazy(() => import('./dashboard/Home'));
 const Login           = React.lazy(() => import('./dashboard/Login'));
+const NotFound        = React.lazy(() => import('./dashboard/NotFound'));
 const Register        = React.lazy(() => import('./dashboard/Register'));
 const Profile         = React.lazy(() => import('./dashboard/Profile'));
 const Dashboard       = React.lazy(() => import('./dashboard/Dashboard'));
 const Project         = React.lazy(() => import('./dashboard/Project'));
+const ProjectPreview  = React.lazy(() => import('./dashboard/ProjectPreview'));
 const Invite          = React.lazy(() => import('./dashboard/Invite'));
 const Editor          = React.lazy(() => import('./editor/Editor'));
 const HomeHeader      = React.lazy(() => import('./dashboard/HomeHeader'));
@@ -27,8 +29,9 @@ const mapStateToProps = state => ({
   workspace:     state.ui.workspace,
   campaignType:  state.project.campaignType,
   projectIsBusy: state.project.isBusy,
+  isPreview:     state.project.isPreview,
   editorIsBusy:  state.editor.isBusy,
-  userIsBusy:    state.user.isBusy
+  user:          state.user
 });
 
 @connect(
@@ -39,9 +42,10 @@ export default class App extends React.Component {
   static propTypes = {
     workspace:     PropTypes.string.isRequired,
     campaignType:  PropTypes.number.isRequired,
-    userIsBusy:    PropTypes.bool.isRequired,
+    user:          PropTypes.object.isRequired,
     projectIsBusy: PropTypes.bool.isRequired,
     editorIsBusy:  PropTypes.bool.isRequired,
+    isPreview:     PropTypes.bool.isRequired,
     userMe:        PropTypes.func.isRequired,
     uiInitialize:  PropTypes.func.isRequired,
   };
@@ -78,6 +82,12 @@ export default class App extends React.Component {
    * @returns {*}
    */
   renderModals = () => {
+    const { user } = this.props;
+
+    if (!user.id) {
+      return null;
+    }
+
     return (
       <ErrorBoundary>
         <Modals.OpenModal />
@@ -98,9 +108,9 @@ export default class App extends React.Component {
    * @returns {*}
    */
   renderHeader = () => {
-    const { workspace } = this.props;
+    const { workspace, isPreview } = this.props;
 
-    if (workspace === 'editor' || workspace === 'project-export' || workspace === 'project-settings') {
+    if (!isPreview && (workspace === 'editor' || workspace === 'project-export' || workspace === 'project-settings')) {
       return <EditorHeader />;
     } else if (workspace === 'home') {
       return <HomeHeader />;
@@ -113,7 +123,7 @@ export default class App extends React.Component {
    * @returns {*}
    */
   render() {
-    const { workspace, campaignType, userIsBusy, editorIsBusy, projectIsBusy } = this.props;
+    const { workspace, campaignType, user, editorIsBusy, projectIsBusy } = this.props;
 
     const classes = classNames(`workspace-${workspace} h-min-100`, {
       'editor':                                                         workspace === 'editor',
@@ -137,13 +147,15 @@ export default class App extends React.Component {
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/profile/:id" component={Profile} />
                 <Route exact path="/invite/:id/:hash" component={Invite} />
+                <Route exact path="/preview/project/:id/:hash" component={ProjectPreview} />
                 <ProtectedRoute path="/editor" component={Editor} />
                 <ProtectedRoute path="/dashboard" component={Dashboard} />
+                <Route component={NotFound} />
               </Switch>
             </Router>
           </div>
           {this.renderModals()}
-          {(userIsBusy || editorIsBusy || projectIsBusy) && (
+          {(user.isBusy || editorIsBusy || projectIsBusy) && (
             <LoadingCubes />
           )}
           <ToastContainer />
