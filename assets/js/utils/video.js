@@ -22,7 +22,18 @@ export function videoYoutubeShortUrl(url) {
   return `https://youtu.be/${youtubeId}`;
 }
 
+/**
+ * @param {string} url
+ * @returns {boolean}
+ */
+export function isImageUrl(url) {
+  const ext = url.split('.').pop().toLowerCase();
+
+  return ['jpg', 'jpeg', 'gif', 'png', 'webp'].indexOf(ext) !== -1;
+}
+
 export default {
+  isImageUrl,
   extractYoutubeId: videoExtractYoutubeId,
   youtubeShortUrl:  videoYoutubeShortUrl
 }

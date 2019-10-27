@@ -51,6 +51,9 @@ export default class Activities extends React.PureComponent {
         <div className="editor-activity-item-body-message hyphenate">
           <Icon name="comment-alt" className="editor-activity-item-icon" />
           {strings.truncate(a.note.text, 100)}
+          {a.note.attachmentUrl && (
+            <i>{a.note.attachmentName}</i>
+          )}
         </div>
       </>
     );

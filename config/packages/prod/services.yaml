@@ -64,3 +64,12 @@ parameters:
             cloudfront:
                 id:  'E3E733268WBTQY'
                 url: 'cdn.gogokick.com'
+
+        attachments:
+            s3:
+                folder:       'attachments'
+                bucket:       'assets.gogokick.com'
+                cacheControl: 'max-age=300'
+            cloudfront:
+                id:  'E3E733268WBTQY'
+                url: 'cdn.gogokick.com'

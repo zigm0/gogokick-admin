@@ -14,11 +14,11 @@ interface CDNInterface
      * @param string $system
      * @param string $path
      * @param string $data
-     * @param closure $progressFunc ($downloadTotalSize, $downloadSizeSoFar, $uploadTotalSize, $uploadSizeSoFar)
+     * @param array  $headers
      *
      * @return string
      */
-    public function upload($system, $path, $data, $progressFunc = null);
+    public function upload($system, $path, $data, $headers = []);
 
     /**
      * Returns the contents of the file at the given path
@@ -39,6 +39,13 @@ interface CDNInterface
      * @return bool
      */
     public function remove($system, $path);
+
+    /**
+     * @param string $url
+     *
+     * @return bool
+     */
+    public function removeByURL($url);
 
     /**
      * Invalidate the cache for the given path

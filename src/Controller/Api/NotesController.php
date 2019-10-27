@@ -43,18 +43,36 @@ class NotesController extends ApiController
      */
     public function saveAction($blockID, Request $request, NoteRepository $repository)
     {
-        $user    = $this->getUser();
-        $block   = $this->getBlock($blockID);
-        $message = $request->json->get('message');
-        if (!$message) {
+        $user       = $this->getUser();
+        $block      = $this->getBlock($blockID);
+        $message    = $request->request->get('message');
+        $attachment = $request->files->get('attachment');
+        if (!$message && !$attachment) {
             throw new BadRequestHttpException('Missing message');
+        }
+        if (!$message) {
+            $message = '';
         }
 
         $note = (new Note())
             ->setUser($user)
             ->setBlock($block)
-            ->setText($message);
+            ->setText($message)
+            ->setAttachmentName('')
+            ->setAttachmentUrl('');
         $this->em->persist($note);
+
+        if ($attachment) {
+            $ext  = pathinfo($attachment->getClientOriginalName(), PATHINFO_EXTENSION);
+            $data = file_get_contents($attachment->getPathName());
+            $path = sprintf('%d-%s.%s', microtime(true), uniqid(), $ext);
+            $url  = $this->cdn->upload('attachments', $path, $data, [
+                'ContentDisposition' => sprintf('attachment; filename="%s"', $attachment->getClientOriginalName()),
+                'MetadataDirective'  => 'REPLACE'
+            ]);
+            $note->setAttachmentUrl($url);
+            $note->setAttachmentName($attachment->getClientOriginalName());
+        }
 
         $activity = (new Activity())
             ->setUser($user)
@@ -62,7 +80,6 @@ class NotesController extends ApiController
             ->setMessage('')
             ->setType(Activity::TYPE_BLOCK_NOTE);
         $this->em->persist($activity);
-
         $this->em->flush();
         $this->eventDispatcher->dispatch('app.activity', new ActivityEvent($activity));
 
@@ -83,6 +100,9 @@ class NotesController extends ApiController
     public function deleteAction($id, NoteRepository $noteRepository, ActivityRepository $activityRepository)
     {
         $note = $noteRepository->findByID($id);
+        if ($url = $note->getAttachmentUrl()) {
+            $this->cdn->removeByURL($url);
+        }
         $this->em->remove($note);
 
         foreach($activityRepository->findByNote($note) as $activity) {

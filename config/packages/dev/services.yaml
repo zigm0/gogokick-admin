@@ -64,3 +64,12 @@ parameters:
             cloudfront:
                 id:  'E34SMF4C1NLPCH'
                 url: 'dawo3jgs9j8n8.cloudfront.net'
+
+        attachments:
+            s3:
+                folder:       'gogokick-attachments'
+                bucket:       'arb.headzoo.io'
+                cacheControl: 'max-age=300'
+            cloudfront:
+                id:  'E34SMF4C1NLPCH'
+                url: 'dawo3jgs9j8n8.cloudfront.net'

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Moment from 'react-moment';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { connect, acl, mapDispatchToProps } from 'utils';
-import { Form, Textarea } from 'components/forms';
+import { connect, strings, video, acl, mapDispatchToProps } from 'utils';
+import { Form, Input } from 'components/forms';
 import { Button } from 'components/bootstrap';
 import { Avatar, Icon } from 'components';
 import { notesActions, formActions } from 'actions';
@@ -41,8 +41,20 @@ export default class EditorNotes extends React.PureComponent {
    */
   constructor(props) {
     super(props);
-    this.message = React.createRef();
-    this.notes   = React.createRef();
+    this.message         = React.createRef();
+    this.notes           = React.createRef();
+    this.attachmentInput = React.createRef();
+
+    this.state = {
+      attachment: null
+    };
+  }
+
+  /**
+   *
+   */
+  componentDidMount() {
+    this.attachmentInput.current.addEventListener('change', this.handleAttachChange, false);
   }
 
   /**
@@ -64,16 +76,26 @@ export default class EditorNotes extends React.PureComponent {
   }
 
   /**
+   *
+   */
+  componentWillUnmount() {
+    this.attachmentInput.current.removeEventListener('change', this.handleAttachChange, false);
+  }
+
+  /**
    * @param {Event} e
    */
   handleFormSubmit = (e) => {
     const { activeBlockID, formValues, formChange, notesSave } = this.props;
+    const { attachment } = this.state;
 
     e.preventDefault();
     formChange('notes', 'message', '');
-    notesSave(activeBlockID, formValues.message);
+    notesSave(activeBlockID, formValues.message, attachment);
     setTimeout(() => {
       this.message.current.focus();
+      this.attachmentInput.current.value = '';
+      this.setState({ attachment: null });
     }, 500);
   };
 
@@ -94,24 +116,59 @@ export default class EditorNotes extends React.PureComponent {
    */
   handleMessageKeyUp = (e) => {
     if (e.keyCode === 13) {
+      console.log('here');
       e.preventDefault();
       this.handleFormSubmit(e);
     }
   };
 
   /**
+   * @param {Event} e
+   */
+  handleAttachClick = (e) => {
+    e.preventDefault();
+    this.attachmentInput.current.click();
+  };
+
+  /**
+   * @param {Event} e
+   */
+  handleAttachChange = (e) => {
+    this.setState({
+      attachment: e.target.files[0]
+    });
+  };
+
+  /**
    * @returns {*}
    */
   renderForm = () => {
+    const { attachment } = this.state;
+
     return (
       <Form name="notes" className="editor-notes-form" onSubmit={this.handleFormSubmit}>
-        <Textarea
-          ref={this.message}
-          name="message"
-          id="notes-message-input"
-          placeholder="Add your message..."
-          onKeyUp={this.handleMessageKeyUp}
-        />
+        <input type="file" ref={this.attachmentInput} style={{ width: 0, height: 0 }} />
+        {attachment && (
+          <div className="editor-notes-form-attachment">
+            {strings.truncate(attachment.name, 35)}
+          </div>
+        )}
+        <div className="d-flex align-items-center gutter-bottom-sm">
+          <Input
+            ref={this.message}
+            name="message"
+            id="notes-message-input"
+            formGroupClassName="flex-grow-1"
+            placeholder="Add your message..."
+            onKeyDown={this.handleMessageKeyUp}
+          />
+          <Button
+            icon="paperclip"
+            className="flex-grow-0 btn-attachment"
+            title="Attach file"
+            onClick={this.handleAttachClick}
+          />
+        </div>
         <Button theme="success" block>
           Save
         </Button>
@@ -162,6 +219,18 @@ export default class EditorNotes extends React.PureComponent {
                 <div className="editor-note-item-message hyphenate">
                   {note.text}
                 </div>
+                {(note.attachmentUrl && video.isImageUrl(note.attachmentUrl)) && (
+                  <a href={note.attachmentUrl} target="_blank" className="editor-note-item-attachment-image">
+                    <img src={note.attachmentUrl}  alt="Attachment" />
+                    <span>{note.attachmentName}</span>
+                  </a>
+                )}
+                {(note.attachmentUrl && !video.isImageUrl(note.attachmentUrl)) && (
+                  <a href={note.attachmentUrl} target="_blank" className="editor-note-item-attachment-file">
+                    <Icon name="file" size={2} />
+                    <span>{note.attachmentName}</span>
+                  </a>
+                )}
               </li>
             ))}
           </ul>

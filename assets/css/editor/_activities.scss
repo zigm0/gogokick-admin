@@ -55,6 +55,12 @@
 
 .editor-activity-item-body-message {
   word-break: break-all;
+
+  i {
+    display: inline-block;
+    font-style: italic;
+    margin-left: $gutter-size-sm;
+  }
 }
 
 .editor-activities-read-more {

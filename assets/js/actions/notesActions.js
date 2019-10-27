@@ -93,12 +93,19 @@ export const notesFetch = (blockID) => {
 /**
  * @param {number} blockID
  * @param {string} message
+ * @param {File} attachment
  * @returns {Function}
  */
-export const notesSave = (blockID, message) => {
+export const notesSave = (blockID, message, attachment) => {
   return (dispatch) => {
+    const form = new FormData();
+    form.append('message', message);
+    if (attachment) {
+      form.append('attachment', attachment);
+    }
+
     dispatch(notesBusy(true));
-    api.post(router.generate('api_notes_save', { blockID }), { message })
+    api.post(router.generate('api_notes_save', { blockID }), form)
       .then((notes) => {
         dispatch({
           type: NOTES_FETCH,

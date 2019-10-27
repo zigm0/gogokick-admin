@@ -49,24 +49,19 @@ class AmazonCDN implements CDNInterface
     /**
      * {@inheritDoc}
      */
-    public function upload($system, $path, $data, $progressFunc = null)
+    public function upload($system, $path, $data, $headers = [])
     {
         $config = $this->getSystemConfig($system);
         $key    = $this->getSystemPath($system, $path);
 
-        $req = [
+        $req = array_merge([
             'Bucket'       => $config['s3']['bucket'],
             'Key'          => $key,
             'Body'         => $data,
             'ContentType'  => $this->mimeTypes->getFromFilename($path),
             'CacheControl' => $config['s3']['cacheControl'],
             'ACL'          => 'public-read',
-        ];
-        if ($progressFunc) {
-            $req['@http'] = [
-                'progress' => $progressFunc
-            ];
-        }
+        ], $headers);
 
         $this->s3->putObject($req);
 
@@ -103,6 +98,18 @@ class AmazonCDN implements CDNInterface
         ]);
 
         return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removeByURL($url)
+    {
+        $parts = parse_url($url);
+        $path  = ltrim($parts['path'], '/');
+        list($system, $path) = explode('/', $path, 2);
+
+        return $this->remove($system, $path);
     }
 
     /**

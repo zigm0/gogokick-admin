@@ -47,6 +47,20 @@ class Note
     protected $text;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"web"})
+     */
+    protected $attachmentUrl;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"web"})
+     */
+    protected $attachmentName;
+
+    /**
      * @var Collection
      * @ORM\OneToMany(targetEntity="Activity", mappedBy="note")
      */
@@ -168,6 +182,46 @@ class Note
     public function setText(string $text): Note
     {
         $this->text = $text;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAttachmentUrl(): ?string
+    {
+        return $this->attachmentUrl;
+    }
+
+    /**
+     * @param string $attachmentUrl
+     *
+     * @return Note
+     */
+    public function setAttachmentUrl(string $attachmentUrl): Note
+    {
+        $this->attachmentUrl = $attachmentUrl;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAttachmentName(): ?string
+    {
+        return $this->attachmentName;
+    }
+
+    /**
+     * @param string $attachmentName
+     *
+     * @return Note
+     */
+    public function setAttachmentName(string $attachmentName): Note
+    {
+        $this->attachmentName = $attachmentName;
 
         return $this;
     }

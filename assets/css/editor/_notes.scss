@@ -90,8 +90,50 @@
   margin-left: 50px;
 }
 
+.editor-note-item-attachment-image {
+  color: $color-dim;
+  margin-left: 50px;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    color: $color-dim;
+  }
+
+  img {
+    max-height: 50px;
+    max-width: 32px;
+    margin-right: $gutter-size-sm;
+  }
+}
+
+.editor-note-item-attachment-file {
+  color: $color-dim;
+  margin-left: 45px;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    color: $color-dim;
+  }
+}
+
 .editor-notes-form {
   flex: none;
+
+  .form-group {
+    margin-bottom: 0;
+  }
+
+  .btn-attachment {
+    color: $color-dim !important;
+  }
+}
+
+.editor-notes-form-attachment {
+  color: $color-dim;
+  font-size: $font-size-sm;
+  font-style: italic;
 }
 
 .editor-note-item-details {
