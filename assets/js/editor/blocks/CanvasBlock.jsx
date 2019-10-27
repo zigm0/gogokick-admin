@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
 import { connect, constants, video, acl, mapDispatchToProps } from 'utils';
-import { editorActions } from 'actions';
+import { editorActions, uiActions } from 'actions';
 import CanvasBlockBody from './CanvasBlockBody';
 import BlockMenu from './BlockMenu';
 
@@ -15,7 +15,7 @@ const mapStateToProps = state => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps(editorActions)
+  mapDispatchToProps(editorActions, uiActions)
 )
 export default class CanvasBlock extends React.PureComponent {
   static propTypes = {
@@ -33,7 +33,8 @@ export default class CanvasBlock extends React.PureComponent {
     hoverBlockID:        PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     activeBlockID:       PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     editorHoverBlock:    PropTypes.func.isRequired,
-    editorActivateBlock: PropTypes.func.isRequired
+    editorActivateBlock: PropTypes.func.isRequired,
+    uiToast:             PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -112,9 +113,11 @@ export default class CanvasBlock extends React.PureComponent {
    * @param {Event} e
    */
   handleClick = (e) => {
-    const { block, meTeamMember, activeBlockID, editorActivateBlock } = this.props;
+    const { block, meTeamMember, activeBlockID, editorActivateBlock, uiToast } = this.props;
 
-    if (!e.target.classList.contains('icon') && block.id !== activeBlockID && !block.isLocked) {
+    if (block.isLocked) {
+      uiToast('Block is locked!');
+    } else if (!e.target.classList.contains('icon') && block.id !== activeBlockID) {
       const resource = `block-${constants.blockType(block.type)}`;
       if (acl(meTeamMember.roles, 'edit', resource)) {
         editorActivateBlock(block.id);

@@ -262,8 +262,10 @@ export const editorBlockMedia = (payload) => {
  * @returns {{payload: *, type: string}}
  */
 export const editorActivateBlock = (payload) => {
-  return (dispatch) => {
-    if (!payload) {
+  return (dispatch, getState) => {
+    const { editor, notes } = getState();
+
+    if (notes.isVisible && (!payload || payload !== editor.activeBlockID)) {
       dispatch(notesVisible(false));
     }
 

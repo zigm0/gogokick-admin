@@ -65,6 +65,9 @@ export const notesOpen = (blockID) => {
   return (dispatch) => {
     dispatch(editorActivateBlock(blockID));
     dispatch(notesVisible(true));
+    if (fetchInterval) {
+      clearInterval(fetchInterval);
+    }
     fetchInterval = setInterval(() => {
       dispatch(notesFetch(blockID, false));
     }, 5000);
@@ -78,6 +81,10 @@ export const notesClose = () => {
   return (dispatch) => {
     dispatch(editorActivateBlock(0));
     dispatch(notesVisible(false));
+    dispatch({
+      type:  NOTES_FETCH,
+      notes: []
+    });
     clearInterval(fetchInterval);
   };
 };

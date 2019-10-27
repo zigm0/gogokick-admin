@@ -2,6 +2,7 @@
 
 .Toastify__toast--default {
   padding: 0;
+  min-height: auto;
   color: $color-body-text;
   background-color: $color-header;
 }
