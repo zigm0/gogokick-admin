@@ -27,16 +27,6 @@ export default class EditorExport extends React.PureComponent {
   static defaultProps = {};
 
   /**
-   * @param {*} props
-   */
-  constructor(props) {
-    super(props);
-
-    this.btnCopy = React.createRef();
-    this.clipboard = null;
-  }
-
-  /**
    *
    */
   componentDidMount() {
@@ -52,22 +42,19 @@ export default class EditorExport extends React.PureComponent {
         redirectAfterOpen: false
       });
     }
+
+    this.clipboard = new Clipboard('#project-export-copy-btn');
   }
 
   /**
-   * @param {*} prevProps
+   *
    */
-  componentDidUpdate(prevProps) {
-    const { project, meTeamMember } = this.props;
-    const { project: prevProject } = prevProps;
+  componentDidUpdate() {
+    const { meTeamMember } = this.props;
     const { user, roles } = meTeamMember;
 
     if (user && !acl(roles, 'export', 'project')) {
       history.push('/');
-    }
-
-    if (project.id !== prevProject.id && this.clipboard === null) {
-      this.clipboard = new Clipboard(this.btnCopy.current);
     }
   }
 
@@ -177,7 +164,7 @@ export default class EditorExport extends React.PureComponent {
                   Click the Copy button to copy your page to your clipboard.
                 </p>
                 <button
-                  ref={this.btnCopy}
+                  id="project-export-copy-btn"
                   className="btn btn-success project-export-btn"
                   data-clipboard-target="#project-export-textarea"
                 >
