@@ -12,7 +12,7 @@ parameters:
                 cacheControl: 'max-age=300'
             cloudfront:
                 id:  'E3E733268WBTQY'
-                url: 'cdn.gogokick.com'
+                url: 'd24gkgs6s9hlg4.cloudfront.net'
 
         assets:
             s3:
@@ -21,7 +21,7 @@ parameters:
                 cacheControl: 'max-age=31536000'
             cloudfront:
                 id:  'E3E733268WBTQY'
-                url: 'cdn.gogokick.com'
+                url: 'd24gkgs6s9hlg4.cloudfront.net'
 
         project_images:
             s3:
@@ -30,7 +30,7 @@ parameters:
                 cacheControl: 'max-age=31536000'
             cloudfront:
                 id:  'E3E733268WBTQY'
-                url: 'cdn.gogokick.com'
+                url: 'd24gkgs6s9hlg4.cloudfront.net'
             size:
                 width: 1024
                 height: 576
@@ -42,7 +42,7 @@ parameters:
                 cacheControl: 'max-age=31536000'
             cloudfront:
                 id:  'E3E733268WBTQY'
-                url: 'cdn.gogokick.com'
+                url: 'd24gkgs6s9hlg4.cloudfront.net'
 
         avatars:
             s3:
@@ -51,7 +51,7 @@ parameters:
                 cacheControl: 'max-age=31536000'
             cloudfront:
                 id:  'E3E733268WBTQY'
-                url: 'cdn.gogokick.com'
+                url: 'd24gkgs6s9hlg4.cloudfront.net'
             size:
                 width: 200
                 height: 200
@@ -63,4 +63,4 @@ parameters:
                 cacheControl: 'max-age=300'
             cloudfront:
                 id:  'E3E733268WBTQY'
-                url: 'cdn.gogokick.com'
+                url: 'd24gkgs6s9hlg4.cloudfront.net'
