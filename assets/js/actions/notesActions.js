@@ -8,6 +8,8 @@ export const NOTES_VISIBLE        = 'NOTES_VISIBLE';
 export const NOTES_FETCH          = 'NOTES_FETCH';
 export const NOTES_DELETE         = 'NOTES_DELETE';
 
+let fetchInterval = null;
+
 /**
  * @param {boolean} isBusy
  * @returns {{isBusy: *, type: string}}
@@ -32,21 +34,26 @@ export const notesVisible = (isVisible) => {
 
 /**
  * @param {number} blockID
- * @returns {{type: string}}
+ * @param {boolean} showBusy
+ * @returns {Function}
  */
-export const notesToggleVisible = (blockID) => {
-  return (dispatch, getState) => {
-    const { notes } = getState();
-
-    const isVisible = !notes.isVisible;
-
-    if (!isVisible) {
-      dispatch(editorActivateBlock(0));
-      dispatch(notesVisible(false));
-    } else {
-      dispatch(editorActivateBlock(blockID));
-      dispatch(notesVisible(true));
+export const notesFetch = (blockID, showBusy = true) => {
+  return (dispatch) => {
+    if (showBusy) {
+      dispatch(notesBusy(true));
     }
+    api.get(router.generate('api_notes_fetch', { blockID }))
+      .then((notes) => {
+        dispatch({
+          type: NOTES_FETCH,
+          notes
+        });
+      })
+      .finally(() => {
+        if (showBusy) {
+          dispatch(notesBusy(false));
+        }
+      });
   };
 };
 
@@ -58,6 +65,9 @@ export const notesOpen = (blockID) => {
   return (dispatch) => {
     dispatch(editorActivateBlock(blockID));
     dispatch(notesVisible(true));
+    fetchInterval = setInterval(() => {
+      dispatch(notesFetch(blockID, false));
+    }, 5000);
   };
 };
 
@@ -68,26 +78,24 @@ export const notesClose = () => {
   return (dispatch) => {
     dispatch(editorActivateBlock(0));
     dispatch(notesVisible(false));
+    clearInterval(fetchInterval);
   };
 };
 
 /**
  * @param {number} blockID
- * @returns {Function}
+ * @returns {{type: string}}
  */
-export const notesFetch = (blockID) => {
-  return (dispatch) => {
-    dispatch(notesBusy(true));
-    api.get(router.generate('api_notes_fetch', { blockID }))
-      .then((notes) => {
-        dispatch({
-          type: NOTES_FETCH,
-          notes
-        });
-      })
-      .finally(() => {
-        dispatch(notesBusy(false));
-      });
+export const notesToggleVisible = (blockID) => {
+  return (dispatch, getState) => {
+    const { notes } = getState();
+
+    const isVisible = !notes.isVisible;
+    if (!isVisible) {
+      dispatch(notesClose());
+    } else {
+      dispatch(notesOpen(blockID));
+    }
   };
 };
 

@@ -96,6 +96,7 @@
 }
 
 .editor-note-item-message {
+  color: $color-dim;
   margin-left: 50px;
 }
 
@@ -114,6 +115,10 @@
     max-width: 32px;
     margin-right: $gutter-size-sm;
   }
+
+  span {
+    font-size: $font-size-sm;
+  }
 }
 
 .editor-note-item-attachment-file {
@@ -124,6 +129,10 @@
 
   &:hover {
     color: $color-dim;
+  }
+
+  span {
+    font-size: $font-size-sm;
   }
 }
 
