@@ -21,6 +21,15 @@
   padding: $gutter-size $gutter-size-sm $gutter-size $gutter-size;
   display: flex;
   flex-flow: column nowrap;
+
+  .loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+  }
 }
 
 .editor-note-items {

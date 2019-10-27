@@ -1,6 +1,7 @@
 import { api, router } from 'utils';
 import { editorActivateBlock } from './editorActions';
 import { activitiesFetch } from './activityActions';
+import { uiToast } from './uiActions';
 
 export const NOTES_BUSY           = 'NOTES_BUSY';
 export const NOTES_VISIBLE        = 'NOTES_VISIBLE';
@@ -107,6 +108,11 @@ export const notesSave = (blockID, message, attachment) => {
     dispatch(notesBusy(true));
     api.post(router.generate('api_notes_save', { blockID }), form)
       .then((notes) => {
+        if (notes._error) {
+          dispatch(uiToast(notes._error, { type: 'error' }));
+          return;
+        }
+
         dispatch({
           type: NOTES_FETCH,
           notes

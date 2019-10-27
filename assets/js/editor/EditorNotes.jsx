@@ -6,11 +6,12 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import { connect, strings, video, acl, mapDispatchToProps } from 'utils';
 import { Form, Input } from 'components/forms';
 import { Button } from 'components/bootstrap';
-import { Avatar, Icon } from 'components';
+import { Avatar, Icon, Loading } from 'components';
 import { notesActions, formActions } from 'actions';
 
 const mapStateToProps = state => ({
   notes:         state.notes.notes,
+  isBusy:        state.notes.isBusy,
   isVisible:     state.notes.isVisible,
   formValues:    state.forms.notes,
   activeBlockID: state.editor.activeBlockID,
@@ -24,6 +25,7 @@ const mapStateToProps = state => ({
 export default class EditorNotes extends React.PureComponent {
   static propTypes = {
     notes:         PropTypes.array.isRequired,
+    isBusy:        PropTypes.bool.isRequired,
     isVisible:     PropTypes.bool.isRequired,
     formValues:    PropTypes.object.isRequired,
     meTeamMember:  PropTypes.object.isRequired,
@@ -143,11 +145,12 @@ export default class EditorNotes extends React.PureComponent {
    * @returns {*}
    */
   renderForm = () => {
+    const { isBusy } = this.props;
     const { attachment } = this.state;
 
     return (
       <Form name="notes" className="editor-notes-form" onSubmit={this.handleFormSubmit}>
-        <input type="file" ref={this.attachmentInput} style={{ width: 0, height: 0 }} />
+        <input type="file" ref={this.attachmentInput} style={{ width: 0, height: 0 }}  disabled={isBusy} />
         {attachment && (
           <div className="editor-notes-form-attachment">
             {strings.truncate(attachment.name, 35)}
@@ -161,15 +164,17 @@ export default class EditorNotes extends React.PureComponent {
             formGroupClassName="flex-grow-1"
             placeholder="Add your message..."
             onKeyDown={this.handleMessageKeyUp}
+            disabled={isBusy}
           />
           <Button
             icon="paperclip"
             className="flex-grow-0 btn-attachment"
             title="Attach file"
             onClick={this.handleAttachClick}
+            disabled={isBusy}
           />
         </div>
-        <Button theme="success" block>
+        <Button theme="success" disabled={isBusy} block>
           Save
         </Button>
       </Form>
@@ -243,7 +248,7 @@ export default class EditorNotes extends React.PureComponent {
    * @returns {*}
    */
   render() {
-    const { isVisible } = this.props;
+    const { isVisible, isBusy } = this.props;
 
     const classes = classNames('editor-notes', {
       'editor-notes-visible': isVisible
@@ -254,6 +259,9 @@ export default class EditorNotes extends React.PureComponent {
         <div className="editor-notes-body">
           {this.renderNotes()}
           {this.renderForm()}
+          {isBusy && (
+            <Loading />
+          )}
         </div>
       </div>
     );

@@ -7,6 +7,7 @@ use App\Event\ActivityEvent;
 use App\Http\Request;
 use App\Repository\ActivityRepository;
 use App\Repository\NoteRepository;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -62,7 +63,14 @@ class NotesController extends ApiController
             ->setAttachmentUrl('');
         $this->em->persist($note);
 
+        /** @var UploadedFile $attachment */
         if ($attachment) {
+            if ($attachment->getSize() > 25 * 1024 * 1024) {
+                return new JsonResponse([
+                    '_error' => 'File size too large. 25MB max.'
+                ]);
+            }
+
             $ext  = pathinfo($attachment->getClientOriginalName(), PATHINFO_EXTENSION);
             $data = file_get_contents($attachment->getPathName());
             $path = sprintf('%d-%s.%s', microtime(true), uniqid(), $ext);
