@@ -7,30 +7,30 @@ parameters:
     cdn:
         screenshots:
             s3:
-                folder:       'gogokick-screenshots'
-                bucket:       'arb.headzoo.io'
+                folder:       'screenshots'
+                bucket:       'assets.gogokick.com'
                 cacheControl: 'max-age=300'
             cloudfront:
-                id:  'E34SMF4C1NLPCH'
-                url: 'dawo3jgs9j8n8.cloudfront.net'
+                id:  'E3E733268WBTQY'
+                url: 'd24gkgs6s9hlg4.cloudfront.net'
 
         assets:
             s3:
-                folder:       'gogokick-assets'
-                bucket:       'arb.headzoo.io'
+                folder:       'assets'
+                bucket:       'assets.gogokick.com'
                 cacheControl: 'max-age=31536000'
             cloudfront:
-                id:  'E34SMF4C1NLPCH'
-                url: 'dawo3jgs9j8n8.cloudfront.net'
+                id:  'E3E733268WBTQY'
+                url: 'd24gkgs6s9hlg4.cloudfront.net'
 
         project_images:
             s3:
                 folder:       'project-images'
-                bucket:       'arb.headzoo.io'
+                bucket:       'assets.gogokick.com'
                 cacheControl: 'max-age=31536000'
             cloudfront:
-                id:  'E34SMF4C1NLPCH'
-                url: 'dawo3jgs9j8n8.cloudfront.net'
+                id:  'E3E733268WBTQY'
+                url: 'd24gkgs6s9hlg4.cloudfront.net'
             size:
                 width: 1024
                 height: 576
@@ -38,29 +38,29 @@ parameters:
         block_images:
             s3:
                 folder:       'block-images'
-                bucket:       'arb.headzoo.io'
+                bucket:       'assets.gogokick.com'
                 cacheControl: 'max-age=31536000'
             cloudfront:
-                id:  'E34SMF4C1NLPCH'
-                url: 'dawo3jgs9j8n8.cloudfront.net'
+                id:  'E3E733268WBTQY'
+                url: 'd24gkgs6s9hlg4.cloudfront.net'
 
         avatars:
             s3:
-                folder:       'gogokick-avatars'
-                bucket:       'arb.headzoo.io'
+                folder:       'avatars'
+                bucket:       'assets.gogokick.com'
                 cacheControl: 'max-age=31536000'
             cloudfront:
-                id:  'E34SMF4C1NLPCH'
-                url: 'dawo3jgs9j8n8.cloudfront.net'
+                id:  'E3E733268WBTQY'
+                url: 'd24gkgs6s9hlg4.cloudfront.net'
             size:
                 width: 200
                 height: 200
 
         downloads:
             s3:
-                folder:       'gogokick-downloads'
-                bucket:       'arb.headzoo.io'
+                folder:       'downloads'
+                bucket:       'assets.gogokick.com'
                 cacheControl: 'max-age=300'
             cloudfront:
-                id:  'E34SMF4C1NLPCH'
-                url: 'dawo3jgs9j8n8.cloudfront.net'
+                id:  'E3E733268WBTQY'
+                url: 'd24gkgs6s9hlg4.cloudfront.net'
