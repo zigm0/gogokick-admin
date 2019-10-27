@@ -220,13 +220,13 @@ export default class EditorNotes extends React.PureComponent {
                   {note.text}
                 </div>
                 {(note.attachmentUrl && video.isImageUrl(note.attachmentUrl)) && (
-                  <a href={note.attachmentUrl} target="_blank" className="editor-note-item-attachment-image">
+                  <a href={note.attachmentUrl} className="editor-note-item-attachment-image">
                     <img src={note.attachmentUrl}  alt="Attachment" />
                     <span>{note.attachmentName}</span>
                   </a>
                 )}
                 {(note.attachmentUrl && !video.isImageUrl(note.attachmentUrl)) && (
-                  <a href={note.attachmentUrl} target="_blank" className="editor-note-item-attachment-file">
+                  <a href={note.attachmentUrl} className="editor-note-item-attachment-file">
                     <Icon name="file" size={2} />
                     <span>{note.attachmentName}</span>
                   </a>
