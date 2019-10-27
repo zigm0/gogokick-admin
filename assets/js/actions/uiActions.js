@@ -66,7 +66,8 @@ export const uiToast = (payload, meta = {}) => {
     hideProgressBar: true,
     closeOnClick:    true,
     pauseOnHover:    true,
-    draggable:       true
+    draggable:       true,
+    type:            meta.type
   });
 
   return {

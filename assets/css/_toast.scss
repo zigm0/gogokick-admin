@@ -2,14 +2,18 @@
 
 .Toastify__toast--default {
   padding: 0;
-  @extend .striped-border;
+  color: $color-body-text;
+  background-color: $color-header;
+}
+
+.Toastify__toast--error {
+  color: #FFF;
+  background-color: $color-danger;
 }
 
 .Toastify__toast-body {
-  color: #FFF;
-  background-color: #242424;
   padding: $gutter-size-sm;
-  margin-top: $width-striped-border;
+  margin-top: 0;
   margin-bottom: 0;
 }
 
