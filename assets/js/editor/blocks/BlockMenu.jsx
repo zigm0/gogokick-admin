@@ -98,10 +98,12 @@ export default class BlockMenu extends React.PureComponent {
   };
 
   /**
-   *
+   * @param {Event} e
    */
-  handleLockClick = () => {
+  handleLockClick = (e) => {
     const { block, editorBlockSettings, editorActivateBlock } = this.props;
+
+    e.preventDefault();
 
     const newBlock = objects.clone(block);
     newBlock.isLocked = !block.isLocked;

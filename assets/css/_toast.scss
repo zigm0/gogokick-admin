@@ -4,11 +4,18 @@
   padding: 0;
   min-height: auto;
   color: $color-body-text;
-  background-color: $color-header;
+  background-color: darken($color-header, 5%);
+}
+
+.Toastify__toast--info {
+  color: #FFF;
+  min-height: auto;
+  background-color: $color-info;
 }
 
 .Toastify__toast--error {
   color: #FFF;
+  min-height: auto;
   background-color: $color-danger;
 }
 
@@ -31,26 +38,4 @@
 
 .Toastify__toast-container--bottom-center {
   margin-left: -252px;
-}
-
-.toast-error {
-  &::before {
-    content: "\f071";
-    font-weight: 900;
-    margin-right: 0.5rem;
-    color: $color-warning;
-    font-family: "Font Awesome 5 Free";
-  }
-}
-
-.toast-default {
-  text-align: center;
-
-  &::before {
-    content: "\f00c";
-    font-weight: 900;
-    margin-right: 0.5rem;
-    color: $color-block-text;
-    font-family: "Font Awesome 5 Free";
-  }
 }

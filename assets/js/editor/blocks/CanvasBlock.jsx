@@ -116,7 +116,7 @@ export default class CanvasBlock extends React.PureComponent {
     const { block, meTeamMember, activeBlockID, editorActivateBlock, uiToast } = this.props;
 
     if (block.isLocked) {
-      uiToast('Block is locked!');
+      uiToast('Block is locked!', { type: 'info' });
     } else if (!e.target.classList.contains('icon') && block.id !== activeBlockID) {
       const resource = `block-${constants.blockType(block.type)}`;
       if (acl(meTeamMember.roles, 'edit', resource)) {
