@@ -1,7 +1,3 @@
-easy_admin_bundle:
-    resource: '@EasyAdminBundle/Controller/EasyAdminController.php'
-    prefix: /admin
-    type: annotation
 editor_blank:
     path: "/editor"
     defaults: { _controller: 'App\Controller\HomeController::editorAction' }
