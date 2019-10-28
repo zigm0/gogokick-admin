@@ -4,10 +4,11 @@ import classNames from 'classnames';
 import Moment from 'react-moment';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { connect, strings, video, acl, mapDispatchToProps } from 'utils';
-import { Form, Input } from 'components/forms';
+import { Form, Textarea } from 'components/forms';
 import { Button } from 'components/bootstrap';
 import { Avatar, Icon, Loading } from 'components';
 import { notesActions, formActions } from 'actions';
+import 'autolink-js';
 
 const mapStateToProps = state => ({
   notes:         state.notes.notes,
@@ -115,12 +116,35 @@ export default class EditorNotes extends React.PureComponent {
 
   /**
    * @param {Event} e
+   * @param {*} note
+   */
+  handleQuoteClick = (e, note) => {
+    const { formChange } = this.props;
+    let { text } = note;
+
+    const rx = new RegExp('^>([^\n]+)$', 'm'); // eslint-disable-line
+    const matches = text.match(rx);
+    if (matches) {
+      text = text.replace(matches[0], '').trim();
+    }
+
+    formChange('notes', 'message', `> ${text + "\n"}`);
+    setTimeout(() => {
+      this.message.current.focus();
+    }, 200);
+  };
+
+  /**
+   * @param {Event} e
    */
   handleMessageKeyUp = (e) => {
-    if (e.keyCode === 13) {
-      console.log('here');
-      e.preventDefault();
-      this.handleFormSubmit(e);
+    if (e.keyCode === 13 && !e.shiftKey) {
+      const { value } = e.target;
+
+      if (value[0] !== '>' || (value[0] === '>' && value.indexOf("\n") !== -1)) {
+        e.preventDefault();
+        this.handleFormSubmit(e);
+      }
     }
   };
 
@@ -156,16 +180,19 @@ export default class EditorNotes extends React.PureComponent {
             {strings.truncate(attachment.name, 35)}
           </div>
         )}
+        <Textarea
+          ref={this.message}
+          name="message"
+          id="notes-message-input"
+          formGroupClassName="flex-grow-1 gutter-bottom-sm"
+          placeholder="Add your message..."
+          onKeyDown={this.handleMessageKeyUp}
+          disabled={isBusy}
+        />
         <div className="d-flex align-items-center gutter-bottom-sm">
-          <Input
-            ref={this.message}
-            name="message"
-            id="notes-message-input"
-            formGroupClassName="flex-grow-1"
-            placeholder="Add your message..."
-            onKeyDown={this.handleMessageKeyUp}
-            disabled={isBusy}
-          />
+          <Button disabled={isBusy} block>
+            Send
+          </Button>
           <Button
             icon="paperclip"
             className="flex-grow-0 btn-attachment"
@@ -174,9 +201,6 @@ export default class EditorNotes extends React.PureComponent {
             disabled={isBusy}
           />
         </div>
-        <Button theme="success" disabled={isBusy} block>
-          Save
-        </Button>
       </Form>
     );
   };
@@ -190,6 +214,16 @@ export default class EditorNotes extends React.PureComponent {
     if (!meTeamMember.user) {
       return null;
     }
+
+    const rx = new RegExp('^>([^\n]+)$', 'm'); // eslint-disable-line
+    const quoteText = (text) => {
+      const matches = text.match(rx);
+      if (matches) {
+        return text.replace(matches[0], `<blockquote class="hyphenate">${matches[1].trim()}</blockquote>`);
+      }
+
+      return text.replace(/\n/g, '<br />').autoLink({ target: '_blank', rel: 'nofollow' });
+    };
 
     return (
       <Scrollbars ref={this.notes}>
@@ -210,6 +244,13 @@ export default class EditorNotes extends React.PureComponent {
                     onClick={e => this.handleDeleteClick(e, note)}
                   />
                 )}
+                <Icon
+                  name="quote-left"
+                  className="editor-note-item-quote-icon"
+                  title="Quote"
+                  onClick={e => this.handleQuoteClick(e, note)}
+                  fas
+                />
                 <div className="editor-note-item-avatar">
                   <Avatar src={note.user.avatar} sm />
                   <div className="editor-note-item-details">
@@ -221,9 +262,10 @@ export default class EditorNotes extends React.PureComponent {
                     </Moment>
                   </div>
                 </div>
-                <div className="editor-note-item-message hyphenate">
-                  {note.text}
-                </div>
+                <div
+                  className="editor-note-item-message hyphenate"
+                  dangerouslySetInnerHTML={{ __html: quoteText(note.text) }}
+                />
                 {(note.attachmentUrl && video.isImageUrl(note.attachmentUrl)) && (
                   <a href={note.attachmentUrl} className="editor-note-item-attachment-image">
                     <img src={note.attachmentUrl}  alt="Attachment" />

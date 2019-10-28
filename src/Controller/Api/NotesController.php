@@ -58,7 +58,7 @@ class NotesController extends ApiController
         $note = (new Note())
             ->setUser($user)
             ->setBlock($block)
-            ->setText($message)
+            ->setText(strip_tags($message))
             ->setAttachmentName('')
             ->setAttachmentUrl('');
         $this->em->persist($note);

@@ -1030,6 +1030,11 @@ attr-accept@^1.1.3:
   dependencies:
     core-js "^2.5.0"
 
+autolink-js@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/autolink-js/-/autolink-js-1.0.2.tgz#2fb443ab8b101ab1591560cc699b2a5c33f0bdf3"
+  integrity sha1-L7RDq4sQGrFZFWDMaZsqXDPwvfM=
+
 autoprefixer@^9.5.1:
   version "9.5.1"
   resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-9.5.1.tgz#243b1267b67e7e947f28919d786b50d3bb0fb357"

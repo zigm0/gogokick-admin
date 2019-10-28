@@ -104,6 +104,7 @@ export default class BlockMenu extends React.PureComponent {
     const { block, editorBlockSettings, editorActivateBlock } = this.props;
 
     e.preventDefault();
+    e.stopPropagation();
 
     const newBlock = objects.clone(block);
     newBlock.isLocked = !block.isLocked;

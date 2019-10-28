@@ -5,7 +5,7 @@
   background-color: #f6f6f6;
   width: 350px;
   position: absolute;
-  top: $height-header;
+  top: $height-header + 1px;
   right: -350px;
   bottom: 0;
   z-index: 100;
@@ -18,7 +18,7 @@
 
 .editor-notes-body {
   height: 100%;
-  padding: $gutter-size $gutter-size-sm $gutter-size $gutter-size;
+  padding: 0 $gutter-size-sm $gutter-size-sm $gutter-size-sm;
   display: flex;
   flex-flow: column nowrap;
 
@@ -35,6 +35,7 @@
 .editor-note-items {
   flex: auto;
   overflow-y: auto;
+  margin-bottom: 0;
 }
 
 .editor-note-items-empty {
@@ -59,20 +60,37 @@
   &:hover {
     background-color: $color-sidebar-block-bg;
 
-    .editor-note-item-delete-icon {
+    .editor-note-item-delete-icon,
+    .editor-note-item-quote-icon {
       display: block;
     }
   }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.editor-note-item-delete-icon,
+.editor-note-item-quote-icon {
+  float: right;
+  display: none;
+  cursor: pointer;
 }
 
 .editor-note-item-delete-icon {
-  float: right;
-  display: none;
   color: $color-danger;
-  cursor: pointer;
 
   &:hover {
     color: lighten($color-danger, 10%);
+  }
+}
+
+.editor-note-item-quote-icon {
+  color: $color-dim;
+
+  &:hover {
+    color: lighten($color-dim, 10%);
   }
 }
 
@@ -80,6 +98,7 @@
   display: flex;
   align-items: center;
   color: #AAA;
+  margin-bottom: $gutter-size-sm;
 
   .avatar {
     margin-right: $gutter-size;
@@ -97,12 +116,18 @@
 
 .editor-note-item-message {
   color: $color-dim;
-  margin-left: 50px;
+  line-height: 1.4rem;
+
+  blockquote {
+    max-width: 100%;
+    margin-bottom: $gutter-size;
+    padding-left: 7.5px;
+    border-left: 3px solid $color-info;
+  }
 }
 
 .editor-note-item-attachment-image {
   color: $color-dim;
-  margin-left: 50px;
   display: flex;
   align-items: center;
 
@@ -123,7 +148,6 @@
 
 .editor-note-item-attachment-file {
   color: $color-dim;
-  margin-left: 45px;
   display: flex;
   align-items: center;
 
