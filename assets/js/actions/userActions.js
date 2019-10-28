@@ -76,7 +76,7 @@ export const userLogin = () => {
           if (parsed.back) {
             history.push(parsed.back);
           } else {
-            history.push('/dashboard');
+            history.push('/');
           }
         }
       })
