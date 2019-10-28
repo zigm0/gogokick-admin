@@ -7,8 +7,7 @@
   justify-content: space-between;
   align-items: center;
   background-color: $color-header;
-  border-bottom: darken($color-header, 10%);
-  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid darken($color-header, 5%);
 
   .btn {
     color: $color-body-text;
