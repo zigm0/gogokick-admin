@@ -93,6 +93,13 @@ class ProjectsController extends ApiController
             throw $this->createNotFoundException();
         }
 
+        $blocks = $project->getBlocks()->toArray();
+        usort($blocks, function(Block $a, Block $b) {
+            return ($a->getSortOrder() > $b->getSortOrder()) ? 1 : -1;
+        });
+        $project->setBlocks(new ArrayCollection($blocks));
+
+
         // $project->getUser();
 
         return $this->jsonEntityResponse($project);
@@ -450,6 +457,11 @@ class ProjectsController extends ApiController
     public function imagesAction($id)
     {
         $project = $this->getProject($id);
+        $blocks  = $project->getBlocks()->toArray();
+        usort($blocks, function(Block $a, Block $b) {
+            return ($a->getSortOrder() > $b->getSortOrder()) ? 1 : -1;
+        });
+        $project->setBlocks(new ArrayCollection($blocks));
 
         $zipFile = tempnam(sys_get_temp_dir(), 'export');
         $guzzle  = new Client();
@@ -478,13 +490,5 @@ class ProjectsController extends ApiController
         $url  = $this->cdn->upload('downloads', $path, $data);
 
         return new JsonResponse(['url' => $url]);
-    }
-
-    /**
-     * @Route("/{id}/images/download", name="_images_download", methods={"GET"})
-     */
-    public function downloadZipAction()
-    {
-
     }
 }
