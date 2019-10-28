@@ -32,6 +32,9 @@ export default class Home extends React.PureComponent {
     }
   }
 
+  /**
+   *
+   */
   componentDidMount() {
     setInterval(() => {
       const { raised } = this.state;
