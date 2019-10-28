@@ -79,7 +79,7 @@ class TeamController extends ApiController
         ];
 
         $message = (new Swift_Message('Invitation to GoGoKick project'))
-            ->setFrom('invites@gogokick.com')
+            ->setFrom('noreply@gogokick.com')
             ->setTo($email)
             ->setBody(
                 $this->renderView('_emails/invite.html.twig', $params),
