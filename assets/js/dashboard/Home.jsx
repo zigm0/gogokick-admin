@@ -7,6 +7,7 @@ import { Container, Row, Column } from 'components/bootstrap';
 import { PublicProjectCard } from 'cards';
 
 const mapStateToProps = state => ({
+  mission:         state.content.mission,
   isAuthenticated: state.user.isAuthenticated
 });
 
@@ -15,6 +16,7 @@ const mapStateToProps = state => ({
 )
 export default class Home extends React.PureComponent {
   static propTypes = {
+    mission:         PropTypes.string.isRequired,
     isAuthenticated: PropTypes.bool.isRequired
   };
 
@@ -123,27 +125,12 @@ export default class Home extends React.PureComponent {
    * @returns {*}
    */
   renderMission = () => {
+    const { mission } = this.props;
+
     return (
       <div className="home-page-mission">
         <Container className="home-page-container">
-          <h3>Our Mission</h3>
-          <p>
-            We know the feel of spending countless hours, sleepless nights and caffeine-fueled days pursuing a dream.
-            We’ve faced with the daunting task of learning and executing all that goes into successful crowdfunding.
-            We started making the tools inside GoGoKick for ourselves and now want to share their benefits to anyone
-            else looking to crowdfund a dream.
-          </p>
-          <p>
-            We understand the short timeframe needed to learn things like attracting an audience, crafting a story
-            page, filming a video, running ads on the many social platforms, PR outreach and more.  The tools on
-            this site were built to help in the following ways:
-          </p>
-          <ul>
-            <li>Design and Create effective campaign Video and Page using current best practices.</li>
-            <li>Manage and Organize action items through an interactive checklist.</li>
-            <li>Collaborate with team members and bring in hired help to fill in skill gaps.</li>
-            <li>Foster community amongst fellow creators and backers.</li>
-          </ul>
+          <div dangerouslySetInnerHTML={{ __html: mission }} />
         </Container>
       </div>
     );

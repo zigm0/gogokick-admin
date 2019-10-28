@@ -4,9 +4,11 @@ namespace App\Controller;
 use App\Controller\Api\ApiController;
 use App\Entity\Activity;
 use App\Entity\Block;
+use App\Entity\Content;
 use App\Entity\Project;
 use App\Entity\ProjectUser;
 use App\Repository\ActivityRepository;
+use App\Repository\ContentRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\WatchRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,13 +35,15 @@ class HomeController extends ApiController
      * @param ProjectRepository  $projectRepository
      * @param WatchRepository    $watchRepository
      * @param ActivityRepository $activityRepository
+     * @param ContentRepository  $contentRepository
      *
      * @return Response
      */
     public function editorAction(
         ProjectRepository $projectRepository,
         WatchRepository $watchRepository,
-        ActivityRepository $activityRepository
+        ActivityRepository $activityRepository,
+        ContentRepository $contentRepository
     )
     {
         $constants = [
@@ -99,6 +103,11 @@ class HomeController extends ApiController
             }
         }
 
+        $mission = $contentRepository->findByName('mission');
+        if (!$mission) {
+            $mission = new Content();
+        }
+
         return $this->render('editor/index.html.twig', [
             'constants'    => $constants,
             'initialState' => [
@@ -110,6 +119,9 @@ class HomeController extends ApiController
                 'publicProjects' => $projects,
                 'activity'       => [
                     'activities' => $activities
+                ],
+                'content' => [
+                    'mission' => $mission->getHtml()
                 ]
             ]
         ]);
