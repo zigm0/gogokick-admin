@@ -121,7 +121,10 @@ class HomeController extends ApiController
                     'activities' => $activities
                 ],
                 'content' => [
-                    'mission' => $mission->getHtml()
+                    'mission' => [
+                        'html'  => $mission->getHtml(),
+                        'title' => $mission->getTitle()
+                    ]
                 ]
             ]
         ]);

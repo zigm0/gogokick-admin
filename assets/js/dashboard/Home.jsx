@@ -16,7 +16,7 @@ const mapStateToProps = state => ({
 )
 export default class Home extends React.PureComponent {
   static propTypes = {
-    mission:         PropTypes.string.isRequired,
+    mission:         PropTypes.object.isRequired,
     isAuthenticated: PropTypes.bool.isRequired
   };
 
@@ -130,7 +130,8 @@ export default class Home extends React.PureComponent {
     return (
       <div className="home-page-mission">
         <Container className="home-page-container">
-          <div dangerouslySetInnerHTML={{ __html: mission }} />
+          <h3>{mission.title}</h3>
+          <div dangerouslySetInnerHTML={{ __html: mission.html }} />
         </Container>
       </div>
     );

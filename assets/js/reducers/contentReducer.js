@@ -1,7 +1,10 @@
 import { objects } from 'utils';
 
 const initialState = objects.merge({
-  missing: ''
+  mission: {
+    html:  '',
+    title: ''
+  }
 }, window.initialState.content);
 
 const handlers = {};
