@@ -63,12 +63,7 @@ class HomeController extends ApiController
             $user['isAuthenticated'] = true;
         }
 
-        $projects = $projectRepository->createQueryBuilder('p')
-            ->where('p.isPublic = 1')
-            ->andWhere('p.isDeleted = 0')
-            ->orderBy('p.dateUpdated', 'desc')
-            ->getQuery()
-            ->execute();
+        $projects = $projectRepository->findByTeamMember($this->getUser());
         $projects = $this->arrayEntityGroup($projects);
         foreach($projects as &$project) {
             $uid = $project['user']['id'];

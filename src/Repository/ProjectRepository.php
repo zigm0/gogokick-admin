@@ -55,7 +55,7 @@ class ProjectRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->leftJoin(ProjectUser::class, 'pu', Join::WITH, 'pu.project = p')
             ->where('p.isDeleted = 0')
-            ->andWhere('p.user = :user OR pu.user = :user')
+            ->andWhere('(p.user = :user OR pu.user = :user)')
             ->setParameter(':user', $user)
             ->orderBy('p.dateUpdated', 'desc')
             ->getQuery()
