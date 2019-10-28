@@ -33,11 +33,13 @@ easy_admin:
                 fields:
                     - id
                     - name
+                    - isPublic
                     - dateCreated
             form:
                 fields:
                     - name
                     - { property: 'subtitle', type_options: { required: false, empty_data: '' } }
+                    - isPublic
 
 
         Content:
