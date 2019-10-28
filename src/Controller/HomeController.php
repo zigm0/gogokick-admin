@@ -19,26 +19,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class HomeController extends ApiController
 {
-    /**
-     * @Route("/", name="home")
-     *
-     * @return Response
-     */
+
     public function indexAction()
     {
         return $this->render('home/index.html.twig');
     }
 
-    /**
-     * @Route("/editor", name="editor")
-     *
-     * @param ProjectRepository  $projectRepository
-     * @param WatchRepository    $watchRepository
-     * @param ActivityRepository $activityRepository
-     * @param ContentRepository  $contentRepository
-     *
-     * @return Response
-     */
+
     public function editorAction(
         ProjectRepository $projectRepository,
         WatchRepository $watchRepository,
