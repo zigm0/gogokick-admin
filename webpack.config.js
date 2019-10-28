@@ -8,8 +8,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 module.exports = {
   mode:    'development',
   entry:   {
-    app:    ['./assets/css/app.scss'],
-    editor: ['./assets/js/editor.jsx', './assets/css/editor.scss']
+    app: ['./assets/css/app.scss']
   },
   output:  {
     path:     path.resolve(__dirname, 'public/build'),
