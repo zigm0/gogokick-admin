@@ -63,17 +63,20 @@ class HomeController extends ApiController
             $user['isAuthenticated'] = true;
         }
 
-        $projects = $projectRepository->findByTeamMember($this->getUser());
-        $projects = $this->arrayEntityGroup($projects);
-        foreach($projects as &$project) {
-            $uid = $project['user']['id'];
-            unset($project['user']);
-            unset($project['blocks']);
-            unset($project['team']);
-            if (!empty($project['image'])) {
-                unset($project['image']['user']);
+        $projects = [];
+        if ($u = $this->getUser()) {
+            $projects = $projectRepository->findByTeamMember($u);
+            $projects = $this->arrayEntityGroup($projects);
+            foreach($projects as &$project) {
+                $uid = $project['user']['id'];
+                unset($project['user']);
+                unset($project['blocks']);
+                unset($project['team']);
+                if (!empty($project['image'])) {
+                    unset($project['image']['user']);
+                }
+                $project['user'] = ['id' => $uid];
             }
-            $project['user'] = ['id' => $uid];
         }
 
         $watching = [];
