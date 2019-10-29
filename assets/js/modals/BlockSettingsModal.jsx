@@ -362,12 +362,12 @@ export default class BlockSettingsModal extends React.PureComponent {
    */
   render() {
     const { block, modals, meTeamMember } = this.props;
-    const { roles } = meTeamMember;
 
-    if (!modals.blockSettings) {
+    if (!modals.blockSettings || !meTeamMember) {
       return null;
     }
 
+    const { roles } = meTeamMember;
     const blockType = constants.blockType(block.type);
 
     return (
