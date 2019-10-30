@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "23a749e0f11bf28c0436a18c3d20fe23",
+    "content-hash": "214d18669d7df17959cfad1b20ccafd2",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -2581,12 +2581,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataAdminBundle.git",
-                "reference": "b9739ceaa53a0a7984f074d91ac1c2afc546d2f8"
+                "reference": "64aa95da4cef7bb533822e87382005f101c577ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/b9739ceaa53a0a7984f074d91ac1c2afc546d2f8",
-                "reference": "b9739ceaa53a0a7984f074d91ac1c2afc546d2f8",
+                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/64aa95da4cef7bb533822e87382005f101c577ae",
+                "reference": "64aa95da4cef7bb533822e87382005f101c577ae",
                 "shasum": ""
             },
             "require": {
@@ -6781,7 +6781,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "sonata-project/admin-bundle": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
