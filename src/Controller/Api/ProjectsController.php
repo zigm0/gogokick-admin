@@ -470,7 +470,7 @@ class ProjectsController extends ApiController
 
         $counter = 1;
         foreach($project->getBlocks() as $block) {
-            if ($block->getType() === Block::TYPE_IMAGE) {
+            if ($block->getType() === Block::TYPE_IMAGE && $block->getMedia()) {
                 $url  = $block->getMedia()->getUrl();
                 $path = parse_url($url, PHP_URL_PATH);
                 $name = pathinfo($path, PATHINFO_BASENAME);
