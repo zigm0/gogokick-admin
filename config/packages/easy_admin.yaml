@@ -33,6 +33,7 @@ easy_admin:
                 fields:
                     - id
                     - name
+                    - campaignTypeString
                     - isPublic
                     - dateCreated
             form:
@@ -40,7 +41,7 @@ easy_admin:
                     - name
                     - { property: 'subtitle', type_options: { required: false, empty_data: '' } }
                     - isPublic
-
+                    - team
 
         Content:
             class: App\Entity\Content
