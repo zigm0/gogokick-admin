@@ -1,6 +1,10 @@
 <?php
 namespace App\Admin;
 
+use App\Entity\Media;
+use App\Entity\Project;
+use App\Media\CDNInterface;
+use Doctrine\ORM\ORMException;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -16,6 +20,19 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
  */
 class ProjectAdmin extends AbstractAdmin
 {
+    /**
+     * @var CDNInterface
+     */
+    protected $cdn;
+
+    /**
+     * @param CDNInterface $cdn
+     */
+    public function setCDN(CDNInterface $cdn)
+    {
+        $this->cdn = $cdn;
+    }
+
     /**
      * @param RouteCollection $collection
      */
@@ -36,6 +53,10 @@ class ProjectAdmin extends AbstractAdmin
             ])
             ->add('user', null, [
                 'label' => 'Owner'
+            ])
+            ->add('imageFile', FileType::class, [
+                'required' => false,
+                'label'    => 'Image'
             ])
             ->add('isPublic')
             ;
@@ -68,5 +89,55 @@ class ProjectAdmin extends AbstractAdmin
                 'label' => 'Public'
             ])
             ->add('dateCreated');
+    }
+
+    /**
+     * @param $object
+     *
+     * @throws ORMException
+     */
+    public function prePersist($object)
+    {
+        $this->updateProject($object);
+        parent::prePersist($object);
+    }
+
+    /**
+     * @param $object
+     *
+     * @throws ORMException
+     */
+    public function preUpdate($object)
+    {
+        $this->updateProject($object);
+        parent::preUpdate($object);
+    }
+
+    /**
+     * @param Project $project
+     *
+     * @throws ORMException
+     */
+    protected function updateProject(Project $project)
+    {
+        if ($file = $project->getImageFile()) {
+            $ext  = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
+            $data = file_get_contents($file->getPathName());
+            $path = sprintf('%d-%s.%s', microtime(true), uniqid(), $ext);
+            $url  = $this->cdn->upload('project_images', $path, $data);
+
+            $media = (new Media())
+                ->setUrl($url)
+                ->setSystem('project_images')
+                ->setPath($path)
+                ->setOrigFilename($file->getClientOriginalName())
+                ->setUser($project->getUser());
+            $project->setImage($media);
+
+            $container = $this->getConfigurationPool()->getContainer();
+            $em = $container->get('doctrine.orm.entity_manager');
+            $em->persist($media);
+            $em->flush();
+        }
     }
 }

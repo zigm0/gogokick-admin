@@ -6,6 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Exception;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -72,6 +74,11 @@ class Project
      * @Groups({"web"})
      */
     protected $image;
+
+    /**
+     * @var File
+     */
+    protected $imageFile;
 
     /**
      * @var Collection
@@ -321,6 +328,26 @@ class Project
     public function setImage(Media $image): Project
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return File|UploadedFile
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File $file
+     *
+     * @return Project
+     */
+    public function setImageFile(File $file): Project
+    {
+        $this->imageFile = $file;
 
         return $this;
     }

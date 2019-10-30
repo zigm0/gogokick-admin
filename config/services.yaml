@@ -70,6 +70,8 @@ services:
     admin.projects:
         class: App\Admin\ProjectAdmin
         arguments: [~, App\Entity\Project, ~]
+        calls:
+            - [setCDN, ['@App\Media\CDNInterface']]
         tags:
             - { name: sonata.admin, manager_type: orm, group: Projects, label: Projects }
 
