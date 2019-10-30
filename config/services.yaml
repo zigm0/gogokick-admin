@@ -66,6 +66,23 @@ services:
         arguments:
             - 'http://127.0.0.1:8080'
 
-    App\EventListener\ApiExceptionListener:
+
+    admin.projects:
+        class: App\Admin\ProjectAdmin
+        arguments: [~, App\Entity\Project, ~]
         tags:
-            - { name: kernel.event_listener, method: onKernelException, event: kernel.exception }
+            - { name: sonata.admin, manager_type: orm, group: Projects, label: Projects }
+
+    admin.users:
+        class: App\Admin\UserAdmin
+        arguments: [~, App\Entity\User, ~]
+        calls:
+            - [setPasswordEncoder, ['@security.user_password_encoder.generic']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Users, label: Users }
+
+    admin.content:
+        class: App\Admin\ContentAdmin
+        arguments: [~, App\Entity\Content, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Content, label: Content }

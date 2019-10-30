@@ -60,6 +60,14 @@ class Content
     }
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string)$this->getName();
+    }
+
+    /**
      * @return int
      */
     public function getId(): ?int
