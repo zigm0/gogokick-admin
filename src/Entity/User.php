@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\Collection;
 use Exception;
 use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -62,6 +64,11 @@ class User implements UserInterface
      * @Groups({"web"})
      */
     protected $avatar;
+
+    /**
+     * @var File
+     */
+    protected $avatarFile;
 
     /**
      * @var array
@@ -228,6 +235,26 @@ class User implements UserInterface
     public function setAvatar(string $avatar): User
     {
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * @return File|UploadedFile
+     */
+    public function getAvatarFile(): ?File
+    {
+        return $this->avatarFile;
+    }
+
+    /**
+     * @param File $avatarFile
+     *
+     * @return User
+     */
+    public function setAvatarFile(File $avatarFile): User
+    {
+        $this->avatarFile = $avatarFile;
 
         return $this;
     }

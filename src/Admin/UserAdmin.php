@@ -1,13 +1,18 @@
 <?php
 namespace App\Admin;
 
+use App\Entity\Media;
 use App\Entity\User;
+use App\Media\CDNInterface;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -25,6 +30,16 @@ class UserAdmin extends AbstractAdmin
     protected $passwordEncoder;
 
     /**
+     * @var CDNInterface
+     */
+    protected $cdn;
+
+    /**
+     * @var string
+     */
+    protected $origPassword;
+
+    /**
      * @param UserPasswordEncoderInterface $passwordEncoder
      */
     public function setPasswordEncoder(UserPasswordEncoderInterface $passwordEncoder)
@@ -32,6 +47,13 @@ class UserAdmin extends AbstractAdmin
         $this->passwordEncoder = $passwordEncoder;
     }
 
+    /**
+     * @param CDNInterface $cdn
+     */
+    public function setCDN(CDNInterface $cdn)
+    {
+        $this->cdn = $cdn;
+    }
 
     /**
      * @param RouteCollection $collection
@@ -56,6 +78,8 @@ class UserAdmin extends AbstractAdmin
         ], $subject->getSocial());
         $subject->setSocial($social);
 
+        $this->origPassword = $subject->getPassword();
+
         $formMapper
             ->add('isEnabled')
             ->add('name', TextType::class)
@@ -67,6 +91,10 @@ class UserAdmin extends AbstractAdmin
             ])
             ->add('bio', TextareaType::class, [
                 'required' => false
+            ])
+            ->add('avatarFile', FileType::class, [
+                'required' => false,
+                'label'    => 'Avatar'
             ])
             ->add('skills', ChoiceType::class, [
                 'label' => 'Skills',
@@ -121,6 +149,9 @@ class UserAdmin extends AbstractAdmin
 
     /**
      * @param $object
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function prePersist($object)
     {
@@ -130,6 +161,9 @@ class UserAdmin extends AbstractAdmin
 
     /**
      * @param $object
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function preUpdate($object)
     {
@@ -139,6 +173,9 @@ class UserAdmin extends AbstractAdmin
 
     /**
      * @param User $user
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function updateUser(User $user)
     {
@@ -146,11 +183,33 @@ class UserAdmin extends AbstractAdmin
             $user->setPassword(
                 $this->passwordEncoder->encodePassword($user, $pass)
             );
+        } else {
+            $user->setPassword($this->origPassword);
         }
 
         $roles = $user->getRoles();
         if (empty($roles)) {
             $user->setRoles(['ROLE_USER']);
+        }
+
+        if ($file = $user->getAvatarFile()) {
+            $ext  = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
+            $data = file_get_contents($file->getPathName());
+            $path = sprintf('%d-%s.%s', microtime(true), uniqid(), $ext);
+            $url  = $this->cdn->upload('avatars', $path, $data);
+
+            $media = (new Media())
+                ->setUrl($url)
+                ->setSystem('avatars')
+                ->setPath($path)
+                ->setOrigFilename($file->getClientOriginalName())
+                ->setUser($user);
+            $user->setAvatar($url);
+
+            $container = $this->getConfigurationPool()->getContainer();
+            $em = $container->get('doctrine.orm.entity_manager');
+            $em->persist($media);
+            $em->flush();
         }
     }
 }
