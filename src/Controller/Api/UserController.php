@@ -7,6 +7,8 @@ use App\Http\Request;
 use App\Model\ProfileModel;
 use App\Repository\UserRepository;
 use App\Security\LoginFormAuthenticator;
+use DateTime;
+use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -86,6 +88,11 @@ class UserController extends ApiController
         $request->getSession()->set('_security_main', serialize($token));
         $event = new InteractiveLoginEvent($request, $token);
         $this->eventDispatcher->dispatch('security.interactive_login', $event);
+
+        try {
+            $user->setDateLastLogin(new DateTime());
+            $this->em->flush();
+        } catch (Exception $e) {}
 
         return $this->jsonEntityResponse($user);
     }
