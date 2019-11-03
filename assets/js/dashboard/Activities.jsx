@@ -65,8 +65,15 @@ export default class Activities extends React.PureComponent {
    * @returns {*}
    */
   renderInviteAccepted = (a) => {
+    const url = `/editor/${a.project.id}`;
+
     return (
-      <div />
+      <>
+        <span className="editor-activity-item-date">
+          Joined team <Link to={url}>#{a.project.name}</Link>&nbsp;
+          <Moment fromNow>{a.dateCreated}</Moment>.
+        </span>
+      </>
     );
   };
 

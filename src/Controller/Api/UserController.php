@@ -1,12 +1,16 @@
 <?php
 namespace App\Controller\Api;
 
+use App\Entity\Media;
 use App\Entity\User;
 use App\Http\ModelRequestHandler;
 use App\Http\Request;
 use App\Model\ProfileModel;
 use App\Repository\UserRepository;
 use App\Security\LoginFormAuthenticator;
+use DateTime;
+use Exception;
+use LasseRafn\InitialAvatarGenerator\InitialAvatar;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -87,6 +91,11 @@ class UserController extends ApiController
         $event = new InteractiveLoginEvent($request, $token);
         $this->eventDispatcher->dispatch('security.interactive_login', $event);
 
+        try {
+            $user->setDateLastLogin(new DateTime());
+            $this->em->flush();
+        } catch (Exception $e) {}
+
         return $this->jsonEntityResponse($user);
     }
 
@@ -136,17 +145,49 @@ class UserController extends ApiController
             return new JsonResponse(['_error' => 'Email address taken.']);
         }
 
+        $colors = [
+            '#929D9E',
+            '#FB8122',
+            '#3CBCC3',
+            '#438945',
+            '#2CCCC3',
+            '#FDD935',
+            '#E42C6A',
+            '#FB9039',
+            '#C60021',
+            '#849531',
+            '#B3E3B5'
+        ];
+        $index  = mt_rand(0, count($colors));
+        $avatar = new InitialAvatar();
+        $image  = $avatar
+            ->width(100)
+            ->height(100)
+            ->background($colors[$index])
+            ->name($name[0])
+            ->generate();
+        $data = $image->encode('jpg');
+        $path = sprintf('%d-%s.jpg', microtime(true), uniqid());
+        $url  = $this->cdn->upload('avatars', $path, $data);
+
         $user = (new User())
             ->setEmail($email)
             ->setName($name)
             ->setIsEnabled(true)
             ->addRole(User::ROLE_USER)
-            ->setAvatar(sprintf('https://api.adorable.io/avatars/200/%s.png', $email));
+            ->setAvatar($url);
         $user->setPassword(
             $passwordEncoder->encodePassword($user, $pass)
         );
 
+        $media = (new Media())
+            ->setUrl($url)
+            ->setSystem('avatars')
+            ->setPath($path)
+            ->setOrigFilename($path)
+            ->setUser($user);
         $this->em->persist($user);
+        $this->em->persist($media);
         $this->em->flush();
 
         $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
