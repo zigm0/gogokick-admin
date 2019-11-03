@@ -28,33 +28,23 @@ export default class Home extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      helped: 620,
-      active: 26,
-      raised: 1556002
-    }
+      helped: 0,
+      active: 0,
+      raised: 0
+    };
   }
 
   /**
    *
    */
   componentDidMount() {
-    setInterval(() => {
-      const { raised } = this.state;
-      this.setState({ raised: raised + numbers.random(10, 56) });
-    }, 3000);
     setTimeout(() => {
-      const { raised } = this.state;
-      this.setState({ raised: raised + numbers.random(10, 20) });
+      this.setState({
+        raised: 1556002,
+        helped: 620,
+        active: 26
+      });
     }, 250);
-
-    setInterval(() => {
-      const { helped } = this.state;
-      this.setState({ helped: helped + numbers.random(1, 2) });
-    }, 3500);
-    setInterval(() => {
-      const { active } = this.state;
-      this.setState({ active: active + numbers.random(1, 2) });
-    }, 2250);
   }
 
   /**

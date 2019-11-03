@@ -32,6 +32,7 @@ $header-height: 70px;
   display: flex;
   min-height: 225px;
   padding-top: $gutter-size;
+  padding-bottom: $gutter-size;
 
   .column {
     display: flex;
@@ -47,10 +48,11 @@ $header-height: 70px;
     font-weight: 700;
     padding-left: $gutter-size-lg;
     padding-right: $gutter-size-lg;
+    margin-top: $gutter-size-sm;
   }
 
   img {
-    height: 180px;
+    width: 90%;
 
     @include media-xs {
       margin-bottom: $gutter-size;
