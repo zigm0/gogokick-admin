@@ -53,6 +53,14 @@ class Setting
     }
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string)$this->getProperty();
+    }
+
+    /**
      * @return int
      */
     public function getId(): ?int
