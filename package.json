@@ -78,7 +78,7 @@
     "redux": "^4.0.2",
     "redux-arc": "^0.7.5",
     "redux-thunk": "^2.3.0",
-    "sanitize-html": "^1.20.1",
+    "sanitize-html": "^2.3.2",
     "stickybits": "^3.6.6",
     "webpack-bundle-analyzer": "^3.4.1"
   }
